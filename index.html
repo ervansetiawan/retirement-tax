@@ -504,6 +504,28 @@
               <span id="kpiBreakdownPreTaxPct" class="text-[9px] text-slate-400 block mt-0.5">0% of wealth</span>
             </div>
           </div>
+
+          <!-- Potential Capital Gains Tax Liability (Federal & State) -->
+          <div class="mt-2.5 pt-2.5 border-t border-slate-800/80">
+            <div class="p-2.5 rounded-xl bg-amber-950/30 border border-amber-500/25 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+              <div class="space-y-0.5">
+                <div class="flex items-center gap-1.5 text-[11px] font-semibold text-amber-400">
+                  <span class="w-2 h-2 rounded-full bg-amber-400 shadow-sm shadow-amber-400/50"></span>
+                  <span>Potential Capital Gains Tax (Federal + State)</span>
+                </div>
+                <div id="kpiCapGainsLiabilitySplit" class="text-[10px] text-slate-300 font-mono">
+                  Fed (15%): $0 | MN (6.8%): $0
+                </div>
+                <div id="kpiCapGainsUnrealizedBasis" class="text-[9px] text-slate-500">
+                  on $0 unrealized gain in taxable brokerage
+                </div>
+              </div>
+              <div class="sm:text-right flex sm:flex-col items-baseline sm:items-end justify-between border-t sm:border-t-0 pt-1.5 sm:pt-0 border-slate-800/60">
+                <span id="kpiCapGainsTaxLiability" class="text-base sm:text-lg font-black text-amber-300 font-mono">$0</span>
+                <span class="text-[9px] text-amber-500/90 font-medium">due on liquidation</span>
+              </div>
+            </div>
+          </div>
         </div>
 
         <!-- CARD 2: TOTAL TAX PAID (WITH ITEMIZED FEDERAL, STATE, CAP GAINS, IRMAA) -->
@@ -1226,7 +1248,9 @@
         else if (stateCfg.type === 'flat') stateCapGainsRate = stateCfg.rate;
 
         const unrealizedGains = Math.max(0, currentTaxable - taxableCostBasis);
-        const taxableProjTax = unrealizedGains * (0.15 + stateCapGainsRate);
+        const fedCapGainsProjTax = unrealizedGains * 0.15;
+        const stateCapGainsProjTax = unrealizedGains * stateCapGainsRate;
+        const taxableProjTax = fedCapGainsProjTax + stateCapGainsProjTax;
 
         const totalProjTaxOnRemaining = Math.round(preTaxProjTax + taxableProjTax);
         const afterTaxNetWorth = Math.round(Math.max(0, netWorth - totalProjTaxOnRemaining));
@@ -1246,6 +1270,9 @@
           projTaxOnRemaining: totalProjTaxOnRemaining,
           preTaxProjTax: Math.round(preTaxProjTax),
           taxableProjTax: Math.round(taxableProjTax),
+          fedCapGainsProjTax: Math.round(fedCapGainsProjTax),
+          stateCapGainsProjTax: Math.round(stateCapGainsProjTax),
+          unrealizedGains: Math.round(unrealizedGains),
           netWorth: Math.round(netWorth),
           afterTaxNetWorth
         });
@@ -1272,6 +1299,9 @@
         finalProjTaxOnRemaining: lastYear.projTaxOnRemaining,
         finalPreTaxProjTax: lastYear.preTaxProjTax,
         finalTaxableProjTax: lastYear.taxableProjTax,
+        finalFedCapGainsProjTax: lastYear.fedCapGainsProjTax,
+        finalStateCapGainsProjTax: lastYear.stateCapGainsProjTax,
+        finalUnrealizedGains: lastYear.unrealizedGains,
         finalRoth: lastYear.roth,
         finalPreTax: lastYear.preTax,
         finalTaxable: lastYear.taxable
@@ -1398,6 +1428,24 @@
       setElWidth('nwBarRoth', `${rothPct.toFixed(1)}%`);
       setElWidth('nwBarTaxable', `${taxablePct.toFixed(1)}%`);
       setElWidth('nwBarPreTax', `${preTaxPct.toFixed(1)}%`);
+
+      // Potential Capital Gains Tax Liability on Taxable Balance (Federal & State)
+      const capGainsTax = activeData.finalTaxableProjTax || 0;
+      const fedCapGains = activeData.finalFedCapGainsProjTax || 0;
+      const stateCapGains = activeData.finalStateCapGainsProjTax || 0;
+      const unrealized = activeData.finalUnrealizedGains || 0;
+      const stateCode = params.stateResidence || 'MN';
+      const stateCfg = getStateConfig(stateCode);
+      let stateRatePct = 0;
+      if (stateCfg.type === 'graduated') stateRatePct = 6.8;
+      else if (stateCfg.type === 'flat') stateRatePct = (stateCfg.rate || 0) * 100;
+
+      setElText('kpiCapGainsTaxLiability', formatCurrency(capGainsTax));
+      setElText(
+        'kpiCapGainsLiabilitySplit',
+        `Fed (15%): ${formatCurrency(fedCapGains)} | ${stateCode} (${stateRatePct > 0 ? stateRatePct.toFixed(1) + '%' : '0%'}): ${formatCurrency(stateCapGains)}`
+      );
+      setElText('kpiCapGainsUnrealizedBasis', `on ${formatCurrency(unrealized)} unrealized gain`);
 
       // 2. TOTAL TAX PAID & GRANULAR TAX BREAKDOWN
       const totalTaxes = Math.max(1, activeData.totalComprehensiveTaxes);
