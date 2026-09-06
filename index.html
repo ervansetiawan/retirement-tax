@@ -1,0 +1,1981 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Retirement Net Worth & Roth Conversion Calculator</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+          }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #0b1120;
+      color: #f8fafc;
+    }
+    input[type=range]::-webkit-slider-thumb {
+      height: 16px;
+      width: 16px;
+      border-radius: 50%;
+      background: #38bdf8;
+      cursor: pointer;
+      -webkit-appearance: none;
+      box-shadow: 0 0 6px rgba(56, 189, 248, 0.7);
+    }
+    #conversionSlider::-webkit-slider-thumb {
+      background: #10b981;
+      box-shadow: 0 0 6px rgba(16, 185, 129, 0.7);
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: #1e293b;
+      border-radius: 4px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #475569;
+      border-radius: 4px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+      background: #64748b;
+    }
+  </style>
+</head>
+
+<body class="min-h-screen bg-slate-950 text-slate-100 flex flex-col antialiased">
+  <header class="border-b border-slate-800 bg-slate-900/80 backdrop-blur-md sticky top-0 z-40">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex flex-wrap items-center justify-between gap-3">
+      <div class="flex items-center space-x-3">
+        <div class="h-10 w-10 rounded-xl bg-gradient-to-br from-emerald-400 via-teal-500 to-cyan-500 flex items-center justify-center shadow-lg shadow-emerald-500/20 text-slate-950 font-black text-xl">
+          %
+        </div>
+        <div>
+          <h1 class="text-base sm:text-lg font-bold text-white tracking-tight flex items-center gap-2">
+            Retirement & Roth Conversion Analyzer
+            <span class="text-[11px] px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-medium">To Age 90</span>
+          </h1>
+          <p class="text-xs text-slate-400">Immediate retirement | Social Security & IRMAA | Adjustable ROI | Federal & State Tax Brackets</p>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2 text-xs">
+        <button id="btnResetDefaults" class="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 transition-colors border border-slate-700 flex items-center gap-1.5 font-medium">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+          Reset Defaults
+        </button>
+        <button id="btnExportCSV" class="px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-semibold transition-colors shadow-md shadow-emerald-700/30 flex items-center gap-1.5">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+          Export CSV
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 flex-1 w-full grid grid-cols-1 lg:grid-cols-12 gap-5">
+
+    <!-- LEFT COLUMN: INPUT CONTROLS, TAX SETTINGS & OPTIMIZERS (5 cols) -->
+    <section class="lg:col-span-5 space-y-4">
+      <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 shadow-xl space-y-5">
+        
+        <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+          <h2 class="text-xs font-bold uppercase tracking-wider text-slate-300 flex items-center gap-2">
+            <svg class="w-4 h-4 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"/></svg>
+            Starting Profile & Assumptions
+          </h2>
+          <span class="text-[11px] text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/20 font-medium">Active Retirement</span>
+        </div>
+
+        <div class="space-y-3">
+          <div>
+            <div class="flex justify-between items-center text-xs mb-1">
+              <label class="font-medium text-slate-400">Current Age (Immediate Retirement)</label>
+              <span id="yearsRetiredBadge" class="text-cyan-400 font-semibold">40 yrs to Age 90</span>
+            </div>
+            <div class="relative">
+              <input type="number" id="currentAge" min="30" max="85" value="50" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-sm text-white font-semibold focus:outline-none focus:border-cyan-400" />
+              <span class="absolute right-3 top-2.5 text-xs text-slate-500">years old</span>
+            </div>
+          </div>
+
+          <div>
+            <div class="flex justify-between items-center text-xs mb-1">
+              <span class="text-blue-400 font-semibold flex items-center gap-1.5">
+                <span class="w-2.5 h-2.5 rounded-full bg-blue-500 shadow-sm shadow-blue-500/50"></span>
+                Current Pre-Tax 401(k) / IRA Balance
+              </span>
+              <span id="labelBal401k" class="font-bold text-white text-sm">$1,000,000</span>
+            </div>
+            <div class="relative">
+              <span class="absolute left-3 top-2 text-slate-500 text-sm">$</span>
+              <input type="number" id="bal401k" step="25000" min="0" value="1000000" class="w-full bg-slate-800 border border-slate-700 rounded-xl pl-7 pr-3 py-2 text-sm text-white font-semibold focus:outline-none focus:border-blue-400" />
+            </div>
+          </div>
+
+          <!-- Adjustable Investment Return (ROI) -->
+          <div>
+            <div class="flex justify-between items-center text-xs mb-1.5">
+              <span class="text-cyan-400 font-semibold flex items-center gap-1.5">
+                <span class="w-2.5 h-2.5 rounded-full bg-cyan-400 shadow-sm shadow-cyan-400/50"></span>
+                Annual Investment Return (ROI)
+              </span>
+              <span id="labelRoi" class="font-bold text-cyan-300 text-sm">7.0%</span>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 items-center bg-slate-800/40 p-2.5 rounded-xl border border-slate-700/50">
+              <div class="sm:col-span-2">
+                <input type="range" id="roiSlider" min="1" max="15" step="0.25" value="7.0" class="w-full accent-cyan-400 h-1.5 bg-slate-700 rounded-lg cursor-pointer" />
+                <div class="flex justify-between text-[10px] text-slate-500 mt-1">
+                  <span>1.0%</span>
+                  <span>Moderate (5-7%)</span>
+                  <span>Aggressive (8-10%)</span>
+                  <span>15.0%</span>
+                </div>
+              </div>
+              <div class="relative">
+                <input type="number" id="roiRate" min="0" max="25" step="0.1" value="7.0" class="w-full bg-slate-800 border border-slate-700 rounded-xl pl-2.5 pr-6 py-1.5 text-xs text-white font-semibold focus:outline-none focus:border-cyan-400 text-right" />
+                <span class="absolute right-2.5 top-2 text-xs text-slate-500">%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="space-y-3 pt-2 border-t border-slate-800/80">
+          <div class="flex items-center justify-between">
+            <h3 class="text-xs font-bold text-purple-400 uppercase tracking-wider flex items-center gap-1.5">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+              Social Security Benefit
+            </h3>
+            <span id="labelSsAnnual" class="font-bold text-purple-300 text-xs">$36,000 / yr</span>
+          </div>
+
+          <div class="grid grid-cols-2 gap-2.5">
+            <div>
+              <label class="block text-xs font-medium text-slate-400 mb-1">Monthly Benefit</label>
+              <div class="relative">
+                <span class="absolute left-3 top-2 text-slate-500 text-xs">$</span>
+                <input type="number" id="ssMonthly" step="100" min="0" value="3000" class="w-full bg-slate-800 border border-slate-700 rounded-xl pl-6 pr-3 py-2 text-xs text-white font-semibold focus:outline-none focus:border-purple-400" />
+              </div>
+            </div>
+            <div>
+              <label class="block text-xs font-medium text-slate-400 mb-1">Claiming Age</label>
+              <div class="relative">
+                <input type="number" id="ssStartAge" min="62" max="70" value="67" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white font-semibold focus:outline-none focus:border-purple-400" />
+                <span class="absolute right-3 top-2.5 text-xs text-slate-500">yrs</span>
+              </div>
+            </div>
+          </div>
+          <p class="text-[11px] text-slate-400 leading-tight">
+            Models IRS provisional income rules ($32k/$44k MFJ; $25k/$34k Single). After-tax net proceeds reinvest into the taxable brokerage.
+          </p>
+        </div>
+
+        <div class="space-y-3 pt-2 border-t border-slate-800/80">
+          <div class="flex items-center justify-between">
+            <h3 class="text-xs font-bold text-pink-400 uppercase tracking-wider flex items-center gap-1.5">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/></svg>
+              Medicare IRMAA (Part B & D)
+            </h3>
+            <label class="relative inline-flex items-center cursor-pointer">
+              <input type="checkbox" id="enableIrmaa" checked class="sr-only peer">
+              <div class="w-8 h-4 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-pink-500"></div>
+            </label>
+          </div>
+
+          <div id="irmaaSettingsArea" class="space-y-2.5 transition-opacity">
+            <div class="grid grid-cols-2 gap-2.5 items-center">
+              <div>
+                <label class="block text-xs font-medium text-slate-400 mb-1">Medicare Enrollees</label>
+                <select id="irmaaEnrollees" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-2 py-2 text-xs text-white font-medium focus:outline-none focus:border-pink-400">
+                  <option value="1">1 Person (Single / 1 Spouse)</option>
+                  <option value="2" selected>2 Persons (Both Spouses)</option>
+                </select>
+              </div>
+              <div>
+                <span class="block text-xs font-medium text-slate-400 mb-1">IRMAA Cliff Threshold</span>
+                <div class="bg-slate-800/80 border border-slate-700 rounded-xl px-3 py-2 text-xs font-bold text-pink-300 font-mono text-center">
+                  <span id="irmaaTierThreshold">$212,000</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Dynamic IRMAA Status Badge -->
+            <div class="p-2.5 rounded-xl bg-slate-950/80 border border-slate-800 flex items-center justify-between text-xs">
+              <div>
+                <span class="text-[10px] text-slate-500 block">Conversion Year MAGI Status:</span>
+                <span id="irmaaCurrentStatus" class="font-bold text-emerald-400 text-xs">Base Premium (No Surcharge)</span>
+              </div>
+              <div class="text-right">
+                <span class="text-[10px] text-slate-500 block">Projected IRMAA Drag:</span>
+                <span id="irmaaCurrentAnnualDrag" class="font-bold text-slate-300 text-xs font-mono">$0 / yr</span>
+              </div>
+            </div>
+            <p class="text-[11px] text-slate-400 leading-tight">
+              Medicare applies a <strong>2-year lookback</strong> on MAGI (Part B & D). Post-73 RMD spikes frequently trigger maximum Tier 4/5 cliffs.
+            </p>
+          </div>
+        </div>
+
+        <div class="space-y-3 pt-2 border-t border-slate-800/80">
+          <div class="flex items-center justify-between">
+            <h3 class="text-xs font-bold text-cyan-400 uppercase tracking-wider flex items-center gap-1.5">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+              Federal & State Tax Settings
+            </h3>
+            <span id="stateTaxLabelNote" class="text-[10px] text-emerald-400 font-medium">Minnesota State Tax Active</span>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+            <!-- STATE RESIDENCE DROPDOWN -->
+            <div>
+              <label class="block text-xs font-medium text-slate-400 mb-1">State of Residence</label>
+              <select id="stateResidence" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-2 py-2 text-xs text-white font-medium focus:outline-none focus:border-cyan-400">
+                <option value="AL">Alabama (AL)</option>
+                <option value="AK">Alaska (AK - 0%)</option>
+                <option value="AZ">Arizona (AZ - 2.5%)</option>
+                <option value="AR">Arkansas (AR)</option>
+                <option value="CA">California (CA)</option>
+                <option value="CO">Colorado (CO - 4.4%)</option>
+                <option value="CT">Connecticut (CT)</option>
+                <option value="DE">Delaware (DE)</option>
+                <option value="DC">District of Columbia (DC)</option>
+                <option value="FL">Florida (FL - 0%)</option>
+                <option value="GA">Georgia (GA - 5.39%)</option>
+                <option value="HI">Hawaii (HI)</option>
+                <option value="ID">Idaho (ID - 5.695%)</option>
+                <option value="IL">Illinois (IL - 4.95%)</option>
+                <option value="IN">Indiana (IN - 3.05%)</option>
+                <option value="IA">Iowa (IA - 3.8%)</option>
+                <option value="KS">Kansas (KS)</option>
+                <option value="KY">Kentucky (KY - 4.0%)</option>
+                <option value="LA">Louisiana (LA)</option>
+                <option value="ME">Maine (ME)</option>
+                <option value="MD">Maryland (MD)</option>
+                <option value="MA">Massachusetts (MA - 5.0%)</option>
+                <option value="MI">Michigan (MI - 4.25%)</option>
+                <option value="MN" selected>Minnesota (MN - 5.35%-9.85%)</option>
+                <option value="MS">Mississippi (MS - 4.7%)</option>
+                <option value="MO">Missouri (MO)</option>
+                <option value="MT">Montana (MT)</option>
+                <option value="NE">Nebraska (NE)</option>
+                <option value="NV">Nevada (NV - 0%)</option>
+                <option value="NH">New Hampshire (NH - 0%)</option>
+                <option value="NJ">New Jersey (NJ)</option>
+                <option value="NM">New Mexico (NM)</option>
+                <option value="NY">New York (NY)</option>
+                <option value="NC">North Carolina (NC - 4.5%)</option>
+                <option value="ND">North Dakota (ND)</option>
+                <option value="OH">Ohio (OH)</option>
+                <option value="OK">Oklahoma (OK)</option>
+                <option value="OR">Oregon (OR)</option>
+                <option value="PA">Pennsylvania (PA - 3.07%)</option>
+                <option value="RI">Rhode Island (RI)</option>
+                <option value="SC">South Carolina (SC)</option>
+                <option value="SD">South Dakota (SD - 0%)</option>
+                <option value="TN">Tennessee (TN - 0%)</option>
+                <option value="TX">Texas (TX - 0%)</option>
+                <option value="UT">Utah (UT - 4.55%)</option>
+                <option value="VT">Vermont (VT)</option>
+                <option value="VA">Virginia (VA)</option>
+                <option value="WA">Washington (WA - 0%)</option>
+                <option value="WV">West Virginia (WV)</option>
+                <option value="WI">Wisconsin (WI)</option>
+                <option value="WY">Wyoming (WY - 0%)</option>
+              </select>
+            </div>
+
+            <!-- FILING STATUS -->
+            <div>
+              <label class="block text-xs font-medium text-slate-400 mb-1">Filing Status</label>
+              <select id="filingStatus" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-2 py-2 text-xs text-white font-medium focus:outline-none focus:border-cyan-400">
+                <option value="married" selected>Married Jointly ($31,500)</option>
+                <option value="single">Single Filer ($15,750)</option>
+              </select>
+            </div>
+
+            <!-- OTHER TAXABLE INCOME -->
+            <div>
+              <label class="block text-xs font-medium text-slate-400 mb-1">Other Taxable Income</label>
+              <div class="relative">
+                <span class="absolute left-3 top-2 text-slate-500 text-xs">$</span>
+                <input type="number" id="otherTaxableIncome" step="5000" min="0" value="0" class="w-full bg-slate-800 border border-slate-700 rounded-xl pl-6 pr-3 py-2 text-xs text-white font-semibold focus:outline-none focus:border-cyan-400" />
+              </div>
+            </div>
+          </div>
+
+          <!-- Dynamic Tax Bracket Readout -->
+          <div class="p-2.5 rounded-xl bg-slate-950/80 border border-slate-800 grid grid-cols-3 gap-2 text-center text-xs">
+            <div>
+              <span class="text-slate-400 text-[10px] block">Marginal Bracket</span>
+              <span id="taxMarginalBracket" class="font-bold text-cyan-300 text-xs">28.8%</span>
+              <span id="taxMarginalBreakdown" class="text-[9px] text-slate-500 block leading-tight mt-0.5">22% Fed + 6.8% MN</span>
+            </div>
+            <div>
+              <span class="text-slate-400 text-[10px] block">Effective Tax Rate</span>
+              <span id="taxEffectiveRate" class="font-bold text-amber-300 text-xs">14.2%</span>
+              <span class="text-[9px] text-slate-500 block leading-tight mt-0.5">Combined Fed + State</span>
+            </div>
+            <div>
+              <span class="text-slate-400 text-[10px] block">Annual Tax on Conv.</span>
+              <span id="taxAnnualBill" class="font-bold text-rose-300 text-xs">$7,100</span>
+              <span id="taxAnnualSplit" class="text-[9px] text-slate-500 block leading-tight mt-0.5">Fed: $0 | State: $0</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="space-y-3 pt-2 border-t border-slate-800/80 bg-slate-950/60 -mx-5 px-5 py-4 border-b rounded-xl">
+          <div class="flex items-center justify-between">
+            <h3 class="text-xs font-bold text-emerald-400 uppercase tracking-wider flex items-center gap-1.5">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/></svg>
+              Annual Roth Conversion Plan
+            </h3>
+            <label class="relative inline-flex items-center cursor-pointer">
+              <input type="checkbox" id="enableConversion" checked class="sr-only peer">
+              <div class="w-9 h-5 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-emerald-500"></div>
+            </label>
+          </div>
+
+          <div id="conversionSettingsArea" class="space-y-3 transition-opacity">
+            <div>
+              <div class="flex justify-between text-xs mb-1.5">
+                <span class="text-slate-300 font-medium">Conversion Amount Per Year</span>
+                <span id="conversionAmountLabel" class="font-bold text-emerald-300 text-sm">$50,000 / yr</span>
+              </div>
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 items-center bg-slate-800/40 p-2.5 rounded-xl border border-slate-700/50">
+                <div class="sm:col-span-2">
+                  <input type="range" id="conversionSlider" min="0" max="300000" step="2500" value="50000" class="w-full accent-emerald-400 h-1.5 bg-slate-700 rounded-lg cursor-pointer" />
+                  <div class="flex justify-between text-[10px] text-slate-500 mt-1 font-mono">
+                    <span>$0</span>
+                    <span>$75k</span>
+                    <span>$150k</span>
+                    <span>$225k</span>
+                    <span>$300k</span>
+                  </div>
+                </div>
+                <div class="relative">
+                  <span class="absolute left-2.5 top-2 text-xs text-slate-500">$</span>
+                  <input type="number" id="conversionAmount" step="2500" min="0" max="1000000" value="50000" class="w-full bg-slate-800 border border-slate-700 rounded-xl pl-6 pr-2.5 py-1.5 text-xs text-white font-semibold focus:outline-none focus:border-emerald-400 text-right" />
+                </div>
+              </div>
+            </div>
+
+            <!-- Optimizer Button & Fill-Bracket Shortcuts -->
+            <div class="pt-1 space-y-2">
+              <button type="button" id="btnOptimizeMinTax" class="w-full py-2.5 px-3 rounded-xl bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 hover:from-emerald-500 hover:to-cyan-500 text-white text-xs font-bold shadow-md shadow-emerald-900/30 flex items-center justify-center gap-1.5 transition-all transform active:scale-98 text-center leading-tight">
+                <svg class="w-3.5 h-3.5 text-amber-300 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clip-rule="evenodd"/></svg>
+                <span>Calculate Best Conversion (Minimize Lifetime Tax & IRMAA)</span>
+              </button>
+
+              <div class="flex items-center justify-between text-[11px] text-slate-400 px-0.5">
+                <span>Fill Federal Bracket:</span>
+                <div class="flex gap-1.5">
+                  <button type="button" class="btn-fill-bracket px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-cyan-300 border border-slate-700 font-medium transition" data-bracket="0.12">
+                    Top of 12%
+                  </button>
+                  <button type="button" class="btn-fill-bracket px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-cyan-300 border border-slate-700 font-medium transition" data-bracket="0.22">
+                    Top of 22%
+                  </button>
+                  <button type="button" class="btn-fill-bracket px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-cyan-300 border border-slate-700 font-medium transition" data-bracket="0.24">
+                    Top of 24%
+                  </button>
+                </div>
+              </div>
+
+              <!-- Optimization Result Banner -->
+              <div id="optimizerResultBanner" class="hidden p-2.5 rounded-xl bg-emerald-950/70 border border-emerald-500/30 text-xs text-slate-200 space-y-1">
+                <div class="flex items-center justify-between font-bold">
+                  <span id="optStrategyTitle" class="flex items-center gap-1 text-emerald-400">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                    Optimal Strategy Found
+                  </span>
+                  <span id="optTargetAmountBadge" class="font-mono text-white text-[11px]">$0 / yr</span>
+                </div>
+                <p id="optSavingsSummary" class="text-[11px] text-slate-300 leading-snug">
+                  Recommendation details.
+                </p>
+              </div>
+            </div>
+
+            <!-- Start and End Age Duration -->
+            <div class="grid grid-cols-2 gap-3">
+              <div>
+                <label class="block text-xs font-medium text-slate-400 mb-1">Start Age</label>
+                <div class="relative">
+                  <input type="number" id="conversionStartAge" min="30" max="85" value="50" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-1.5 text-xs text-white font-semibold focus:outline-none focus:border-emerald-400" />
+                  <span class="absolute right-2.5 top-2 text-[10px] text-slate-500">yrs</span>
+                </div>
+              </div>
+              <div>
+                <label class="block text-xs font-medium text-slate-400 mb-1">End Age</label>
+                <div class="relative">
+                  <input type="number" id="conversionEndAge" min="30" max="89" value="65" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-1.5 text-xs text-white font-semibold focus:outline-none focus:border-emerald-400" />
+                  <span class="absolute right-2.5 top-2 text-[10px] text-slate-500">yrs</span>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-xs font-medium text-slate-400 mb-1">Tax Payment Method</label>
+              <select id="taxPaymentSource" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-2.5 py-1.5 text-xs text-white font-medium focus:outline-none focus:border-emerald-400">
+                <option value="withheld">Withheld from Pre-Tax 401(k) (No outside cash required)</option>
+                <option value="outside">Paid from Outside Income (100% of conversion enters Roth)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- RIGHT COLUMN: REDESIGNED TOTAL NET WORTH & TOTAL TAX CARDS (7 cols) -->
+    <section class="lg:col-span-7 space-y-4">
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+        <!-- CARD 1: TOTAL NET WORTH (WITH ROTH & TAXABLE BREAKDOWN) -->
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 shadow-xl flex flex-col justify-between relative overflow-hidden">
+          <div class="absolute -right-6 -bottom-6 w-24 h-24 bg-emerald-500/10 rounded-full blur-2xl pointer-events-none"></div>
+
+          <div>
+            <div class="flex items-center justify-between mb-1.5">
+              <span class="text-xs font-bold uppercase tracking-wider text-slate-300 flex items-center gap-1.5">
+                <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 shadow-sm shadow-emerald-400/50"></span>
+                Total Net Worth @ Age 90
+              </span>
+              <span id="kpiVsBaseline" class="text-[10px] text-emerald-400 font-bold bg-emerald-500/10 px-2 py-0.5 rounded-lg border border-emerald-500/20">
+                +0% vs Baseline
+              </span>
+            </div>
+
+            <div class="flex items-baseline gap-2 mb-1">
+              <span id="kpiNetWorth90" class="text-2xl sm:text-3xl font-black text-white">$0</span>
+              <span id="kpiAfterTaxSubnote" class="text-xs font-medium text-emerald-400 bg-emerald-950/60 px-2 py-0.5 rounded-md border border-emerald-500/30">
+                After-Tax: $0
+              </span>
+            </div>
+
+            <!-- Proportional Asset Distribution Bar -->
+            <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden flex my-2.5">
+              <div id="nwBarRoth" class="bg-emerald-500 h-full transition-all duration-500" style="width: 50%;"></div>
+              <div id="nwBarTaxable" class="bg-amber-500 h-full transition-all duration-500" style="width: 25%;"></div>
+              <div id="nwBarPreTax" class="bg-blue-500 h-full transition-all duration-500" style="width: 25%;"></div>
+            </div>
+          </div>
+
+          <!-- Granular Breakdown Section -->
+          <div class="pt-2.5 border-t border-slate-800/80 grid grid-cols-3 gap-2 text-center text-xs">
+            <div class="p-2 rounded-xl bg-slate-950/60 border border-slate-800/80">
+              <span class="text-[10px] text-emerald-400 font-medium block flex items-center justify-center gap-1">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Tax-Free Roth
+              </span>
+              <span id="kpiBreakdownRoth" class="font-bold text-white text-xs block mt-0.5">$0</span>
+              <span id="kpiBreakdownRothPct" class="text-[9px] text-slate-400 block mt-0.5">0% of wealth</span>
+            </div>
+            <div class="p-2 rounded-xl bg-slate-950/60 border border-slate-800/80">
+              <span class="text-[10px] text-amber-400 font-medium block flex items-center justify-center gap-1">
+                <span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span> Taxable
+              </span>
+              <span id="kpiBreakdownTaxable" class="font-bold text-white text-xs block mt-0.5">$0</span>
+              <span id="kpiBreakdownTaxablePct" class="text-[9px] text-slate-400 block mt-0.5">0% of wealth</span>
+            </div>
+            <div class="p-2 rounded-xl bg-slate-950/60 border border-slate-800/80">
+              <span class="text-[10px] text-blue-400 font-medium block flex items-center justify-center gap-1">
+                <span class="w-1.5 h-1.5 rounded-full bg-blue-400"></span> Pre-Tax 401(k)
+              </span>
+              <span id="kpiBreakdownPreTax" class="font-bold text-white text-xs block mt-0.5">$0</span>
+              <span id="kpiBreakdownPreTaxPct" class="text-[9px] text-slate-400 block mt-0.5">0% of wealth</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- CARD 2: TOTAL TAX PAID (WITH ITEMIZED FEDERAL, STATE, CAP GAINS, IRMAA) -->
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 shadow-xl flex flex-col justify-between relative overflow-hidden">
+          <div class="absolute -right-6 -bottom-6 w-24 h-24 bg-rose-500/10 rounded-full blur-2xl pointer-events-none"></div>
+
+          <div>
+            <div class="flex items-center justify-between mb-1.5">
+              <span class="text-xs font-bold uppercase tracking-wider text-slate-300 flex items-center gap-1.5">
+                <span class="w-2.5 h-2.5 rounded-full bg-rose-400 shadow-sm shadow-rose-400/50"></span>
+                Total Lifetime Taxes & Surcharges
+              </span>
+              <span id="kpiTaxSavedVsBase" class="text-[10px] text-emerald-400 font-bold bg-emerald-500/10 px-2 py-0.5 rounded-lg border border-emerald-500/20">
+                Saves $0 vs Baseline
+              </span>
+            </div>
+
+            <div class="flex items-baseline gap-2 mb-1">
+              <span id="kpiTotalTaxPaid" class="text-2xl sm:text-3xl font-black text-rose-300">$0</span>
+              <span class="text-[11px] text-slate-400">Paid + Embedded</span>
+            </div>
+
+            <!-- Proportional Tax Distribution Bar -->
+            <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden flex my-2.5">
+              <div id="taxBarFed" class="bg-cyan-500 h-full transition-all duration-500" style="width: 40%;"></div>
+              <div id="taxBarState" class="bg-indigo-500 h-full transition-all duration-500" style="width: 20%;"></div>
+              <div id="taxBarCapGains" class="bg-amber-500 h-full transition-all duration-500" style="width: 15%;"></div>
+              <div id="taxBarIrmaa" class="bg-pink-500 h-full transition-all duration-500" style="width: 15%;"></div>
+              <div id="taxBarTerminal" class="bg-rose-600 h-full transition-all duration-500" style="width: 10%;"></div>
+            </div>
+          </div>
+
+          <!-- Itemized Tax Breakdown Grid -->
+          <div class="pt-2.5 border-t border-slate-800/80 grid grid-cols-2 sm:grid-cols-3 gap-2 text-center text-xs">
+            <div class="p-1.5 rounded-xl bg-slate-950/60 border border-slate-800/80">
+              <span class="text-[10px] text-cyan-400 font-medium block">Federal Income</span>
+              <span id="kpiTaxFed" class="font-bold text-white text-xs block mt-0.5">$0</span>
+              <span id="kpiTaxFedPct" class="text-[9px] text-slate-500 block">0% of total</span>
+            </div>
+            <div class="p-1.5 rounded-xl bg-slate-950/60 border border-slate-800/80">
+              <span id="kpiStateTaxLabel" class="text-[10px] text-indigo-400 font-medium block">State Tax (MN)</span>
+              <span id="kpiTaxState" class="font-bold text-white text-xs block mt-0.5">$0</span>
+              <span id="kpiTaxStatePct" class="text-[9px] text-slate-500 block">0% of total</span>
+            </div>
+            <div class="p-1.5 rounded-xl bg-slate-950/60 border border-slate-800/80">
+              <span class="text-[10px] text-amber-400 font-medium block">Capital Gains</span>
+              <span id="kpiTaxCapGains" class="font-bold text-white text-xs block mt-0.5">$0</span>
+              <span id="kpiTaxCapGainsPct" class="text-[9px] text-slate-500 block">0% of total</span>
+            </div>
+            <div class="p-1.5 rounded-xl bg-slate-950/60 border border-slate-800/80">
+              <span class="text-[10px] text-pink-400 font-medium block">Medicare IRMAA</span>
+              <span id="kpiTaxIrmaa" class="font-bold text-white text-xs block mt-0.5">$0</span>
+              <span id="kpiTaxIrmaaPct" class="text-[9px] text-slate-500 block">0% of total</span>
+            </div>
+            <div class="p-1.5 rounded-xl bg-slate-950/60 border border-slate-800/80 col-span-2 sm:col-span-2">
+              <span class="text-[10px] text-rose-400 font-medium block">Terminal Pre-Tax Tax Debt</span>
+              <span id="kpiTaxTerminalPreTax" class="font-bold text-white text-xs block mt-0.5">$0</span>
+              <span id="kpiTaxTerminalPreTaxPct" class="text-[9px] text-slate-500 block">0% of total</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 shadow-xl space-y-3">
+        <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800/80 pb-2.5">
+          <div>
+            <h3 class="text-sm font-bold text-white tracking-wide">
+              Net Worth Trajectory to Age 90 (<span id="chartRoiBadge" class="text-cyan-400">7.0%</span> Compounding)
+            </h3>
+            <p class="text-[11px] text-slate-400">Tax-Free (Roth) + Pre-Tax (401k) + Taxable compose Total Net Worth</p>
+          </div>
+          <!-- View Toggle -->
+          <div class="inline-flex rounded-xl bg-slate-800 p-0.5 text-xs">
+            <button id="viewWithConversion" class="px-3 py-1.5 rounded-lg bg-emerald-600 text-white font-semibold shadow-sm transition">
+              With Conversions
+            </button>
+            <button id="viewBaseline" class="px-3 py-1.5 rounded-lg text-slate-300 hover:text-white font-medium transition">
+              Baseline (No Conv.)
+            </button>
+          </div>
+        </div>
+
+        <!-- Chart Canvas Container -->
+        <div class="relative h-64 sm:h-72 w-full">
+          <canvas id="projectionChart"></canvas>
+        </div>
+
+        <!-- Legend Badges -->
+        <div class="flex flex-wrap items-center justify-center gap-3 text-xs pt-1 border-t border-slate-800/60">
+          <div class="flex items-center gap-1.5">
+            <span class="w-3 h-3 rounded bg-emerald-500 inline-block shadow shadow-emerald-500/30"></span>
+            <span class="text-slate-300 text-[11px] font-medium">Tax-Free (Roth)</span>
+          </div>
+          <div class="flex items-center gap-1.5">
+            <span class="w-3 h-3 rounded bg-blue-500 inline-block shadow shadow-blue-500/30"></span>
+            <span class="text-slate-300 text-[11px] font-medium">Pre-Tax (401k)</span>
+          </div>
+          <div class="flex items-center gap-1.5">
+            <span class="w-3 h-3 rounded bg-amber-500 inline-block shadow shadow-amber-500/30"></span>
+            <span class="text-slate-300 text-[11px] font-medium">Taxable (Reinvested RMDs & SS)</span>
+          </div>
+          <div class="flex items-center gap-1.5">
+            <span class="w-5 h-0.5 bg-slate-100 inline-block border-t-2 border-dashed border-slate-100"></span>
+            <span class="text-slate-200 text-[11px] font-bold">Total Net Worth</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-gradient-to-r from-slate-900 via-slate-900/95 to-emerald-950/40 border border-slate-800 rounded-2xl p-4 shadow-lg space-y-2">
+        <h4 class="text-xs font-bold uppercase tracking-wider text-emerald-400 flex items-center gap-1.5">
+          <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+          Strategy Findings & RMD Impact
+        </h4>
+        <div id="strategyInsightsContent" class="text-xs text-slate-300 leading-relaxed grid grid-cols-1 md:grid-cols-2 gap-3">
+          <!-- Populated dynamically -->
+        </div>
+      </div>
+
+      <div class="bg-slate-900 border border-slate-800 rounded-2xl shadow-xl overflow-hidden">
+        <div class="px-4 py-3 border-b border-slate-800 flex items-center justify-between">
+          <div>
+            <h3 class="text-xs sm:text-sm font-bold text-white">Year-by-Year Net Worth Projection</h3>
+            <p class="text-[11px] text-slate-400">Breakdown by tax shelter, conversion costs, Social Security, IRMAA, and remaining tax</p>
+          </div>
+          <span class="text-[11px] bg-slate-800 text-slate-400 px-2.5 py-0.5 rounded-lg border border-slate-700 font-mono" id="tableRowCount">
+            0 Years
+          </span>
+        </div>
+
+        <div class="overflow-x-auto max-h-72 custom-scrollbar">
+          <table class="w-full text-left text-xs font-medium text-slate-300 border-collapse">
+            <thead class="bg-slate-950 sticky top-0 z-10 text-slate-400 uppercase text-[10px] tracking-wider border-b border-slate-800">
+              <tr>
+                <th class="px-2.5 py-2 font-semibold">Age</th>
+                <th class="px-2.5 py-2 font-semibold text-blue-400">Pre-Tax</th>
+                <th class="px-2.5 py-2 font-semibold text-emerald-400">Tax-Free (Roth)</th>
+                <th class="px-2.5 py-2 font-semibold text-amber-400">Taxable</th>
+                <th class="px-2.5 py-2 font-semibold text-purple-300">Soc. Sec.</th>
+                <th class="px-2.5 py-2 font-semibold text-indigo-300">Conversion</th>
+                <th class="px-2.5 py-2 font-semibold text-red-400">Conv. Tax</th>
+                <th class="px-2.5 py-2 font-semibold text-orange-400">Forced RMD</th>
+                <th class="px-2.5 py-2 font-semibold text-pink-400">IRMAA Surch.</th>
+                <th class="px-2.5 py-2 font-semibold text-rose-400">Proj. Rem. Tax</th>
+                <th class="px-2.5 py-2 font-semibold text-slate-300">Nominal Total</th>
+                <th class="px-2.5 py-2 font-semibold text-emerald-400 text-right">After-Tax Net</th>
+              </tr>
+            </thead>
+            <tbody id="projectionTableBody" class="divide-y divide-slate-800/60 font-mono text-[11px]">
+              <!-- Populated via JavaScript -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </section>
+  </main>
+
+  <footer class="border-t border-slate-800/80 bg-slate-950 text-slate-500 text-xs py-3 mt-auto">
+    <div class="max-w-7xl mx-auto px-4 text-center space-y-1 text-[11px]">
+      <p>Calculations use official federal standard deductions ($31,500 Married, $15,750 Single), Medicare Part B & D IRMAA surcharges, and SECURE Act 2.0 RMD rules (age 73+).</p>
+    </div>
+  </footer>
+
+  <script>
+    let chartInstance = null;
+    let currentResults = null;
+    let baselineResults = null;
+    let activeChartMode = 'conversion';
+
+    // Safe helper functions to prevent null property setting exceptions
+    function setElText(id, val) {
+      const el = document.getElementById(id);
+      if (el) el.textContent = val;
+    }
+    function setElHtml(id, val) {
+      const el = document.getElementById(id);
+      if (el) el.innerHTML = val;
+    }
+    function setElWidth(id, pct) {
+      const el = document.getElementById(id);
+      if (el) el.style.width = pct;
+    }
+
+    const formatCurrency = (val) => {
+      return new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD',
+        maximumFractionDigits: 0
+      }).format(val || 0);
+    };
+
+    // Official Federal Progressive Tax Brackets
+    const TAX_BRACKETS = {
+      single: {
+        standardDeduction: 15750,
+        brackets: [
+          { cap: 11925, rate: 0.10 },
+          { cap: 48475, rate: 0.12 },
+          { cap: 103350, rate: 0.22 },
+          { cap: 197300, rate: 0.24 },
+          { cap: 250525, rate: 0.32 },
+          { cap: 626350, rate: 0.35 },
+          { cap: Infinity, rate: 0.37 }
+        ]
+      },
+      married: {
+        standardDeduction: 31500,
+        brackets: [
+          { cap: 23850, rate: 0.10 },
+          { cap: 96950, rate: 0.12 },
+          { cap: 206700, rate: 0.22 },
+          { cap: 394600, rate: 0.24 },
+          { cap: 501050, rate: 0.32 },
+          { cap: 751600, rate: 0.35 },
+          { cap: Infinity, rate: 0.37 }
+        ]
+      }
+    };
+
+    const IRMAA_TIERS = {
+      single: [
+        { cap: 106000, partB: 0, partD: 0, label: 'Base Premium (No Surcharge)' },
+        { cap: 133000, partB: 74.00, partD: 13.70, label: 'Tier 1 Surcharge' },
+        { cap: 167000, partB: 185.00, partD: 35.40, label: 'Tier 2 Surcharge' },
+        { cap: 200000, partB: 296.00, partD: 57.10, label: 'Tier 3 Surcharge' },
+        { cap: 500000, partB: 407.00, partD: 78.80, label: 'Tier 4 Surcharge' },
+        { cap: Infinity, partB: 444.00, partD: 85.80, label: 'Tier 5 Surcharge' }
+      ],
+      married: [
+        { cap: 212000, partB: 0, partD: 0, label: 'Base Premium (No Surcharge)' },
+        { cap: 266000, partB: 74.00, partD: 13.70, label: 'Tier 1 Surcharge' },
+        { cap: 334000, partB: 185.00, partD: 35.40, label: 'Tier 2 Surcharge' },
+        { cap: 400000, partB: 296.00, partD: 57.10, label: 'Tier 3 Surcharge' },
+        { cap: 750000, partB: 407.00, partD: 78.80, label: 'Tier 4 Surcharge' },
+        { cap: Infinity, partB: 444.00, partD: 85.80, label: 'Tier 5 Surcharge' }
+      ]
+    };
+
+    function calculateIrmaaSurcharge(magi, filingStatus, enrollees = 2) {
+      const tiers = IRMAA_TIERS[filingStatus] || IRMAA_TIERS.single;
+      let selectedTier = tiers[0];
+
+      for (let i = 0; i < tiers.length; i++) {
+        if (magi <= tiers[i].cap) {
+          selectedTier = tiers[i];
+          break;
+        }
+        if (i === tiers.length - 1) {
+          selectedTier = tiers[i];
+        }
+      }
+
+      const monthlyPerPerson = selectedTier.partB + selectedTier.partD;
+      const annualTotalSurcharge = monthlyPerPerson * 12 * enrollees;
+
+      return {
+        tierLabel: selectedTier.label,
+        monthlyPerPerson,
+        annualSurcharge: annualTotalSurcharge,
+        isSurchargeActive: annualTotalSurcharge > 0,
+        tierCap: selectedTier.cap
+      };
+    }
+
+    const STATE_TAX_DATA = {
+      MN: {
+        name: 'Minnesota',
+        type: 'graduated',
+        single: {
+          standardDeduction: 14950,
+          brackets: [
+            { cap: 32570, rate: 0.0535 },
+            { cap: 106990, rate: 0.0680 },
+            { cap: 198630, rate: 0.0785 },
+            { cap: Infinity, rate: 0.0985 }
+          ]
+        },
+        married: {
+          standardDeduction: 29900,
+          brackets: [
+            { cap: 47620, rate: 0.0535 },
+            { cap: 189180, rate: 0.0680 },
+            { cap: 330410, rate: 0.0785 },
+            { cap: Infinity, rate: 0.0985 }
+          ]
+        }
+      },
+      AK: { name: 'Alaska', type: 'none', rate: 0 },
+      FL: { name: 'Florida', type: 'none', rate: 0 },
+      NV: { name: 'Nevada', type: 'none', rate: 0 },
+      NH: { name: 'New Hampshire', type: 'none', rate: 0 },
+      SD: { name: 'South Dakota', type: 'none', rate: 0 },
+      TN: { name: 'Tennessee', type: 'none', rate: 0 },
+      TX: { name: 'Texas', type: 'none', rate: 0 },
+      WA: { name: 'Washington', type: 'none', rate: 0 },
+      WY: { name: 'Wyoming', type: 'none', rate: 0 },
+      AZ: { name: 'Arizona', type: 'flat', rate: 0.025, standardDeductionSingle: 14600, standardDeductionMarried: 29200 },
+      CO: { name: 'Colorado', type: 'flat', rate: 0.044, standardDeductionSingle: 14600, standardDeductionMarried: 29200 },
+      GA: { name: 'Georgia', type: 'flat', rate: 0.0539, standardDeductionSingle: 12000, standardDeductionMarried: 24000 },
+      ID: { name: 'Idaho', type: 'flat', rate: 0.05695, standardDeductionSingle: 14600, standardDeductionMarried: 29200 },
+      IL: { name: 'Illinois', type: 'flat', rate: 0.0495, standardDeductionSingle: 2775, standardDeductionMarried: 5550 },
+      IN: { name: 'Indiana', type: 'flat', rate: 0.0305, standardDeductionSingle: 1000, standardDeductionMarried: 2000 },
+      IA: { name: 'Iowa', type: 'flat', rate: 0.038, standardDeductionSingle: 14600, standardDeductionMarried: 29200 },
+      KY: { name: 'Kentucky', type: 'flat', rate: 0.040, standardDeductionSingle: 3160, standardDeductionMarried: 6320 },
+      MI: { name: 'Michigan', type: 'flat', rate: 0.0425, standardDeductionSingle: 5600, standardDeductionMarried: 11200 },
+      MS: { name: 'Mississippi', type: 'flat', rate: 0.047, standardDeductionSingle: 2300, standardDeductionMarried: 4600 },
+      NC: { name: 'North Carolina', type: 'flat', rate: 0.045, standardDeductionSingle: 12750, standardDeductionMarried: 25500 },
+      PA: { name: 'Pennsylvania', type: 'flat', rate: 0.0307, standardDeductionSingle: 0, standardDeductionMarried: 0 },
+      UT: { name: 'Utah', type: 'flat', rate: 0.0455, standardDeductionSingle: 14600, standardDeductionMarried: 29200 },
+      CA: {
+        name: 'California',
+        type: 'graduated',
+        single: { standardDeduction: 5540, brackets: [{ cap: 10756, rate: 0.01 }, { cap: 25499, rate: 0.02 }, { cap: 40245, rate: 0.04 }, { cap: 55866, rate: 0.06 }, { cap: 70606, rate: 0.08 }, { cap: 360659, rate: 0.093 }, { cap: 432787, rate: 0.103 }, { cap: 721314, rate: 0.113 }, { cap: Infinity, rate: 0.123 }] },
+        married: { standardDeduction: 11080, brackets: [{ cap: 21512, rate: 0.01 }, { cap: 50998, rate: 0.02 }, { cap: 80490, rate: 0.04 }, { cap: 111732, rate: 0.06 }, { cap: 141212, rate: 0.08 }, { cap: 721318, rate: 0.093 }, { cap: 865574, rate: 0.103 }, { cap: 1000000, rate: 0.113 }, { cap: Infinity, rate: 0.123 }] }
+      },
+      NY: {
+        name: 'New York',
+        type: 'graduated',
+        single: { standardDeduction: 8000, brackets: [{ cap: 8500, rate: 0.04 }, { cap: 11700, rate: 0.045 }, { cap: 13900, rate: 0.0525 }, { cap: 80650, rate: 0.055 }, { cap: 215400, rate: 0.06 }, { cap: 1077550, rate: 0.0685 }, { cap: 5000000, rate: 0.0965 }, { cap: Infinity, rate: 0.109 }] },
+        married: { standardDeduction: 16050, brackets: [{ cap: 17150, rate: 0.04 }, { cap: 23600, rate: 0.045 }, { cap: 27900, rate: 0.0525 }, { cap: 161550, rate: 0.055 }, { cap: 323200, rate: 0.06 }, { cap: 2155350, rate: 0.0685 }, { cap: 5000000, rate: 0.0965 }, { cap: Infinity, rate: 0.109 }] }
+      },
+      NJ: {
+        name: 'New Jersey',
+        type: 'graduated',
+        single: { standardDeduction: 1000, brackets: [{ cap: 20000, rate: 0.014 }, { cap: 35000, rate: 0.0175 }, { cap: 40000, rate: 0.035 }, { cap: 75000, rate: 0.05525 }, { cap: 500000, rate: 0.0637 }, { cap: 1000000, rate: 0.0897 }, { cap: Infinity, rate: 0.1075 }] },
+        married: { standardDeduction: 2000, brackets: [{ cap: 20000, rate: 0.014 }, { cap: 50000, rate: 0.0175 }, { cap: 70000, rate: 0.0245 }, { cap: 80000, rate: 0.035 }, { cap: 150000, rate: 0.05525 }, { cap: 500000, rate: 0.0637 }, { cap: 1000000, rate: 0.0897 }, { cap: Infinity, rate: 0.1075 }] }
+      },
+      MA: { name: 'Massachusetts', type: 'flat', rate: 0.05, standardDeductionSingle: 4400, standardDeductionMarried: 8800 },
+      VA: {
+        name: 'Virginia',
+        type: 'graduated',
+        single: { standardDeduction: 8500, brackets: [{ cap: 3000, rate: 0.02 }, { cap: 5000, rate: 0.03 }, { cap: 17000, rate: 0.05 }, { cap: Infinity, rate: 0.0575 }] },
+        married: { standardDeduction: 17000, brackets: [{ cap: 3000, rate: 0.02 }, { cap: 5000, rate: 0.03 }, { cap: 17000, rate: 0.05 }, { cap: Infinity, rate: 0.0575 }] }
+      },
+      MD: {
+        name: 'Maryland',
+        type: 'graduated',
+        single: { standardDeduction: 2550, brackets: [{ cap: 1000, rate: 0.02 }, { cap: 2000, rate: 0.03 }, { cap: 3000, rate: 0.04 }, { cap: 100000, rate: 0.0475 }, { cap: 125000, rate: 0.05 }, { cap: 150000, rate: 0.0525 }, { cap: 250000, rate: 0.055 }, { cap: Infinity, rate: 0.0575 }] },
+        married: { standardDeduction: 5150, brackets: [{ cap: 1000, rate: 0.02 }, { cap: 2000, rate: 0.03 }, { cap: 3000, rate: 0.04 }, { cap: 150000, rate: 0.0475 }, { cap: 175000, rate: 0.05 }, { cap: 225000, rate: 0.0525 }, { cap: 300000, rate: 0.055 }, { cap: Infinity, rate: 0.0575 }] }
+      },
+      WI: {
+        name: 'Wisconsin',
+        type: 'graduated',
+        single: { standardDeduction: 13810, brackets: [{ cap: 14320, rate: 0.035 }, { cap: 28640, rate: 0.044 }, { cap: 315310, rate: 0.053 }, { cap: Infinity, rate: 0.0765 }] },
+        married: { standardDeduction: 25330, brackets: [{ cap: 19090, rate: 0.035 }, { cap: 38190, rate: 0.044 }, { cap: 420420, rate: 0.053 }, { cap: Infinity, rate: 0.0765 }] }
+      },
+      OH: {
+        name: 'Ohio',
+        type: 'graduated',
+        single: { standardDeduction: 0, brackets: [{ cap: 26050, rate: 0.0 }, { cap: 100000, rate: 0.0275 }, { cap: Infinity, rate: 0.035 }] },
+        married: { standardDeduction: 0, brackets: [{ cap: 26050, rate: 0.0 }, { cap: 100000, rate: 0.0275 }, { cap: Infinity, rate: 0.035 }] }
+      },
+      OR: {
+        name: 'Oregon',
+        type: 'graduated',
+        single: { standardDeduction: 2745, brackets: [{ cap: 4300, rate: 0.0475 }, { cap: 10750, rate: 0.0675 }, { cap: 125000, rate: 0.0875 }, { cap: Infinity, rate: 0.099 }] },
+        married: { standardDeduction: 5490, brackets: [{ cap: 8600, rate: 0.0475 }, { cap: 21500, rate: 0.0675 }, { cap: 250000, rate: 0.0875 }, { cap: Infinity, rate: 0.099 }] }
+      },
+      OTHER: { name: 'Standard State', type: 'flat', rate: 0.045, standardDeductionSingle: 5000, standardDeductionMarried: 10000 }
+    };
+
+    function getStateConfig(stateCode) {
+      return STATE_TAX_DATA[stateCode] || STATE_TAX_DATA.OTHER;
+    }
+
+    function calculateTaxableSocialSecurity(ssAnnual, nonSsMagi, filingStatus) {
+      if (ssAnnual <= 0) return 0;
+      const provisionalIncome = nonSsMagi + 0.5 * ssAnnual;
+      const base1 = filingStatus === 'married' ? 32000 : 25000;
+      const base2 = filingStatus === 'married' ? 44000 : 34000;
+      const max50 = filingStatus === 'married' ? 6000 : 4500;
+
+      if (provisionalIncome <= base1) {
+        return 0;
+      } else if (provisionalIncome <= base2) {
+        return Math.min(0.5 * ssAnnual, 0.5 * (provisionalIncome - base1));
+      } else {
+        const tier1 = Math.min(0.5 * ssAnnual, max50);
+        const tier2 = 0.85 * (provisionalIncome - base2);
+        return Math.min(0.85 * ssAnnual, tier1 + tier2);
+      }
+    }
+
+    function computeStateTax(grossIncome, status, stateCode, taxableSS = 0) {
+      const config = getStateConfig(stateCode);
+      if (config.type === 'none' || config.rate === 0) {
+        return { tax: 0, marginalRate: 0, deduction: 0 };
+      }
+
+      let stateAdjustedGross = grossIncome;
+      if (taxableSS > 0) {
+        if (stateCode === 'MN') {
+          const mnSub = status === 'married' ? 11500 : 8900;
+          const stateTaxableSS = Math.max(0, taxableSS - mnSub);
+          stateAdjustedGross = (grossIncome - taxableSS) + stateTaxableSS;
+        } else if (!['CO', 'CT', 'MT', 'NM', 'RI', 'VT'].includes(stateCode)) {
+          stateAdjustedGross = Math.max(0, grossIncome - taxableSS);
+        }
+      }
+
+      if (config.type === 'flat') {
+        const deduction = status === 'married' ? (config.standardDeductionMarried || 0) : (config.standardDeductionSingle || 0);
+        const taxable = Math.max(0, stateAdjustedGross - deduction);
+        return {
+          tax: taxable * config.rate,
+          marginalRate: taxable > 0 ? config.rate : 0,
+          deduction
+        };
+      }
+
+      if (config.type === 'graduated') {
+        const stateRules = config[status] || config.single;
+        const deduction = stateRules.standardDeduction || 0;
+        const taxable = Math.max(0, stateAdjustedGross - deduction);
+        if (taxable <= 0) return { tax: 0, marginalRate: stateRules.brackets[0].rate, deduction };
+
+        let tax = 0;
+        let prevCap = 0;
+        let marginalRate = stateRules.brackets[0].rate;
+
+        for (let i = 0; i < stateRules.brackets.length; i++) {
+          const { cap, rate } = stateRules.brackets[i];
+          if (taxable > cap) {
+            tax += (cap - prevCap) * rate;
+            prevCap = cap;
+          } else {
+            tax += (taxable - prevCap) * rate;
+            marginalRate = rate;
+            break;
+          }
+        }
+        return { tax, marginalRate, deduction };
+      }
+
+      return { tax: 0, marginalRate: 0, deduction: 0 };
+    }
+
+    function computeFederalTax(taxableIncome, status) {
+      if (taxableIncome <= 0) return 0;
+      const brackets = TAX_BRACKETS[status].brackets;
+      let tax = 0;
+      let prevCap = 0;
+
+      for (let i = 0; i < brackets.length; i++) {
+        const { cap, rate } = brackets[i];
+        if (taxableIncome > cap) {
+          tax += (cap - prevCap) * rate;
+          prevCap = cap;
+        } else {
+          tax += (taxableIncome - prevCap) * rate;
+          break;
+        }
+      }
+      return tax;
+    }
+
+    function calculateConversionTax(conversionAmt, filingStatus, otherIncome = 0, stateCode = 'MN', ssAnnual = 0) {
+      const fedDeduction = TAX_BRACKETS[filingStatus].standardDeduction;
+
+      const baseTaxableSS = calculateTaxableSocialSecurity(ssAnnual, otherIncome, filingStatus);
+      const baseGrossFed = otherIncome + baseTaxableSS;
+      const fedTaxableBase = Math.max(0, baseGrossFed - fedDeduction);
+
+      const totalTaxableSS = calculateTaxableSocialSecurity(ssAnnual, otherIncome + conversionAmt, filingStatus);
+      const totalGrossFed = otherIncome + conversionAmt + totalTaxableSS;
+      const fedTaxableTotal = Math.max(0, totalGrossFed - fedDeduction);
+
+      const fedBaseTax = computeFederalTax(fedTaxableBase, filingStatus);
+      const fedTotalTax = computeFederalTax(fedTaxableTotal, filingStatus);
+      const fedIncrementalTax = Math.max(0, fedTotalTax - fedBaseTax);
+
+      const fedBrackets = TAX_BRACKETS[filingStatus].brackets;
+      let fedMarginalRate = 0.10;
+      for (let i = 0; i < fedBrackets.length; i++) {
+        if (fedTaxableTotal <= fedBrackets[i].cap) {
+          fedMarginalRate = fedBrackets[i].rate;
+          break;
+        }
+      }
+
+      const stateBase = computeStateTax(baseGrossFed, filingStatus, stateCode, baseTaxableSS);
+      const stateTotal = computeStateTax(totalGrossFed, filingStatus, stateCode, totalTaxableSS);
+      const stateIncrementalTax = Math.max(0, stateTotal.tax - stateBase.tax);
+      const stateMarginalRate = stateTotal.marginalRate;
+
+      const totalIncrementalTax = fedIncrementalTax + stateIncrementalTax;
+      const effectiveRate = conversionAmt > 0 ? (totalIncrementalTax / conversionAmt) : 0;
+      const combinedMarginalRate = fedMarginalRate + stateMarginalRate;
+
+      return {
+        incrementalTax: totalIncrementalTax,
+        effectiveRate,
+        marginalRate: combinedMarginalRate,
+        fedIncrementalTax,
+        stateIncrementalTax,
+        fedMarginalRate,
+        stateMarginalRate,
+        baseTax: fedBaseTax + stateBase.tax,
+        totalTax: fedTotalTax + stateTotal.tax
+      };
+    }
+
+    function getConversionToFillBracket(targetRate, filingStatus, otherIncome = 0) {
+      const deduction = TAX_BRACKETS[filingStatus].standardDeduction;
+      const brackets = TAX_BRACKETS[filingStatus].brackets;
+      const bracketObj = brackets.find(b => Math.abs(b.rate - targetRate) < 0.005);
+      if (!bracketObj) return 0;
+
+      const targetTaxableCeiling = bracketObj.cap;
+      const targetGrossIncome = targetTaxableCeiling + deduction;
+      const fillAmount = Math.max(0, targetGrossIncome - otherIncome);
+      return Math.round(fillAmount);
+    }
+
+    function getRMDDistributionPeriod(age) {
+      const rmdTable = {
+        72: 27.4, 73: 26.5, 74: 25.5, 75: 24.6, 76: 23.7, 77: 22.9,
+        78: 22.0, 79: 21.1, 80: 20.2, 81: 19.4, 82: 18.5, 83: 17.7,
+        84: 16.8, 85: 16.0, 86: 15.2, 87: 14.4, 88: 13.7, 89: 12.9,
+        90: 12.2
+      };
+      return rmdTable[age] || 12.0;
+    }
+
+    function getInputs() {
+      const curAge = Math.max(18, Math.min(88, parseInt(document.getElementById('currentAge').value) || 50));
+      const bal401k = Math.max(0, parseFloat(document.getElementById('bal401k').value) || 0);
+      const roiRateInput = parseFloat(document.getElementById('roiRate').value);
+      const rateReturn = !isNaN(roiRateInput) && roiRateInput >= 0 ? roiRateInput / 100 : 0.07;
+      const filingStatus = document.getElementById('filingStatus').value;
+      const stateEl = document.getElementById('stateResidence');
+      const stateResidence = stateEl ? stateEl.value : 'MN';
+      const otherIncome = Math.max(0, parseFloat(document.getElementById('otherTaxableIncome').value) || 0);
+
+      const ssMonthlyInput = document.getElementById('ssMonthly');
+      const ssMonthly = ssMonthlyInput ? Math.max(0, parseFloat(ssMonthlyInput.value) || 0) : 3000;
+      const ssStartAgeInput = document.getElementById('ssStartAge');
+      const ssStartAge = ssStartAgeInput ? Math.max(62, Math.min(70, parseInt(ssStartAgeInput.value) || 67)) : 67;
+
+      const enableIrmaaEl = document.getElementById('enableIrmaa');
+      const enableIrmaa = enableIrmaaEl ? enableIrmaaEl.checked : true;
+      const irmaaEnrolleesEl = document.getElementById('irmaaEnrollees');
+      const irmaaEnrollees = irmaaEnrolleesEl ? parseInt(irmaaEnrolleesEl.value) || 2 : 2;
+
+      const enableConversion = document.getElementById('enableConversion').checked;
+      const convAmount = enableConversion ? Math.max(0, parseFloat(document.getElementById('conversionAmount').value) || 0) : 0;
+      const convStartAge = Math.max(curAge, parseInt(document.getElementById('conversionStartAge').value) || curAge);
+      const convEndAge = Math.max(convStartAge, parseInt(document.getElementById('conversionEndAge').value) || 65);
+      const taxPaymentSource = document.getElementById('taxPaymentSource').value;
+
+      return {
+        curAge,
+        bal401k,
+        filingStatus,
+        stateResidence,
+        otherIncome,
+        ssMonthly,
+        ssStartAge,
+        enableIrmaa,
+        irmaaEnrollees,
+        enableConversion,
+        convAmount,
+        convStartAge,
+        convEndAge,
+        taxPaymentSource,
+        rateReturn,
+        endAge: 90
+      };
+    }
+
+    function runSimulation(params, applyConversion = true) {
+      const {
+        curAge,
+        bal401k,
+        filingStatus,
+        stateResidence,
+        otherIncome,
+        ssMonthly,
+        ssStartAge,
+        enableIrmaa,
+        irmaaEnrollees,
+        convAmount,
+        convStartAge,
+        convEndAge,
+        taxPaymentSource,
+        rateReturn,
+        endAge
+      } = params;
+
+      let currentPreTax = bal401k;
+      let currentRoth = 0;
+      let currentTaxable = 0;
+      let taxableCostBasis = 0;
+
+      let totalFederalTax = 0;
+      let totalStateTax = 0;
+      let totalCapGainsTax = 0;
+      let totalIrmaaPaid = 0;
+      let totalTaxesPaidOnConversion = 0;
+      let totalTaxesPaidOnRMD = 0;
+      let totalRmdsForced = 0;
+      let totalCapitalConverted = 0;
+
+      const years = [];
+      const annualMagiHistory = {};
+
+      for (let age = curAge; age <= endAge; age++) {
+        const currentYearIndex = age - curAge;
+        const calendarYear = new Date().getFullYear() + currentYearIndex;
+
+        const ssBenefit = (age >= ssStartAge) ? (ssMonthly * 12) : 0;
+
+        let actualConvGross = 0;
+        let actualConvNet = 0;
+        let actualConvTax = 0;
+
+        // 1. Annual Roth Conversion Execution (Federal + State)
+        if (applyConversion && age >= convStartAge && age <= convEndAge && currentPreTax > 0) {
+          actualConvGross = Math.min(currentPreTax, convAmount);
+          const taxInfo = calculateConversionTax(actualConvGross, filingStatus, otherIncome, stateResidence, ssBenefit);
+          actualConvTax = taxInfo.incrementalTax;
+
+          totalFederalTax += taxInfo.fedIncrementalTax;
+          totalStateTax += taxInfo.stateIncrementalTax;
+          totalTaxesPaidOnConversion += actualConvTax;
+          totalCapitalConverted += actualConvGross;
+
+          if (taxPaymentSource === 'outside') {
+            actualConvNet = actualConvGross;
+            currentPreTax -= actualConvGross;
+          } else {
+            actualConvNet = Math.max(0, actualConvGross - actualConvTax);
+            currentPreTax -= actualConvGross;
+          }
+
+          currentRoth += actualConvNet;
+        }
+
+        // 2. Mandatory IRS Required Minimum Distributions (RMDs) at Age 73+
+        let rmdAmount = 0;
+        let rmdTax = 0;
+
+        if (age >= 73 && currentPreTax > 0) {
+          const divisor = getRMDDistributionPeriod(age);
+          rmdAmount = currentPreTax / divisor;
+          totalRmdsForced += rmdAmount;
+
+          const takenFromPreTax = Math.min(currentPreTax, rmdAmount);
+          currentPreTax -= takenFromPreTax;
+
+          const rmdTaxInfo = calculateConversionTax(takenFromPreTax, filingStatus, otherIncome + actualConvGross, stateResidence, ssBenefit);
+          rmdTax = rmdTaxInfo.incrementalTax;
+          totalFederalTax += rmdTaxInfo.fedIncrementalTax;
+          totalStateTax += rmdTaxInfo.stateIncrementalTax;
+          totalTaxesPaidOnRMD += rmdTax;
+
+          const rmdAfterTax = Math.max(0, takenFromPreTax - rmdTax);
+          currentTaxable += rmdAfterTax;
+          taxableCostBasis += rmdAfterTax;
+        }
+
+        // 3. Track MAGI for Medicare 2-year lookback
+        const taxableSSForMagi = calculateTaxableSocialSecurity(ssBenefit, otherIncome + actualConvGross + rmdAmount, filingStatus);
+        const thisYearMagi = otherIncome + actualConvGross + rmdAmount + taxableSSForMagi;
+        annualMagiHistory[age] = thisYearMagi;
+
+        // 4. Medicare IRMAA Surcharge (Age 65+ based on income 2 years prior)
+        let irmaaSurcharge = 0;
+        if (enableIrmaa && age >= 65) {
+          const lookbackAge = age - 2;
+          const lookbackMagi = annualMagiHistory[lookbackAge] !== undefined ? annualMagiHistory[lookbackAge] : otherIncome;
+          const irmaaDetails = calculateIrmaaSurcharge(lookbackMagi, filingStatus, irmaaEnrollees);
+          irmaaSurcharge = irmaaDetails.annualSurcharge;
+          totalIrmaaPaid += irmaaSurcharge;
+
+          if (currentTaxable >= irmaaSurcharge) {
+            currentTaxable -= irmaaSurcharge;
+          }
+        }
+
+        // 5. Social Security Net Inflow Reinvested
+        if (ssBenefit > 0) {
+          const taxableSSStandalone = calculateTaxableSocialSecurity(ssBenefit, otherIncome, filingStatus);
+          const fedGross = otherIncome + taxableSSStandalone;
+          const fedTaxable = Math.max(0, fedGross - TAX_BRACKETS[filingStatus].standardDeduction);
+          const fedStandalone = computeFederalTax(fedTaxable, filingStatus);
+          const stateStandalone = computeStateTax(fedGross, filingStatus, stateResidence, taxableSSStandalone).tax;
+          const ssTaxEst = fedStandalone + stateStandalone;
+          const netSsInflow = Math.max(0, ssBenefit - ssTaxEst);
+          currentTaxable += netSsInflow;
+          taxableCostBasis += netSsInflow;
+        }
+
+        // 6. Investment Compounding at Adjustable ROI
+        currentPreTax *= (1 + rateReturn);
+        currentRoth *= (1 + rateReturn);
+
+        // Annual taxable growth with 15% dividend / turnover drag
+        const preGrowthTaxable = currentTaxable;
+        const taxableGrowthRate = rateReturn * 0.85;
+        const annualCapGainsDrag = preGrowthTaxable * (rateReturn - taxableGrowthRate);
+        totalCapGainsTax += annualCapGainsDrag;
+
+        currentTaxable *= (1 + taxableGrowthRate);
+
+        const netWorth = currentPreTax + currentRoth + currentTaxable;
+
+        // 7. Projected Tax Liability on Remaining Balance
+        let preTaxProjTax = 0;
+        if (currentPreTax > 0) {
+          const annual10yrDist = currentPreTax / 10;
+          const taxPerYear = calculateConversionTax(annual10yrDist, filingStatus, otherIncome, stateResidence, ssBenefit).incrementalTax;
+          preTaxProjTax = taxPerYear * 10;
+        }
+
+        const stateCfg = getStateConfig(stateResidence);
+        let stateCapGainsRate = 0;
+        if (stateCfg.type === 'graduated') stateCapGainsRate = 0.068;
+        else if (stateCfg.type === 'flat') stateCapGainsRate = stateCfg.rate;
+
+        const unrealizedGains = Math.max(0, currentTaxable - taxableCostBasis);
+        const taxableProjTax = unrealizedGains * (0.15 + stateCapGainsRate);
+
+        const totalProjTaxOnRemaining = Math.round(preTaxProjTax + taxableProjTax);
+        const afterTaxNetWorth = Math.round(Math.max(0, netWorth - totalProjTaxOnRemaining));
+
+        years.push({
+          age,
+          year: calendarYear,
+          preTax: Math.round(currentPreTax),
+          roth: Math.round(currentRoth),
+          taxable: Math.round(currentTaxable),
+          ssBenefit: Math.round(ssBenefit),
+          conversion: Math.round(actualConvGross),
+          convTax: Math.round(actualConvTax),
+          rmd: Math.round(rmdAmount),
+          rmdTax: Math.round(rmdTax),
+          irmaa: Math.round(irmaaSurcharge),
+          projTaxOnRemaining: totalProjTaxOnRemaining,
+          preTaxProjTax: Math.round(preTaxProjTax),
+          taxableProjTax: Math.round(taxableProjTax),
+          netWorth: Math.round(netWorth),
+          afterTaxNetWorth
+        });
+      }
+
+      const lastYear = years[years.length - 1];
+      const terminalPreTaxTax = lastYear.preTaxProjTax;
+      const totalComprehensiveTaxes = Math.round(totalFederalTax + totalStateTax + totalCapGainsTax + totalIrmaaPaid + terminalPreTaxTax);
+
+      return {
+        years,
+        totalFederalTax: Math.round(totalFederalTax),
+        totalStateTax: Math.round(totalStateTax),
+        totalCapGainsTax: Math.round(totalCapGainsTax + lastYear.taxableProjTax),
+        totalIrmaaPaid: Math.round(totalIrmaaPaid),
+        terminalPreTaxTax: Math.round(terminalPreTaxTax),
+        totalComprehensiveTaxes,
+        totalTaxesPaidOnConversion,
+        totalTaxesPaidOnRMD,
+        totalCapitalConverted,
+        totalRmdsForced,
+        finalNetWorth: lastYear.netWorth,
+        finalAfterTaxNetWorth: lastYear.afterTaxNetWorth,
+        finalProjTaxOnRemaining: lastYear.projTaxOnRemaining,
+        finalPreTaxProjTax: lastYear.preTaxProjTax,
+        finalTaxableProjTax: lastYear.taxableProjTax,
+        finalRoth: lastYear.roth,
+        finalPreTax: lastYear.preTax,
+        finalTaxable: lastYear.taxable
+      };
+    }
+
+    function optimizeRothStrategy(baseParams) {
+      const curAge = baseParams.curAge;
+      const startAge = curAge;
+      const maxEndAge = Math.min(85, Math.max(curAge + 4, 75));
+
+      const candidateEndAges = [];
+      for (let end = curAge + 1; end <= maxEndAge; end++) {
+        candidateEndAges.push(end);
+      }
+
+      const baseAmounts = new Set([0]);
+
+      [0.10, 0.12, 0.22, 0.24, 0.32].forEach(rate => {
+        const amt = getConversionToFillBracket(rate, baseParams.filingStatus, baseParams.otherIncome);
+        if (amt > 0) baseAmounts.add(amt);
+      });
+
+      for (let amt = 10000; amt <= 250000; amt += 10000) {
+        baseAmounts.add(amt);
+      }
+
+      let bestAmount = 0;
+      let bestStartAge = startAge;
+      let bestEndAge = Math.min(curAge + 10, 72);
+      let bestTotalCost = Infinity;
+      let maxRothAt90 = -Infinity;
+      let bestSim = null;
+
+      candidateEndAges.forEach(endAge => {
+        const yearsCount = Math.max(1, endAge - startAge + 1);
+        const amountSet = new Set(baseAmounts);
+
+        const annualizedDeplete = Math.round((baseParams.bal401k * Math.pow(1 + baseParams.rateReturn, yearsCount / 2)) / yearsCount);
+        if (annualizedDeplete > 0) {
+          amountSet.add(annualizedDeplete);
+          amountSet.add(Math.round(annualizedDeplete * 0.75));
+          amountSet.add(Math.round(annualizedDeplete * 1.25));
+        }
+
+        amountSet.forEach(amount => {
+          const testParams = Object.assign({}, baseParams, {
+            convStartAge: startAge,
+            convEndAge: endAge,
+            convAmount: amount,
+            enableConversion: amount > 0
+          });
+
+          const sim = runSimulation(testParams, amount > 0);
+          const totalCost = sim.totalComprehensiveTaxes;
+          const finalRoth = sim.finalRoth;
+
+          if (
+            totalCost < bestTotalCost - 100 ||
+            (Math.abs(totalCost - bestTotalCost) <= 100 && finalRoth > maxRothAt90)
+          ) {
+            bestTotalCost = totalCost;
+            maxRothAt90 = finalRoth;
+            bestAmount = amount;
+            bestEndAge = endAge;
+            bestSim = sim;
+          }
+        });
+      });
+
+      return {
+        bestAmount,
+        bestStartAge,
+        bestEndAge,
+        bestYears: bestEndAge - bestStartAge + 1,
+        bestSim,
+        bestLifetimeTax: bestTotalCost,
+        maxRothAt90
+      };
+    }
+
+    function updateDashboardKPIs(simWithConv, simBaseline, params) {
+      const activeData = activeChartMode === 'conversion' ? simWithConv : simBaseline;
+      const lastYear = activeData.years[activeData.years.length - 1];
+
+      // 1. TOTAL NET WORTH & DETAILED BREAKDOWN (ROTH, TAXABLE, PRE-TAX)
+      const totalNW = Math.max(1, lastYear.netWorth);
+      setElText('kpiNetWorth90', formatCurrency(lastYear.netWorth));
+      setElText('kpiAfterTaxSubnote', `After-Tax: ${formatCurrency(lastYear.afterTaxNetWorth)}`);
+
+      const baseline90 = simBaseline.finalNetWorth;
+      const conv90 = simWithConv.finalNetWorth;
+      const diff90 = conv90 - baseline90;
+      const diffPct = baseline90 > 0 ? ((diff90 / baseline90) * 100) : 0;
+
+      const vsBadge = document.getElementById('kpiVsBaseline');
+      if (vsBadge) {
+        if (activeChartMode === 'baseline') {
+          vsBadge.innerHTML = `Baseline Mode`;
+          vsBadge.className = 'text-[10px] text-slate-400 font-bold bg-slate-800 px-2 py-0.5 rounded-lg border border-slate-700';
+        } else if (diff90 >= 0) {
+          vsBadge.innerHTML = `+${formatCurrency(diff90)} (+${diffPct.toFixed(1)}%) vs Baseline`;
+          vsBadge.className = 'text-[10px] text-emerald-400 font-bold bg-emerald-500/10 px-2 py-0.5 rounded-lg border border-emerald-500/20';
+        } else {
+          vsBadge.innerHTML = `${formatCurrency(diff90)} (${diffPct.toFixed(1)}%) vs Baseline`;
+          vsBadge.className = 'text-[10px] text-amber-400 font-bold bg-amber-500/10 px-2 py-0.5 rounded-lg border border-amber-500/20';
+        }
+      }
+
+      // Percentages and Dollar Figures for Net Worth Breakdown
+      const rothPct = (lastYear.roth / totalNW) * 100;
+      const taxablePct = (lastYear.taxable / totalNW) * 100;
+      const preTaxPct = (lastYear.preTax / totalNW) * 100;
+
+      setElText('kpiBreakdownRoth', formatCurrency(lastYear.roth));
+      setElText('kpiBreakdownRothPct', `${rothPct.toFixed(1)}% of wealth`);
+
+      setElText('kpiBreakdownTaxable', formatCurrency(lastYear.taxable));
+      setElText('kpiBreakdownTaxablePct', `${taxablePct.toFixed(1)}% of wealth`);
+
+      setElText('kpiBreakdownPreTax', formatCurrency(lastYear.preTax));
+      setElText('kpiBreakdownPreTaxPct', `${preTaxPct.toFixed(1)}% of wealth`);
+
+      setElWidth('nwBarRoth', `${rothPct.toFixed(1)}%`);
+      setElWidth('nwBarTaxable', `${taxablePct.toFixed(1)}%`);
+      setElWidth('nwBarPreTax', `${preTaxPct.toFixed(1)}%`);
+
+      // 2. TOTAL TAX PAID & GRANULAR TAX BREAKDOWN
+      const totalTaxes = Math.max(1, activeData.totalComprehensiveTaxes);
+      setElText('kpiTotalTaxPaid', formatCurrency(activeData.totalComprehensiveTaxes));
+
+      const taxSavedVsBase = simBaseline.totalComprehensiveTaxes - simWithConv.totalComprehensiveTaxes;
+      const taxSavedBadge = document.getElementById('kpiTaxSavedVsBase');
+      if (taxSavedBadge) {
+        if (activeChartMode === 'baseline') {
+          taxSavedBadge.textContent = `Baseline Tax Liability`;
+          taxSavedBadge.className = 'text-[10px] text-slate-400 font-bold bg-slate-800 px-2 py-0.5 rounded-lg border border-slate-700';
+        } else if (taxSavedVsBase >= 0) {
+          taxSavedBadge.textContent = `Saves ${formatCurrency(taxSavedVsBase)} vs Baseline`;
+          taxSavedBadge.className = 'text-[10px] text-emerald-400 font-bold bg-emerald-500/10 px-2 py-0.5 rounded-lg border border-emerald-500/20';
+        } else {
+          taxSavedBadge.textContent = `${formatCurrency(taxSavedVsBase)} vs Baseline`;
+          taxSavedBadge.className = 'text-[10px] text-amber-400 font-bold bg-amber-500/10 px-2 py-0.5 rounded-lg border border-amber-500/20';
+        }
+      }
+
+      const fedPct = (activeData.totalFederalTax / totalTaxes) * 100;
+      const statePct = (activeData.totalStateTax / totalTaxes) * 100;
+      const capGainsPct = (activeData.totalCapGainsTax / totalTaxes) * 100;
+      const irmaaPct = (activeData.totalIrmaaPaid / totalTaxes) * 100;
+      const terminalPct = (activeData.terminalPreTaxTax / totalTaxes) * 100;
+
+      setElText('kpiTaxFed', formatCurrency(activeData.totalFederalTax));
+      setElText('kpiTaxFedPct', `${fedPct.toFixed(1)}% of total`);
+
+      setElText('kpiStateTaxLabel', `State Tax (${params.stateResidence})`);
+      setElText('kpiTaxState', formatCurrency(activeData.totalStateTax));
+      setElText('kpiTaxStatePct', `${statePct.toFixed(1)}% of total`);
+
+      setElText('kpiTaxCapGains', formatCurrency(activeData.totalCapGainsTax));
+      setElText('kpiTaxCapGainsPct', `${capGainsPct.toFixed(1)}% of total`);
+
+      setElText('kpiTaxIrmaa', formatCurrency(activeData.totalIrmaaPaid));
+      setElText('kpiTaxIrmaaPct', `${irmaaPct.toFixed(1)}% of total`);
+
+      setElText('kpiTaxTerminalPreTax', formatCurrency(activeData.terminalPreTaxTax));
+      setElText('kpiTaxTerminalPreTaxPct', `${terminalPct.toFixed(1)}% of total`);
+
+      setElWidth('taxBarFed', `${fedPct.toFixed(1)}%`);
+      setElWidth('taxBarState', `${statePct.toFixed(1)}%`);
+      setElWidth('taxBarCapGains', `${capGainsPct.toFixed(1)}%`);
+      setElWidth('taxBarIrmaa', `${irmaaPct.toFixed(1)}%`);
+      setElWidth('taxBarTerminal', `${terminalPct.toFixed(1)}%`);
+
+      setElText('yearsRetiredBadge', `${90 - params.curAge} yrs to Age 90`);
+
+      updateStrategyInsights(simWithConv, simBaseline, params);
+    }
+
+    function updateStrategyInsights(simWithConv, simBaseline, params) {
+      const container = document.getElementById('strategyInsightsContent');
+      if (!container) return;
+
+      const diffAfterTax = simWithConv.finalAfterTaxNetWorth - simBaseline.finalAfterTaxNetWorth;
+      const rothRatioConv = (simWithConv.finalRoth / (simWithConv.finalNetWorth || 1)) * 100;
+      const irmaaDifference = simBaseline.totalIrmaaPaid - simWithConv.totalIrmaaPaid;
+      const stateName = getStateConfig(params.stateResidence).name;
+
+      container.innerHTML = `
+        <div class="space-y-1.5">
+          <div class="flex items-start gap-1.5">
+            <span class="text-emerald-400 font-bold">•</span>
+            <p>
+              <strong class="text-white">Tax-Free Conversion:</strong> 
+              Converts pre-tax 401(k) assets into 
+              <strong class="text-emerald-400">${formatCurrency(simWithConv.finalRoth)} (${rothRatioConv.toFixed(0)}%)</strong> in permanent tax-free Roth wealth by age 90, shielded from Federal, ${stateName}, and IRMAA cliffs.
+            </p>
+          </div>
+          <div class="flex items-start gap-1.5">
+            <span class="text-emerald-400 font-bold">•</span>
+            <p>
+              <strong class="text-white">Medicare IRMAA Protection:</strong> 
+              Baseline RMDs trigger <strong class="text-rose-400">${formatCurrency(simBaseline.totalIrmaaPaid)}</strong> in forced Medicare IRMAA surcharges at age 73+. Conversions eliminate <strong class="text-pink-300 font-semibold">${formatCurrency(Math.max(0, irmaaDifference))}</strong> of lifetime Medicare premium surcharges.
+            </p>
+          </div>
+        </div>
+
+        <div class="space-y-1.5">
+          <div class="flex items-start gap-1.5">
+            <span class="text-emerald-400 font-bold">•</span>
+            <p>
+              <strong class="text-white">True After-Tax Advantage:</strong> 
+              After settling all embedded taxes and IRMAA drags, conversions provide <strong class="text-emerald-400 font-bold">${diffAfterTax >= 0 ? '+' : ''}${formatCurrency(diffAfterTax)}</strong> in real after-tax wealth (${formatCurrency(simWithConv.finalAfterTaxNetWorth)} vs ${formatCurrency(simBaseline.finalAfterTaxNetWorth)}).
+            </p>
+          </div>
+          <div class="flex items-start gap-1.5">
+            <span class="text-emerald-400 font-bold">•</span>
+            <p>
+              <strong class="text-white">Heir Protection:</strong> 
+              Heirs inheriting pre-tax accounts face the SECURE Act 10-year rule in their peak earning years; Roth assets pass 100% tax-free with zero IRMAA impact.
+            </p>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderChart(simulationData) {
+      const canvas = document.getElementById('projectionChart');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      const labels = simulationData.years.map(y => `Age ${y.age}`);
+      const rothData = simulationData.years.map(y => y.roth);
+      const preTaxData = simulationData.years.map(y => y.preTax);
+      const taxableData = simulationData.years.map(y => y.taxable);
+      const netWorthData = simulationData.years.map(y => y.netWorth);
+
+      if (chartInstance) {
+        chartInstance.destroy();
+      }
+
+      chartInstance = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: labels,
+          datasets: [
+            {
+              label: 'Total Net Worth',
+              data: netWorthData,
+              borderColor: '#ffffff',
+              borderWidth: 2.5,
+              borderDash: [5, 4],
+              pointRadius: 0,
+              fill: false,
+              tension: 0.2,
+              stack: 'total_envelope',
+              order: 0
+            },
+            {
+              label: 'Tax-Free (Roth)',
+              data: rothData,
+              backgroundColor: 'rgba(16, 185, 129, 0.65)',
+              borderColor: '#10b981',
+              borderWidth: 1.5,
+              fill: true,
+              pointRadius: 0,
+              tension: 0.2,
+              stack: 'breakdown',
+              order: 1
+            },
+            {
+              label: 'Pre-Tax (401k/IRA)',
+              data: preTaxData,
+              backgroundColor: 'rgba(59, 130, 246, 0.6)',
+              borderColor: '#3b82f6',
+              borderWidth: 1.5,
+              fill: true,
+              pointRadius: 0,
+              tension: 0.2,
+              stack: 'breakdown',
+              order: 2
+            },
+            {
+              label: 'Taxable (Reinvested RMDs & SS)',
+              data: taxableData,
+              backgroundColor: 'rgba(245, 158, 11, 0.55)',
+              borderColor: '#f59e0b',
+              borderWidth: 1.5,
+              fill: true,
+              pointRadius: 0,
+              tension: 0.2,
+              stack: 'breakdown',
+              order: 3
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          interaction: {
+            mode: 'index',
+            intersect: false
+          },
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              backgroundColor: '#0f172a',
+              titleColor: '#f8fafc',
+              bodyColor: '#cbd5e1',
+              borderColor: '#334155',
+              borderWidth: 1,
+              padding: 10,
+              callbacks: {
+                label: function(context) {
+                  let label = context.dataset.label || '';
+                  if (label) label += ': ';
+                  if (context.parsed.y !== null) {
+                    label += formatCurrency(context.parsed.y);
+                  }
+                  return label;
+                }
+              }
+            }
+          },
+          scales: {
+            x: {
+              grid: { color: 'rgba(51, 65, 85, 0.35)' },
+              ticks: { color: '#94a3b8', maxTicksLimit: 12, font: { size: 10 } }
+            },
+            y: {
+              stacked: true,
+              grid: { color: 'rgba(51, 65, 85, 0.35)' },
+              ticks: {
+                color: '#94a3b8',
+                font: { size: 10 },
+                callback: function(value) {
+                  if (value >= 1e6) return '$' + (value / 1e6).toFixed(1) + 'M';
+                  if (value >= 1e3) return '$' + (value / 1e3).toFixed(0) + 'k';
+                  return '$' + value;
+                }
+              }
+            }
+          }
+        }
+      });
+    }
+
+    function renderTable(simulationData) {
+      const tbody = document.getElementById('projectionTableBody');
+      if (!tbody) return;
+      const years = simulationData.years;
+      setElText('tableRowCount', `${years.length} Projected Years`);
+
+      let html = '';
+      years.forEach((row) => {
+        const hasConversion = row.conversion > 0;
+        const hasSs = row.ssBenefit > 0;
+        const hasIrmaa = row.irmaa > 0;
+        html += `
+          <tr class="hover:bg-slate-800/50 transition-colors">
+            <td class="px-2.5 py-1.5 font-bold text-white">${row.age}</td>
+            <td class="px-2.5 py-1.5 text-blue-300 font-medium">${formatCurrency(row.preTax)}</td>
+            <td class="px-2.5 py-1.5 text-emerald-400 font-semibold">${formatCurrency(row.roth)}</td>
+            <td class="px-2.5 py-1.5 text-amber-300">${formatCurrency(row.taxable)}</td>
+            <td class="px-2.5 py-1.5 ${hasSs ? 'text-purple-300 font-medium' : 'text-slate-600'}">
+              ${hasSs ? formatCurrency(row.ssBenefit) : '—'}
+            </td>
+            <td class="px-2.5 py-1.5 ${hasConversion ? 'text-indigo-300 font-semibold' : 'text-slate-600'}">
+              ${hasConversion ? formatCurrency(row.conversion) : '—'}
+            </td>
+            <td class="px-2.5 py-1.5 ${row.convTax > 0 ? 'text-red-400' : 'text-slate-600'}">
+              ${row.convTax > 0 ? formatCurrency(row.convTax) : '—'}
+            </td>
+            <td class="px-2.5 py-1.5 ${row.rmd > 0 ? 'text-orange-400' : 'text-slate-600'}">
+              ${row.rmd > 0 ? formatCurrency(row.rmd) : '—'}
+            </td>
+            <td class="px-2.5 py-1.5 ${hasIrmaa ? 'text-pink-400 font-semibold' : 'text-slate-600'}">
+              ${hasIrmaa ? formatCurrency(row.irmaa) : '—'}
+            </td>
+            <td class="px-2.5 py-1.5 text-rose-400 font-semibold">
+              ${row.projTaxOnRemaining > 0 ? formatCurrency(row.projTaxOnRemaining) : '$0'}
+            </td>
+            <td class="px-2.5 py-1.5 text-slate-300 font-medium">${formatCurrency(row.netWorth)}</td>
+            <td class="px-2.5 py-1.5 font-bold text-emerald-400 text-right">${formatCurrency(row.afterTaxNetWorth)}</td>
+          </tr>
+        `;
+      });
+
+      tbody.innerHTML = html;
+    }
+
+    function recalculate() {
+      const params = getInputs();
+
+      currentResults = runSimulation(params, params.enableConversion);
+      baselineResults = runSimulation(params, false);
+
+      const activeSsAnnual = (params.curAge >= params.ssStartAge) ? (params.ssMonthly * 12) : 0;
+      const taxInfo = calculateConversionTax(params.convAmount, params.filingStatus, params.otherIncome, params.stateResidence, activeSsAnnual);
+      const stateCfg = getStateConfig(params.stateResidence);
+
+      // IRMAA Status for Current Conversion Year
+      const taxableSSCurrent = calculateTaxableSocialSecurity(activeSsAnnual, params.otherIncome + params.convAmount, params.filingStatus);
+      const conversionYearMagi = params.otherIncome + params.convAmount + taxableSSCurrent;
+      const irmaaCurrent = calculateIrmaaSurcharge(conversionYearMagi, params.filingStatus, params.irmaaEnrollees);
+
+      const thresholdCap = params.filingStatus === 'married' ? 212000 : 106000;
+      setElText('irmaaTierThreshold', formatCurrency(thresholdCap));
+
+      const irmaaStatusEl = document.getElementById('irmaaCurrentStatus');
+      if (irmaaStatusEl) {
+        irmaaStatusEl.textContent = irmaaCurrent.tierLabel;
+        irmaaStatusEl.className = irmaaCurrent.isSurchargeActive ? 'font-bold text-pink-400 text-xs' : 'font-bold text-emerald-400 text-xs';
+      }
+      setElText('irmaaCurrentAnnualDrag', `${formatCurrency(irmaaCurrent.annualSurcharge)} / yr`);
+
+      setElText('taxMarginalBracket', `${(taxInfo.marginalRate * 100).toFixed(1)}%`);
+      setElText('taxMarginalBreakdown', `${(taxInfo.fedMarginalRate * 100).toFixed(0)}% Fed + ${(taxInfo.stateMarginalRate * 100).toFixed(1)}% ${params.stateResidence}`);
+
+      setElText('taxEffectiveRate', `${(taxInfo.effectiveRate * 100).toFixed(1)}%`);
+      setElText('taxAnnualBill', formatCurrency(taxInfo.incrementalTax));
+      setElText('taxAnnualSplit', `Fed: ${formatCurrency(taxInfo.fedIncrementalTax)} | ${params.stateResidence}: ${formatCurrency(taxInfo.stateIncrementalTax)}`);
+
+      setElText('stateTaxLabelNote', `${stateCfg.name} State Tax Active`);
+      setElText('labelBal401k', formatCurrency(params.bal401k));
+      setElText('labelSsAnnual', `${formatCurrency(params.ssMonthly * 12)} / yr`);
+      setElText('conversionAmountLabel', `${formatCurrency(params.convAmount)} / yr`);
+
+      const roiPctFormatted = `${(params.rateReturn * 100).toFixed(1)}%`;
+      setElText('labelRoi', roiPctFormatted);
+      setElText('chartRoiBadge', roiPctFormatted);
+
+      updateDashboardKPIs(currentResults, baselineResults, params);
+      
+      const activeData = activeChartMode === 'conversion' ? currentResults : baselineResults;
+      renderChart(activeData);
+      renderTable(activeData);
+    }
+
+    function initListeners() {
+      const inputIds = [
+        'currentAge', 'bal401k', 'filingStatus', 'stateResidence', 'otherTaxableIncome',
+        'ssMonthly', 'ssStartAge', 'irmaaEnrollees',
+        'conversionAmount', 'conversionStartAge', 'conversionEndAge',
+        'taxPaymentSource'
+      ];
+
+      inputIds.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) {
+          el.addEventListener('input', recalculate);
+          el.addEventListener('change', recalculate);
+        }
+      });
+
+      // Synchronize ROI controls
+      const roiSlider = document.getElementById('roiSlider');
+      const roiRate = document.getElementById('roiRate');
+      if (roiSlider && roiRate) {
+        roiSlider.addEventListener('input', (e) => {
+          roiRate.value = e.target.value;
+          recalculate();
+        });
+        roiRate.addEventListener('input', (e) => {
+          roiSlider.value = e.target.value;
+          recalculate();
+        });
+      }
+
+      // Synchronize Conversion controls
+      const conversionSlider = document.getElementById('conversionSlider');
+      const conversionAmount = document.getElementById('conversionAmount');
+      if (conversionSlider && conversionAmount) {
+        conversionSlider.addEventListener('input', (e) => {
+          conversionAmount.value = e.target.value;
+          recalculate();
+        });
+        conversionAmount.addEventListener('input', (e) => {
+          conversionSlider.value = e.target.value;
+          recalculate();
+        });
+      }
+
+      const toggleIrmaa = document.getElementById('enableIrmaa');
+      const irmaaArea = document.getElementById('irmaaSettingsArea');
+      if (toggleIrmaa && irmaaArea) {
+        toggleIrmaa.addEventListener('change', () => {
+          if (!toggleIrmaa.checked) {
+            irmaaArea.style.opacity = '0.35';
+            irmaaArea.style.pointerEvents = 'none';
+          } else {
+            irmaaArea.style.opacity = '1';
+            irmaaArea.style.pointerEvents = 'auto';
+          }
+          recalculate();
+        });
+      }
+
+      const toggleConv = document.getElementById('enableConversion');
+      const convArea = document.getElementById('conversionSettingsArea');
+      if (toggleConv && convArea) {
+        toggleConv.addEventListener('change', () => {
+          if (!toggleConv.checked) {
+            convArea.style.opacity = '0.35';
+            convArea.style.pointerEvents = 'none';
+          } else {
+            convArea.style.opacity = '1';
+            convArea.style.pointerEvents = 'auto';
+          }
+          recalculate();
+        });
+      }
+
+      const btnConv = document.getElementById('viewWithConversion');
+      const btnBase = document.getElementById('viewBaseline');
+
+      // Lifetime Tax Minimization Optimizer
+      const btnOptimizeMinTax = document.getElementById('btnOptimizeMinTax');
+      const optBanner = document.getElementById('optimizerResultBanner');
+      const optBadge = document.getElementById('optTargetAmountBadge');
+      const optSummary = document.getElementById('optSavingsSummary');
+      const optTitle = document.getElementById('optStrategyTitle');
+
+      if (btnOptimizeMinTax) {
+        btnOptimizeMinTax.addEventListener('click', () => {
+          const params = getInputs();
+          const opt = optimizeRothStrategy(params);
+
+          document.getElementById('conversionAmount').value = opt.bestAmount;
+          if (conversionSlider) conversionSlider.value = Math.min(300000, opt.bestAmount);
+
+          document.getElementById('conversionStartAge').value = opt.bestStartAge;
+          document.getElementById('conversionEndAge').value = opt.bestEndAge;
+          document.getElementById('enableConversion').checked = true;
+          if (convArea) {
+            convArea.style.opacity = '1';
+            convArea.style.pointerEvents = 'auto';
+          }
+
+          recalculate();
+
+          const baselineCost = baselineResults.totalComprehensiveTaxes;
+          const totalSaved = Math.max(0, baselineCost - opt.bestLifetimeTax);
+          const stateName = getStateConfig(params.stateResidence).name;
+
+          if (optBadge) optBadge.textContent = `${formatCurrency(opt.bestAmount)}/yr (${opt.bestYears} yrs: ${opt.bestStartAge}–${opt.bestEndAge})`;
+
+          if (optTitle) {
+            optTitle.innerHTML = `
+              <svg class="w-3.5 h-3.5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+              <span class="text-emerald-400">Combined Federal + ${stateName} + IRMAA Strategy Found</span>
+            `;
+          }
+          if (optBanner) {
+            optBanner.className = 'p-2.5 rounded-xl bg-emerald-950/70 border border-emerald-500/40 text-xs text-slate-200 space-y-1 block';
+          }
+          if (optSummary) {
+            optSummary.innerHTML = `
+              Converting <strong class="text-white">${formatCurrency(opt.bestAmount)}/yr for ${opt.bestYears} years (ages ${opt.bestStartAge}–${opt.bestEndAge})</strong> saves <strong class="text-emerald-300 font-bold">${formatCurrency(totalSaved)}</strong> in combined Federal, ${stateName}, and Medicare IRMAA surcharges vs baseline RMDs.
+            `;
+          }
+        });
+      }
+
+      // Bracket Presets
+      document.querySelectorAll('.btn-fill-bracket').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const targetRate = parseFloat(e.target.dataset.bracket);
+          const params = getInputs();
+          const fillAmt = getConversionToFillBracket(targetRate, params.filingStatus, params.otherIncome);
+
+          document.getElementById('conversionAmount').value = fillAmt;
+          if (conversionSlider) conversionSlider.value = Math.min(300000, fillAmt);
+
+          document.getElementById('enableConversion').checked = true;
+          if (convArea) {
+            convArea.style.opacity = '1';
+            convArea.style.pointerEvents = 'auto';
+          }
+
+          recalculate();
+
+          if (optBadge) optBadge.textContent = `${formatCurrency(fillAmt)} / yr`;
+          if (optTitle) optTitle.innerHTML = `<span class="text-cyan-400 font-bold">Federal Bracket Top Strategy</span>`;
+          if (optBanner) optBanner.className = 'p-2.5 rounded-xl bg-slate-900 border border-cyan-500/40 text-xs text-slate-200 space-y-1 block';
+          if (optSummary) {
+            optSummary.innerHTML = `Targeting the top of the <strong class="text-cyan-300 font-semibold">${(targetRate * 100).toFixed(0)}% federal bracket</strong> ($${fillAmt.toLocaleString()}/yr) factoring in ${getStateConfig(params.stateResidence).name} state income tax.`;
+          }
+        });
+      });
+
+      if (btnConv) {
+        btnConv.addEventListener('click', () => {
+          activeChartMode = 'conversion';
+          btnConv.className = 'px-3 py-1.5 rounded-lg bg-emerald-600 text-white font-semibold shadow-sm transition';
+          if (btnBase) btnBase.className = 'px-3 py-1.5 rounded-lg text-slate-300 hover:text-white font-medium transition';
+          const params = getInputs();
+          renderChart(currentResults);
+          renderTable(currentResults);
+          updateDashboardKPIs(currentResults, baselineResults, params);
+        });
+      }
+
+      if (btnBase) {
+        btnBase.addEventListener('click', () => {
+          activeChartMode = 'baseline';
+          btnBase.className = 'px-3 py-1.5 rounded-lg bg-blue-600 text-white font-semibold shadow-sm transition';
+          if (btnConv) btnConv.className = 'px-3 py-1.5 rounded-lg text-slate-300 hover:text-white font-medium transition';
+          const params = getInputs();
+          renderChart(baselineResults);
+          renderTable(baselineResults);
+          updateDashboardKPIs(currentResults, baselineResults, params);
+        });
+      }
+
+      // Reset Defaults
+      const btnReset = document.getElementById('btnResetDefaults');
+      if (btnReset) {
+        btnReset.addEventListener('click', () => {
+          document.getElementById('currentAge').value = 50;
+          document.getElementById('bal401k').value = 1000000;
+          document.getElementById('roiRate').value = 7.0;
+          document.getElementById('roiSlider').value = 7.0;
+          const ssMo = document.getElementById('ssMonthly');
+          if (ssMo) ssMo.value = 3000;
+          const ssAge = document.getElementById('ssStartAge');
+          if (ssAge) ssAge.value = 67;
+          const irmTog = document.getElementById('enableIrmaa');
+          if (irmTog) irmTog.checked = true;
+          const irmEnr = document.getElementById('irmaaEnrollees');
+          if (irmEnr) irmEnr.value = 2;
+          document.getElementById('stateResidence').value = 'MN';
+          document.getElementById('filingStatus').value = 'married';
+          document.getElementById('otherTaxableIncome').value = 0;
+          document.getElementById('enableConversion').checked = true;
+          document.getElementById('conversionAmount').value = 50000;
+          if (conversionSlider) conversionSlider.value = 50000;
+          document.getElementById('conversionStartAge').value = 50;
+          document.getElementById('conversionEndAge').value = 65;
+          document.getElementById('taxPaymentSource').value = 'withheld';
+
+          if (convArea) {
+            convArea.style.opacity = '1';
+            convArea.style.pointerEvents = 'auto';
+          }
+          if (irmaaArea) {
+            irmaaArea.style.opacity = '1';
+            irmaaArea.style.pointerEvents = 'auto';
+          }
+          if (optBanner) optBanner.classList.add('hidden');
+          activeChartMode = 'conversion';
+          if (btnConv) btnConv.click();
+          recalculate();
+        });
+      }
+
+      // Export CSV
+      const btnExport = document.getElementById('btnExportCSV');
+      if (btnExport) {
+        btnExport.addEventListener('click', () => {
+          if (!currentResults || !currentResults.years) return;
+          const rows = [
+            ['Age', 'Calendar Year', 'Pre-Tax 401k Balance', 'Tax-Free Roth Balance', 'Taxable Balance', 'Social Security Received', 'Roth Conversion Amount', 'Conversion Tax Paid (Fed+State)', 'Forced RMD (73+)', 'RMD Tax Paid (Fed+State)', 'Medicare IRMAA Paid', 'Projected Tax on Remaining Balance', 'Total Nominal Net Worth', 'After-Tax Net Worth']
+          ];
+
+          currentResults.years.forEach(r => {
+            rows.push([
+              r.age,
+              r.year,
+              r.preTax,
+              r.roth,
+              r.taxable,
+              r.ssBenefit,
+              r.conversion,
+              r.convTax,
+              r.rmd,
+              r.rmdTax,
+              r.irmaa,
+              r.projTaxOnRemaining,
+              r.netWorth,
+              r.afterTaxNetWorth
+            ]);
+          });
+
+          const csvContent = "data:text/csv;charset=utf-8," + rows.map(e => e.join(",")).join("\n");
+          const encodedUri = encodeURI(csvContent);
+          const link = document.createElement("a");
+          link.setAttribute("href", encodedUri);
+          link.setAttribute("download", `Retirement_Roth_Projection_Age90.csv`);
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+        });
+      }
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', () => {
+        initListeners();
+        recalculate();
+      });
+    } else {
+      initListeners();
+      recalculate();
+    }
+  </script>
+</body>
+</html>
