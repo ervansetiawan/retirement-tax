@@ -82,7 +82,7 @@
     .container {
       width: 100%;
       max-width: 100%;
-      overflow-x: hidden;
+      overflow-x: clip;
       box-sizing: border-box;
       margin: 0 auto;
     }
@@ -136,13 +136,19 @@
       margin-top: 0.25rem;
     }
 
-    /* What-If Scenario Quick Slider Card at Top of All Tabs */
+    /* What-If Scenario Quick Slider Card Sticky at Top of Results */
     .what-if-card {
-      background: #f8fafc;
-      border: 1px solid #bfdbfe;
+      position: -webkit-sticky;
+      position: sticky;
+      top: 0.35rem;
+      z-index: 40;
+      background: rgba(255, 255, 255, 0.98);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1.5px solid #93c5fd;
       border-radius: 12px;
       margin-bottom: 1.15rem;
-      box-shadow: 0 1px 3px rgba(37, 99, 235, 0.05);
+      box-shadow: 0 4px 14px rgba(37, 99, 235, 0.09), 0 1px 3px rgba(0, 0, 0, 0.05);
       overflow: hidden;
       transition: all 0.2s ease;
     }
@@ -198,8 +204,15 @@
       white-space: nowrap;
     }
     @media (max-width: 640px) {
-      .what-if-preview-badge {
+      .what-if-subtitle {
         display: none;
+      }
+      .what-if-preview-badge {
+        font-size: 0.74rem;
+        padding: 0.15rem 0.45rem;
+      }
+      .what-if-toggle-btn {
+        padding: 0.55rem 0.75rem;
       }
     }
     .what-if-content {
@@ -310,7 +323,7 @@
       align-items: start;
       width: 100%;
       max-width: 100%;
-      overflow-x: hidden;
+      overflow-x: clip;
     }
     .panel-view {
       min-width: 0;
@@ -321,7 +334,7 @@
       min-width: 0;
       max-width: 100%;
       width: 100%;
-      overflow-x: hidden;
+      overflow-x: clip;
     }
     #panelInputs {
       scrollbar-width: none !important;
@@ -395,136 +408,71 @@
 
     @media (max-width: 1023px) {
       .mobile-carousel-nav {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        background: #ffffff;
-        border: 1.5px solid #cbd5e1;
-        border-radius: 12px;
-        padding: 0.55rem 0.85rem;
-        margin-bottom: 0.75rem;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
-        position: sticky;
-        top: 0.25rem;
-        z-index: 25;
+        display: none !important;
       }
       .carousel-nav-arrow {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.25rem;
-        background: #f8fafc;
-        color: #1e293b;
-        border: 1px solid #cbd5e1;
-        border-radius: 8px;
-        padding: 0.4rem 0.65rem;
-        font-size: 0.86rem;
-        font-weight: 700;
-        cursor: pointer;
-        transition: all 0.15s ease;
-        touch-action: manipulation;
-        user-select: none;
-      }
-      .carousel-nav-arrow:hover:not(:disabled) {
-        background: #e2e8f0;
-        color: #0f172a;
-      }
-      .carousel-nav-arrow:disabled {
-        opacity: 0.35;
-        cursor: not-allowed;
+        display: none !important;
       }
       .carousel-nav-center {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-        gap: 0.2rem;
-        min-width: 0;
+        display: none !important;
       }
       .carousel-step-title {
-        font-size: 0.96rem;
-        font-weight: 800;
-        color: #0f172a;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        max-width: 190px;
+        display: none !important;
       }
       .carousel-dots-row {
-        display: flex;
-        align-items: center;
-        gap: 0.45rem;
+        display: none !important;
       }
       .carousel-dot {
-        width: 8px;
-        height: 8px;
-        border-radius: 50%;
-        background: #cbd5e1;
-        border: none;
-        padding: 0;
-        cursor: pointer;
-        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-        touch-action: manipulation;
-      }
-      .carousel-dot.active {
-        background: #2563eb;
-        width: 22px;
-        border-radius: 4px;
+        display: none !important;
       }
       .carousel-counter {
-        font-size: 0.78rem;
-        color: #64748b;
-        font-weight: 600;
+        display: none !important;
       }
 
       .mobile-carousel-hint {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 0.35rem;
-        font-size: 0.82rem;
-        color: #64748b;
-        font-weight: 500;
-        margin-top: 0.6rem;
-        margin-bottom: 1.15rem;
-        user-select: none;
+        display: none !important;
       }
 
-      /* Swipeable results carousel track */
+      /* Continuous vertical scroll results container (zero horizontal swipe) */
       .results-carousel-track {
         display: flex !important;
-        flex-direction: row !important;
+        flex-direction: column !important;
         flex-wrap: nowrap !important;
-        overflow-x: auto !important;
-        overflow-y: hidden !important;
-        scroll-snap-type: x mandatory !important;
+        overflow-x: visible !important;
+        overflow-y: visible !important;
+        scroll-snap-type: none !important;
         -webkit-overflow-scrolling: touch !important;
-        scroll-behavior: smooth !important;
-        gap: 0 !important;
-        margin-left: -0.5rem !important;
-        margin-right: -0.5rem !important;
-        padding: 0 0.5rem !important;
-        scrollbar-width: none !important;
-        width: calc(100% + 1rem) !important;
+        gap: 1.25rem !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        padding: 0 !important;
+        width: 100% !important;
         box-sizing: border-box !important;
       }
       .results-carousel-track::-webkit-scrollbar {
         display: none !important;
       }
 
-      /* KPI grid dissolves as contents so its 3 children become direct carousel slides */
+      /* KPI grid stacks vertically for continuous vertical scrolling */
       .kpi-grid {
-        display: contents !important;
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 1.25rem !important;
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
       }
 
       .carousel-slide {
         min-width: 100% !important;
         max-width: 100% !important;
         width: 100% !important;
-        flex: 0 0 100% !important;
-        scroll-snap-align: start !important;
-        scroll-snap-stop: always !important;
+        flex: none !important;
+        scroll-snap-align: none !important;
+        scroll-snap-stop: normal !important;
         box-sizing: border-box !important;
-        padding: 0 0.25rem !important;
+        padding: 0 !important;
+        margin: 0 !important;
       }
 
       .carousel-slide .kpi-card {
@@ -2640,7 +2588,7 @@
                 </span>
                 <span class="slider-badge">Current assets across retirement & brokerage accounts</span>
               </div>
-              <span class="balances-total-badge" id="startingBalancesTotalBadge">$2,400,000 Total</span>
+              <span class="balances-total-badge" id="startingBalancesTotalBadge">$2,500,000 Total</span>
             </div>
 
             <div class="balances-items-list">
@@ -2728,6 +2676,28 @@
                     <span>$0</span>
                     <span>$2.5M</span>
                     <span>$5M</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Health Savings Account (HSA) -->
+              <div class="balance-sub-item">
+                <div class="slider-header-row">
+                  <div class="slider-title">
+                    <span style="color: #0d9488; font-size: 0.98rem;">Health Savings Account (HSA)</span>
+                    <span class="slider-badge">100% Tax-Free Healthcare · No RMDs</span>
+                  </div>
+                  <div class="slider-val-input-wrap">
+                    <span class="prefix">$</span>
+                    <input type="number" inputmode="decimal" id="balHsa" value="100000" step="5000" class="slider-val-input has-prefix" oninput="syncFromNumber('balHsa', 'balHsaSlider')" />
+                  </div>
+                </div>
+                <div class="slider-track-wrap">
+                  <input type="range" id="balHsaSlider" min="0" max="1000000" value="100000" step="5000" oninput="syncFromSlider('balHsaSlider', 'balHsa')" />
+                  <div class="slider-range-labels">
+                    <span>$0</span>
+                    <span>$500k</span>
+                    <span>$1M</span>
                   </div>
                 </div>
               </div>
@@ -3174,7 +3144,7 @@
                     </div>
                     <div class="balance-growth-legend" id="bgGrowthLegend">
                       <span class="bg-legend-item"><span class="bg-legend-dot" style="background: #4f46e5;"></span>Taxable</span>
-                      <span class="bg-legend-item"><span class="bg-legend-dot" style="background: #10b981;"></span>Non-Taxable (Roth)</span>
+                      <span class="bg-legend-item"><span class="bg-legend-dot" style="background: #10b981;"></span>Non-Taxable (Roth &amp; HSA)</span>
                     </div>
                   </div>
                   <div class="balance-growth-canvas-wrap" id="bgCanvasWrap">
@@ -3237,7 +3207,7 @@
                         </div>
                       </div>
                       <div class="milestone-desc">
-                        Initial capital starts across 4 accounts categorized by tax treatment: <strong>Traditional 401(k) / IRA</strong> (pre-tax, taxable upon withdrawal), <strong>Taxable Brokerage</strong> (taxed on capital gains), and <strong>Roth IRA</strong> (100% tax-free).
+                        Initial capital starts across 5 accounts categorized by tax treatment: <strong>Traditional 401(k) / IRA</strong> (pre-tax, taxable upon withdrawal), <strong>Taxable Brokerage</strong> (taxed on capital gains), <strong>Health Savings Account (HSA)</strong> (100% tax-free for healthcare), and <strong>Roth IRA</strong> (100% tax-free).
                       </div>
                     </div>
 
@@ -3289,16 +3259,36 @@
                       </div>
                       <div class="milestone-desc">
                         At Age 90, ending balances across all accounts are summed:
-                        <div style="font-family: monospace; font-size: 0.74rem; background: #f8fafc; padding: 3px 6px; border-radius: 4px; margin-top: 3px; color: #334155;">Final Balance = Pre-Tax (401k/IRA) + Brokerage + Roth IRA</div>
-                        The horizontal bar breaks down the final total into <strong>Taxable</strong> (Pre-Tax &amp; Brokerage) vs. <strong>Non-Taxable</strong> (100% Tax-Free Roth).
+                        <div style="font-family: monospace; font-size: 0.74rem; background: #f8fafc; padding: 3px 6px; border-radius: 4px; margin-top: 3px; color: #334155;">Final Balance = Pre-Tax (401k/IRA) + Brokerage + Roth IRA + HSA</div>
+                        The horizontal bar breaks down the final total into <strong>Taxable</strong> (Pre-Tax &amp; Brokerage) vs. <strong>Non-Taxable</strong> (100% Tax-Free Roth &amp; HSA).
                       </div>
                     </div>
                   </div>
                 </div>
 
-                <!-- Scroll Hint to Next Tab -->
-                <div class="tab-scroll-hint-wrap" onclick="stepMobileCard(1, true)">
-                  <span>Scroll down for Withdrawal & Taxes ↓</span>
+                <!-- Withdrawal & Tax Strategy Timeline Visualization (Moved right after How We Calculate Final Balance, Non-Collapsible) -->
+                <div class="timeline-card" id="timelineSection" style="margin-top: 0.85rem;">
+                  <div class="timeline-toggle-btn" id="btnToggleTimeline" style="cursor: default;">
+                    <div class="timeline-header-left">
+                      <div class="timeline-title">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+                          <circle cx="12" cy="12" r="10"></circle>
+                          <polyline points="12 6 12 12 16 14"></polyline>
+                        </svg>
+                        <span>Withdrawal &amp; Tax Strategy Roadmap</span>
+                      </div>
+                      <span class="timeline-subtitle">Lifecycle phases grouped by withdrawal source, tax strategies &amp; statutory milestones</span>
+                    </div>
+                    <div class="timeline-header-right">
+                      <span class="timeline-preview-badge" id="timelineSummaryBadge">Analyzing Roadmap...</span>
+                      <span id="timelineChevron" style="display: none;"></span>
+                    </div>
+                  </div>
+
+                  <div class="timeline-content" id="timelineContent" style="display: block;">
+                    <div class="timeline-flow" id="timelineFlow">
+                      <!-- Dynamic timeline phases injected by renderTimelineVisualization() -->
+                    </div>
                 </div>
               </div>
             </div>
@@ -3306,8 +3296,8 @@
             <div class="carousel-slide" id="slideLifetimeTaxes">
               <div class="kpi-card" id="kpiCardLifetimeTaxes">
                 <div>
-                  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; width: 100%;">
-                    <!-- Left Column: Paid Taxes -->
+                  <div style="display: flex; flex-direction: column; gap: 1.15rem; width: 100%;">
+                    <!-- Top Block: Paid Taxes -->
                     <div>
                       <div class="kpi-label">Paid Taxes</div>
                       <div class="kpi-value" id="kpiTaxes">--</div>
@@ -3318,14 +3308,14 @@
                       </div>
                     </div>
 
-                    <!-- Right Column: Estimated Taxes on Unrealized Gain -->
-                    <div style="text-align: right;">
-                      <div class="kpi-label" style="text-align: right;">Est. Tax on Unrealized Gain</div>
-                      <div class="kpi-value" id="kpiUnrealizedTax" style="color: #7c3aed; text-align: right;">$0</div>
-                      <div class="kpi-sub" id="kpiUnrealizedTaxSub" style="text-align: right;">--</div>
-                      <div class="kpi-tax-hbar-wrap" id="kpiUnrealizedTaxHBarWrap" style="margin-top: 0.50rem; margin-left: auto;">
+                    <!-- Bottom Block: Estimated Taxes on Unrealized Gain (Below Paid Taxes) -->
+                    <div style="padding-top: 0.85rem; border-top: 1px solid #e2e8f0;">
+                      <div class="kpi-label">Est. Tax on Unrealized Gain</div>
+                      <div class="kpi-value" id="kpiUnrealizedTax" style="color: #7c3aed;">$0</div>
+                      <div class="kpi-sub" id="kpiUnrealizedTaxSub">--</div>
+                      <div class="kpi-tax-hbar-wrap" id="kpiUnrealizedTaxHBarWrap" style="margin-top: 0.50rem;">
                         <div class="kpi-tax-hbar" id="kpiUnrealizedTaxHBar"></div>
-                        <div class="kpi-tax-hbar-legend" id="kpiUnrealizedTaxHBarLegend" style="justify-content: flex-end;"></div>
+                        <div class="kpi-tax-hbar-legend" id="kpiUnrealizedTaxHBarLegend"></div>
                       </div>
                     </div>
                   </div>
@@ -3349,6 +3339,7 @@
                       <span class="bg-legend-item"><span class="bg-legend-dot" style="background: #0284c7;"></span>Pre-Tax</span>
                       <span class="bg-legend-item"><span class="bg-legend-dot" style="background: #f59e0b;"></span>Mandatory RMD</span>
                       <span class="bg-legend-item"><span class="bg-legend-dot" style="background: #a855f7;"></span>Brokerage</span>
+                      <span class="bg-legend-item"><span class="bg-legend-dot" style="background: #0d9488;"></span>HSA</span>
                       <span class="bg-legend-item"><span class="bg-legend-dot" style="background: #10b981;"></span>Roth IRA</span>
                     </div>
                   </div>
@@ -3587,11 +3578,6 @@
                     </div>
                   </div>
                 </div>
-
-                <!-- Scroll Hint to Next Tab -->
-                <div class="tab-scroll-hint-wrap" onclick="stepMobileCard(1, true)">
-                  <span>Scroll down for Year-by-Year Schedule ↓</span>
-                </div>
               </div>
             </div>
 
@@ -3604,31 +3590,6 @@
                 <div>
                   <div class="chart-title">Year-by-Year Schedule</div>
                   <div style="font-size: 1.0rem; color: var(--text-muted); font-weight: 500; margin-top: 2px;">Total inflows (withdrawal + Social Security) and where money goes: living expenses, taxes & healthcare</div>
-                </div>
-              </div>
-              <!-- Withdrawal & Tax Strategy Timeline Visualization -->
-              <div class="timeline-card" id="timelineSection">
-                <button type="button" class="timeline-toggle-btn" id="btnToggleTimeline" onclick="toggleTimelineSection()" aria-expanded="true">
-                  <div class="timeline-header-left">
-                    <div class="timeline-title">
-                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="12" cy="12" r="10"></circle>
-                        <polyline points="12 6 12 12 16 14"></polyline>
-                      </svg>
-                      <span>Withdrawal &amp; Tax Strategy Roadmap</span>
-                    </div>
-                    <span class="timeline-subtitle">Lifecycle phases grouped by withdrawal source, tax strategies &amp; statutory milestones</span>
-                  </div>
-                  <div class="timeline-header-right">
-                    <span class="timeline-preview-badge" id="timelineSummaryBadge">Analyzing Roadmap...</span>
-                    <span id="timelineChevron" class="milestones-chevron rotated">▼</span>
-                  </div>
-                </button>
-
-                <div class="timeline-content" id="timelineContent">
-                  <div class="timeline-flow" id="timelineFlow">
-                    <!-- Dynamic timeline phases injected by renderTimelineVisualization() -->
-                  </div>
                 </div>
               </div>
 
@@ -3646,9 +3607,9 @@
                   </tbody>
                 </table>
               </div>
-              <!-- Scroll Hint to Return to First Tab -->
+              <!-- Scroll Hint to Return to Top / Inputs -->
               <div class="tab-scroll-hint-wrap" onclick="goToMobileCard(0, true); window.scrollTo({ top: 0, behavior: 'smooth' });">
-                <span>↑ Back to Net Worth Analysis (Tab 1)</span>
+                <span>↑ Back to Top · Adjust Inputs &amp; Sliders</span>
               </div>
             </div>
           </div>
@@ -4339,38 +4300,17 @@
       currentMobileCardIndex = index;
       updateMobileCarouselUI(index);
 
-      const track = document.getElementById('resultsCarouselTrack');
-      const slide = document.getElementById(MOBILE_CARDS[index].id);
-      if (track && slide) {
-        isCarouselScrolling = true;
-        const targetLeft = slide.offsetLeft;
-        track.scrollTo({
-          left: targetLeft,
-          behavior: smooth ? 'smooth' : 'auto'
-        });
-        setTimeout(() => {
-          isCarouselScrolling = false;
-        }, 350);
+      const slide = document.getElementById(MOBILE_CARDS[index]?.id);
+      if (slide) {
+        slide.scrollIntoView({ behavior: smooth ? 'smooth' : 'auto', block: 'start' });
       }
 
-      // If switching to Net Worth Analysis (card 0), re-render Balance Growth SVG
-      if (index === 0 && currentSchedule && currentSchedule.length > 0 && currentPlanParams) {
+      // Re-render charts when scrolling to sections
+      if (currentSchedule && currentSchedule.length > 0 && currentPlanParams) {
         setTimeout(() => {
           renderBalanceGrowthChart(currentSchedule, currentPlanParams);
-        }, 50);
-      }
-
-      // If switching to Withdrawal and Taxes (card 1), re-render Withdrawals and Taxes SVGs
-      if (index === 1 && currentSchedule && currentSchedule.length > 0 && currentPlanParams) {
-        setTimeout(() => {
           renderWithdrawalsBySourceChart(currentSchedule, currentPlanParams);
           renderTaxesOverTimeChart(currentSchedule, currentPlanParams);
-        }, 50);
-      }
-
-      // If switching to Schedule Table & Roadmap (card 2), re-render Timeline Visualization
-      if (index === 2 && currentSchedule && currentSchedule.length > 0 && currentPlanParams) {
-        setTimeout(() => {
           renderTimelineVisualization(currentSchedule, currentPlanParams, currentDepletedAge);
         }, 50);
       }
@@ -4381,48 +4321,18 @@
       if (nextIdx < 0 || nextIdx >= MOBILE_CARDS.length) return;
       goToMobileCard(nextIdx, true);
       if (fromScroll) {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        const slide = document.getElementById(MOBILE_CARDS[nextIdx]?.id);
+        if (slide) slide.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
     }
 
     function handleCarouselScroll() {
-      if (isCarouselScrolling || window.innerWidth >= 1024) return;
-      const track = document.getElementById('resultsCarouselTrack');
-      if (!track) return;
-
-      const scrollLeft = track.scrollLeft;
-      const trackW = track.clientWidth || window.innerWidth;
-      if (trackW <= 0) return;
-
-      // Find slide closest to scroll position
-      let closestIdx = 0;
-      let minDiff = Infinity;
-      MOBILE_CARDS.forEach((card, idx) => {
-        const slide = document.getElementById(card.id);
-        if (slide) {
-          const diff = Math.abs(slide.offsetLeft - scrollLeft);
-          if (diff < minDiff) {
-            minDiff = diff;
-            closestIdx = idx;
-          }
-        } else {
-          const expectedLeft = idx * trackW;
-          const diff = Math.abs(expectedLeft - scrollLeft);
-          if (diff < minDiff) {
-            minDiff = diff;
-            closestIdx = idx;
-          }
-        }
-      });
-
-      if (closestIdx !== currentMobileCardIndex) {
-        updateMobileCarouselUI(closestIdx);
-      }
+      // Maintained for compatibility in continuous vertical scroll mode
     }
 
     /* ==========================================================================
-       VERTICAL SCROLL TO NEXT/PREVIOUS TAB NAVIGATION
-       Allows user to keep scrolling down or up at tab boundaries to transition tabs
+       VERTICAL SCROLL NAVIGATION BETWEEN INPUTS & CONTINUOUS RESULTS
+       Allows user to scroll down from Inputs into Results, and scroll up from top of Results back to Inputs
        ========================================================================== */
     let scrollTransitionCooldown = false;
     let vTouchStartY = 0;
@@ -4437,7 +4347,7 @@
       const isResultsVisible = panelResults && !panelResults.classList.contains('hidden-mobile');
 
       if (!isResultsVisible) {
-        // User is currently viewing the Inputs panel
+        // User is currently viewing the Inputs panel; scroll down at bottom goes to Results
         if (delta > 0) {
           scrollTransitionCooldown = true;
           switchMobileTab('results');
@@ -4448,29 +4358,18 @@
         return;
       }
 
-      // User is currently viewing Results carousel
-      const targetIdx = currentMobileCardIndex + delta;
-      if (targetIdx < 0) {
-        // Scrolling up past top of Net Worth Analysis (Card 0) -> Navigate back to Inputs!
+      // User is currently viewing Results; scroll up at top goes to Inputs
+      if (delta < 0) {
         scrollTransitionCooldown = true;
         switchMobileTab('inputs');
         setTimeout(() => {
           scrollTransitionCooldown = false;
         }, 700);
-        return;
       }
-      if (targetIdx >= MOBILE_CARDS.length) return;
-
-      scrollTransitionCooldown = true;
-      stepMobileCard(delta, true);
-
-      setTimeout(() => {
-        scrollTransitionCooldown = false;
-      }, 700);
     }
 
     function initVerticalScrollTabNavigation() {
-      // 1. Mobile touch swipe up/down at card boundaries
+      // 1. Mobile touch swipe up/down at boundaries
       window.addEventListener('touchstart', (e) => {
         if (window.innerWidth >= 1024 || !e.touches || e.touches.length !== 1) return;
         vTouchStartY = e.touches[0].clientY;
@@ -4480,19 +4379,11 @@
         const isResultsVisible = panelResults && !panelResults.classList.contains('hidden-mobile');
 
         if (isResultsVisible) {
-          const activeCard = document.getElementById(MOBILE_CARDS[currentMobileCardIndex]?.id);
-          if (activeCard) {
-            const rect = activeCard.getBoundingClientRect();
-            // Bottom of active card is within or near viewport bottom
-            isAtBottomOnTouchStart = (rect.bottom <= window.innerHeight + 40);
-            // Top of active card is at or near viewport top
-            isAtTopOnTouchStart = (rect.top >= -30 && window.scrollY <= 30);
-          } else {
-            isAtBottomOnTouchStart = (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 40);
-            isAtTopOnTouchStart = (window.scrollY <= 30);
-          }
+          // Top of results page
+          isAtTopOnTouchStart = (window.scrollY <= 15);
+          isAtBottomOnTouchStart = false;
         } else {
-          // On inputs panel
+          // On inputs panel: check if user is at bottom
           isAtBottomOnTouchStart = (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 40);
           isAtTopOnTouchStart = (window.scrollY <= 30);
         }
@@ -4510,28 +4401,13 @@
 
         // Check for dominant vertical swipe past boundary (> 40px vertical, dy > 1.3 * dx)
         if (Math.abs(dy) > 40 && Math.abs(dy) > Math.abs(dx) * 1.3) {
-          // If swiping finger UP (scrolling DOWN) past bottom of card/inputs -> Next
-          if (dy < -40 && isAtBottomOnTouchStart) {
-            if (!isResultsVisible) {
-              triggerVerticalTabTransition(1);
-            } else if (currentMobileCardIndex < MOBILE_CARDS.length - 1) {
-              const tableWrap = e.target.closest ? e.target.closest('.table-wrapper') : null;
-              if (tableWrap && (tableWrap.scrollTop + tableWrap.clientHeight < tableWrap.scrollHeight - 10)) {
-                return; // Table is still scrolling internally
-              }
-              triggerVerticalTabTransition(1);
-            }
+          // Swiping finger UP (scrolling DOWN) past bottom of inputs -> go to Results
+          if (dy < -40 && !isResultsVisible && isAtBottomOnTouchStart) {
+            triggerVerticalTabTransition(1);
           }
-          // If swiping finger DOWN (scrolling UP) past top of card -> Previous Tab or back to Inputs
-          else if (dy > 40 && isAtTopOnTouchStart) {
-            if (isResultsVisible) {
-              const tableWrap = e.target.closest ? e.target.closest('.table-wrapper') : null;
-              if (tableWrap && tableWrap.scrollTop > 10) {
-                return; // Table is still scrolling internally
-              }
-              // If currentMobileCardIndex === 0, triggerVerticalTabTransition(-1) goes back to Inputs!
-              triggerVerticalTabTransition(-1);
-            }
+          // Swiping finger DOWN (scrolling UP) at very top of Results -> go back to Inputs
+          else if (dy > 40 && isResultsVisible && isAtTopOnTouchStart) {
+            triggerVerticalTabTransition(-1);
           }
         }
       }, { passive: true });
@@ -4562,36 +4438,15 @@
           return;
         }
 
-        const activeCard = document.getElementById(MOBILE_CARDS[currentMobileCardIndex]?.id);
-        if (!activeCard) return;
-
-        const rect = activeCard.getBoundingClientRect();
-        const isAtBottom = (rect.bottom <= window.innerHeight + 30);
-        const isAtTop = (rect.top >= -25 && window.scrollY <= 20);
-
-        const tableWrap = e.target.closest ? e.target.closest('.table-wrapper') : null;
-        if (tableWrap) {
-          if (e.deltaY > 0 && tableWrap.scrollTop + tableWrap.clientHeight < tableWrap.scrollHeight - 5) return;
-          if (e.deltaY < 0 && tableWrap.scrollTop > 5) return;
-        }
-
-        if (e.deltaY > 0 && isAtBottom && currentMobileCardIndex < MOBILE_CARDS.length - 1) {
-          wheelAccum += e.deltaY;
-          clearTimeout(wheelResetTimer);
-          wheelResetTimer = setTimeout(() => { wheelAccum = 0; }, 200);
-
-          if (wheelAccum > 50) {
-            wheelAccum = 0;
-            triggerVerticalTabTransition(1);
-          }
-        } else if (e.deltaY < 0 && isAtTop) {
+        // On Results panel: scrolling up at the very top transitions back to Inputs
+        const isAtTop = (window.scrollY <= 10);
+        if (e.deltaY < 0 && isAtTop) {
           wheelAccum += e.deltaY;
           clearTimeout(wheelResetTimer);
           wheelResetTimer = setTimeout(() => { wheelAccum = 0; }, 200);
 
           if (wheelAccum < -50) {
             wheelAccum = 0;
-            // On card 0, this triggers transition to Inputs! On cards 1-2, transitions to previous card
             triggerVerticalTabTransition(-1);
           }
         } else {
@@ -4601,44 +4456,7 @@
     }
 
     function initMobileCarousel() {
-      const track = document.getElementById('resultsCarouselTrack');
-      if (!track) return;
-
-      let scrollDebounce;
-      track.addEventListener('scroll', () => {
-        clearTimeout(scrollDebounce);
-        scrollDebounce = setTimeout(handleCarouselScroll, 50);
-      }, { passive: true });
-
-      // Touch gesture support: swiping left/right
-      let touchStartX = 0;
-      let touchStartY = 0;
-      track.addEventListener('touchstart', (e) => {
-        if (e.touches && e.touches.length === 1) {
-          touchStartX = e.touches[0].clientX;
-          touchStartY = e.touches[0].clientY;
-        }
-      }, { passive: true });
-
-      track.addEventListener('touchend', (e) => {
-        if (e.changedTouches && e.changedTouches.length === 1) {
-          const endX = e.changedTouches[0].clientX;
-          const endY = e.changedTouches[0].clientY;
-          const dx = endX - touchStartX;
-          const dy = endY - touchStartY;
-          // Trigger card switch if decisive horizontal swipe (> 50px and dx > 1.8 * dy)
-          if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.8) {
-            if (dx < 0 && currentMobileCardIndex < MOBILE_CARDS.length - 1) {
-              stepMobileCard(1);
-            } else if (dx > 0 && currentMobileCardIndex > 0) {
-              stepMobileCard(-1);
-            }
-          }
-        }
-      }, { passive: true });
-
       initVerticalScrollTabNavigation();
-
       updateMobileCarouselUI(0);
     }
 
@@ -4659,7 +4477,15 @@
         panelInputs?.classList.add('hidden-mobile');
         panelResults?.classList.remove('hidden-mobile');
         window.scrollTo({ top: 0, behavior: 'smooth' });
-        goToMobileCard(currentMobileCardIndex || 0, false);
+        // Re-render all charts for continuous vertical view
+        if (currentSchedule && currentSchedule.length > 0 && currentPlanParams) {
+          setTimeout(() => {
+            renderBalanceGrowthChart(currentSchedule, currentPlanParams);
+            renderWithdrawalsBySourceChart(currentSchedule, currentPlanParams);
+            renderTaxesOverTimeChart(currentSchedule, currentPlanParams);
+            renderTimelineVisualization(currentSchedule, currentPlanParams, currentDepletedAge);
+          }, 60);
+        }
       }
     }
 
@@ -4709,6 +4535,9 @@
 
       document.getElementById('balBrokerage').value = 1000000;
       document.getElementById('balBrokerageSlider').value = 1000000;
+
+      if (document.getElementById('balHsa')) document.getElementById('balHsa').value = 100000;
+      if (document.getElementById('balHsaSlider')) document.getElementById('balHsaSlider').value = 100000;
 
       if (document.getElementById('annualRothConv')) document.getElementById('annualRothConv').value = 0;
       if (document.getElementById('annualRothConvSlider')) document.getElementById('annualRothConvSlider').value = 0;
@@ -4969,6 +4798,7 @@
         balIRAInit,
         balRothInit,
         balBrokerageInit,
+        balHsaInit = 100000,
         rateReturn,
         rateInflation,
         costBasisRatio,
@@ -4985,6 +4815,7 @@
       let balIRA = balIRAInit;
       let balRoth = balRothInit;
       let balBrokerage = balBrokerageInit;
+      let balHsa = (params.balHsaInit !== undefined) ? params.balHsaInit : 100000;
 
       const returnRateDec = rateReturn / 100;
       const inflationDec = rateInflation / 100;
@@ -5009,7 +4840,8 @@
           balIRA = balIRA * (1 + returnRateDec);
           balRoth = balRoth * (1 + returnRateDec);
           balBrokerage = balBrokerage * (1 + returnRateDec);
-          const totalEndingBal = bal401k + balIRA + balRoth + balBrokerage;
+          balHsa = balHsa * (1 + returnRateDec);
+          const totalEndingBal = bal401k + balIRA + balRoth + balBrokerage + balHsa;
 
           schedule.push({
             year: yearIdx + 1,
@@ -5039,6 +4871,7 @@
             targetExpense: targetExpense,
             portfolioExpenseNeed: 0,
             wBrokerage: 0,
+            wHsa: 0,
             capitalGain: 0,
             ltcgTax: 0,
             ordinaryTax: 0,
@@ -5064,6 +4897,7 @@
             balIRA: balIRA,
             balPretax: bal401k + balIRA,
             balRoth: balRoth,
+            balHsa: balHsa,
             totalEndingBal: totalEndingBal
           });
           magiHistory.push(0);
@@ -5072,7 +4906,7 @@
 
         const annualSS = (age >= ssStartAge) ? (ssMonthly * 12 * inflFactor) : 0;
         const portfolioExpenseNeed = Math.max(0, targetExpense - annualSS);
-        const totalStartBal = bal401k + balIRA + balRoth + balBrokerage;
+        const totalStartBal = bal401k + balIRA + balRoth + balBrokerage + balHsa;
 
         if (totalStartBal <= 1 && depletedAge === null) {
           depletedAge = age;
@@ -5099,6 +4933,7 @@
         const targetGrossPretaxCap = stdDed + targetOrdinaryTaxableCap;
 
         let wBrokerage = 0;
+        let wHsa = 0;
         let wPretax = 0;
         let wRoth = 0;
         let estTax = 0;
@@ -5110,7 +4945,7 @@
           if (penalizePretax) {
             // -------------------------------------------------------------
             // PRE-59½ PENALTY AVOIDANCE BRIDGE:
-            // Avoid 10% penalty by tapping Taxable Brokerage and Roth first!
+            // Avoid 10% penalty by tapping Taxable Brokerage, HSA, and Roth first!
             // -------------------------------------------------------------
             let currentNet = 0;
 
@@ -5124,14 +4959,21 @@
               currentNet = wBrokerage - brokTax;
             }
 
-            // 2. Next tap Roth IRA (contributions 0% penalty and 0% tax)
+            // 2. Next tap HSA (100% tax-free, 0% penalty for healthcare & living bridge)
+            if (currentNet < portfolioExpenseNeed && balHsa > 0) {
+              const need = portfolioExpenseNeed - currentNet;
+              wHsa = Math.min(balHsa, need);
+              currentNet += wHsa;
+            }
+
+            // 3. Next tap Roth IRA (contributions 0% penalty and 0% tax)
             if (currentNet < portfolioExpenseNeed && balRoth > 0) {
               const need = portfolioExpenseNeed - currentNet;
               wRoth = Math.min(balRoth, need);
               currentNet += wRoth;
             }
 
-            // 3. Last resort before 60: pre-tax (incurs ordinary tax + 10% penalty)
+            // 4. Last resort before 60: pre-tax (incurs ordinary tax + 10% penalty)
             if (currentNet < portfolioExpenseNeed && pretaxTotal > 0) {
               const shortfall = portfolioExpenseNeed - currentNet;
               const grossUpFactor = 0.65; // ~22% ord tax + 10% penalty
@@ -5171,6 +5013,12 @@
               currentNet = (wPretax + wBrokerage) - taxSoFar;
             }
 
+            if (currentNet < portfolioExpenseNeed && balHsa > 0) {
+              const need = portfolioExpenseNeed - currentNet;
+              wHsa = Math.min(balHsa, need);
+              currentNet += wHsa;
+            }
+
             if (currentNet < portfolioExpenseNeed && balRoth > 0) {
               const need = portfolioExpenseNeed - currentNet;
               wRoth = Math.min(balRoth, need);
@@ -5189,11 +5037,14 @@
             }
           }
 
-          if (balBrokerage > wBrokerage && (wPretax + wBrokerage + wRoth - estTax < portfolioExpenseNeed)) {
-            wBrokerage = Math.min(balBrokerage, wBrokerage + (portfolioExpenseNeed - (wPretax + wBrokerage + wRoth)));
+          if (balBrokerage > wBrokerage && (wPretax + wBrokerage + wHsa + wRoth - estTax < portfolioExpenseNeed)) {
+            wBrokerage = Math.min(balBrokerage, wBrokerage + (portfolioExpenseNeed - (wPretax + wBrokerage + wHsa + wRoth)));
           }
-          if (balRoth > wRoth && (wPretax + wBrokerage + wRoth < portfolioExpenseNeed)) {
-            wRoth = Math.min(balRoth, portfolioExpenseNeed - (wPretax + wBrokerage));
+          if (balHsa > wHsa && (wPretax + wBrokerage + wHsa + wRoth < portfolioExpenseNeed)) {
+            wHsa = Math.min(balHsa, wHsa + (portfolioExpenseNeed - (wPretax + wBrokerage + wHsa + wRoth)));
+          }
+          if (balRoth > wRoth && (wPretax + wBrokerage + wHsa + wRoth < portfolioExpenseNeed)) {
+            wRoth = Math.min(balRoth, portfolioExpenseNeed - (wPretax + wBrokerage + wHsa));
           }
 
         } else {
@@ -5218,6 +5069,12 @@
             const shortfall = portfolioExpenseNeed - currentNet;
             const addl = Math.min(remainingPretax, shortfall * 1.35);
             wPretax += addl;
+          }
+
+          if (currentNet < portfolioExpenseNeed && balHsa > 0) {
+            const need = portfolioExpenseNeed - currentNet;
+            wHsa = Math.min(balHsa, need);
+            currentNet += wHsa;
           }
 
           if (currentNet < portfolioExpenseNeed && balRoth > 0) {
@@ -5320,8 +5177,8 @@
           const stateTaxWithoutCG = computeStateTax(stateCode, status, age, wPretax, actualConv, 0, inflFactor);
           const taxWithoutCG = fedTaxWithoutCG + stateTaxWithoutCG;
           capGainTax = Math.max(0, estTax - taxWithoutCG);
-          fedCapGainTax = Math.max(0, fedTax - fedTaxWithoutCG);
-          stateCapGainTax = Math.max(0, stateTax - stateTaxWithoutCG);
+          fedCapGainTax = Math.max(0, fedTax - fedCapGainTax);
+          stateCapGainTax = Math.max(0, stateTax - stateCapGainTax);
         }
 
         // Breakdown tax specifically attributable to Social Security
@@ -5337,8 +5194,8 @@
           const stateTaxWithoutSS = computeStateTax(stateCode, status, age, wPretax, actualConv, finalCapGain, inflFactor);
           const taxWithoutSS = fedTaxWithoutSS + stateTaxWithoutSS;
           ssTax = Math.max(0, estTax - taxWithoutSS);
-          fedSsTax = Math.max(0, fedTax - fedTaxWithoutSS);
-          stateSsTax = Math.max(0, stateTax - stateTaxWithoutSS);
+          fedSsTax = Math.max(0, fedTax - fedSsTax);
+          stateSsTax = Math.max(0, stateTax - stateSsTax);
         }
 
         // Breakdown tax attributable to other incomes (ordinary pre-tax living withdrawals & early penalties)
@@ -5364,10 +5221,13 @@
         const currentYearMagi = wPretax + actualConv + finalCapGain + taxableSS;
         magiHistory.push(currentYearMagi);
 
-        // Fund conversion taxes and Medicare IRMAA surcharges from available taxable brokerage or Roth to preserve living standard
+        // Fund conversion taxes and Medicare IRMAA surcharges from available HSA, taxable brokerage, or Roth to preserve living standard
         const extraNonDiscretionary = convTax + irmaaSurcharge;
         if (extraNonDiscretionary > 0) {
-          if (balBrokerage > wBrokerage) {
+          if (balHsa > wHsa) {
+            const addlHsa = Math.min(balHsa - wHsa, extraNonDiscretionary);
+            wHsa += addlHsa;
+          } else if (balBrokerage > wBrokerage) {
             const addlBrok = Math.min(balBrokerage - wBrokerage, extraNonDiscretionary);
             wBrokerage += addlBrok;
           } else if (balRoth > wRoth) {
@@ -5381,14 +5241,16 @@
         balIRA = Math.max(0, remIRA - convIRA);
         balRoth = Math.max(0, balRoth - wRoth) + actualConv;
         balBrokerage = Math.max(0, balBrokerage - wBrokerage);
+        balHsa = Math.max(0, balHsa - wHsa);
 
         bal401k *= (1 + returnRateDec);
         balIRA *= (1 + returnRateDec);
         balRoth *= (1 + returnRateDec);
         balBrokerage *= (1 + returnRateDec);
+        balHsa *= (1 + returnRateDec);
 
-        const totalEndingBal = bal401k + balIRA + balRoth + balBrokerage;
-        const totalGrossW = wBrokerage + w401k + wIRA + wRoth;
+        const totalEndingBal = bal401k + balIRA + balRoth + balBrokerage + balHsa;
+        const totalGrossW = wBrokerage + w401k + wIRA + wRoth + wHsa;
 
         totalLifetimeTaxes += estTax;
         totalLifetimeIrmaa += irmaaSurcharge;
@@ -5419,6 +5281,7 @@
           targetExpense: targetExpense,
           portfolioExpenseNeed: portfolioExpenseNeed,
           wBrokerage: wBrokerage,
+          wHsa: wHsa,
           capitalGain: finalCapGain,
           ltcgTax: finalLtcgTax,
           ordinaryTax: finalOrdTax,
@@ -5444,6 +5307,7 @@
           balIRA: balIRA,
           balPretax: bal401k + balIRA,
           balRoth: balRoth,
+          balHsa: balHsa,
           totalEndingBal: totalEndingBal
         });
       }
@@ -5513,6 +5377,7 @@
         balIRAInit: parseFloat(document.getElementById('balIRA').value) || 0,
         balRothInit: parseFloat(document.getElementById('balRoth').value) || 0,
         balBrokerageInit: parseFloat(document.getElementById('balBrokerage').value) || 0,
+        balHsaInit: parseFloat(document.getElementById('balHsa')?.value) || 0,
         annualRothConv: parseFloat(document.getElementById('annualRothConv')?.value) || 0,
         rateReturn: parseFloat(document.getElementById('rateReturn').value) || 6.0,
         rateInflation: parseFloat(document.getElementById('rateInflation').value) || 2.5,
@@ -5725,7 +5590,7 @@
       }
 
       document.getElementById('kpiFinalBalance').textContent = formatCurrency(active.finalBalance);
-      const totalStart = params.bal401kInit + params.balIRAInit + params.balRothInit + params.balBrokerageInit;
+      const totalStart = params.bal401kInit + params.balIRAInit + params.balRothInit + params.balBrokerageInit + (params.balHsaInit || 0);
       const balBadge = document.getElementById('startingBalancesTotalBadge');
       if (balBadge) {
         balBadge.textContent = `${formatCurrency(totalStart)} Total`;
@@ -5740,11 +5605,13 @@
         if (lastRow && totalEnding > 0) {
           const finalBrok = Math.max(0, lastRow.balBrokerage || 0);
           const finalPretax = Math.max(0, lastRow.balPretax || 0);
+          const finalHsa = Math.max(0, lastRow.balHsa || 0);
           const finalRoth = Math.max(0, lastRow.balRoth || 0);
 
           const pBrok = (finalBrok / totalEnding) * 100;
           const pPretax = (finalPretax / totalEnding) * 100;
-          const pRoth = Math.max(0, 100 - pBrok - pPretax);
+          const pHsa = (finalHsa / totalEnding) * 100;
+          const pRoth = Math.max(0, 100 - pBrok - pPretax - pHsa);
 
           const barSegs = [];
           const barLegend = [];
@@ -5762,9 +5629,15 @@
             barLegend.push(`<span class="kpi-tax-hbar-legend-item"><span class="kpi-tax-hbar-dot" style="background:#1d4ed8;"></span><strong>Pre-Tax:</strong> ${formatCurrency(finalPretax)} (${Math.round(pPretax)}%)</span>`);
           }
 
-          // 3. Non-Taxable Roth IRA (Emerald Green: #16a34a)
+          // 3. Health Savings Account (Teal: #0d9488) - 100% Tax-Free
+          if (pHsa > 0.5) {
+            barSegs.push(`<div class="kpi-tax-hbar-seg" style="width:${pHsa.toFixed(1)}%; background:#0d9488;" title="Health Savings Account (100% Tax-Free): ${formatCurrency(finalHsa)} (${pHsa.toFixed(1)}%)"></div>`);
+            barLegend.push(`<span class="kpi-tax-hbar-legend-item"><span class="kpi-tax-hbar-dot" style="background:#0d9488;"></span><strong>HSA:</strong> ${formatCurrency(finalHsa)} (${Math.round(pHsa)}%)</span>`);
+          }
+
+          // 4. Non-Taxable Roth IRA (Emerald Green: #16a34a)
           if (pRoth > 0.5) {
-            const rothLabel = (pBrok > 0.5 || pPretax > 0.5) ? 'Non-Taxable:' : 'Non-Taxable (Roth):';
+            const rothLabel = (pBrok > 0.5 || pPretax > 0.5 || pHsa > 0.5) ? 'Non-Taxable (Roth):' : 'Non-Taxable:';
             barSegs.push(`<div class="kpi-tax-hbar-seg" style="width:${pRoth.toFixed(1)}%; background:#16a34a;" title="Non-Taxable Roth IRA (100% Tax-Free): ${formatCurrency(finalRoth)} (${pRoth.toFixed(1)}%)"></div>`);
             barLegend.push(`<span class="kpi-tax-hbar-legend-item"><span class="kpi-tax-hbar-dot" style="background:#16a34a;"></span><strong>${rothLabel}</strong> ${formatCurrency(finalRoth)} (${Math.round(pRoth)}%)</span>`);
           }
@@ -5808,7 +5681,7 @@
       const initialExp = params.initialExpense || 100000;
       const isSolvent = (active.depletedAge === null);
       const finalBal = active.finalBalance || 0;
-      const totalStartAssets = (params.bal401kInit || 0) + (params.balIRAInit || 0) + (params.balRothInit || 0) + (params.balBrokerageInit || 0);
+      const totalStartAssets = (params.bal401kInit || 0) + (params.balIRAInit || 0) + (params.balRothInit || 0) + (params.balBrokerageInit || 0) + (params.balHsaInit || 0);
       const ssAge = params.ssStartAge || 67;
       const annualSS = (params.ssMonthly || 0) * 12;
 
@@ -5817,7 +5690,7 @@
       let peakAge = curAge;
       if (active.schedule && active.schedule.length > 0) {
         active.schedule.forEach(r => {
-          const tot = (r.balBrokerage || 0) + (r.balPretax || 0) + (r.balRoth || 0);
+          const tot = (r.balBrokerage || 0) + (r.balPretax || 0) + (r.balRoth || 0) + (r.balHsa || 0);
           if (tot > peakBal) {
             peakBal = tot;
             peakAge = r.age;
@@ -5828,10 +5701,12 @@
       // Final balance breakdown
       let finalTaxable = 0;
       let finalRoth = 0;
+      let finalHsa = 0;
       if (active.schedule && active.schedule.length > 0) {
         const last = active.schedule[active.schedule.length - 1];
         finalTaxable = (last.balBrokerage || 0) + (last.balPretax || 0);
         finalRoth = (last.balRoth || 0);
+        finalHsa = (last.balHsa || 0);
       }
 
       const items = [];
@@ -5844,7 +5719,10 @@
 
         let wealthText = `Your plan is <strong>solvent through Age 90</strong>, leaving a projected <strong>${formatCurrency(finalBal)}</strong> estate`;
         if (finalBal > 0) {
-          wealthText += ` (${formatCurrency(finalRoth)} tax-free Roth, ${formatCurrency(finalTaxable)} taxable)`;
+          const nonTaxDesc = (finalHsa > 0 && finalRoth > 0)
+            ? `${formatCurrency(finalRoth + finalHsa)} tax-free Roth & HSA`
+            : (finalHsa > 0 ? `${formatCurrency(finalHsa)} tax-free HSA` : `${formatCurrency(finalRoth)} tax-free Roth`);
+          wealthText += ` (${nonTaxDesc}, ${formatCurrency(finalTaxable)} taxable)`;
         }
         wealthText += `. Your portfolio peaks at <strong>${formatCurrency(peakBal)}</strong> at Age ${peakAge}.`;
         items.push({ icon: '🛡️', title: 'Solvency & Estate', text: wealthText });
@@ -6160,8 +6038,8 @@
         ? ((params.balBrokerageInit || 0) + (params.bal401kInit || 0) + (params.balIRAInit || 0))
         : ((schedule[0].balBrokerage || 0) + (schedule[0].balPretax || 0));
       const startNonTaxable = params
-        ? (params.balRothInit || 0)
-        : (schedule[0].balRoth || 0);
+        ? ((params.balRothInit || 0) + (params.balHsaInit || 0))
+        : (((schedule[0].balRoth || 0) + (schedule[0].balHsa || 0)));
       const startTotal = startTaxable + startNonTaxable;
 
       // Build data points list starting from initial start of plan
@@ -6179,7 +6057,7 @@
         const tBrok = Math.max(0, row.balBrokerage || 0);
         const tPretax = Math.max(0, row.balPretax !== undefined ? row.balPretax : ((row.bal401k || 0) + (row.balIRA || 0)));
         const taxBal = tBrok + tPretax;
-        const nonTaxBal = Math.max(0, row.balRoth || 0);
+        const nonTaxBal = Math.max(0, (row.balRoth || 0) + (row.balHsa || 0));
         const totBal = Math.max(0, row.totalEndingBal !== undefined ? row.totalEndingBal : (taxBal + nonTaxBal));
 
         dataPoints.push({
@@ -6446,8 +6324,9 @@
         const mandatoryRmd = Math.max(0, row.mandatoryRmd || 0);
         const wRmd = Math.min(wPretaxTotal, mandatoryRmd);
         const wPretax = Math.max(0, wPretaxTotal - wRmd);
+        const wHsa = Math.max(0, row.wHsa || 0);
         const wRoth = Math.max(0, row.wRoth || 0);
-        const totalW = wBrok + wPretax + wRmd + wRoth;
+        const totalW = wBrok + wPretax + wRmd + wHsa + wRoth;
 
         return {
           age: row.age,
@@ -6458,6 +6337,7 @@
           wBrok: wBrok,
           wPretax: wPretax,
           wRmd: wRmd,
+          wHsa: wHsa,
           wRoth: wRoth,
           totalW: totalW,
           annualSS: Math.max(0, row.annualSS || 0)
@@ -6551,7 +6431,14 @@
           curY -= hBrok;
         }
 
-        // 4. Roth IRA (#10b981)
+        // 4. HSA (#0d9488)
+        const hHsa = (p.wHsa / maxW) * plotH;
+        if (hHsa > 0.4) {
+          barsSvg += `<rect x="${x.toFixed(1)}" y="${(curY - hHsa).toFixed(1)}" width="${barW.toFixed(1)}" height="${hHsa.toFixed(1)}" fill="#0d9488" />`;
+          curY -= hHsa;
+        }
+
+        // 5. Roth IRA (#10b981)
         const hRoth = (p.wRoth / maxW) * plotH;
         if (hRoth > 0.4) {
           barsSvg += `<rect x="${x.toFixed(1)}" y="${(curY - hRoth).toFixed(1)}" width="${barW.toFixed(1)}" height="${hRoth.toFixed(1)}" fill="#10b981" rx="1.2" />`;
@@ -6602,6 +6489,7 @@
         if (p.wBrok > 0) parts.push(`<span style="color:#c084fc;">● Brok:</span> <span style="color:#f1f5f9;">${formatCurrency(p.wBrok)}</span>`);
         if (p.wPretax > 0) parts.push(`<span style="color:#38bdf8;">● Pre-Tax:</span> <span style="color:#f1f5f9;">${formatCurrency(p.wPretax)}</span>`);
         if (p.wRmd > 0) parts.push(`<span style="color:#fbbf24;">● RMD:</span> <span style="color:#f1f5f9;">${formatCurrency(p.wRmd)}</span>`);
+        if (p.wHsa > 0) parts.push(`<span style="color:#2dd4bf;">● HSA:</span> <span style="color:#f1f5f9;">${formatCurrency(p.wHsa)}</span>`);
         if (p.wRoth > 0) parts.push(`<span style="color:#34d399;">● Roth:</span> <span style="color:#f1f5f9;">${formatCurrency(p.wRoth)}</span>`);
         if (parts.length === 0) parts.push(`<span style="color:#94a3b8;">$0 Withdrawals (${p.phaseLabel})</span>`);
         if (p.annualSS > 0) parts.push(`<span style="color:#a7f3d0;">· SS:</span> <span style="color:#f1f5f9;">${formatCurrency(p.annualSS)}</span>`);
@@ -6931,6 +6819,7 @@
           balIRA: p.balIRAInit,
           balRoth: p.balRothInit,
           balBrokerage: p.balBrokerageInit,
+          balHsa: p.balHsaInit,
           annualExpense: p.initialExpense
         };
       }
@@ -6978,7 +6867,7 @@
       const currentAge = baseParams.currentAge;
       const currentRetireAge = baseParams.retirementAge;
       const currentExpense = baseParams.initialExpense;
-      const totalStartAssets = baseParams.bal401kInit + baseParams.balIRAInit + baseParams.balRothInit + baseParams.balBrokerageInit;
+      const totalStartAssets = baseParams.bal401kInit + baseParams.balIRAInit + baseParams.balRothInit + baseParams.balBrokerageInit + (baseParams.balHsaInit || 0);
       const activeStrat = activeStrategy || 'smart';
 
       const targetLabels = {
@@ -7703,14 +7592,9 @@
        sources, tax strategies, and statutory milestones.
        ========================================================================== */
     function toggleTimelineSection() {
+      // Non-collapsible: content is always visible
       const content = document.getElementById('timelineContent');
-      const chev = document.getElementById('timelineChevron');
-      const btn = document.getElementById('btnToggleTimeline');
-      if (!content) return;
-      const isHidden = (content.style.display === 'none');
-      content.style.display = isHidden ? 'block' : 'none';
-      if (chev) chev.classList.toggle('rotated', isHidden);
-      if (btn) btn.setAttribute('aria-expanded', isHidden ? 'true' : 'false');
+      if (content) content.style.display = 'block';
     }
 
     function generateTimelinePhases(schedule, params, depletedAge) {
@@ -7740,7 +7624,7 @@
           (depletedAge !== null && depletedAge !== undefined && d.age >= depletedAge) ||
           ((d.totalEndingBal || 0) <= 1 && (d.totalGrossW || 0) <= 1)
         ));
-        const isRothFree = (!isWorking && !isDepleted && (d.balPretax || 0) <= 0 && (d.balBrokerage || 0) <= 0 && (d.wRoth || 0) > 0);
+        const isRothFree = (!isWorking && !isDepleted && (d.balPretax || 0) <= 0 && (d.balBrokerage || 0) <= 0 && ((d.wRoth || 0) > 0 || (d.wHsa || 0) > 0));
         const isRmdPhase = (!isWorking && !isDepleted && d.isRmd && (d.mandatoryRmd || 0) > 0 && (d.balPretax || 0) > 0);
         const isSSActive = (!isWorking && !isDepleted && (d.annualSS || 0) > 0 && !isRmdPhase && !isRothFree);
         const isEarlyBridge = (!isWorking && !isDepleted && d.age < 60 && (d.wBrokerage || 0) > 0 && !isSSActive);
@@ -7752,7 +7636,7 @@
         else if (isRmdPhase) type = 'RMD';
         else if (isSSActive) type = 'SS_ACTIVE';
         else if (isEarlyBridge) type = 'BROKERAGE_BRIDGE';
-        else if ((d.wBrokerage || 0) > 0 && (d.wPretax || 0) <= 0 && (d.wRoth || 0) <= 0) type = 'BROKERAGE_BRIDGE';
+        else if ((d.wBrokerage || 0) > 0 && (d.wPretax || 0) <= 0 && (d.wRoth || 0) <= 0 && (d.wHsa || 0) <= 0) type = 'BROKERAGE_BRIDGE';
 
         if (!currentPhase || currentPhase.type !== type) {
           if (currentPhase) {
@@ -7776,6 +7660,7 @@
             totalIrmaa: d.irmaaSurcharge || 0,
             wBrokerageSum: d.wBrokerage || 0,
             wPretaxSum: d.wPretax || 0,
+            wHsaSum: d.wHsa || 0,
             wRothSum: d.wRoth || 0
           };
         } else {
@@ -7793,6 +7678,7 @@
           currentPhase.totalIrmaa += (d.irmaaSurcharge || 0);
           currentPhase.wBrokerageSum += (d.wBrokerage || 0);
           currentPhase.wPretaxSum += (d.wPretax || 0);
+          currentPhase.wHsaSum += (d.wHsa || 0);
           currentPhase.wRothSum += (d.wRoth || 0);
         }
       }
@@ -7878,7 +7764,7 @@
             catBg = '#eff6ff';
             catColor = '#1d4ed8';
             title = 'Working & Wealth Accumulation';
-            desc = `Active employment wages fund baseline living expenses ($0 portfolio withdrawals). Pre-tax 401(k), IRA, Brokerage, and Roth accounts compound uninterrupted at ${retRate}% annual return.`;
+            desc = `Active employment wages fund baseline living expenses ($0 portfolio withdrawals). Pre-tax 401(k), IRA, Brokerage, Roth, and HSA accounts compound uninterrupted at ${retRate}% annual return.`;
             chips.push(`<span>💼 Inflow: <strong>Active Wages</strong></span>`);
             chips.push(`<span>📈 Growth: <strong>${retRate}% Compounding</strong></span>`);
             chips.push(`<span>🛡️ Taxes: <strong>$0 Retirement Tax</strong></span>`);
@@ -7955,13 +7841,13 @@
             nodeBg = '#dcfce7';
             nodeBorder = '#86efac';
             nodeColor = '#15803d';
-            catBadge = '100% Tax-Free Roth';
+            catBadge = '100% Tax-Free Roth & HSA';
             catBg = '#dcfce7';
             catColor = '#15803d';
-            title = '100% Tax-Free Roth Drawdown Phase';
-            desc = `Pre-tax and brokerage accounts have been fully drawn down or converted. All remaining retirement living costs are funded 100% tax-free from Roth IRA distributions with $0 federal and $0 state taxes through Age 90.`;
+            title = '100% Tax-Free Roth & HSA Drawdown Phase';
+            desc = `Pre-tax and brokerage accounts have been fully drawn down or converted. All remaining retirement living costs are funded 100% tax-free from Roth IRA and HSA distributions with $0 federal and $0 state taxes through Age 90.`;
             chips.push(`<span>💵 Avg W/D: <strong>${formatCurrency(avgW)}/yr</strong></span>`);
-            chips.push(`<span>💎 Source: <strong>100% Roth IRA</strong></span>`);
+            chips.push(`<span>💎 Source: <strong>100% Roth & HSA</strong></span>`);
             chips.push(`<span>🎉 Taxes: <strong>$0 Lifetime Taxes</strong></span>`);
             break;
 
@@ -7975,7 +7861,7 @@
             catBg = '#fee2e2';
             catColor = '#b91c1c';
             title = `🚨 Money Runs Out: Portfolio Depleted at Age ${phase.startAge}`;
-            desc = `All investment accounts (Brokerage, 401(k)/IRA, and Roth) are completely exhausted at Age ${phase.startAge} (${phase.startYear}). Portfolio distributions drop to $0/yr for the remaining ${yrs} year${yrs === 1 ? '' : 's'} through Age 90.` +
+            desc = `All investment accounts (Brokerage, 401(k)/IRA, Roth, and HSA) are completely exhausted at Age ${phase.startAge} (${phase.startYear}). Portfolio distributions drop to $0/yr for the remaining ${yrs} year${yrs === 1 ? '' : 's'} through Age 90.` +
                    (avgSS > 0
                      ? ` Guaranteed Social Security provides ${formatCurrency(avgSS)}/yr, leaving an annual unfunded spending deficit of ${formatCurrency(shortfall)}/yr against the target ${formatCurrency(avgExpense)}/yr lifestyle.`
                      : ` With no Social Security active, your target lifestyle of ${formatCurrency(avgExpense)}/yr is 100% unfunded.`);
@@ -8094,6 +7980,7 @@
         if (totalBal > 0) {
           const pPretaxBal = Math.min(100, Math.max(0, (((d.balPretax || (d.bal401k + d.balIRA))) / totalBal) * 100));
           const pBrokBal = Math.min(100, Math.max(0, ((d.balBrokerage || 0) / totalBal) * 100));
+          const pHsaBal = Math.min(100, Math.max(0, ((d.balHsa || 0) / totalBal) * 100));
           const pRothBal = Math.min(100, Math.max(0, ((d.balRoth || 0) / totalBal) * 100));
 
           const bSegs = [];
@@ -8105,6 +7992,10 @@
           if (pBrokBal > 0) {
             bSegs.push(`<div class="tbl-hbar-seg" style="width:${pBrokBal.toFixed(1)}%; background:#9333ea;" title="Brokerage: ${formatCurrency(d.balBrokerage)} (${Math.round(pBrokBal)}%)"></div>`);
             bLegend.push(`<span class="tbl-hbar-legend-item"><span class="tbl-hbar-dot" style="background:#9333ea;"></span>Brok ${Math.round(pBrokBal)}%</span>`);
+          }
+          if (pHsaBal > 0) {
+            bSegs.push(`<div class="tbl-hbar-seg" style="width:${pHsaBal.toFixed(1)}%; background:#0d9488;" title="HSA: ${formatCurrency(d.balHsa)} (${Math.round(pHsaBal)}%)"></div>`);
+            bLegend.push(`<span class="tbl-hbar-legend-item"><span class="tbl-hbar-dot" style="background:#0d9488;"></span>HSA ${Math.round(pHsaBal)}%</span>`);
           }
           if (pRothBal > 0) {
             bSegs.push(`<div class="tbl-hbar-seg" style="width:${pRothBal.toFixed(1)}%; background:#16a34a;" title="Roth IRA: ${formatCurrency(d.balRoth)} (${Math.round(pRothBal)}%)"></div>`);
@@ -8158,6 +8049,7 @@
               ${ssNote}
               ${taxDetailNote}
               ${irmaaNote}
+              ${d.wHsa > 0 ? `<div class="tbl-sub-note" style="color:#0d9488; font-weight:600;">• HSA: ${formatCurrency(d.wHsa)} (Tax-Free)</div>` : ''}
               ${d.isEarlyPenalty ? `<div class="tbl-sub-note" style="color:#b91c1c; font-weight:600;">• Early Pen (10%): ${formatCurrency(d.earlyPenalty)}</div>` : ''}
               ${d.taxableSS > 0 ? `<div class="tbl-sub-note-detail" style="color:#15803d;">(incl. ${formatCurrency(d.taxableSS)} taxable SS)</div>` : ''}
               ${d.convTax > 0 ? `<div class="tbl-sub-note-detail" style="color:#b45309;">(incl. ${formatCurrency(d.convTax)} conv tax)</div>` : ''}
