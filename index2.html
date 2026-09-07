@@ -7,7 +7,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
-  <title>Retirement Tax-Minimizing Withdrawal Calculator</title>
+  <title>FIRE TaxCalc</title>
   <meta name="description" content="A mobile-optimized retirement withdrawal calculator with touch-friendly sliding bars, optimizing multi-bucket drawdowns to minimize taxes through Age 90." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -130,17 +130,32 @@
       background: #f8fafc;
       border: 1px solid #bfdbfe;
       border-radius: 12px;
-      padding: 0.75rem 1rem;
       margin-bottom: 1.15rem;
       box-shadow: 0 1px 3px rgba(37, 99, 235, 0.05);
+      overflow: hidden;
+      transition: all 0.2s ease;
     }
-    .what-if-header {
+    .what-if-toggle-btn {
+      width: 100%;
+      background: transparent;
+      border: none;
+      padding: 0.70rem 1rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 0.65rem;
+      cursor: pointer;
+      text-align: left;
+      gap: 0.75rem;
+      transition: background 0.15s ease;
+    }
+    .what-if-toggle-btn:hover {
+      background: #f1f5f9;
+    }
+    .what-if-header-left {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
       flex-wrap: wrap;
-      gap: 0.35rem;
     }
     .what-if-title {
       font-size: 0.88rem;
@@ -154,6 +169,30 @@
       font-size: 0.74rem;
       color: #64748b;
       font-weight: 500;
+    }
+    .what-if-header-right {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      flex-shrink: 0;
+    }
+    .what-if-preview-badge {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #2563eb;
+      background: #eff6ff;
+      border: 1px solid #dbeafe;
+      padding: 0.18rem 0.55rem;
+      border-radius: 9999px;
+      white-space: nowrap;
+    }
+    @media (max-width: 640px) {
+      .what-if-preview-badge {
+        display: none;
+      }
+    }
+    .what-if-content {
+      padding: 0.15rem 1rem 0.85rem 1rem;
     }
     .what-if-grid {
       display: grid;
@@ -252,39 +291,6 @@
       backdrop-filter: blur(12px);
       box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
     }
-    @media (min-width: 1024px) {
-      .mobile-nav-bar {
-        display: none !important;
-      }
-    }
-    .mobile-tab-btn {
-      flex: 1;
-      padding: 0.75rem 0.5rem;
-      border: 1px solid transparent;
-      border-radius: 8px;
-      background: transparent;
-      color: var(--text-muted);
-      font-size: 1.05rem;
-      font-weight: 700;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.45rem;
-      transition: all 0.15s ease;
-      white-space: nowrap;
-      min-height: 48px;
-    }
-    .mobile-tab-btn:hover {
-      background: #f1f5f9;
-      color: var(--text-main);
-    }
-    .mobile-tab-btn.active {
-      background: var(--primary);
-      color: #ffffff;
-      box-shadow: 0 2px 8px rgba(37, 99, 235, 0.35);
-    }
-
     /* Grid Layout: Responsive 1-col on mobile, 2-col on desktop */
     .dashboard-grid {
       display: grid;
@@ -306,6 +312,15 @@
       width: 100%;
       overflow-x: hidden;
     }
+    #panelInputs {
+      scrollbar-width: none !important;
+      -ms-overflow-style: none !important;
+    }
+    #panelInputs::-webkit-scrollbar {
+      display: none !important;
+      width: 0 !important;
+      height: 0 !important;
+    }
     @media (min-width: 1024px) {
       .dashboard-grid {
         grid-template-columns: 340px minmax(0, 1fr);
@@ -319,17 +334,13 @@
         top: 1rem;
         max-height: calc(100vh - 2rem);
         overflow-y: auto;
-        padding-right: 4px;
+        scrollbar-width: none !important;
+        -ms-overflow-style: none !important;
       }
       #panelInputs::-webkit-scrollbar {
-        width: 5px;
-      }
-      #panelInputs::-webkit-scrollbar-track {
-        background: transparent;
-      }
-      #panelInputs::-webkit-scrollbar-thumb {
-        background: var(--border);
-        border-radius: 4px;
+        display: none !important;
+        width: 0 !important;
+        height: 0 !important;
       }
     }
     @media (min-width: 1440px) {
@@ -357,22 +368,6 @@
       justify-content: center;
       min-height: 50px;
       font-size: 1.02rem;
-      font-weight: 700;
-      border-radius: 8px;
-    }
-    .mobile-back-wrap {
-      margin-bottom: 0.85rem;
-    }
-    @media (min-width: 1024px) {
-      .mobile-back-wrap {
-        display: none !important;
-      }
-    }
-    .mobile-back-btn {
-      width: 100%;
-      justify-content: center;
-      min-height: 46px;
-      font-size: 0.98rem;
       font-weight: 700;
       border-radius: 8px;
     }
@@ -1807,7 +1802,7 @@
       font-size: 1.08rem;
       text-align: right;
     }
-    @media (max-width: 1023px) {
+    @media (min-width: 641px) and (max-width: 1023px) {
       table {
         min-width: 500px;
       }
@@ -1875,6 +1870,85 @@
       font-weight: 700;
       margin-left: 0.25rem;
     }
+    .tag-early-pen {
+      background: #fee2e2;
+      color: #b91c1c;
+      border: 1px solid #fca5a5;
+    }
+
+    /* Table Column Header Responsive Helpers */
+    .th-compact {
+      display: none;
+    }
+    .th-full {
+      display: inline;
+    }
+
+    /* Table Typography & Component Classes */
+    .tbl-yr-val {
+      font-size: 0.96rem;
+      color: #64748b;
+      line-height: 1.15;
+    }
+    .tbl-age-val {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: #0f172a;
+      margin-top: 2px;
+    }
+    .tbl-tag-row {
+      margin-top: 3px;
+    }
+    .tbl-inflow-header {
+      display: flex;
+      justify-content: flex-end;
+      align-items: baseline;
+      gap: 0.5rem;
+    }
+    .tbl-inflow-lbl {
+      font-size: 0.96rem;
+      color: #64748b;
+      font-weight: 600;
+    }
+    .tbl-inflow-val {
+      color: #0f172a;
+      font-size: 1.20rem;
+      font-weight: 800;
+    }
+    .tbl-sub-notes {
+      margin-top: 5px;
+      border-top: 1px dashed #e2e8f0;
+      padding-top: 4px;
+      text-align: right;
+    }
+    .tbl-sub-note {
+      font-size: 0.95rem;
+      margin-top: 3px;
+      line-height: 1.35;
+    }
+    .tbl-sub-note-sub {
+      font-size: 0.90rem;
+    }
+    .tbl-sub-note-detail {
+      font-size: 0.88rem;
+      margin-top: 1px;
+    }
+    .tbl-bal-val {
+      font-weight: 800;
+      font-size: 1.15rem;
+      color: #0f172a;
+    }
+    .tbl-empty-inflow {
+      font-size: 0.92rem;
+      color: #94a3b8;
+      margin-top: 3px;
+    }
+    .tbl-depleted-val {
+      font-size: 0.94rem;
+      color: #dc2626;
+      font-weight: 700;
+      margin-top: 3px;
+    }
 
     /* Table Mini Horizontal Stacked Bar Charts */
     .tbl-hbar-wrap {
@@ -1918,6 +1992,185 @@
       height: 8px;
       border-radius: 50%;
       display: inline-block;
+    }
+
+    /* Mobile Table Layout: Zero-Scroll Horizontal Optimization */
+    @media (max-width: 640px) {
+      .table-card {
+        padding: 0.65rem 0.35rem;
+        margin-bottom: 1.25rem;
+      }
+      .table-actions {
+        margin-bottom: 0.5rem;
+        gap: 0.4rem;
+      }
+      .table-wrapper {
+        overflow-x: hidden !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box;
+        border-radius: 6px;
+      }
+      table {
+        min-width: 0 !important;
+        width: 100% !important;
+        table-layout: fixed;
+        font-size: 0.76rem;
+      }
+      th {
+        padding: 0.45rem 0.20rem;
+        font-size: 0.70rem;
+        white-space: normal;
+        word-break: break-word;
+        line-height: 1.15;
+      }
+      td {
+        padding: 0.45rem 0.25rem;
+        font-size: 0.76rem;
+        white-space: normal;
+        word-break: break-word;
+        overflow-wrap: break-word;
+      }
+      th:first-child, td:first-child {
+        width: 56px !important;
+        min-width: 56px !important;
+        max-width: 56px !important;
+        padding: 0.40rem 0.10rem;
+        border-right: 1px solid #e2e8f0;
+      }
+      td:first-child {
+        position: static !important;
+      }
+      th:first-child {
+        position: sticky !important;
+        top: 0 !important;
+        z-index: 15 !important;
+      }
+      th:nth-child(2), td:nth-child(2) {
+        width: calc(64% - 36px) !important;
+        padding-left: 0.30rem;
+        padding-right: 0.30rem;
+      }
+      th:nth-child(3), td:nth-child(3) {
+        width: calc(36% - 20px) !important;
+        padding-left: 0.30rem;
+        padding-right: 0.25rem;
+      }
+      .th-full {
+        display: none !important;
+      }
+      .th-compact {
+        display: inline !important;
+      }
+      .tbl-yr-val {
+        font-size: 0.68rem !important;
+      }
+      .tbl-age-val {
+        font-size: 0.80rem !important;
+        font-weight: 700;
+        margin-top: 1px;
+      }
+      .tbl-tag-row {
+        margin-top: 2px;
+      }
+      .tag-rmd {
+        font-size: 0.60rem !important;
+        padding: 0.10rem 0.25rem !important;
+        margin-left: 0;
+        display: inline-block;
+      }
+      .tbl-inflow-header {
+        gap: 0.25rem;
+      }
+      .tbl-inflow-lbl {
+        font-size: 0.66rem !important;
+      }
+      .tbl-inflow-val {
+        font-size: 0.80rem !important;
+        white-space: nowrap;
+      }
+      .tbl-bal-val {
+        font-size: 0.80rem !important;
+        white-space: nowrap;
+      }
+      .tbl-hbar-wrap {
+        min-width: 0 !important;
+        max-width: 100% !important;
+        width: 100% !important;
+        margin-top: 3px;
+      }
+      .tbl-hbar {
+        height: 6px !important;
+        border-radius: 3px !important;
+      }
+      .tbl-hbar-legend {
+        gap: 0.20rem !important;
+        font-size: 0.60rem !important;
+        margin-top: 2px !important;
+        line-height: 1.1 !important;
+      }
+      .tbl-hbar-legend-item {
+        gap: 2px !important;
+      }
+      .tbl-hbar-dot {
+        width: 5px !important;
+        height: 5px !important;
+      }
+      .tbl-sub-notes {
+        margin-top: 3px;
+        padding-top: 3px;
+      }
+      .tbl-sub-note {
+        font-size: 0.64rem !important;
+        margin-top: 2px;
+        line-height: 1.20 !important;
+      }
+      .tbl-sub-note-sub {
+        font-size: 0.60rem !important;
+        display: block;
+      }
+      .tbl-sub-note-detail {
+        font-size: 0.60rem !important;
+        margin-top: 1px;
+      }
+      .tbl-empty-inflow, .tbl-depleted-val {
+        font-size: 0.65rem !important;
+        margin-top: 2px;
+      }
+    }
+
+    /* Bottom Tab Scroll Hint Buttons */
+    .tab-scroll-hint-wrap {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.65rem 0.85rem;
+      margin-top: 1rem;
+      background: #f8fafc;
+      border: 1.5px dashed #cbd5e1;
+      border-radius: 8px;
+      color: #475569;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      user-select: none;
+      text-align: center;
+    }
+    .tab-scroll-hint-wrap:hover {
+      background: #eff6ff;
+      color: #2563eb;
+      border-color: #93c5fd;
+    }
+    .tab-scroll-hint-wrap.tab-scroll-hint-top {
+      margin-top: 0;
+      margin-bottom: 0.75rem;
+    }
+    @media (min-width: 1024px) {
+      .tab-scroll-hint-wrap {
+        display: none !important;
+      }
     }
 
     /* KPI Lifetime Taxes Horizontal Breakdown Bar */
@@ -1991,76 +2244,6 @@
       background: #f8fafc;
       border-color: #94a3b8;
     }
-
-    /* Explanation Guide: 100% width, 1-col on mobile, 2-col on tablet/desktop */
-    .guide-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 1.15rem;
-      margin-top: 1.25rem;
-      width: 100%;
-      min-width: 0;
-      max-width: 100%;
-      box-sizing: border-box;
-      overflow: hidden;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-    }
-    @media (min-width: 640px) {
-      .guide-card {
-        padding: 1.35rem;
-      }
-    }
-    .guide-title {
-      font-size: 1.20rem;
-      font-weight: 700;
-      margin-bottom: 0.85rem;
-      color: #1d4ed8;
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-    }
-    .guide-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 0.85rem;
-    }
-    @media (min-width: 640px) {
-      .guide-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 1rem;
-      }
-    }
-    .guide-box {
-      background: #f8fafc;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 0.95rem;
-    }
-    .guide-box h4 {
-      font-size: 1.10rem;
-      font-weight: 700;
-      color: var(--text-main);
-      margin-bottom: 0.35rem;
-      display: flex;
-      align-items: center;
-      gap: 0.35rem;
-    }
-    .guide-box p {
-      font-size: 1.0rem;
-      color: var(--text-muted);
-      line-height: 1.5;
-    }
-
-    /* Footer */
-    footer {
-      margin-top: 2.5rem;
-      text-align: center;
-      color: var(--text-dim);
-      font-size: 0.75rem;
-      border-top: 1px solid var(--border);
-      padding-top: 1.25rem;
-    }
   </style>
 </head>
 <body>
@@ -2074,25 +2257,10 @@
             <line x1="12" y1="1" x2="12" y2="23"></line>
             <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
           </svg>
-          Retirement Calculator
-        </div>
-        <div class="brand-subtitle">
-          Touch-friendly year-by-year tax-minimizing withdrawal planner.
+          FIRE TaxCalc
         </div>
       </div>
     </header>
-
-    <!-- Mobile Quick View Navigation -->
-    <nav class="mobile-nav-bar" id="mobileNavBar" aria-label="Mobile Navigation">
-      <button class="mobile-tab-btn active" id="btnTabInputs" onclick="switchMobileTab('inputs')">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
-        <span>Inputs</span>
-      </button>
-      <button class="mobile-tab-btn" id="btnTabResults" onclick="switchMobileTab('results')">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10"></path><path d="M12 20V4"></path><path d="M6 20V14"></path></svg>
-        <span>Results</span>
-      </button>
-    </nav>
 
     <!-- Main Grid -->
     <div class="dashboard-grid">
@@ -2102,21 +2270,6 @@
           <div class="card-title">
             <span>Tell me about your situation</span>
             <button class="btn-action btn-secondary" style="padding: 0.25rem 0.75rem; font-size: 0.82rem; min-height: 34px;" onclick="resetInputs()">Reset</button>
-          </div>
-
-          <!-- Strategy Toggle: 2 Distinct Objectives -->
-          <div class="strategy-toggle">
-            <button id="stratSmart" class="strategy-btn active" onclick="setStrategy('smart')" title="Fills low 10%/12% brackets and uses Roth as a tax shield">
-              <span class="strat-btn-title">Smart Bracket-Fill</span>
-              <span class="strat-btn-desc">Minimizes your taxes</span>
-            </button>
-            <button id="stratConv" class="strategy-btn" onclick="setStrategy('conv')" title="Standard rule of thumb: Brokerage first, Pre-tax second, Roth last">
-              <span class="strat-btn-title">Conventional Order</span>
-              <span class="strat-btn-desc">Standard rule of thumb</span>
-            </button>
-          </div>
-          <div class="strategy-desc-banner" id="strategyDescBanner">
-            <strong>Smart Bracket-Fill:</strong> Fills low 10%/12% ordinary brackets with pre-tax distributions and uses tax-free Roth withdrawals as a shield against 22%+ spikes and IRMAA cliffs.
           </div>
 
           <!-- 1. Age & Timeline Planning (Grouped Box) -->
@@ -2657,64 +2810,66 @@
 
       <!-- Main Content Area -->
       <main id="panelResults" class="panel-view">
-        <div class="mobile-back-wrap">
-          <button class="btn-action btn-secondary mobile-back-btn" onclick="switchMobileTab('inputs')">
-            ← Back to Adjust Inputs & Sliders
-          </button>
-        </div>
-
         <!-- What-If Scenario Quick Slider Bar (At Top of All Tabs) -->
         <div class="what-if-card" id="whatIfSection">
-          <div class="what-if-header">
-            <div class="what-if-title">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
-              </svg>
-              <span>What-If Scenarios</span>
+          <button type="button" class="what-if-toggle-btn" id="btnToggleWhatIf" onclick="toggleWhatIfSection()" aria-expanded="false">
+            <div class="what-if-header-left">
+              <div class="what-if-title">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                </svg>
+                <span>What-If Scenarios</span>
+              </div>
+              <span class="what-if-subtitle">Adjust assumptions to test scenarios in real time across all tabs</span>
             </div>
-            <span class="what-if-subtitle">Adjust assumptions to test scenarios in real time across all tabs</span>
-          </div>
-
-          <div class="what-if-grid">
-            <!-- 1. Investment Growth Rate Slider -->
-            <div class="what-if-item">
-              <div class="what-if-item-header">
-                <span class="what-if-label">Investment Return</span>
-                <span class="what-if-val" id="whatIfReturnVal">6.0%</span>
-              </div>
-              <input type="range" class="what-if-slider" id="whatIfReturnSlider" min="2.0" max="12.0" step="0.1" value="6.0" oninput="syncWhatIfReturn(this.value)" aria-label="What-if Investment Return" />
-              <div class="what-if-range-labels">
-                <span>2.0%</span>
-                <span>6.0%</span>
-                <span>12.0%</span>
-              </div>
+            <div class="what-if-header-right">
+              <span class="what-if-preview-badge" id="whatIfPreviewBadge">6.0% Return · Age 50 · $0/yr</span>
+              <span id="whatIfChevron" class="milestones-chevron">▼</span>
             </div>
+          </button>
 
-            <!-- 2. Retirement Age Slider -->
-            <div class="what-if-item">
-              <div class="what-if-item-header">
-                <span class="what-if-label">Retirement Age</span>
-                <span class="what-if-val" id="whatIfRetireAgeVal">Age 50</span>
+          <div class="what-if-content" id="whatIfContent" style="display: none;">
+            <div class="what-if-grid">
+              <!-- 1. Investment Growth Rate Slider -->
+              <div class="what-if-item">
+                <div class="what-if-item-header">
+                  <span class="what-if-label">Investment Return</span>
+                  <span class="what-if-val" id="whatIfReturnVal">6.0%</span>
+                </div>
+                <input type="range" class="what-if-slider" id="whatIfReturnSlider" min="2.0" max="12.0" step="0.1" value="6.0" oninput="syncWhatIfReturn(this.value)" aria-label="What-if Investment Return" />
+                <div class="what-if-range-labels">
+                  <span>2.0%</span>
+                  <span>6.0%</span>
+                  <span>12.0%</span>
+                </div>
               </div>
-              <input type="range" class="what-if-slider" id="whatIfRetireAgeSlider" min="30" max="85" step="1" value="50" oninput="syncWhatIfRetireAge(this.value)" aria-label="What-if Retirement Age" />
-              <div class="what-if-range-labels">
-                <span id="whatIfRetireMinLabel">Age 50</span>
-                <span>Age 65</span>
-                <span>Age 85</span>
-              </div>
-            </div>
 
-            <!-- 3. Annual Roth Conversion Slider -->
-            <div class="what-if-item">
-              <div class="what-if-item-header">
-                <span class="what-if-label">Annual Roth Conversion</span>
-                <span class="what-if-val" id="whatIfRothConvVal">$0/yr</span>
+              <!-- 2. Retirement Age Slider -->
+              <div class="what-if-item">
+                <div class="what-if-item-header">
+                  <span class="what-if-label">Retirement Age</span>
+                  <span class="what-if-val" id="whatIfRetireAgeVal">Age 50</span>
+                </div>
+                <input type="range" class="what-if-slider" id="whatIfRetireAgeSlider" min="30" max="85" step="1" value="50" oninput="syncWhatIfRetireAge(this.value)" aria-label="What-if Retirement Age" />
+                <div class="what-if-range-labels">
+                  <span id="whatIfRetireMinLabel">Age 50</span>
+                  <span>Age 65</span>
+                  <span>Age 85</span>
+                </div>
               </div>
-              <input type="range" class="what-if-slider" id="whatIfRothConvSlider" min="0" max="300000" step="5000" value="0" oninput="syncWhatIfRothConv(this.value)" aria-label="What-if Annual Roth Conversion" />
-              <div class="what-if-range-labels">
-                <span>$0</span>
-                <span>$150k</span>
-                <span>$300k</span>
+
+              <!-- 3. Annual Roth Conversion Slider -->
+              <div class="what-if-item">
+                <div class="what-if-item-header">
+                  <span class="what-if-label">Annual Roth Conversion</span>
+                  <span class="what-if-val" id="whatIfRothConvVal">$0/yr</span>
+                </div>
+                <input type="range" class="what-if-slider" id="whatIfRothConvSlider" min="0" max="300000" step="5000" value="0" oninput="syncWhatIfRothConv(this.value)" aria-label="What-if Annual Roth Conversion" />
+                <div class="what-if-range-labels">
+                  <span>$0</span>
+                  <span>$150k</span>
+                  <span>$300k</span>
+                </div>
               </div>
             </div>
           </div>
@@ -2744,6 +2899,10 @@
           <!-- KPI Cards Grid (on mobile displays as contents so 3 children are direct sequential slides 0, 1, 2) -->
           <div class="kpi-grid">
             <div class="carousel-slide" id="slideFinalBalance">
+              <!-- Scroll Up Hint to Inputs on Mobile -->
+              <div class="tab-scroll-hint-wrap tab-scroll-hint-top" onclick="switchMobileTab('inputs')">
+                <span>↑ Scroll up to Adjust Inputs &amp; Sliders</span>
+              </div>
               <div class="kpi-card" id="kpiCardFinalBalance">
                 <div>
                   <div class="kpi-label">Final Balance (End of Simulation · Age 90)</div>
@@ -2886,6 +3045,11 @@
                       </div>
                     </div>
                   </div>
+                </div>
+
+                <!-- Scroll Hint to Next Tab -->
+                <div class="tab-scroll-hint-wrap" onclick="stepMobileCard(1, true)">
+                  <span>Scroll down for Withdrawal & Taxes ↓</span>
                 </div>
               </div>
             </div>
@@ -3174,6 +3338,11 @@
                     </div>
                   </div>
                 </div>
+
+                <!-- Scroll Hint to Next Tab -->
+                <div class="tab-scroll-hint-wrap" onclick="stepMobileCard(1, true)">
+                  <span>Scroll down for Year-by-Year Schedule ↓</span>
+                </div>
               </div>
             </div>
 
@@ -3203,9 +3372,9 @@
                 <table>
                   <thead>
                     <tr>
-                      <th style="text-align: center;">Year / Age</th>
-                      <th style="color: #2563eb;">Total Inflows & Where Money Goes</th>
-                      <th style="font-weight: 800; color: #0f172a;">Ending Balance</th>
+                      <th class="tbl-col-yr" style="text-align: center;">Year / Age</th>
+                      <th class="tbl-col-inflow" style="color: #2563eb;"><span class="th-full">Total Inflows & Where Money Goes</span><span class="th-compact">Inflow & Usage</span></th>
+                      <th class="tbl-col-bal" style="font-weight: 800; color: #0f172a;"><span class="th-full">Ending Balance</span><span class="th-compact">Ending Bal</span></th>
                     </tr>
                   </thead>
                   <tbody id="scheduleTableBody">
@@ -3213,71 +3382,20 @@
                   </tbody>
                 </table>
               </div>
+              <!-- Scroll Hint to Return to First Tab -->
+              <div class="tab-scroll-hint-wrap" onclick="goToMobileCard(0, true); window.scrollTo({ top: 0, behavior: 'smooth' });">
+                <span>↑ Back to Net Worth Analysis (Tab 1)</span>
+              </div>
             </div>
           </div>
         </div>
 
         <!-- Mobile Carousel Swipe Hint -->
         <div class="mobile-carousel-hint" id="mobileCarouselHint">
-          <span>👈 Swipe left or right to switch cards 👉</span>
-        </div>
-
-        <!-- Strategy Explanatory Guide -->
-        <div class="guide-card">
-          <div class="guide-title">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <circle cx="12" cy="12" r="10"></circle>
-              <line x1="12" y1="16" x2="12" y2="12"></line>
-              <line x1="12" y1="8" x2="12.01" y2="8"></line>
-            </svg>
-            How Tax-Minimization Protects Your Wealth
-          </div>
-          <div class="guide-grid">
-            <div class="guide-box">
-              <h4>1. Standard Deduction Harvesting (0% Tax)</h4>
-              <p>Every year, the standard deduction ($14,600 Single, $29,200 MFJ, plus $1,550-$1,950 extra for age 65+) provides 0% tax headroom. We withdraw pre-tax funds into this space <strong>100% tax-free</strong>.</p>
-            </div>
-            <div class="guide-box">
-              <h4>2. Strategic Bracket-Filling (10% & 12%)</h4>
-              <p>Draining taxable accounts first allows pre-tax accounts to balloon into a "tax bomb" triggering heavy RMD taxes at ages 73-75. Filling lower brackets early prevents future tax spikes.</p>
-            </div>
-            <div class="guide-box">
-              <h4>3. Roth IRA as a High-Tax Shield</h4>
-              <p>When expenses exceed low ordinary brackets, Roth withdrawals cover the rest tax-free, preventing you from crossing into 22%/24%+ brackets or Medicare IRMAA penalties.</p>
-            </div>
-            <div class="guide-box">
-              <h4>4. SECURE 2.0 RMD Compliance</h4>
-              <p>Mandatory Required Minimum Distributions start at age 73 (or 75 for birth year 1960+), automatically calculated and satisfied from pre-tax buckets.</p>
-            </div>
-            <div class="guide-box">
-              <h4>5. Pre-59½ Early Penalty Avoidance (IRC § 72(t))</h4>
-              <p>Withdrawing pre-tax funds before age 59½ incurs a 10% IRS penalty. Our Smart Strategy shields you by tapping Brokerage and Roth principal first, reserving pre-tax accounts until age 60 (or toggling the Rule of 55 / SEPP exemption).</p>
-            </div>
-            <div class="guide-box">
-              <h4>6. Preferential Long-Term Capital Gains (0% & 15% LTCG)</h4>
-              <p>Brokerage withdrawals are split into tax-free principal (adjusted via the Cost Basis slider) and taxable capital gains. Gains stack on top of ordinary income, utilizing the 0% LTCG threshold ($94,050 MFJ / $47,025 Single in 2024, inflation-indexed) to achieve zero capital gains tax.</p>
-            </div>
-            <div class="guide-box">
-              <h4>7. Roth Conversions & Defusing Future RMDs</h4>
-              <p>Converting pre-tax balances to Roth in early retirement locks in lower ordinary brackets (10%, 12%, or 22%) and permanently eliminates Age 73/75 RMD tax spikes. Converted funds grow tax-free forever, and conversions carry <strong>0% early withdrawal penalty</strong>.</p>
-            </div>
-            <div class="guide-box">
-              <h4>8. Medicare IRMAA Surcharges & 2-Year Lookback Rule</h4>
-              <p>At age 65, Medicare Part B & D premiums apply income-based surcharges (IRMAA) with steep cliffs. Under statutory rules, your surcharge is determined by your MAGI from <strong>2 years prior</strong>. Strategic Roth conversions and tax-free Roth withdrawals shield you from crossing IRMAA cliff thresholds.</p>
-            </div>
-            <div class="guide-box">
-              <h4>9. Minnesota & State Tax Optimization</h4>
-              <p>Minnesota taxes retirement distributions and taxable capital gains progressively across 5.35% to 9.85% brackets (with a bonus senior standard deduction at age 65+). Our Smart Strategy coordinates withdrawals so you smooth state brackets alongside federal brackets, while displaying exact lifetime comparisons to Minnesota state taxes.</p>
-            </div>
-          </div>
+          <span>👈 Swipe or scroll down/up to switch tabs 👉</span>
         </div>
       </main>
     </div>
-
-    <!-- Footer -->
-    <footer>
-      Retirement Tax-Minimizing Withdrawal Calculator &bull; Touch-Friendly Sliding Bars &bull; Ready for GitHub Pages
-    </footer>
   </div>
 
   <script>
@@ -3884,6 +4002,33 @@
         whatIfRothSlider.value = conv;
         if (whatIfRothVal) whatIfRothVal.textContent = formatCurrency(conv) + '/yr';
       }
+
+      // Sync Preview Badge
+      const whatIfPreview = document.getElementById('whatIfPreviewBadge');
+      if (whatIfPreview && rateInput && retAgeInput && convInput) {
+        const rate = parseFloat(rateInput.value) || 6.0;
+        const curAge = parseInt(curAgeInput ? curAgeInput.value : 50) || 50;
+        const retAge = parseInt(retAgeInput.value) || curAge;
+        const conv = parseFloat(convInput.value) || 0;
+        whatIfPreview.textContent = `${rate.toFixed(1)}% Return · Age ${retAge} · ${formatCurrency(conv)}/yr`;
+      }
+    }
+
+    function toggleWhatIfSection() {
+      const content = document.getElementById('whatIfContent');
+      const chevron = document.getElementById('whatIfChevron');
+      const btn = document.getElementById('btnToggleWhatIf');
+      if (!content) return;
+      const isHidden = (content.style.display === 'none' || !content.style.display);
+      if (isHidden) {
+        content.style.display = 'block';
+        if (chevron) chevron.classList.add('rotated');
+        if (btn) btn.setAttribute('aria-expanded', 'true');
+      } else {
+        content.style.display = 'none';
+        if (chevron) chevron.classList.remove('rotated');
+        if (btn) btn.setAttribute('aria-expanded', 'false');
+      }
     }
 
     /* ==========================================================================
@@ -3921,17 +4066,6 @@
       dots.forEach((dot, idx) => {
         dot.classList.toggle('active', idx === index);
       });
-
-      // Synchronize top mobile navigation tabs (Inputs, Results)
-      if (window.innerWidth < 1024) {
-        const btnInputs = document.getElementById('btnTabInputs');
-        const btnResults = document.getElementById('btnTabResults');
-        const panelResults = document.getElementById('panelResults');
-        if (panelResults && !panelResults.classList.contains('hidden-mobile')) {
-          if (btnResults) btnResults.classList.add('active');
-          if (btnInputs) btnInputs.classList.remove('active');
-        }
-      }
     }
 
     function goToMobileCard(index, smooth = true) {
@@ -3970,8 +4104,13 @@
       }
     }
 
-    function stepMobileCard(delta) {
-      goToMobileCard(currentMobileCardIndex + delta, true);
+    function stepMobileCard(delta, fromScroll = false) {
+      const nextIdx = currentMobileCardIndex + delta;
+      if (nextIdx < 0 || nextIdx >= MOBILE_CARDS.length) return;
+      goToMobileCard(nextIdx, true);
+      if (fromScroll) {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
     }
 
     function handleCarouselScroll() {
@@ -4007,6 +4146,186 @@
       if (closestIdx !== currentMobileCardIndex) {
         updateMobileCarouselUI(closestIdx);
       }
+    }
+
+    /* ==========================================================================
+       VERTICAL SCROLL TO NEXT/PREVIOUS TAB NAVIGATION
+       Allows user to keep scrolling down or up at tab boundaries to transition tabs
+       ========================================================================== */
+    let scrollTransitionCooldown = false;
+    let vTouchStartY = 0;
+    let vTouchStartX = 0;
+    let isAtBottomOnTouchStart = false;
+    let isAtTopOnTouchStart = false;
+
+    function triggerVerticalTabTransition(delta) {
+      if (scrollTransitionCooldown || isCarouselScrolling || window.innerWidth >= 1024) return;
+
+      const panelResults = document.getElementById('panelResults');
+      const isResultsVisible = panelResults && !panelResults.classList.contains('hidden-mobile');
+
+      if (!isResultsVisible) {
+        // User is currently viewing the Inputs panel
+        if (delta > 0) {
+          scrollTransitionCooldown = true;
+          switchMobileTab('results');
+          setTimeout(() => {
+            scrollTransitionCooldown = false;
+          }, 700);
+        }
+        return;
+      }
+
+      // User is currently viewing Results carousel
+      const targetIdx = currentMobileCardIndex + delta;
+      if (targetIdx < 0) {
+        // Scrolling up past top of Net Worth Analysis (Card 0) -> Navigate back to Inputs!
+        scrollTransitionCooldown = true;
+        switchMobileTab('inputs');
+        setTimeout(() => {
+          scrollTransitionCooldown = false;
+        }, 700);
+        return;
+      }
+      if (targetIdx >= MOBILE_CARDS.length) return;
+
+      scrollTransitionCooldown = true;
+      stepMobileCard(delta, true);
+
+      setTimeout(() => {
+        scrollTransitionCooldown = false;
+      }, 700);
+    }
+
+    function initVerticalScrollTabNavigation() {
+      // 1. Mobile touch swipe up/down at card boundaries
+      window.addEventListener('touchstart', (e) => {
+        if (window.innerWidth >= 1024 || !e.touches || e.touches.length !== 1) return;
+        vTouchStartY = e.touches[0].clientY;
+        vTouchStartX = e.touches[0].clientX;
+
+        const panelResults = document.getElementById('panelResults');
+        const isResultsVisible = panelResults && !panelResults.classList.contains('hidden-mobile');
+
+        if (isResultsVisible) {
+          const activeCard = document.getElementById(MOBILE_CARDS[currentMobileCardIndex]?.id);
+          if (activeCard) {
+            const rect = activeCard.getBoundingClientRect();
+            // Bottom of active card is within or near viewport bottom
+            isAtBottomOnTouchStart = (rect.bottom <= window.innerHeight + 40);
+            // Top of active card is at or near viewport top
+            isAtTopOnTouchStart = (rect.top >= -30 && window.scrollY <= 30);
+          } else {
+            isAtBottomOnTouchStart = (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 40);
+            isAtTopOnTouchStart = (window.scrollY <= 30);
+          }
+        } else {
+          // On inputs panel
+          isAtBottomOnTouchStart = (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 40);
+          isAtTopOnTouchStart = (window.scrollY <= 30);
+        }
+      }, { passive: true });
+
+      window.addEventListener('touchend', (e) => {
+        if (window.innerWidth >= 1024 || scrollTransitionCooldown || !e.changedTouches || e.changedTouches.length !== 1) return;
+        const endY = e.changedTouches[0].clientY;
+        const endX = e.changedTouches[0].clientX;
+        const dy = endY - vTouchStartY;
+        const dx = endX - vTouchStartX;
+
+        const panelResults = document.getElementById('panelResults');
+        const isResultsVisible = panelResults && !panelResults.classList.contains('hidden-mobile');
+
+        // Check for dominant vertical swipe past boundary (> 40px vertical, dy > 1.3 * dx)
+        if (Math.abs(dy) > 40 && Math.abs(dy) > Math.abs(dx) * 1.3) {
+          // If swiping finger UP (scrolling DOWN) past bottom of card/inputs -> Next
+          if (dy < -40 && isAtBottomOnTouchStart) {
+            if (!isResultsVisible) {
+              triggerVerticalTabTransition(1);
+            } else if (currentMobileCardIndex < MOBILE_CARDS.length - 1) {
+              const tableWrap = e.target.closest ? e.target.closest('.table-wrapper') : null;
+              if (tableWrap && (tableWrap.scrollTop + tableWrap.clientHeight < tableWrap.scrollHeight - 10)) {
+                return; // Table is still scrolling internally
+              }
+              triggerVerticalTabTransition(1);
+            }
+          }
+          // If swiping finger DOWN (scrolling UP) past top of card -> Previous Tab or back to Inputs
+          else if (dy > 40 && isAtTopOnTouchStart) {
+            if (isResultsVisible) {
+              const tableWrap = e.target.closest ? e.target.closest('.table-wrapper') : null;
+              if (tableWrap && tableWrap.scrollTop > 10) {
+                return; // Table is still scrolling internally
+              }
+              // If currentMobileCardIndex === 0, triggerVerticalTabTransition(-1) goes back to Inputs!
+              triggerVerticalTabTransition(-1);
+            }
+          }
+        }
+      }, { passive: true });
+
+      // 2. Mouse wheel / trackpad scroll at boundaries
+      let wheelAccum = 0;
+      let wheelResetTimer = null;
+
+      window.addEventListener('wheel', (e) => {
+        if (window.innerWidth >= 1024 || scrollTransitionCooldown) return;
+
+        const panelResults = document.getElementById('panelResults');
+        const isResultsVisible = panelResults && !panelResults.classList.contains('hidden-mobile');
+
+        if (!isResultsVisible) {
+          const isAtBottom = (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 30);
+          if (e.deltaY > 0 && isAtBottom) {
+            wheelAccum += e.deltaY;
+            clearTimeout(wheelResetTimer);
+            wheelResetTimer = setTimeout(() => { wheelAccum = 0; }, 200);
+            if (wheelAccum > 50) {
+              wheelAccum = 0;
+              triggerVerticalTabTransition(1);
+            }
+          } else {
+            wheelAccum = 0;
+          }
+          return;
+        }
+
+        const activeCard = document.getElementById(MOBILE_CARDS[currentMobileCardIndex]?.id);
+        if (!activeCard) return;
+
+        const rect = activeCard.getBoundingClientRect();
+        const isAtBottom = (rect.bottom <= window.innerHeight + 30);
+        const isAtTop = (rect.top >= -25 && window.scrollY <= 20);
+
+        const tableWrap = e.target.closest ? e.target.closest('.table-wrapper') : null;
+        if (tableWrap) {
+          if (e.deltaY > 0 && tableWrap.scrollTop + tableWrap.clientHeight < tableWrap.scrollHeight - 5) return;
+          if (e.deltaY < 0 && tableWrap.scrollTop > 5) return;
+        }
+
+        if (e.deltaY > 0 && isAtBottom && currentMobileCardIndex < MOBILE_CARDS.length - 1) {
+          wheelAccum += e.deltaY;
+          clearTimeout(wheelResetTimer);
+          wheelResetTimer = setTimeout(() => { wheelAccum = 0; }, 200);
+
+          if (wheelAccum > 50) {
+            wheelAccum = 0;
+            triggerVerticalTabTransition(1);
+          }
+        } else if (e.deltaY < 0 && isAtTop) {
+          wheelAccum += e.deltaY;
+          clearTimeout(wheelResetTimer);
+          wheelResetTimer = setTimeout(() => { wheelAccum = 0; }, 200);
+
+          if (wheelAccum < -50) {
+            wheelAccum = 0;
+            // On card 0, this triggers transition to Inputs! On cards 1-2, transitions to previous card
+            triggerVerticalTabTransition(-1);
+          }
+        } else {
+          wheelAccum = 0;
+        }
+      }, { passive: true });
     }
 
     function initMobileCarousel() {
@@ -4046,6 +4365,8 @@
         }
       }, { passive: true });
 
+      initVerticalScrollTabNavigation();
+
       updateMobileCarouselUI(0);
     }
 
@@ -4057,35 +4378,16 @@
 
       const panelInputs = document.getElementById('panelInputs');
       const panelResults = document.getElementById('panelResults');
-      const btnInputs = document.getElementById('btnTabInputs');
-      const btnResults = document.getElementById('btnTabResults');
-
-      const buttons = document.querySelectorAll('.mobile-tab-btn');
-      buttons.forEach(b => b.classList.remove('active'));
 
       if (tab === 'inputs') {
-        if (btnInputs) btnInputs.classList.add('active');
         panelInputs?.classList.remove('hidden-mobile');
         panelResults?.classList.add('hidden-mobile');
         window.scrollTo({ top: 0, behavior: 'smooth' });
       } else if (tab === 'results') {
-        if (btnResults) btnResults.classList.add('active');
         panelInputs?.classList.add('hidden-mobile');
         panelResults?.classList.remove('hidden-mobile');
         window.scrollTo({ top: 0, behavior: 'smooth' });
-        goToMobileCard(currentMobileCardIndex, false);
-      } else if (tab === 'charts') {
-        if (btnResults) btnResults.classList.add('active');
-        panelInputs?.classList.add('hidden-mobile');
-        panelResults?.classList.remove('hidden-mobile');
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-        goToMobileCard(3, false);
-      } else if (tab === 'table') {
-        if (btnResults) btnResults.classList.add('active');
-        panelInputs?.classList.add('hidden-mobile');
-        panelResults?.classList.remove('hidden-mobile');
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-        goToMobileCard(4, false);
+        goToMobileCard(currentMobileCardIndex || 0, false);
       }
     }
 
@@ -4166,20 +4468,7 @@
     };
 
     function setStrategy(strat) {
-      activeStrategy = strat;
-      const ids = ['stratSmart', 'stratConv'];
-      const map = { smart: 'stratSmart', conv: 'stratConv' };
-      ids.forEach(id => {
-        const btn = document.getElementById(id);
-        if (btn) {
-          if (id === map[strat]) btn.classList.add('active');
-          else btn.classList.remove('active');
-        }
-      });
-      const descEl = document.getElementById('strategyDescBanner');
-      if (descEl && STRATEGY_DESCRIPTIONS[strat]) {
-        descEl.innerHTML = STRATEGY_DESCRIPTIONS[strat];
-      }
+      activeStrategy = 'smart';
       calculatePlan();
     }
 
@@ -4968,7 +5257,8 @@
       const smartResult = simulateRetirement('smart', params);
       const convResult = simulateRetirement('conv', params);
 
-      const activeResult = (activeStrategy === 'smart') ? smartResult : convResult;
+      activeStrategy = 'smart';
+      const activeResult = smartResult;
       currentSchedule = activeResult.schedule;
       currentPlanParams = params;
 
@@ -7193,7 +7483,7 @@
             </div>
           `;
         } else {
-          wBarHtml = '<div style="font-size:0.92rem; color:#94a3b8; margin-top:3px;">$0 inflow / outflow</div>';
+          wBarHtml = '<div class="tbl-empty-inflow">$0 inflow / outflow</div>';
         }
 
         // 2. Build Multi-Bucket Ending Balances Horizontal Bar Chart
@@ -7226,56 +7516,54 @@
             </div>
           `;
         } else {
-          balBarHtml = '<div style="font-size:0.94rem; color:#dc2626; font-weight:700; margin-top:3px;">Portfolio Depleted</div>';
+          balBarHtml = '<div class="tbl-depleted-val">Portfolio Depleted</div>';
         }
 
         // Build Social Security note
         const ssNote = d.annualSS > 0
-          ? `<div style="font-size:0.95rem; color:#15803d; font-weight:600; margin-top:3px;">• Social Security: ${formatCurrency(d.annualSS)}</div>`
+          ? `<div class="tbl-sub-note" style="color:#15803d; font-weight:600;">• SS: ${formatCurrency(d.annualSS)}</div>`
           : '';
 
         // Build IRMAA / Other note
         let irmaaNote = '';
         if (d.age >= 65) {
           if (d.irmaaSurcharge > 0) {
-            irmaaNote = `<div style="font-size:0.94rem; color:#d97706; font-weight:600; margin-top:2px;">• Medicare IRMAA: ${formatCurrency(d.irmaaSurcharge)} (Tier ${d.irmaaTier})</div>`;
+            irmaaNote = `<div class="tbl-sub-note" style="color:#d97706; font-weight:600;">• IRMAA: ${formatCurrency(d.irmaaSurcharge)} (T${d.irmaaTier})</div>`;
           } else {
-            irmaaNote = `<div style="font-size:0.92rem; color:#64748b; margin-top:2px;">• Medicare IRMAA: $0</div>`;
+            irmaaNote = `<div class="tbl-sub-note" style="color:#64748b;">• IRMAA: $0</div>`;
           }
         }
 
         // Build tax subtext note
         const taxDetailNote = taxCost > 0
-          ? `<div style="font-size:0.95rem; color:#dc2626; margin-top:3px; line-height:1.4;">• Est. Taxes: <strong>${formatCurrency(taxCost)}</strong> (Fed: ${formatCurrency(d.fedTax)} · ${d.stateCode}: ${formatCurrency(d.stateTax)})</div>`
-          : `<div style="font-size:0.95rem; color:#16a34a; font-weight:600; margin-top:3px;">• Est. Taxes: $0 (Tax-Free)</div>`;
+          ? `<div class="tbl-sub-note" style="color:#dc2626;">• Taxes: <strong>${formatCurrency(taxCost)}</strong> <span class="tbl-sub-note-sub">(Fed: ${formatCurrency(d.fedTax)} · ${d.stateCode}: ${formatCurrency(d.stateTax)})</span></div>`
+          : `<div class="tbl-sub-note" style="color:#16a34a; font-weight:600;">• Taxes: $0 (Tax-Free)</div>`;
 
         tr.innerHTML = `
           <td>
-            <div style="font-size: 0.96rem; color: #64748b; line-height: 1.15;">${d.calendarYear}</div>
-            <div style="font-size: 1.15rem; font-weight: 800; color: #0f172a; margin-top: 2px;">
-              Age ${d.age}
-            </div>
-            ${d.isRmd ? '<div style="margin-top:3px;"><span class="tag-rmd" title="RMD Required">RMD</span></div>' : ''}
-            ${d.isEarlyPenalty ? '<div style="margin-top:3px;"><span class="tag-rmd" style="background:#fee2e2;color:#b91c1c;border:1px solid #fca5a5;" title="Includes 10% Early Withdrawal Penalty">10% Pen</span></div>' : ''}
+            <div class="tbl-yr-val">${d.calendarYear}</div>
+            <div class="tbl-age-val">Age ${d.age}</div>
+            ${d.isRmd ? '<div class="tbl-tag-row"><span class="tag-rmd" title="RMD Required">RMD</span></div>' : ''}
+            ${d.isEarlyPenalty ? '<div class="tbl-tag-row"><span class="tag-rmd tag-early-pen" title="Includes 10% Early Withdrawal Penalty">10% Pen</span></div>' : ''}
           </td>
           <td>
-            <div style="display: flex; justify-content: flex-end; align-items: baseline; gap: 0.5rem;">
-              <span style="font-size: 0.96rem; color: #64748b; font-weight: 600;">Inflow:</span>
-              <strong style="color: #0f172a; font-size: 1.20rem;">${formatCurrency(totalInflow)}</strong>
+            <div class="tbl-inflow-header">
+              <span class="tbl-inflow-lbl">Inflow:</span>
+              <strong class="tbl-inflow-val">${formatCurrency(totalInflow)}</strong>
             </div>
             ${wBarHtml}
-            <div style="margin-top: 5px; border-top: 1px dashed #e2e8f0; padding-top: 4px;">
+            <div class="tbl-sub-notes">
               ${ssNote}
               ${taxDetailNote}
               ${irmaaNote}
-              ${d.isEarlyPenalty ? `<div style="font-size:0.90rem; color:#b91c1c; font-weight:600; margin-top:2px;">• Early Withdrawal Pen (10%): ${formatCurrency(d.earlyPenalty)}</div>` : ''}
-              ${d.taxableSS > 0 ? `<div style="font-size:0.88rem; color:#15803d; margin-top:1px;">(incl. ${formatCurrency(d.taxableSS)} taxable SS)</div>` : ''}
-              ${d.convTax > 0 ? `<div style="font-size:0.88rem; color:#b45309; margin-top:1px;">(incl. ${formatCurrency(d.convTax)} conv tax)</div>` : ''}
-              ${d.ltcgTax > 0 ? `<div style="font-size:0.88rem; color:#7e22ce; margin-top:1px;">(incl. ${formatCurrency(d.ltcgTax)} LTCG)</div>` : (d.wBrokerage > 0 ? `<div style="font-size:0.88rem; color:#15803d; margin-top:1px;">(0% LTCG rate)</div>` : '')}
+              ${d.isEarlyPenalty ? `<div class="tbl-sub-note" style="color:#b91c1c; font-weight:600;">• Early Pen (10%): ${formatCurrency(d.earlyPenalty)}</div>` : ''}
+              ${d.taxableSS > 0 ? `<div class="tbl-sub-note-detail" style="color:#15803d;">(incl. ${formatCurrency(d.taxableSS)} taxable SS)</div>` : ''}
+              ${d.convTax > 0 ? `<div class="tbl-sub-note-detail" style="color:#b45309;">(incl. ${formatCurrency(d.convTax)} conv tax)</div>` : ''}
+              ${d.ltcgTax > 0 ? `<div class="tbl-sub-note-detail" style="color:#7e22ce;">(incl. ${formatCurrency(d.ltcgTax)} LTCG)</div>` : (d.wBrokerage > 0 ? `<div class="tbl-sub-note-detail" style="color:#15803d;">(0% LTCG rate)</div>` : '')}
             </div>
           </td>
           <td>
-            <div style="font-weight: 800; font-size: 1.15rem; color: #0f172a;">${formatCurrency(d.totalEndingBal)}</div>
+            <div class="tbl-bal-val">${formatCurrency(d.totalEndingBal)}</div>
             ${balBarHtml}
           </td>
         `;
