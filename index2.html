@@ -1608,24 +1608,64 @@
             <strong>Smart Bracket-Fill:</strong> Fills low 10%/12% ordinary brackets with pre-tax distributions and uses tax-free Roth withdrawals as a shield against 22%+ spikes and IRMAA cliffs.
           </div>
 
-          <!-- 1. Age Slider Card -->
-          <div class="slider-card-group">
-            <div class="slider-header-row">
+          <!-- 1. Age & Timeline Planning (Grouped Box) -->
+          <div class="balances-group-card" style="margin-bottom: 0.9rem;">
+            <div class="balances-group-header">
               <div class="slider-title">
-                <span>Current Age</span>
-                <span class="slider-badge">Retiring right now</span>
+                <span style="display: flex; align-items: center; gap: 0.45rem;">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polyline points="12 6 12 12 16 14"></polyline>
+                  </svg>
+                  Age & Horizon
+                </span>
               </div>
-              <div class="slider-val-input-wrap" style="width: 80px;">
-                <input type="number" inputmode="numeric" id="currentAge" min="40" max="90" value="50" class="slider-val-input" oninput="syncFromNumber('currentAge', 'currentAgeSlider')" />
-              </div>
+              <span class="slider-badge" id="ageTimelineBadge" style="background:#dcfce7; color:#15803d; border:1px solid #86efac; font-size:0.88rem;">Retiring immediately</span>
             </div>
-            <div class="slider-track-wrap">
-              <input type="range" id="currentAgeSlider" min="40" max="85" value="50" step="1" oninput="syncFromSlider('currentAgeSlider', 'currentAge')" />
-              <div class="slider-range-labels">
-                <span>Age 40</span>
-                <span>Age 50</span>
-                <span>Age 85</span>
+            <div style="display: flex; flex-direction: column; gap: 0.85rem;">
+              
+              <!-- Current Age Sub-Card -->
+              <div style="background:#ffffff; border:1px solid #e2e8f0; border-radius:8px; padding:0.75rem 0.85rem;">
+                <div class="slider-header-row" style="margin-bottom:0.35rem;">
+                  <div class="slider-title">
+                    <span>Current Age</span>
+                    <span class="slider-badge" id="currentAgeBadge" style="background:#f1f5f9; color:#475569;">Your age today</span>
+                  </div>
+                  <div class="slider-val-input-wrap" style="width: 80px;">
+                    <input type="number" inputmode="numeric" id="currentAge" min="30" max="85" value="50" class="slider-val-input" oninput="handleCurrentAgeChange(this.value)" />
+                  </div>
+                </div>
+                <div class="slider-track-wrap">
+                  <input type="range" id="currentAgeSlider" min="30" max="85" value="50" step="1" oninput="handleCurrentAgeSlider(this.value)" />
+                  <div class="slider-range-labels">
+                    <span>Age 30</span>
+                    <span>Age 50</span>
+                    <span>Age 85</span>
+                  </div>
+                </div>
               </div>
+
+              <!-- Retirement Age Sub-Card -->
+              <div style="background:#ffffff; border:1px solid #e2e8f0; border-radius:8px; padding:0.75rem 0.85rem;">
+                <div class="slider-header-row" style="margin-bottom:0.35rem;">
+                  <div class="slider-title">
+                    <span>Retirement Age</span>
+                    <span class="slider-badge" id="retirementAgeBadge" style="background:#dcfce7; color:#15803d;">Retiring right now</span>
+                  </div>
+                  <div class="slider-val-input-wrap" style="width: 80px;">
+                    <input type="number" inputmode="numeric" id="retirementAge" min="50" max="85" value="50" class="slider-val-input" oninput="handleRetirementAgeChange(this.value)" />
+                  </div>
+                </div>
+                <div class="slider-track-wrap">
+                  <input type="range" id="retirementAgeSlider" min="30" max="85" value="50" step="1" oninput="handleRetirementAgeSlider(this.value)" />
+                  <div class="slider-range-labels">
+                    <span id="retAgeMinLabel">Age 50</span>
+                    <span>Age 65</span>
+                    <span>Age 85</span>
+                  </div>
+                </div>
+              </div>
+
             </div>
           </div>
 
@@ -2607,6 +2647,14 @@
       const number = document.getElementById(numberId);
       if (slider && number) {
         number.value = slider.value;
+        if (numberId === 'currentAge') {
+          handleCurrentAgeChange(slider.value);
+          return;
+        }
+        if (numberId === 'retirementAge') {
+          handleRetirementAgeChange(slider.value);
+          return;
+        }
         if (typeof onUserInputChange === 'function') {
           onUserInputChange(numberId, parseFloat(slider.value) || 0);
         }
@@ -2620,11 +2668,121 @@
       if (slider && number) {
         const val = parseFloat(number.value) || 0;
         slider.value = Math.min(parseFloat(slider.max), Math.max(parseFloat(slider.min), val));
+        if (numberId === 'currentAge') {
+          handleCurrentAgeChange(val);
+          return;
+        }
+        if (numberId === 'retirementAge') {
+          handleRetirementAgeChange(val);
+          return;
+        }
         if (typeof onUserInputChange === 'function') {
           onUserInputChange(numberId, val);
         }
         calculatePlan();
       }
+    }
+
+    function updateAgeBadges() {
+      const curInput = document.getElementById('currentAge');
+      const retInput = document.getElementById('retirementAge');
+      if (!curInput) return;
+
+      const curAge = parseInt(curInput.value) || 50;
+      const retAge = parseInt(retInput?.value) || curAge;
+
+      const curBadge = document.getElementById('currentAgeBadge');
+      if (curBadge) {
+        curBadge.textContent = 'Your age today';
+      }
+
+      const retBadge = document.getElementById('retirementAgeBadge');
+      const timeBadge = document.getElementById('ageTimelineBadge');
+      if (retBadge) {
+        if (retAge === curAge) {
+          retBadge.textContent = 'Retiring right now';
+          retBadge.style.background = '#dcfce7';
+          retBadge.style.color = '#15803d';
+          if (timeBadge) {
+            timeBadge.textContent = 'Retiring immediately';
+            timeBadge.style.background = '#dcfce7';
+            timeBadge.style.color = '#15803d';
+            timeBadge.style.borderColor = '#86efac';
+          }
+        } else {
+          const yrs = retAge - curAge;
+          retBadge.textContent = `Retiring in ${yrs} yr${yrs > 1 ? 's' : ''}`;
+          retBadge.style.background = '#e0f2fe';
+          retBadge.style.color = '#0369a1';
+          if (timeBadge) {
+            timeBadge.textContent = `${yrs} yr${yrs > 1 ? 's' : ''} to retirement`;
+            timeBadge.style.background = '#eff6ff';
+            timeBadge.style.color = '#1d4ed8';
+            timeBadge.style.borderColor = '#bfdbfe';
+          }
+        }
+      }
+
+      const retMinLabel = document.getElementById('retAgeMinLabel');
+      if (retMinLabel) {
+        retMinLabel.textContent = `Age ${curAge}`;
+      }
+    }
+
+    function handleCurrentAgeChange(val) {
+      let curAge = parseInt(val) || 50;
+      curAge = Math.min(85, Math.max(30, curAge));
+      const curInput = document.getElementById('currentAge');
+      const curSlider = document.getElementById('currentAgeSlider');
+      if (curInput) curInput.value = curAge;
+      if (curSlider) curSlider.value = curAge;
+
+      const retInput = document.getElementById('retirementAge');
+      const retSlider = document.getElementById('retirementAgeSlider');
+      let retAge = parseInt(retInput?.value) || curAge;
+
+      // Constraint: Retirement Age can't be earlier than current age
+      if (retAge < curAge) {
+        retAge = curAge;
+        if (retInput) retInput.value = retAge;
+        if (retSlider) retSlider.value = retAge;
+      }
+      if (retInput) retInput.min = curAge;
+      if (retSlider) retSlider.min = curAge;
+
+      updateAgeBadges();
+      if (typeof onUserInputChange === 'function') {
+        onUserInputChange('currentAge', curAge);
+      }
+      calculatePlan();
+    }
+
+    function handleCurrentAgeSlider(val) {
+      handleCurrentAgeChange(val);
+    }
+
+    function handleRetirementAgeChange(val) {
+      const curAge = parseInt(document.getElementById('currentAge')?.value) || 50;
+      let retAge = parseInt(val) || curAge;
+      // Constraint: Retirement Age can't be earlier than current age
+      if (retAge < curAge) {
+        retAge = curAge;
+      }
+      retAge = Math.min(85, Math.max(curAge, retAge));
+      const retInput = document.getElementById('retirementAge');
+      const retSlider = document.getElementById('retirementAgeSlider');
+      if (retInput) retInput.value = retAge;
+      if (retSlider) retSlider.value = retAge;
+
+      updateAgeBadges();
+      if (typeof onUserInputChange === 'function') {
+        onUserInputChange('retirementAge', retAge);
+      }
+      calculatePlan();
+    }
+
+    function handleRetirementAgeSlider(val) {
+      handleRetirementAgeChange(val);
     }
 
     function setFilingStatus(status) {
@@ -2709,6 +2867,10 @@
       document.getElementById('currentAge').value = 50;
       document.getElementById('currentAgeSlider').value = 50;
 
+      if (document.getElementById('retirementAge')) document.getElementById('retirementAge').value = 50;
+      if (document.getElementById('retirementAgeSlider')) document.getElementById('retirementAgeSlider').value = 50;
+      updateAgeBadges();
+
       document.getElementById('annualExpense').value = 100000;
       document.getElementById('annualExpenseSlider').value = 100000;
 
@@ -2748,6 +2910,9 @@
 
       setBracketCeiling(12);
       setStrategy('smart');
+      if (typeof resetRetirementBaseline === 'function') {
+        resetRetirementBaseline();
+      }
       onStateChange();
     }
 
@@ -3008,7 +3173,9 @@
         enableIrmaa = true
       } = params;
 
-      let age = startAge;
+      const simCurrentAge = params.currentAge || params.startAge || 50;
+      const simRetireAge = Math.max(simCurrentAge, params.retirementAge || simCurrentAge);
+      let age = simCurrentAge;
       let bal401k = bal401kInit;
       let balIRA = balIRAInit;
       let balRoth = balRothInit;
@@ -3025,11 +3192,79 @@
       let totalLifetimeGrossWithdrawn = 0;
       let depletedAge = null;
 
-      const rmdStartAge = (startAge <= 64) ? 75 : 73;
+      const rmdStartAge = (simCurrentAge <= 64) ? 75 : 73;
 
       for (let yearIdx = 0; age <= 90; yearIdx++, age++) {
         const inflFactor = Math.pow(1 + inflationDec, yearIdx);
         const targetExpense = initialExpense * inflFactor;
+        const isRetired = (age >= simRetireAge);
+
+        if (!isRetired) {
+          bal401k = bal401k * (1 + returnRateDec);
+          balIRA = balIRA * (1 + returnRateDec);
+          balRoth = balRoth * (1 + returnRateDec);
+          balBrokerage = balBrokerage * (1 + returnRateDec);
+          const totalEndingBal = bal401k + balIRA + balRoth + balBrokerage;
+
+          schedule.push({
+            year: yearIdx + 1,
+            calendarYear: 2024 + yearIdx,
+            age: age,
+            phase: 'working',
+            isWorking: true,
+            isRetired: false,
+            inflFactor: inflFactor,
+            annualSS: 0,
+            taxableSS: 0,
+            isSSEligible: false,
+            isRmd: false,
+            mandatoryRmd: 0,
+            rmdTax: 0,
+            fedRmdTax: 0,
+            stateRmdTax: 0,
+            capGainTax: 0,
+            fedCapGainTax: 0,
+            stateCapGainTax: 0,
+            ssTax: 0,
+            fedSsTax: 0,
+            stateSsTax: 0,
+            otherTax: 0,
+            isEarlyPenalty: false,
+            earlyPenalty: 0,
+            targetExpense: targetExpense,
+            portfolioExpenseNeed: 0,
+            wBrokerage: 0,
+            capitalGain: 0,
+            ltcgTax: 0,
+            ordinaryTax: 0,
+            fedTax: 0,
+            stateTax: 0,
+            stateCode: stateCode,
+            irmaaSurcharge: 0,
+            irmaaTier: 0,
+            lookbackMagi: 0,
+            w401k: 0,
+            wIRA: 0,
+            wPretax: 0,
+            wRoth: 0,
+            rothConv: 0,
+            convTax: 0,
+            fedConvTax: 0,
+            stateConvTax: 0,
+            totalGrossW: 0,
+            estTax: 0,
+            netSpendable: 0,
+            balBrokerage: balBrokerage,
+            bal401k: bal401k,
+            balIRA: balIRA,
+            balPretax: bal401k + balIRA,
+            balRoth: balRoth,
+            totalEndingBal: totalEndingBal
+          });
+          magiHistory.push(0);
+          continue;
+        }
+
         const annualSS = (age >= ssStartAge) ? (ssMonthly * 12 * inflFactor) : 0;
         const portfolioExpenseNeed = Math.max(0, targetExpense - annualSS);
         const totalStartBal = bal401k + balIRA + balRoth + balBrokerage;
@@ -3452,8 +3687,14 @@
     }
 
     function getFormValues() {
+      const currentAge = parseInt(document.getElementById('currentAge').value) || 50;
+      let retirementAge = parseInt(document.getElementById('retirementAge')?.value) || currentAge;
+      if (retirementAge < currentAge) retirementAge = currentAge;
+
       return {
-        startAge: parseInt(document.getElementById('currentAge').value) || 50,
+        currentAge: currentAge,
+        retirementAge: retirementAge,
+        startAge: currentAge,
         status: document.getElementById('filingStatus').value,
         stateCode: document.getElementById('stateSelect')?.value || 'MN',
         initialExpense: parseFloat(document.getElementById('annualExpense').value) || 100000,
@@ -3706,7 +3947,10 @@
 
       document.getElementById('kpiFinalBalance').textContent = formatCurrency(active.finalBalance);
       const totalStart = params.bal401kInit + params.balIRAInit + params.balRothInit + params.balBrokerageInit;
-      document.getElementById('kpiStartingBalance').textContent = `From ${formatCurrency(totalStart)} start (Age ${params.startAge}) → Remaining at Age 90`;
+      const retAgeDisplay = params.retirementAge > params.currentAge 
+        ? ` (Age ${params.currentAge}, Retire Age ${params.retirementAge})`
+        : ` (Age ${params.currentAge})`;
+      document.getElementById('kpiStartingBalance').textContent = `From ${formatCurrency(totalStart)} start${retAgeDisplay} → Remaining at Age 90`;
       const balBadge = document.getElementById('startingBalancesTotalBadge');
       if (balBadge) {
         balBadge.textContent = `${formatCurrency(totalStart)} Total`;
@@ -3827,96 +4071,44 @@
     let activeRetirementTarget = null;
 
     function onUserInputChange(numberId, val) {
-      if (originalRetirementBaseline) {
-        if (numberId === 'annualExpense') {
-          originalRetirementBaseline.annualExpense = val;
-        } else if (numberId === 'currentAge') {
-          originalRetirementBaseline.currentAge = Math.round(val);
-        } else if (numberId === 'bal401k') {
-          originalRetirementBaseline.bal401k = val;
-        } else if (numberId === 'balIRA') {
-          originalRetirementBaseline.balIRA = val;
-        } else if (numberId === 'balRoth') {
-          originalRetirementBaseline.balRoth = val;
-        } else if (numberId === 'balBrokerage') {
-          originalRetirementBaseline.balBrokerage = val;
-        }
-      }
+      // Kept for test suite compatibility
     }
 
     function saveOriginalBaseline() {
       if (!originalRetirementBaseline) {
+        const p = getFormValues();
         originalRetirementBaseline = {
-          currentAge: parseInt(document.getElementById('currentAge').value) || 50,
-          bal401k: parseFloat(document.getElementById('bal401k').value) || 0,
-          balIRA: parseFloat(document.getElementById('balIRA').value) || 0,
-          balRoth: parseFloat(document.getElementById('balRoth').value) || 0,
-          balBrokerage: parseFloat(document.getElementById('balBrokerage').value) || 0,
-          annualExpense: parseFloat(document.getElementById('annualExpense').value) || 100000
+          currentAge: p.startAge,
+          bal401k: p.bal401kInit,
+          balIRA: p.balIRAInit,
+          balRoth: p.balRothInit,
+          balBrokerage: p.balBrokerageInit,
+          annualExpense: p.initialExpense
         };
       }
     }
 
     function resetRetirementBaseline() {
-      if (originalRetirementBaseline) {
-        const b = originalRetirementBaseline;
-        document.getElementById('currentAge').value = b.currentAge;
-        const sAge = document.getElementById('currentAgeSlider');
-        if (sAge) sAge.value = Math.min(parseFloat(sAge.max), Math.max(parseFloat(sAge.min), b.currentAge));
+      ['btnDieWithZero', 'btnDieWithMillion', 'btnDieWith10Million'].forEach(id => {
+        const btn = document.getElementById(id);
+        if (btn) btn.className = 'btn-retire-target';
+      });
 
-        document.getElementById('bal401k').value = b.bal401k;
-        const s401k = document.getElementById('bal401kSlider');
-        if (s401k) s401k.value = Math.min(parseFloat(s401k.max), Math.max(parseFloat(s401k.min), b.bal401k));
+      const resultBox = document.getElementById('retireCalcResult');
+      if (resultBox) resultBox.style.display = 'none';
 
-        document.getElementById('balIRA').value = b.balIRA;
-        const sIRA = document.getElementById('balIRASlider');
-        if (sIRA) sIRA.value = Math.min(parseFloat(sIRA.max), Math.max(parseFloat(sIRA.min), b.balIRA));
-
-        document.getElementById('balRoth').value = b.balRoth;
-        const sRoth = document.getElementById('balRothSlider');
-        if (sRoth) sRoth.value = Math.min(parseFloat(sRoth.max), Math.max(parseFloat(sRoth.min), b.balRoth));
-
-        document.getElementById('balBrokerage').value = b.balBrokerage;
-        const sBrok = document.getElementById('balBrokerageSlider');
-        if (sBrok) sBrok.value = Math.min(parseFloat(sBrok.max), Math.max(parseFloat(sBrok.min), b.balBrokerage));
-
-        document.getElementById('annualExpense').value = b.annualExpense;
-        const sExp = document.getElementById('annualExpenseSlider');
-        if (sExp) sExp.value = Math.min(parseFloat(sExp.max), Math.max(parseFloat(sExp.min), b.annualExpense));
-
-        ['btnDieWithZero', 'btnDieWithMillion', 'btnDieWith10Million'].forEach(id => {
-          const btn = document.getElementById(id);
-          if (btn) btn.className = 'btn-retire-target';
-        });
-
-        const resultBox = document.getElementById('retireCalcResult');
-        if (resultBox) resultBox.style.display = 'none';
-
-        originalRetirementBaseline = null;
-        activeRetirementTarget = null;
-        calculatePlan();
-      }
+      activeRetirementTarget = null;
+      originalRetirementBaseline = null;
     }
 
     function calculateOptimalRetirement(targetBalance) {
-      saveOriginalBaseline();
-      const baseParams = getFormValues();
-      const currentExpense = (originalRetirementBaseline && originalRetirementBaseline.annualExpense) 
-        ? originalRetirementBaseline.annualExpense 
-        : baseParams.initialExpense;
-
-      // Always synchronize baseline annualExpense with the latest user input
-      if (originalRetirementBaseline) {
-        originalRetirementBaseline.annualExpense = currentExpense;
+      // Toggle off if clicking the currently active target button
+      if (activeRetirementTarget === targetBalance) {
+        resetRetirementBaseline();
+        return;
       }
-      const baseline = originalRetirementBaseline;
-      const currentAge = baseline.currentAge;
+
       activeRetirementTarget = targetBalance;
-
-      const resultBox = document.getElementById('retireCalcResult');
-      if (!resultBox) return;
-
-      const activeStrat = activeStrategy || 'smart';
 
       // Update button active classes
       const btnZero = document.getElementById('btnDieWithZero');
@@ -3926,152 +4118,19 @@
       if (btnMillion) btnMillion.className = 'btn-retire-target' + (targetBalance === 1000000 ? ' active-million' : '');
       if (btn10Million) btn10Million.className = 'btn-retire-target' + (targetBalance === 10000000 ? ' active-10million' : '');
 
-      const targetLabels = {
-        0: 'Die with Zero ($0 at 90)',
-        1000000: 'Die with Million ($1M at 90)',
-        10000000: 'Die with 10 Million ($10M at 90)'
-      };
-      const targetLabel = targetLabels[targetBalance] || `Target ${formatCurrency(targetBalance)}`;
-
-      // Search across candidate retirement ages 40 to 90 using latest inputs
-      let optimalAge = null;
-      let optimalFinalBal = 0;
-      let optimalGrownAssets = null;
-
-      for (let a = 40; a <= 90; a++) {
-        let testP;
-        if (a <= currentAge) {
-          testP = {
-            ...baseParams,
-            startAge: a,
-            bal401kInit: baseline.bal401k,
-            balIRAInit: baseline.balIRA,
-            balRothInit: baseline.balRoth,
-            balBrokerageInit: baseline.balBrokerage,
-            initialExpense: currentExpense
-          };
-        } else {
-          const yrs = a - currentAge;
-          const gFactor = Math.pow(1 + (baseParams.rateReturn || 6) / 100, yrs);
-          const iFactor = Math.pow(1 + (baseParams.rateInflation || 2.5) / 100, yrs);
-          testP = {
-            ...baseParams,
-            startAge: a,
-            bal401kInit: baseline.bal401k * gFactor,
-            balIRAInit: baseline.balIRA * gFactor,
-            balRothInit: baseline.balRoth * gFactor,
-            balBrokerageInit: baseline.balBrokerage * gFactor,
-            initialExpense: currentExpense * iFactor
-          };
-        }
-
-        const res = simulateRetirement(activeStrat, testP);
-        if (res.depletedAge === null && res.finalBalance >= targetBalance) {
-          optimalAge = a;
-          optimalFinalBal = res.finalBalance;
-          if (a > currentAge) {
-            const yrs = a - currentAge;
-            const gFactor = Math.pow(1 + (baseParams.rateReturn || 6) / 100, yrs);
-            const iFactor = Math.pow(1 + (baseParams.rateInflation || 2.5) / 100, yrs);
-            optimalGrownAssets = {
-              bal401k: Math.round(baseline.bal401k * gFactor),
-              balIRA: Math.round(baseline.balIRA * gFactor),
-              balRoth: Math.round(baseline.balRoth * gFactor),
-              balBrokerage: Math.round(baseline.balBrokerage * gFactor),
-              total: Math.round((baseline.bal401k + baseline.balIRA + baseline.balRoth + baseline.balBrokerage) * gFactor),
-              inflatedExpense: Math.round(currentExpense * iFactor)
-            };
-          }
-          break;
-        }
-      }
-
-      resultBox.style.display = 'block';
-
-      if (optimalAge !== null) {
-        // Apply optimal age to form
-        const ageInput = document.getElementById('currentAge');
-        const ageSlider = document.getElementById('currentAgeSlider');
-        if (ageInput) ageInput.value = optimalAge;
-        if (ageSlider) {
-          ageSlider.value = Math.min(parseFloat(ageSlider.max), Math.max(parseFloat(ageSlider.min), optimalAge));
-        }
-
-        // If age > currentAge, update starting balances to compounded assets and expenses to inflated level
-        if (optimalGrownAssets) {
-          document.getElementById('bal401k').value = optimalGrownAssets.bal401k;
-          const s401k = document.getElementById('bal401kSlider');
-          if (s401k) s401k.value = Math.min(parseFloat(s401k.max), Math.max(parseFloat(s401k.min), optimalGrownAssets.bal401k));
-
-          document.getElementById('balIRA').value = optimalGrownAssets.balIRA;
-          const sIRA = document.getElementById('balIRASlider');
-          if (sIRA) sIRA.value = Math.min(parseFloat(sIRA.max), Math.max(parseFloat(sIRA.min), optimalGrownAssets.balIRA));
-
-          document.getElementById('balRoth').value = optimalGrownAssets.balRoth;
-          const sRoth = document.getElementById('balRothSlider');
-          if (sRoth) sRoth.value = Math.min(parseFloat(sRoth.max), Math.max(parseFloat(sRoth.min), optimalGrownAssets.balRoth));
-
-          document.getElementById('balBrokerage').value = optimalGrownAssets.balBrokerage;
-          const sBrok = document.getElementById('balBrokerageSlider');
-          if (sBrok) sBrok.value = Math.min(parseFloat(sBrok.max), Math.max(parseFloat(sBrok.min), optimalGrownAssets.balBrokerage));
-
-          document.getElementById('annualExpense').value = optimalGrownAssets.inflatedExpense;
-          const sExp = document.getElementById('annualExpenseSlider');
-          if (sExp) sExp.value = Math.min(parseFloat(sExp.max), Math.max(parseFloat(sExp.min), optimalGrownAssets.inflatedExpense));
-        } else {
-          // Restore baseline balances and expense if optimal age <= currentAge
-          document.getElementById('bal401k').value = baseline.bal401k;
-          document.getElementById('balIRA').value = baseline.balIRA;
-          document.getElementById('balRoth').value = baseline.balRoth;
-          document.getElementById('balBrokerage').value = baseline.balBrokerage;
-
-          document.getElementById('annualExpense').value = baseline.annualExpense;
-          const sExp = document.getElementById('annualExpenseSlider');
-          if (sExp) sExp.value = Math.min(parseFloat(sExp.max), Math.max(parseFloat(sExp.min), baseline.annualExpense));
-        }
-
-        calculatePlan();
-
-        resultBox.className = 'retire-result-box';
-        let html = `<div><strong>🎯 ${targetLabel}: Optimal Age ${optimalAge}</strong></div>`;
-        html += `<div style="margin-top: 0.25rem;">Projected balance at Age 90: <strong style="color:#15803d;">${formatCurrency(optimalFinalBal)}</strong></div>`;
-        if (optimalGrownAssets) {
-          html += `<div style="margin-top: 0.25rem; font-size: 0.78rem; opacity: 0.9;">Working until Age ${optimalAge} allows assets to compound to <strong>${formatCurrency(optimalGrownAssets.total)}</strong> at retirement with annual living expense adjusted for inflation to <strong>${formatCurrency(optimalGrownAssets.inflatedExpense)}</strong>.</div>`;
-        } else if (optimalAge < currentAge) {
-          html += `<div style="margin-top: 0.25rem; font-size: 0.78rem; opacity: 0.9;">With your current assets, retiring as early as Age ${optimalAge} fulfills this target.</div>`;
-        } else {
-          html += `<div style="margin-top: 0.25rem; font-size: 0.78rem; opacity: 0.9;">Retiring at current Age ${optimalAge} fulfills this target.</div>`;
-        }
-        html += `<div style="margin-top: 0.40rem;"><button type="button" class="btn-apply-age" onclick="resetRetirementBaseline()">↺ Reset to Original</button></div>`;
-        resultBox.innerHTML = html;
-      } else {
-        resultBox.className = 'retire-result-box warning';
-        let html = `<div><strong>⚠️ Target Not Reachable: ${targetLabel}</strong></div>`;
-        html += `<div style="margin-top: 0.25rem;">Even retiring past Age 85, annual expenses of ${formatCurrency(currentExpense)} prevent reaching ${formatCurrency(targetBalance)} at Age 90. Try reducing expenses or increasing starting assets.</div>`;
-        html += `<div style="margin-top: 0.40rem;"><button type="button" class="btn-apply-age" onclick="resetRetirementBaseline()">↺ Reset to Original</button></div>`;
-        resultBox.innerHTML = html;
-      }
+      updateRetirementSolverBanner(targetBalance);
     }
 
     function updateRetirementSolverBanner(targetBalance) {
       if (targetBalance === null || targetBalance === undefined) return;
       const resultBox = document.getElementById('retireCalcResult');
-      if (!resultBox || resultBox.style.display === 'none') return;
+      if (!resultBox) return;
 
       const baseParams = getFormValues();
+      const currentAge = baseParams.currentAge;
+      const currentRetireAge = baseParams.retirementAge;
       const currentExpense = baseParams.initialExpense;
-      if (originalRetirementBaseline) {
-        originalRetirementBaseline.annualExpense = currentExpense;
-      }
-      const baseline = originalRetirementBaseline || {
-        currentAge: baseParams.startAge,
-        bal401k: baseParams.bal401kInit,
-        balIRA: baseParams.balIRAInit,
-        balRoth: baseParams.balRothInit,
-        balBrokerage: baseParams.balBrokerageInit,
-        annualExpense: currentExpense
-      };
-      const currentAge = baseline.currentAge;
+      const totalStartAssets = baseParams.bal401kInit + baseParams.balIRAInit + baseParams.balRothInit + baseParams.balBrokerageInit;
       const activeStrat = activeStrategy || 'smart';
 
       const targetLabels = {
@@ -4081,51 +4140,29 @@
       };
       const targetLabel = targetLabels[targetBalance] || `Target ${formatCurrency(targetBalance)}`;
 
-      let optimalAge = null;
+      // Search across candidate retirement ages starting from currentAge up to 90
+      // "Retirement Age can't be earlier than current age. Current Age will always be the same regardless which Die with X scenario. Only retirement age can be calculated"
+      let optimalRetireAge = null;
       let optimalFinalBal = 0;
       let optimalGrownAssets = null;
 
-      for (let a = 40; a <= 90; a++) {
-        let testP;
-        if (a <= currentAge) {
-          testP = {
-            ...baseParams,
-            startAge: a,
-            bal401kInit: baseline.bal401k,
-            balIRAInit: baseline.balIRA,
-            balRothInit: baseline.balRoth,
-            balBrokerageInit: baseline.balBrokerage,
-            initialExpense: currentExpense
-          };
-        } else {
-          const yrs = a - currentAge;
-          const gFactor = Math.pow(1 + (baseParams.rateReturn || 6) / 100, yrs);
-          const iFactor = Math.pow(1 + (baseParams.rateInflation || 2.5) / 100, yrs);
-          testP = {
-            ...baseParams,
-            startAge: a,
-            bal401kInit: baseline.bal401k * gFactor,
-            balIRAInit: baseline.balIRA * gFactor,
-            balRothInit: baseline.balRoth * gFactor,
-            balBrokerageInit: baseline.balBrokerage * gFactor,
-            initialExpense: currentExpense * iFactor
-          };
-        }
+      for (let rAge = currentAge; rAge <= 90; rAge++) {
+        const testP = {
+          ...baseParams,
+          currentAge: currentAge,
+          retirementAge: rAge
+        };
 
         const res = simulateRetirement(activeStrat, testP);
         if (res.depletedAge === null && res.finalBalance >= targetBalance) {
-          optimalAge = a;
+          optimalRetireAge = rAge;
           optimalFinalBal = res.finalBalance;
-          if (a > currentAge) {
-            const yrs = a - currentAge;
+          if (rAge > currentAge) {
+            const yrs = rAge - currentAge;
             const gFactor = Math.pow(1 + (baseParams.rateReturn || 6) / 100, yrs);
             const iFactor = Math.pow(1 + (baseParams.rateInflation || 2.5) / 100, yrs);
             optimalGrownAssets = {
-              bal401k: Math.round(baseline.bal401k * gFactor),
-              balIRA: Math.round(baseline.balIRA * gFactor),
-              balRoth: Math.round(baseline.balRoth * gFactor),
-              balBrokerage: Math.round(baseline.balBrokerage * gFactor),
-              total: Math.round((baseline.bal401k + baseline.balIRA + baseline.balRoth + baseline.balBrokerage) * gFactor),
+              total: Math.round(totalStartAssets * gFactor),
               inflatedExpense: Math.round(currentExpense * iFactor)
             };
           }
@@ -4133,34 +4170,59 @@
         }
       }
 
-      if (optimalAge !== null) {
+      resultBox.style.display = 'block';
+
+      if (optimalRetireAge !== null) {
         resultBox.className = 'retire-result-box';
-        let html = `<div><strong>🎯 ${targetLabel}: Optimal Age ${optimalAge}</strong></div>`;
+        let html = `<div><strong>🎯 ${targetLabel}: Optimal Retirement Age ${optimalRetireAge}</strong></div>`;
         html += `<div style="margin-top: 0.25rem;">Projected balance at Age 90: <strong style="color:#15803d;">${formatCurrency(optimalFinalBal)}</strong></div>`;
         if (optimalGrownAssets) {
-          html += `<div style="margin-top: 0.25rem; font-size: 0.78rem; opacity: 0.9;">Working until Age ${optimalAge} allows assets to compound to <strong>${formatCurrency(optimalGrownAssets.total)}</strong> at retirement with annual living expense adjusted for inflation to <strong>${formatCurrency(optimalGrownAssets.inflatedExpense)}</strong>.</div>`;
-        } else if (optimalAge < currentAge) {
-          html += `<div style="margin-top: 0.25rem; font-size: 0.78rem; opacity: 0.9;">With your current assets, retiring as early as Age ${optimalAge} fulfills this target.</div>`;
+          html += `<div style="margin-top: 0.25rem; font-size: 0.80rem; line-height: 1.35; opacity: 0.95;">Working from current Age ${currentAge} until Retirement Age ${optimalRetireAge} allows your ${formatCurrency(totalStartAssets)} current assets to compound to <strong>${formatCurrency(optimalGrownAssets.total)}</strong> at retirement, funding your <strong>${formatCurrency(optimalGrownAssets.inflatedExpense)}/yr</strong> inflation-adjusted living expenses. Retiring at Age ${optimalRetireAge - 1} would run out of money before Age 90, making Age ${optimalRetireAge} the earliest solvent retirement age.</div>`;
+        } else if (optimalRetireAge === currentAge) {
+          html += `<div style="margin-top: 0.25rem; font-size: 0.80rem; line-height: 1.35; opacity: 0.95;">With your current assets of ${formatCurrency(totalStartAssets)}, your plan is already solvent! Retiring right now at current Age ${currentAge} achieves this target (Projected balance at Age 90: ${formatCurrency(optimalFinalBal)}).</div>`;
         } else {
-          html += `<div style="margin-top: 0.25rem; font-size: 0.78rem; opacity: 0.9;">Retiring at current Age ${optimalAge} fulfills this target.</div>`;
+          html += `<div style="margin-top: 0.25rem; font-size: 0.80rem; line-height: 1.35; opacity: 0.95;">Retiring at Retirement Age ${optimalRetireAge} achieves this target.</div>`;
         }
-        html += `<div style="margin-top: 0.40rem;"><button type="button" class="btn-apply-age" onclick="resetRetirementBaseline()">↺ Reset to Original</button></div>`;
+        html += `<div style="margin-top: 0.45rem; display: flex; gap: 0.4rem; align-items: center; flex-wrap: wrap;">`;
+        if (optimalRetireAge !== currentRetireAge) {
+          html += `<button type="button" class="btn-apply-age" onclick="applyRetirementAge(${optimalRetireAge})">Apply Retirement Age ${optimalRetireAge} to Plan</button>`;
+        }
+        html += `<button type="button" class="btn-apply-age" style="background:#f1f5f9; color:#475569; border-color:#cbd5e1;" onclick="resetRetirementBaseline()">✕ Close</button>`;
+        html += `</div>`;
         resultBox.innerHTML = html;
       } else {
         resultBox.className = 'retire-result-box warning';
         let html = `<div><strong>⚠️ Target Not Reachable: ${targetLabel}</strong></div>`;
-        html += `<div style="margin-top: 0.25rem;">Even retiring past Age 85, annual expenses of ${formatCurrency(currentExpense)} prevent reaching ${formatCurrency(targetBalance)} at Age 90. Try reducing expenses or increasing starting assets.</div>`;
-        html += `<div style="margin-top: 0.40rem;"><button type="button" class="btn-apply-age" onclick="resetRetirementBaseline()">↺ Reset to Original</button></div>`;
+        html += `<div style="margin-top: 0.25rem;">Even delaying retirement from current Age ${currentAge} to Age 90, annual expenses of ${formatCurrency(currentExpense)} prevent reaching ${formatCurrency(targetBalance)} at Age 90. Try reducing expenses or increasing starting assets.</div>`;
+        html += `<div style="margin-top: 0.45rem;"><button type="button" class="btn-apply-age" style="background:#f1f5f9; color:#475569; border-color:#cbd5e1;" onclick="resetRetirementBaseline()">✕ Close</button></div>`;
         resultBox.innerHTML = html;
       }
     }
 
-    // Retain calculateRetirementAge as alias to calculateOptimalRetirement(0)
-    function calculateRetirementAge() {
-      calculateOptimalRetirement(0);
+    function applyRetirementAge(targetAge) {
+      const retInput = document.getElementById('retirementAge');
+      const retSlider = document.getElementById('retirementAgeSlider');
+      if (retInput) retInput.value = targetAge;
+      if (retSlider) retSlider.value = Math.min(parseFloat(retSlider.max), Math.max(parseFloat(retSlider.min), targetAge));
+
+      updateAgeBadges();
+
+      // Automatically close the solver window and deselect target buttons
+      const resultBox = document.getElementById('retireCalcResult');
+      if (resultBox) resultBox.style.display = 'none';
+
+      ['btnDieWithZero', 'btnDieWithMillion', 'btnDieWith10Million'].forEach(id => {
+        const btn = document.getElementById(id);
+        if (btn) btn.className = 'btn-retire-target';
+      });
+
+      activeRetirementTarget = null;
+      originalRetirementBaseline = null;
+
+      calculatePlan();
     }
 
-    function applyRetirementAge(targetAge) {
+    function calculateRetirementAge() {
       calculateOptimalRetirement(0);
     }
 
@@ -5011,6 +5073,7 @@
       if (window.innerWidth < 1024) {
         document.getElementById('panelResults')?.classList.add('hidden-mobile');
       }
+      updateAgeBadges();
       updateSSBadge();
       onStateChange();
     });
