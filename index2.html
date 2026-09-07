@@ -1,4 +1,6 @@
 
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -753,18 +755,117 @@
       border-radius: 2px;
     }
 
+    /* Chart Stage with Side Navigation Arrows */
+    .chart-stage-container {
+      position: relative;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+    .chart-nav-btn {
+      flex: 0 0 34px;
+      width: 34px;
+      height: 60px;
+      border: 1px solid #cbd5e1;
+      background: #ffffff;
+      color: #334155;
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.06);
+      transition: all 0.15s ease;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+      padding: 0;
+      z-index: 10;
+    }
+    .chart-nav-btn:hover:not(:disabled) {
+      background: #f1f5f9;
+      color: #0f172a;
+      border-color: #94a3b8;
+    }
+    .chart-nav-btn:active:not(:disabled) {
+      transform: scale(0.94);
+      background: #e2e8f0;
+    }
+    .chart-nav-btn:disabled {
+      opacity: 0.25;
+      cursor: not-allowed;
+      box-shadow: none;
+      border-color: #e2e8f0;
+    }
+    .chart-nav-subtext {
+      font-size: 0.62rem;
+      font-weight: 700;
+      line-height: 1;
+      margin-top: 2px;
+      color: #64748b;
+    }
+    .chart-viewport {
+      flex: 1 1 auto;
+      min-width: 0;
+      width: 100%;
+      position: relative;
+    }
+    .chart-paging-banner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.35rem 0.65rem;
+      margin-bottom: 0.5rem;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 6px;
+      font-size: 0.78rem;
+      color: #475569;
+    }
+    .chart-viewmode-toggle {
+      display: inline-flex;
+      background: #e2e8f0;
+      border-radius: 6px;
+      padding: 2px;
+      gap: 2px;
+    }
+    .chart-viewmode-btn {
+      border: none;
+      background: transparent;
+      padding: 0.2rem 0.55rem;
+      font-size: 0.72rem;
+      font-weight: 600;
+      border-radius: 4px;
+      color: #64748b;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .chart-viewmode-btn.active {
+      background: #ffffff;
+      color: #0f172a;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.08);
+    }
+
     /* SVG Chart canvas styling */
     .chart-svg-wrap {
       width: 100%;
       position: relative;
       border-radius: 6px;
       overflow: visible;
+      touch-action: pan-y;
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      user-select: none;
     }
     svg.chart-svg {
       width: 100%;
       max-width: 100%;
       height: 220px;
       display: block;
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      user-select: none;
     }
     @media (min-width: 640px) {
       svg.chart-svg {
@@ -774,7 +875,7 @@
 
     .chart-mobile-hint {
       display: flex;
-      justify-content: flex-end;
+      justify-content: space-between;
       align-items: center;
       gap: 0.35rem;
       font-size: 0.78rem;
@@ -846,7 +947,7 @@
     }
     @media (max-width: 1023px) {
       table {
-        min-width: 880px;
+        min-width: 620px;
       }
     }
     @media (min-width: 1024px) {
@@ -927,6 +1028,51 @@
       font-weight: 700;
       margin-left: 0.25rem;
     }
+
+    /* Table Mini Horizontal Stacked Bar Charts */
+    .tbl-hbar-wrap {
+      width: 100%;
+      min-width: 110px;
+      max-width: 160px;
+      margin-left: auto;
+      margin-top: 4px;
+    }
+    .tbl-hbar {
+      display: flex;
+      width: 100%;
+      height: 7px;
+      border-radius: 4px;
+      overflow: hidden;
+      background: #e2e8f0;
+      box-shadow: inset 0 1px 2px rgba(0,0,0,0.08);
+    }
+    .tbl-hbar-seg {
+      height: 100%;
+      transition: width 0.2s ease;
+    }
+    .tbl-hbar-legend {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.70rem;
+      color: #64748b;
+      margin-top: 2px;
+      flex-wrap: wrap;
+    }
+    .tbl-hbar-legend-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 2px;
+      line-height: 1;
+    }
+    .tbl-hbar-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
     .btn-action {
       background: var(--primary);
       color: #ffffff;
@@ -1233,51 +1379,6 @@
             </div>
           </div>
 
-          <!-- 4. Social Security Benefits Card -->
-          <div class="slider-card-group" style="border-color: #bbf7d0; background: #f0fdf4;">
-            <div class="slider-header-row">
-              <div class="slider-title">
-                <span style="color: #15803d;">Social Security Benefit</span>
-                <span class="slider-badge" id="ssSummaryBadge" style="background:#dcfce7; color:#15803d; border:1px solid #86efac; padding:0.15rem 0.5rem; border-radius:4px;">$30,000/yr starting age 67</span>
-              </div>
-              <div class="slider-val-input-wrap">
-                <span class="prefix">$</span>
-                <input type="number" inputmode="decimal" id="ssMonthly" value="2500" step="50" class="slider-val-input has-prefix" oninput="syncFromNumber('ssMonthly', 'ssMonthlySlider'); updateSSBadge();" />
-              </div>
-            </div>
-            <div class="slider-track-wrap">
-              <input type="range" id="ssMonthlySlider" min="0" max="6000" value="2500" step="50" oninput="syncFromSlider('ssMonthlySlider', 'ssMonthly'); updateSSBadge();" />
-              <div class="slider-range-labels">
-                <span>$0</span>
-                <span>$2,500/mo</span>
-                <span>$6,000/mo</span>
-              </div>
-            </div>
-
-            <!-- Starting Age Slider -->
-            <div style="margin-top: 0.85rem; padding-top: 0.75rem; border-top: 1px solid #bbf7d0;">
-              <div class="slider-header-row">
-                <div class="slider-title">
-                  <span style="font-size: 0.8rem; font-weight: 600; color: #334155;">Claiming Age</span>
-                  <span class="slider-badge">Eligible 62 – 70</span>
-                </div>
-                <div class="slider-val-input-wrap" style="width: 70px;">
-                  <input type="number" inputmode="numeric" id="ssStartAge" min="62" max="70" value="67" class="slider-val-input" oninput="syncFromNumber('ssStartAge', 'ssStartAgeSlider'); updateSSBadge();" />
-                </div>
-              </div>
-              <div class="slider-track-wrap">
-                <input type="range" id="ssStartAgeSlider" min="62" max="70" value="67" step="1" oninput="syncFromSlider('ssStartAgeSlider', 'ssStartAge'); updateSSBadge();" />
-                <div class="slider-range-labels">
-                  <span>Age 62</span>
-                  <span>Age 67 (FRA)</span>
-                  <span>Age 70</span>
-                </div>
-              </div>
-            </div>
-            <p style="font-size: 0.78rem; color: #475569; margin-top: 6px; line-height: 1.45;">
-              Social Security reduces required portfolio withdrawals and is taxed under IRS § 86 (up to 85% taxable). Inflation-adjusted.
-            </p>
-          </div>
 
           <!-- 5. Traditional 401(k) Balance Slider Card -->
           <div class="slider-card-group">
@@ -1464,6 +1565,52 @@
               </div>
             </div>
 
+            <!-- Social Security Benefits Card -->
+            <div class="slider-card-group" style="border-color: #bbf7d0; background: #f0fdf4;">
+              <div class="slider-header-row">
+                <div class="slider-title">
+                  <span style="color: #15803d;">Social Security Benefit</span>
+                  <span class="slider-badge" id="ssSummaryBadge" style="background:#dcfce7; color:#15803d; border:1px solid #86efac; padding:0.15rem 0.5rem; border-radius:4px;">$30,000/yr starting age 67</span>
+                </div>
+                <div class="slider-val-input-wrap">
+                  <span class="prefix">$</span>
+                  <input type="number" inputmode="decimal" id="ssMonthly" value="2500" step="50" class="slider-val-input has-prefix" oninput="syncFromNumber('ssMonthly', 'ssMonthlySlider'); updateSSBadge();" />
+                </div>
+              </div>
+              <div class="slider-track-wrap">
+                <input type="range" id="ssMonthlySlider" min="0" max="6000" value="2500" step="50" oninput="syncFromSlider('ssMonthlySlider', 'ssMonthly'); updateSSBadge();" />
+                <div class="slider-range-labels">
+                  <span>$0</span>
+                  <span>$2,500/mo</span>
+                  <span>$6,000/mo</span>
+                </div>
+              </div>
+
+              <!-- Starting Age Slider -->
+              <div style="margin-top: 0.85rem; padding-top: 0.75rem; border-top: 1px solid #bbf7d0;">
+                <div class="slider-header-row">
+                  <div class="slider-title">
+                    <span style="font-size: 0.8rem; font-weight: 600; color: #334155;">Claiming Age</span>
+                    <span class="slider-badge">Eligible 62 – 70</span>
+                  </div>
+                  <div class="slider-val-input-wrap" style="width: 70px;">
+                    <input type="number" inputmode="numeric" id="ssStartAge" min="62" max="70" value="67" class="slider-val-input" oninput="syncFromNumber('ssStartAge', 'ssStartAgeSlider'); updateSSBadge();" />
+                  </div>
+                </div>
+                <div class="slider-track-wrap">
+                  <input type="range" id="ssStartAgeSlider" min="62" max="70" value="67" step="1" oninput="syncFromSlider('ssStartAgeSlider', 'ssStartAge'); updateSSBadge();" />
+                  <div class="slider-range-labels">
+                    <span>Age 62</span>
+                    <span>Age 67 (FRA)</span>
+                    <span>Age 70</span>
+                  </div>
+                </div>
+              </div>
+              <p style="font-size: 0.78rem; color: #475569; margin-top: 6px; line-height: 1.45;">
+                Social Security reduces required portfolio withdrawals and is taxed under IRS § 86 (up to 85% taxable). Inflation-adjusted.
+              </p>
+            </div>
+
             <!-- Fixed Horizon Age (Always Age 90) -->
             <div class="slider-card-group">
               <div class="slider-header-row">
@@ -1613,12 +1760,40 @@
                 </div>
               </div>
             </div>
-            <div class="chart-svg-wrap" id="barChartContainer">
-              <svg id="barChartSvg" class="chart-svg"></svg>
-              <div id="barTooltip" class="chart-tooltip"></div>
+
+            <!-- 5-Year Window Paging Banner -->
+            <div class="chart-paging-banner">
+              <span id="barPagingLabel" style="font-weight: 600;">Displaying Years 1–5 (Ages 60–64)</span>
+              <div class="chart-viewmode-toggle">
+                <button type="button" class="chart-viewmode-btn active" id="btnMode5yrBar" onclick="setChartViewMode('5yr')">5 Years</button>
+                <button type="button" class="chart-viewmode-btn" id="btnModeAllBar" onclick="setChartViewMode('all')">All Years</button>
+              </div>
             </div>
+
+            <div class="chart-stage-container">
+              <!-- Left Arrow Button on side of graph -->
+              <button type="button" class="chart-nav-btn" id="btnPrev5yrBar" onclick="prevChart5Years()" aria-label="Previous 5 Years">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                <span class="chart-nav-subtext">PREV</span>
+              </button>
+
+              <div class="chart-viewport">
+                <div class="chart-svg-wrap" id="barChartContainer">
+                  <svg id="barChartSvg" class="chart-svg"></svg>
+                  <div id="barTooltip" class="chart-tooltip"></div>
+                </div>
+              </div>
+
+              <!-- Right Arrow Button on side of graph -->
+              <button type="button" class="chart-nav-btn" id="btnNext5yrBar" onclick="nextChart5Years()" aria-label="Next 5 Years">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                <span class="chart-nav-subtext">NEXT</span>
+              </button>
+            </div>
+
             <div class="chart-mobile-hint">
-              <span>💡 Tap any bar to inspect annual withdrawals & taxes</span>
+              <span>💡 Press and hold for details</span>
+              <span id="barPageCounter" style="font-size:0.75rem; color:#64748b; font-weight:600;">Page 1 of 7</span>
             </div>
           </div>
 
@@ -1648,12 +1823,40 @@
                 </div>
               </div>
             </div>
-            <div class="chart-svg-wrap" id="areaChartContainer">
-              <svg id="areaChartSvg" class="chart-svg"></svg>
-              <div id="areaTooltip" class="chart-tooltip"></div>
+
+            <!-- 5-Year Window Paging Banner -->
+            <div class="chart-paging-banner">
+              <span id="areaPagingLabel" style="font-weight: 600;">Displaying Years 1–5 (Ages 60–64)</span>
+              <div class="chart-viewmode-toggle">
+                <button type="button" class="chart-viewmode-btn active" id="btnMode5yrArea" onclick="setChartViewMode('5yr')">5 Years</button>
+                <button type="button" class="chart-viewmode-btn" id="btnModeAllArea" onclick="setChartViewMode('all')">All Years</button>
+              </div>
             </div>
+
+            <div class="chart-stage-container">
+              <!-- Left Arrow Button on side of graph -->
+              <button type="button" class="chart-nav-btn" id="btnPrev5yrArea" onclick="prevChart5Years()" aria-label="Previous 5 Years">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                <span class="chart-nav-subtext">PREV</span>
+              </button>
+
+              <div class="chart-viewport">
+                <div class="chart-svg-wrap" id="areaChartContainer">
+                  <svg id="areaChartSvg" class="chart-svg"></svg>
+                  <div id="areaTooltip" class="chart-tooltip"></div>
+                </div>
+              </div>
+
+              <!-- Right Arrow Button on side of graph -->
+              <button type="button" class="chart-nav-btn" id="btnNext5yrArea" onclick="nextChart5Years()" aria-label="Next 5 Years">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                <span class="chart-nav-subtext">NEXT</span>
+              </button>
+            </div>
+
             <div class="chart-mobile-hint">
-              <span>💡 Tap any point to inspect account balances</span>
+              <span>💡 Press and hold for balances</span>
+              <span id="areaPageCounter" style="font-size:0.75rem; color:#64748b; font-weight:600;">Page 1 of 7</span>
             </div>
           </div>
         </div>
@@ -1684,10 +1887,8 @@
                   <th>Year</th>
                   <th>Age</th>
                   <th>Living Expense</th>
-                  <th style="color: #15803d;">Social Security</th>
                   <th style="color: #2563eb;">Total Withdrawals</th>
                   <th style="color: #dc2626;">Est. Tax</th>
-                  <th style="color: #0284c7;">Medicare IRMAA</th>
                   <th style="font-weight: 800; color: #0f172a;">Ending Balance</th>
                 </tr>
               </thead>
@@ -1972,6 +2173,40 @@
 
     let activeStrategy = 'smart';
     let currentSchedule = [];
+    let chartViewMode = '5yr'; // '5yr' or 'all'
+    let chartStartIndex = 0;   // Start index for 5-year window
+    const CHART_WINDOW_SIZE = 5;
+
+    function prevChart5Years() {
+      if (!currentSchedule || currentSchedule.length === 0) return;
+      if (chartStartIndex > 0) {
+        chartStartIndex = Math.max(0, chartStartIndex - CHART_WINDOW_SIZE);
+        renderBarChart(currentSchedule);
+        renderAreaChart(currentSchedule);
+      }
+    }
+
+    function nextChart5Years() {
+      if (!currentSchedule || currentSchedule.length === 0) return;
+      const maxStart = Math.max(0, currentSchedule.length - CHART_WINDOW_SIZE);
+      if (chartStartIndex < maxStart) {
+        chartStartIndex = Math.min(maxStart, chartStartIndex + CHART_WINDOW_SIZE);
+        renderBarChart(currentSchedule);
+        renderAreaChart(currentSchedule);
+      }
+    }
+
+    function setChartViewMode(mode) {
+      chartViewMode = mode;
+      ['Bar', 'Area'].forEach(type => {
+        const btn5 = document.getElementById(`btnMode5yr${type}`);
+        const btnAll = document.getElementById(`btnModeAll${type}`);
+        if (btn5) btn5.classList.toggle('active', mode === '5yr');
+        if (btnAll) btnAll.classList.toggle('active', mode === 'all');
+      });
+      renderBarChart(currentSchedule);
+      renderAreaChart(currentSchedule);
+    }
 
     /* ==========================================================================
        TWO-WAY SLIDER & NUMBER INPUT SYNCHRONIZATION
@@ -2940,8 +3175,44 @@
       svg.innerHTML = '';
       if (!schedule || schedule.length === 0) return;
 
+      // Determine dataset window (5 years or all)
+      const is5yr = (chartViewMode === '5yr');
+      const totalCount = schedule.length;
+      const windowSize = is5yr ? Math.min(CHART_WINDOW_SIZE, totalCount) : totalCount;
+      const maxStart = Math.max(0, totalCount - windowSize);
+      if (chartStartIndex > maxStart) chartStartIndex = maxStart;
+      if (chartStartIndex < 0) chartStartIndex = 0;
+
+      const displayData = is5yr ? schedule.slice(chartStartIndex, chartStartIndex + windowSize) : schedule;
+      const firstD = displayData[0];
+      const lastD = displayData[displayData.length - 1];
+
+      // Update UI Banner and Nav Arrow Buttons
+      const pagingLabel = document.getElementById('barPagingLabel');
+      if (pagingLabel) {
+        if (is5yr) {
+          pagingLabel.textContent = `Displaying Years ${chartStartIndex + 1}–${chartStartIndex + displayData.length} (Ages ${firstD.age}–${lastD.age})`;
+        } else {
+          pagingLabel.textContent = `Displaying All ${totalCount} Years (Ages ${schedule[0].age}–${schedule[totalCount - 1].age})`;
+        }
+      }
+      const pageCounter = document.getElementById('barPageCounter');
+      if (pageCounter) {
+        if (is5yr) {
+          const curPage = Math.floor(chartStartIndex / CHART_WINDOW_SIZE) + 1;
+          const totalPages = Math.ceil(totalCount / CHART_WINDOW_SIZE);
+          pageCounter.textContent = `Page ${curPage} of ${totalPages} (${displayData.length} yrs shown)`;
+        } else {
+          pageCounter.textContent = `All ${totalCount} yrs shown`;
+        }
+      }
+      const btnPrev = document.getElementById('btnPrev5yrBar');
+      const btnNext = document.getElementById('btnNext5yrBar');
+      if (btnPrev) btnPrev.disabled = (!is5yr || chartStartIndex <= 0);
+      if (btnNext) btnNext.disabled = (!is5yr || chartStartIndex >= maxStart);
+
       const containerW = svg.parentElement.clientWidth || (window.innerWidth ? Math.min(window.innerWidth - 32, 720) : 360);
-      const width = Math.max(280, containerW);
+      const width = Math.max(260, containerW);
       const isMobile = width < 640;
       const height = isMobile ? 220 : 260;
       svg.setAttribute('viewBox', `0 0 ${width} ${height}`);
@@ -2954,6 +3225,7 @@
       const plotW = width - padL - padR;
       const plotH = height - padT - padB;
 
+      // Max value computed across the full schedule for consistent Y-axis scaling
       let maxVal = 0;
       schedule.forEach(d => {
         if (d.totalGrossW > maxVal) maxVal = d.totalGrossW;
@@ -2983,10 +3255,10 @@
         svg.appendChild(text);
       }
 
-      const step = plotW / schedule.length;
-      const barW = Math.max(3, Math.min(20, step * 0.72));
+      const step = plotW / displayData.length;
+      const barW = is5yr ? Math.max(16, Math.min(42, step * 0.58)) : Math.max(3, Math.min(20, step * 0.72));
 
-      schedule.forEach((d, idx) => {
+      displayData.forEach((d, idx) => {
         const cx = padL + idx * step + step / 2;
         const x = cx - barW / 2;
         let curY = padT + plotH;
@@ -3002,7 +3274,7 @@
           rect.setAttribute('width', barW);
           rect.setAttribute('height', hPretax);
           rect.setAttribute('fill', '#2563eb');
-          rect.setAttribute('rx', '1');
+          rect.setAttribute('rx', '2');
           svg.appendChild(rect);
           curY -= hPretax;
         }
@@ -3014,7 +3286,7 @@
           rect.setAttribute('width', barW);
           rect.setAttribute('height', hBrok);
           rect.setAttribute('fill', '#9333ea');
-          rect.setAttribute('rx', '1');
+          rect.setAttribute('rx', '2');
           svg.appendChild(rect);
           curY -= hBrok;
         }
@@ -3026,7 +3298,7 @@
           rect.setAttribute('width', barW);
           rect.setAttribute('height', hRoth);
           rect.setAttribute('fill', '#16a34a');
-          rect.setAttribute('rx', '1');
+          rect.setAttribute('rx', '2');
           svg.appendChild(rect);
           curY -= hRoth;
         }
@@ -3037,20 +3309,22 @@
           const dot = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
           dot.setAttribute('cx', cx);
           dot.setAttribute('cy', taxY);
-          dot.setAttribute('r', isMobile ? '2' : '2.5');
+          dot.setAttribute('r', isMobile ? '2.5' : '3');
           dot.setAttribute('fill', '#dc2626');
           svg.appendChild(dot);
         }
 
-        const labelInterval = (schedule.length > 30 && isMobile) ? 10 : 5;
-        if (idx % labelInterval === 0 || idx === schedule.length - 1) {
+        // Always show clear age labels in 5-year view
+        const showLabel = is5yr ? true : ((displayData.length > 30 && isMobile) ? (idx % 10 === 0 || idx === displayData.length - 1) : (idx % 5 === 0 || idx === displayData.length - 1));
+        if (showLabel) {
           const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
           text.setAttribute('x', cx);
-          text.setAttribute('y', height - padB + 13);
+          text.setAttribute('y', height - padB + 14);
           text.setAttribute('text-anchor', 'middle');
-          text.setAttribute('fill', '#64748b');
-          text.setAttribute('font-size', isMobile ? '10px' : '11px');
-          text.textContent = (isMobile && schedule.length > 25) ? d.age : ('Age ' + d.age);
+          text.setAttribute('fill', '#334155');
+          text.setAttribute('font-weight', is5yr ? '600' : '400');
+          text.setAttribute('font-size', is5yr ? '11px' : (isMobile ? '10px' : '11px'));
+          text.textContent = 'Age ' + d.age;
           svg.appendChild(text);
         }
 
@@ -3061,6 +3335,11 @@
         hitRect.setAttribute('height', plotH);
         hitRect.setAttribute('fill', 'transparent');
         hitRect.style.cursor = 'pointer';
+
+        let longPressTimer = null;
+        let isLongPressed = false;
+        let startTouchX = 0;
+        let startTouchY = 0;
 
         function showTooltip() {
           tooltip.style.display = 'block';
@@ -3086,12 +3365,50 @@
           `;
         }
 
-        hitRect.addEventListener('mousemove', showTooltip);
-        hitRect.addEventListener('touchstart', (e) => {
-          showTooltip();
-        }, { passive: true });
-        hitRect.addEventListener('mouseleave', () => {
+        function hideTooltip() {
+          if (longPressTimer) {
+            clearTimeout(longPressTimer);
+            longPressTimer = null;
+          }
+          isLongPressed = false;
           tooltip.style.display = 'none';
+        }
+
+        // Desktop hover
+        hitRect.addEventListener('mousemove', showTooltip);
+        hitRect.addEventListener('mouseleave', hideTooltip);
+
+        // Mobile touch: Long press to display, release/cancel to disappear
+        hitRect.addEventListener('touchstart', (e) => {
+          if (e.touches && e.touches.length > 0) {
+            startTouchX = e.touches[0].clientX;
+            startTouchY = e.touches[0].clientY;
+          }
+          if (longPressTimer) clearTimeout(longPressTimer);
+          longPressTimer = setTimeout(() => {
+            isLongPressed = true;
+            showTooltip();
+            if (navigator.vibrate) {
+              try { navigator.vibrate(20); } catch(ex) {}
+            }
+          }, 260); // 260ms press activates tooltip
+        }, { passive: true });
+
+        hitRect.addEventListener('touchmove', (e) => {
+          if (e.touches && e.touches.length > 0) {
+            const dx = Math.abs(e.touches[0].clientX - startTouchX);
+            const dy = Math.abs(e.touches[0].clientY - startTouchY);
+            if (dx > 12 || dy > 12) {
+              // Scrolled away: cancel timer and hide
+              hideTooltip();
+            }
+          }
+        }, { passive: true });
+
+        hitRect.addEventListener('touchend', hideTooltip, { passive: true });
+        hitRect.addEventListener('touchcancel', hideTooltip, { passive: true });
+        hitRect.addEventListener('contextmenu', (e) => {
+          e.preventDefault();
         });
 
         svg.appendChild(hitRect);
@@ -3104,8 +3421,44 @@
       svg.innerHTML = '';
       if (!schedule || schedule.length === 0) return;
 
+      // Determine dataset window (5 years or all)
+      const is5yr = (chartViewMode === '5yr');
+      const totalCount = schedule.length;
+      const windowSize = is5yr ? Math.min(CHART_WINDOW_SIZE, totalCount) : totalCount;
+      const maxStart = Math.max(0, totalCount - windowSize);
+      if (chartStartIndex > maxStart) chartStartIndex = maxStart;
+      if (chartStartIndex < 0) chartStartIndex = 0;
+
+      const displayData = is5yr ? schedule.slice(chartStartIndex, chartStartIndex + windowSize) : schedule;
+      const firstD = displayData[0];
+      const lastD = displayData[displayData.length - 1];
+
+      // Update UI Banner and Nav Arrow Buttons
+      const pagingLabel = document.getElementById('areaPagingLabel');
+      if (pagingLabel) {
+        if (is5yr) {
+          pagingLabel.textContent = `Displaying Years ${chartStartIndex + 1}–${chartStartIndex + displayData.length} (Ages ${firstD.age}–${lastD.age})`;
+        } else {
+          pagingLabel.textContent = `Displaying All ${totalCount} Years (Ages ${schedule[0].age}–${schedule[totalCount - 1].age})`;
+        }
+      }
+      const pageCounter = document.getElementById('areaPageCounter');
+      if (pageCounter) {
+        if (is5yr) {
+          const curPage = Math.floor(chartStartIndex / CHART_WINDOW_SIZE) + 1;
+          const totalPages = Math.ceil(totalCount / CHART_WINDOW_SIZE);
+          pageCounter.textContent = `Page ${curPage} of ${totalPages} (${displayData.length} yrs shown)`;
+        } else {
+          pageCounter.textContent = `All ${totalCount} yrs shown`;
+        }
+      }
+      const btnPrev = document.getElementById('btnPrev5yrArea');
+      const btnNext = document.getElementById('btnNext5yrArea');
+      if (btnPrev) btnPrev.disabled = (!is5yr || chartStartIndex <= 0);
+      if (btnNext) btnNext.disabled = (!is5yr || chartStartIndex >= maxStart);
+
       const containerW = svg.parentElement.clientWidth || (window.innerWidth ? Math.min(window.innerWidth - 32, 720) : 360);
-      const width = Math.max(280, containerW);
+      const width = Math.max(260, containerW);
       const isMobile = width < 640;
       const height = isMobile ? 220 : 260;
       svg.setAttribute('viewBox', `0 0 ${width} ${height}`);
@@ -3118,6 +3471,7 @@
       const plotW = width - padL - padR;
       const plotH = height - padT - padB;
 
+      // Max balance computed across the full schedule for consistent Y-axis scaling
       let maxBal = 0;
       schedule.forEach(d => {
         if (d.totalEndingBal > maxBal) maxBal = d.totalEndingBal;
@@ -3147,13 +3501,13 @@
         svg.appendChild(text);
       }
 
-      const step = plotW / (schedule.length - 1 || 1);
+      const step = plotW / (displayData.length - 1 || 1);
 
       function createPath(accessor, strokeColor, fillColor) {
         let pathD = '';
         let areaD = `M ${padL} ${padT + plotH} `;
 
-        schedule.forEach((d, idx) => {
+        displayData.forEach((d, idx) => {
           const x = padL + idx * step;
           const y = padT + plotH - (accessor(d) / maxBal) * plotH;
           if (idx === 0) {
@@ -3165,7 +3519,7 @@
           }
         });
 
-        const lastX = padL + (schedule.length - 1) * step;
+        const lastX = padL + (displayData.length - 1) * step;
         areaD += `L ${lastX} ${padT + plotH} Z`;
 
         if (fillColor) {
@@ -3188,27 +3542,47 @@
       createPath(d => d.balBrokerage, '#9333ea', null);
       createPath(d => d.balRoth, '#16a34a', null);
 
-      const labelInterval = (schedule.length > 30 && isMobile) ? 10 : 5;
-      schedule.forEach((d, idx) => {
+      // Points and markers for 5-year view
+      displayData.forEach((d, idx) => {
         const cx = padL + idx * step;
-        if (idx % labelInterval === 0 || idx === schedule.length - 1) {
+        const cyTotal = padT + plotH - (d.totalEndingBal / maxBal) * plotH;
+
+        if (is5yr) {
+          const dot = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+          dot.setAttribute('cx', cx);
+          dot.setAttribute('cy', cyTotal);
+          dot.setAttribute('r', isMobile ? '3.5' : '4');
+          dot.setAttribute('fill', '#0f172a');
+          dot.setAttribute('stroke', '#ffffff');
+          dot.setAttribute('stroke-width', '1.5');
+          svg.appendChild(dot);
+        }
+
+        const showLabel = is5yr ? true : ((displayData.length > 30 && isMobile) ? (idx % 10 === 0 || idx === displayData.length - 1) : (idx % 5 === 0 || idx === displayData.length - 1));
+        if (showLabel) {
           const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
           text.setAttribute('x', cx);
-          text.setAttribute('y', height - padB + 13);
+          text.setAttribute('y', height - padB + 14);
           text.setAttribute('text-anchor', 'middle');
-          text.setAttribute('fill', '#64748b');
-          text.setAttribute('font-size', isMobile ? '10px' : '11px');
-          text.textContent = (isMobile && schedule.length > 25) ? d.age : ('Age ' + d.age);
+          text.setAttribute('fill', '#334155');
+          text.setAttribute('font-weight', is5yr ? '600' : '400');
+          text.setAttribute('font-size', is5yr ? '11px' : (isMobile ? '10px' : '11px'));
+          text.textContent = 'Age ' + d.age;
           svg.appendChild(text);
         }
 
         const hitRect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-        hitRect.setAttribute('x', cx - step / 2);
+        hitRect.setAttribute('x', cx - (step / 2 || 15));
         hitRect.setAttribute('y', padT);
-        hitRect.setAttribute('width', Math.max(8, step));
+        hitRect.setAttribute('width', Math.max(12, step));
         hitRect.setAttribute('height', plotH);
         hitRect.setAttribute('fill', 'transparent');
         hitRect.style.cursor = 'pointer';
+
+        let longPressTimer = null;
+        let isLongPressed = false;
+        let startTouchX = 0;
+        let startTouchY = 0;
 
         function showTooltip() {
           tooltip.style.display = 'block';
@@ -3223,12 +3597,50 @@
           `;
         }
 
-        hitRect.addEventListener('mousemove', showTooltip);
-        hitRect.addEventListener('touchstart', (e) => {
-          showTooltip();
-        }, { passive: true });
-        hitRect.addEventListener('mouseleave', () => {
+        function hideTooltip() {
+          if (longPressTimer) {
+            clearTimeout(longPressTimer);
+            longPressTimer = null;
+          }
+          isLongPressed = false;
           tooltip.style.display = 'none';
+        }
+
+        // Desktop hover
+        hitRect.addEventListener('mousemove', showTooltip);
+        hitRect.addEventListener('mouseleave', hideTooltip);
+
+        // Mobile touch: Long press to display, release/cancel to disappear
+        hitRect.addEventListener('touchstart', (e) => {
+          if (e.touches && e.touches.length > 0) {
+            startTouchX = e.touches[0].clientX;
+            startTouchY = e.touches[0].clientY;
+          }
+          if (longPressTimer) clearTimeout(longPressTimer);
+          longPressTimer = setTimeout(() => {
+            isLongPressed = true;
+            showTooltip();
+            if (navigator.vibrate) {
+              try { navigator.vibrate(20); } catch(ex) {}
+            }
+          }, 260); // 260ms press activates tooltip
+        }, { passive: true });
+
+        hitRect.addEventListener('touchmove', (e) => {
+          if (e.touches && e.touches.length > 0) {
+            const dx = Math.abs(e.touches[0].clientX - startTouchX);
+            const dy = Math.abs(e.touches[0].clientY - startTouchY);
+            if (dx > 12 || dy > 12) {
+              // Scrolled away: cancel timer and hide
+              hideTooltip();
+            }
+          }
+        }, { passive: true });
+
+        hitRect.addEventListener('touchend', hideTooltip, { passive: true });
+        hitRect.addEventListener('touchcancel', hideTooltip, { passive: true });
+        hitRect.addEventListener('contextmenu', (e) => {
+          e.preventDefault();
         });
 
         svg.appendChild(hitRect);
@@ -3244,29 +3656,86 @@
         const tr = document.createElement('tr');
         if (d.isRmd) tr.classList.add('rmd-year');
 
-        // Build multi-bucket withdrawals breakdown subtext
-        const wItems = [];
-        if (d.w401k > 0) wItems.push(`<span style="color:#2563eb;">401k: ${formatCurrency(d.w401k)}</span>`);
-        if (d.wIRA > 0) wItems.push(`<span style="color:#0284c7;">Trad: ${formatCurrency(d.wIRA)}</span>`);
-        if (d.wRoth > 0) wItems.push(`<span style="color:#16a34a;">Roth: ${formatCurrency(d.wRoth)}</span>`);
-        if (d.wBrokerage > 0) {
-          const capNote = d.capitalGain > 0 ? ` <span style="color:#7e22ce;font-size:0.76rem;">(gain: ${formatCurrency(d.capitalGain)})</span>` : '';
-          wItems.push(`<span style="color:#9333ea;">Brok: ${formatCurrency(d.wBrokerage)}${capNote}</span>`);
-        }
-        if (d.rothConv > 0) {
-          wItems.push(`<span style="color:#b45309;font-weight:600;">+ Conv: ${formatCurrency(d.rothConv)}</span>`);
-        }
-        const wSubHtml = wItems.length > 0
-          ? `<div style="font-size:0.78rem; line-height:1.45; margin-top:4px; white-space:normal;">${wItems.join(' · ')}</div>`
-          : '<div style="font-size:0.78rem; color:#64748b; margin-top:4px;">$0 withdrawn</div>';
+        // 1. Build Multi-Bucket Withdrawals Horizontal Bar Chart
+        let wBarHtml = '';
+        const totalW = d.totalGrossW || 0;
+        if (totalW > 0) {
+          const pPretax = Math.min(100, Math.max(0, ((d.wPretax || 0) / totalW) * 100));
+          const pBrok = Math.min(100, Math.max(0, ((d.wBrokerage || 0) / totalW) * 100));
+          const pRoth = Math.min(100, Math.max(0, ((d.wRoth || 0) / totalW) * 100));
 
-        // Build multi-bucket remaining balances breakdown subtext
-        const balSubHtml = `
-          <div style="font-size:0.78rem; line-height:1.45; margin-top:4px; white-space:normal;">
-            <div><span style="color:#2563eb;">401k:</span> ${formatCurrency(d.bal401k)} · <span style="color:#0284c7;">Trad:</span> ${formatCurrency(d.balIRA)}</div>
-            <div><span style="color:#16a34a;">Roth:</span> ${formatCurrency(d.balRoth)} · <span style="color:#9333ea;">Brok:</span> ${formatCurrency(d.balBrokerage)}</div>
-          </div>
-        `;
+          const segs = [];
+          const legend = [];
+          if (pPretax > 0) {
+            segs.push(`<div class="tbl-hbar-seg" style="width:${pPretax.toFixed(1)}%; background:#2563eb;" title="Trad 401k/IRA: ${formatCurrency(d.wPretax)} (${Math.round(pPretax)}%)"></div>`);
+            legend.push(`<span class="tbl-hbar-legend-item"><span class="tbl-hbar-dot" style="background:#2563eb;"></span>401k/Trad ${Math.round(pPretax)}%</span>`);
+          }
+          if (pBrok > 0) {
+            segs.push(`<div class="tbl-hbar-seg" style="width:${pBrok.toFixed(1)}%; background:#9333ea;" title="Brokerage: ${formatCurrency(d.wBrokerage)} (${Math.round(pBrok)}%)"></div>`);
+            legend.push(`<span class="tbl-hbar-legend-item"><span class="tbl-hbar-dot" style="background:#9333ea;"></span>Brok ${Math.round(pBrok)}%</span>`);
+          }
+          if (pRoth > 0) {
+            segs.push(`<div class="tbl-hbar-seg" style="width:${pRoth.toFixed(1)}%; background:#16a34a;" title="Roth IRA: ${formatCurrency(d.wRoth)} (${Math.round(pRoth)}%)"></div>`);
+            legend.push(`<span class="tbl-hbar-legend-item"><span class="tbl-hbar-dot" style="background:#16a34a;"></span>Roth ${Math.round(pRoth)}%</span>`);
+          }
+
+          wBarHtml = `
+            <div class="tbl-hbar-wrap">
+              <div class="tbl-hbar">${segs.join('')}</div>
+              <div class="tbl-hbar-legend">${legend.join('')}</div>
+            </div>
+          `;
+        } else {
+          wBarHtml = '<div style="font-size:0.75rem; color:#94a3b8; margin-top:3px;">$0 withdrawn</div>';
+        }
+
+        // 2. Build Multi-Bucket Ending Balances Horizontal Bar Chart
+        let balBarHtml = '';
+        const totalBal = d.totalEndingBal || 0;
+        if (totalBal > 0) {
+          const pPretaxBal = Math.min(100, Math.max(0, (((d.balPretax || (d.bal401k + d.balIRA))) / totalBal) * 100));
+          const pBrokBal = Math.min(100, Math.max(0, ((d.balBrokerage || 0) / totalBal) * 100));
+          const pRothBal = Math.min(100, Math.max(0, ((d.balRoth || 0) / totalBal) * 100));
+
+          const bSegs = [];
+          const bLegend = [];
+          if (pPretaxBal > 0) {
+            bSegs.push(`<div class="tbl-hbar-seg" style="width:${pPretaxBal.toFixed(1)}%; background:#2563eb;" title="Pre-Tax: ${formatCurrency(d.balPretax || (d.bal401k + d.balIRA))} (${Math.round(pPretaxBal)}%)"></div>`);
+            bLegend.push(`<span class="tbl-hbar-legend-item"><span class="tbl-hbar-dot" style="background:#2563eb;"></span>Pre-tax ${Math.round(pPretaxBal)}%</span>`);
+          }
+          if (pBrokBal > 0) {
+            bSegs.push(`<div class="tbl-hbar-seg" style="width:${pBrokBal.toFixed(1)}%; background:#9333ea;" title="Brokerage: ${formatCurrency(d.balBrokerage)} (${Math.round(pBrokBal)}%)"></div>`);
+            bLegend.push(`<span class="tbl-hbar-legend-item"><span class="tbl-hbar-dot" style="background:#9333ea;"></span>Brok ${Math.round(pBrokBal)}%</span>`);
+          }
+          if (pRothBal > 0) {
+            bSegs.push(`<div class="tbl-hbar-seg" style="width:${pRothBal.toFixed(1)}%; background:#16a34a;" title="Roth IRA: ${formatCurrency(d.balRoth)} (${Math.round(pRothBal)}%)"></div>`);
+            bLegend.push(`<span class="tbl-hbar-legend-item"><span class="tbl-hbar-dot" style="background:#16a34a;"></span>Roth ${Math.round(pRothBal)}%</span>`);
+          }
+
+          balBarHtml = `
+            <div class="tbl-hbar-wrap">
+              <div class="tbl-hbar">${bSegs.join('')}</div>
+              <div class="tbl-hbar-legend">${bLegend.join('')}</div>
+            </div>
+          `;
+        } else {
+          balBarHtml = '<div style="font-size:0.75rem; color:#dc2626; font-weight:600; margin-top:3px;">Portfolio Depleted</div>';
+        }
+
+        // Build Social Security note for Total Withdrawals
+        const ssNote = d.annualSS > 0
+          ? `<div style="font-size:0.75rem; color:#15803d; font-weight:600; margin-top:3px;">+ SS: ${formatCurrency(d.annualSS)}</div>`
+          : '';
+
+        // Build IRMAA note for Est Tax
+        let irmaaNote = '';
+        if (d.age >= 65) {
+          if (d.irmaaSurcharge > 0) {
+            irmaaNote = `<div style="font-size:0.75rem; color:#0284c7; font-weight:600; margin-top:2px;">+ IRMAA: ${formatCurrency(d.irmaaSurcharge)} (Tier ${d.irmaaTier})</div>`;
+          } else {
+            irmaaNote = `<div style="font-size:0.73rem; color:#64748b; margin-top:2px;">IRMAA: $0</div>`;
+          }
+        }
 
         tr.innerHTML = `
           <td>${d.calendarYear}</td>
@@ -3277,35 +3746,22 @@
           </td>
           <td>${formatCurrency(d.targetExpense)}</td>
           <td>
-            ${d.annualSS > 0
-              ? `<div style="font-weight:700; color:#15803d;">${formatCurrency(d.annualSS)}</div>
-                 <div style="font-size:0.78rem; color:#64748b; margin-top:3px; line-height:1.4;">Taxable: <span style="color:${d.taxableSS > 0 ? '#b91c1c' : '#15803d'}; font-weight:600;">${formatCurrency(d.taxableSS)}</span> (${Math.round((d.taxableSS / d.annualSS) * 100)}%)</div>`
-              : `<div style="color:#64748b; font-size:0.92rem; font-weight:600;">$0</div>
-                 <div style="font-size:0.78rem; color:#64748b; margin-top:3px;">${d.age < 62 ? 'Pre-eligibility (<62)' : 'Deferred claim'}</div>`
-            }
-          </td>
-          <td>
             <div style="font-weight:700; color:#0f172a;">${formatCurrency(d.totalGrossW)}</div>
-            ${wSubHtml}
+            ${wBarHtml}
+            ${ssNote}
           </td>
           <td style="color: #dc2626;">
             <div style="font-weight:700; color:#dc2626;">${formatCurrency(d.estTax)}</div>
-            <div style="font-size:0.78rem; color:#64748b; margin-top:3px; line-height:1.4;">Fed: ${formatCurrency(d.fedTax)} · ${d.stateCode}: ${formatCurrency(d.stateTax)}</div>
-            ${d.taxableSS > 0 ? `<div style="font-size:0.76rem; color:#15803d;">(incl. ${formatCurrency(d.taxableSS)} taxable SS)</div>` : ''}
-            ${d.convTax > 0 ? `<div style="font-size:0.76rem; color:#b45309;">(incl. ${formatCurrency(d.convTax)} conv tax)</div>` : ''}
-            ${d.ltcgTax > 0 ? `<div style="font-size:0.76rem; color:#7e22ce;">(incl. ${formatCurrency(d.ltcgTax)} LTCG)</div>` : (d.wBrokerage > 0 ? `<div style="font-size:0.76rem; color:#15803d;">(0% LTCG rate)</div>` : '')}
-            ${d.isEarlyPenalty ? `<div style="font-size:0.76rem; color:#b91c1c; font-weight:600;">(incl. ${formatCurrency(d.earlyPenalty)} pen)</div>` : ''}
-          </td>
-          <td style="color: #0284c7;">
-            ${d.age < 65 
-              ? '<span style="color:#64748b; font-size:0.86rem;">Pre-65</span>' 
-              : (d.irmaaSurcharge > 0 
-                ? `<div><strong>${formatCurrency(d.irmaaSurcharge)}</strong></div><span class="tag-rmd" style="background:#e0f2fe;color:#0369a1;border:1px solid #bae6fd;" title="Tier ${d.irmaaTier} surcharge based on 2-yr lookback MAGI ${formatCurrency(d.lookbackMagi)}">Tier ${d.irmaaTier}</span>` 
-                : '<span style="color:#64748b; font-size:0.86rem;">$0 (Base)</span>')}
+            <div style="font-size:0.76rem; color:#64748b; margin-top:2px; line-height:1.4;">Fed: ${formatCurrency(d.fedTax)} · ${d.stateCode}: ${formatCurrency(d.stateTax)}</div>
+            ${d.taxableSS > 0 ? `<div style="font-size:0.74rem; color:#15803d;">(incl. ${formatCurrency(d.taxableSS)} taxable SS)</div>` : ''}
+            ${d.convTax > 0 ? `<div style="font-size:0.74rem; color:#b45309;">(incl. ${formatCurrency(d.convTax)} conv tax)</div>` : ''}
+            ${d.ltcgTax > 0 ? `<div style="font-size:0.74rem; color:#7e22ce;">(incl. ${formatCurrency(d.ltcgTax)} LTCG)</div>` : (d.wBrokerage > 0 ? `<div style="font-size:0.74rem; color:#15803d;">(0% LTCG rate)</div>` : '')}
+            ${d.isEarlyPenalty ? `<div style="font-size:0.74rem; color:#b91c1c; font-weight:600;">(incl. ${formatCurrency(d.earlyPenalty)} pen)</div>` : ''}
+            ${irmaaNote}
           </td>
           <td>
             <div style="font-weight: 800; color: #0f172a;">${formatCurrency(d.totalEndingBal)}</div>
-            ${balSubHtml}
+            ${balBarHtml}
           </td>
         `;
         tbody.appendChild(tr);
