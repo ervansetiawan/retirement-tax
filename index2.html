@@ -942,7 +942,7 @@
     }
     @media (max-width: 1023px) {
       table {
-        min-width: 660px;
+        min-width: 500px;
       }
     }
     @media (min-width: 1024px) {
@@ -968,25 +968,11 @@
       z-index: 12;
       background: #ffffff;
       text-align: center;
-      width: 66px;
-      min-width: 66px;
-      border-right: 1px solid var(--border);
-    }
-    th:first-child {
-      z-index: 20;
-      background: #f8fafc;
-    }
-    th:nth-child(2), td:nth-child(2) {
-      position: sticky;
-      left: 66px;
-      z-index: 12;
-      background: #ffffff;
-      text-align: center;
-      width: 82px;
-      min-width: 82px;
+      width: 95px;
+      min-width: 95px;
       border-right: 2px solid #cbd5e1;
     }
-    th:nth-child(2) {
+    th:first-child {
       z-index: 20;
       background: #f8fafc;
     }
@@ -1003,8 +989,7 @@
     tr:nth-child(even) td {
       background: #f8fafc;
     }
-    tr:nth-child(even) td:first-child,
-    tr:nth-child(even) td:nth-child(2) {
+    tr:nth-child(even) td:first-child {
       background: #f8fafc;
     }
     tr:hover td {
@@ -1028,7 +1013,7 @@
     .tbl-hbar-wrap {
       width: 100%;
       min-width: 130px;
-      max-width: 195px;
+      max-width: 230px;
       margin-left: auto;
       margin-top: 6px;
     }
@@ -1756,18 +1741,18 @@
               </div>
             </div>
 
-            <!-- 5-Year Window Paging Banner -->
+            <!-- 10-Year Window Paging Banner -->
             <div class="chart-paging-banner">
-              <span id="barPagingLabel" style="font-weight: 600;">Displaying Years 1–5 (Ages 60–64)</span>
+              <span id="barPagingLabel" style="font-weight: 600;">Displaying Years 1–10 (Ages 60–69)</span>
               <div class="chart-viewmode-toggle">
-                <button type="button" class="chart-viewmode-btn active" id="btnMode5yrBar" onclick="setChartViewMode('5yr')">5 Years</button>
+                <button type="button" class="chart-viewmode-btn active" id="btnMode10yrBar" onclick="setChartViewMode('10yr')">10 Years</button>
                 <button type="button" class="chart-viewmode-btn" id="btnModeAllBar" onclick="setChartViewMode('all')">All Years</button>
               </div>
             </div>
 
             <div class="chart-stage-container">
               <!-- Left Arrow Button on side of graph -->
-              <button type="button" class="chart-nav-btn" id="btnPrev5yrBar" onclick="prevChart5Years()" aria-label="Previous 5 Years">
+              <button type="button" class="chart-nav-btn" id="btnPrev10yrBar" onclick="prevChart10Years()" aria-label="Previous 10 Years">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
                 <span class="chart-nav-subtext">PREV</span>
               </button>
@@ -1780,7 +1765,7 @@
               </div>
 
               <!-- Right Arrow Button on side of graph -->
-              <button type="button" class="chart-nav-btn" id="btnNext5yrBar" onclick="nextChart5Years()" aria-label="Next 5 Years">
+              <button type="button" class="chart-nav-btn" id="btnNext10yrBar" onclick="nextChart10Years()" aria-label="Next 10 Years">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
                 <span class="chart-nav-subtext">NEXT</span>
               </button>
@@ -1788,7 +1773,7 @@
 
             <div class="chart-mobile-hint">
               <span>💡 Press and hold for details</span>
-              <span id="barPageCounter" style="font-size:0.86rem; color:#475569; font-weight:700;">Page 1 of 7</span>
+              <span id="barPageCounter" style="font-size:0.86rem; color:#475569; font-weight:700;">Page 1 of 4</span>
             </div>
           </div>
 
@@ -1797,7 +1782,7 @@
             <div class="chart-header">
               <div>
                 <div class="chart-title">Remaining Balances Over Time</div>
-                <div style="font-size: 0.92rem; color: var(--text-dim); margin-top: 2px;">Year-end portfolio values by account</div>
+                <div style="font-size: 0.92rem; color: var(--text-dim); margin-top: 2px;">Full projection of year-end portfolio values through Age 90</div>
               </div>
               <div class="chart-legend">
                 <div class="legend-item">
@@ -1819,39 +1804,13 @@
               </div>
             </div>
 
-            <!-- 5-Year Window Paging Banner -->
-            <div class="chart-paging-banner">
-              <span id="areaPagingLabel" style="font-weight: 600;">Displaying Years 1–5 (Ages 60–64)</span>
-              <div class="chart-viewmode-toggle">
-                <button type="button" class="chart-viewmode-btn active" id="btnMode5yrArea" onclick="setChartViewMode('5yr')">5 Years</button>
-                <button type="button" class="chart-viewmode-btn" id="btnModeAllArea" onclick="setChartViewMode('all')">All Years</button>
-              </div>
-            </div>
-
-            <div class="chart-stage-container">
-              <!-- Left Arrow Button on side of graph -->
-              <button type="button" class="chart-nav-btn" id="btnPrev5yrArea" onclick="prevChart5Years()" aria-label="Previous 5 Years">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
-                <span class="chart-nav-subtext">PREV</span>
-              </button>
-
-              <div class="chart-viewport">
-                <div class="chart-svg-wrap" id="areaChartContainer">
-                  <svg id="areaChartSvg" class="chart-svg"></svg>
-                  <div id="areaTooltip" class="chart-tooltip"></div>
-                </div>
-              </div>
-
-              <!-- Right Arrow Button on side of graph -->
-              <button type="button" class="chart-nav-btn" id="btnNext5yrArea" onclick="nextChart5Years()" aria-label="Next 5 Years">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                <span class="chart-nav-subtext">NEXT</span>
-              </button>
+            <div class="chart-svg-wrap" id="areaChartContainer">
+              <svg id="areaChartSvg" class="chart-svg"></svg>
+              <div id="areaTooltip" class="chart-tooltip"></div>
             </div>
 
             <div class="chart-mobile-hint">
-              <span>💡 Press and hold for balances</span>
-              <span id="areaPageCounter" style="font-size:0.86rem; color:#475569; font-weight:700;">Page 1 of 7</span>
+              <span>💡 Press and hold along the line for year-by-year balances</span>
             </div>
           </div>
         </div>
@@ -1861,7 +1820,7 @@
           <div class="table-actions">
             <div>
               <div class="chart-title">Year-by-Year Schedule</div>
-              <div style="font-size: 0.92rem; color: var(--text-dim); margin-top: 2px;">Multi-bucket withdrawals & ending balances with account-level breakdown subtexts</div>
+              <div style="font-size: 0.92rem; color: var(--text-dim); margin-top: 2px;">Total inflows (withdrawal + Social Security) and where money goes: living expenses, taxes & healthcare</div>
             </div>
             <div style="display: flex; gap: 0.5rem;">
               <button class="btn-action btn-secondary" onclick="exportCSV()">
@@ -1879,11 +1838,8 @@
             <table>
               <thead>
                 <tr>
-                  <th>Year</th>
-                  <th>Age</th>
-                  <th>Living Expense</th>
-                  <th style="color: #2563eb;">Total Withdrawals</th>
-                  <th style="color: #dc2626;">Est. Tax</th>
+                  <th style="text-align: center;">Year / Age</th>
+                  <th style="color: #2563eb;">Total Inflows & Where Money Goes</th>
                   <th style="font-weight: 800; color: #0f172a;">Ending Balance</th>
                 </tr>
               </thead>
@@ -2168,39 +2124,34 @@
 
     let activeStrategy = 'smart';
     let currentSchedule = [];
-    let chartViewMode = '5yr'; // '5yr' or 'all'
-    let chartStartIndex = 0;   // Start index for 5-year window
-    const CHART_WINDOW_SIZE = 5;
+    let chartViewMode = '10yr'; // '10yr' or 'all'
+    let chartStartIndex = 0;    // Start index for 10-year window
+    const CHART_WINDOW_SIZE = 10;
 
-    function prevChart5Years() {
+    function prevChart10Years() {
       if (!currentSchedule || currentSchedule.length === 0) return;
       if (chartStartIndex > 0) {
         chartStartIndex = Math.max(0, chartStartIndex - CHART_WINDOW_SIZE);
         renderBarChart(currentSchedule);
-        renderAreaChart(currentSchedule);
       }
     }
 
-    function nextChart5Years() {
+    function nextChart10Years() {
       if (!currentSchedule || currentSchedule.length === 0) return;
       const maxStart = Math.max(0, currentSchedule.length - CHART_WINDOW_SIZE);
       if (chartStartIndex < maxStart) {
         chartStartIndex = Math.min(maxStart, chartStartIndex + CHART_WINDOW_SIZE);
         renderBarChart(currentSchedule);
-        renderAreaChart(currentSchedule);
       }
     }
 
     function setChartViewMode(mode) {
       chartViewMode = mode;
-      ['Bar', 'Area'].forEach(type => {
-        const btn5 = document.getElementById(`btnMode5yr${type}`);
-        const btnAll = document.getElementById(`btnModeAll${type}`);
-        if (btn5) btn5.classList.toggle('active', mode === '5yr');
-        if (btnAll) btnAll.classList.toggle('active', mode === 'all');
-      });
+      const btn10 = document.getElementById('btnMode10yrBar');
+      const btnAll = document.getElementById('btnModeAllBar');
+      if (btn10) btn10.classList.toggle('active', mode === '10yr');
+      if (btnAll) btnAll.classList.toggle('active', mode === 'all');
       renderBarChart(currentSchedule);
-      renderAreaChart(currentSchedule);
     }
 
     /* ==========================================================================
@@ -3170,22 +3121,22 @@
       svg.innerHTML = '';
       if (!schedule || schedule.length === 0) return;
 
-      // Determine dataset window (5 years or all)
-      const is5yr = (chartViewMode === '5yr');
+      // Determine dataset window (10 years or all)
+      const is10yr = (chartViewMode === '10yr');
       const totalCount = schedule.length;
-      const windowSize = is5yr ? Math.min(CHART_WINDOW_SIZE, totalCount) : totalCount;
+      const windowSize = is10yr ? Math.min(CHART_WINDOW_SIZE, totalCount) : totalCount;
       const maxStart = Math.max(0, totalCount - windowSize);
       if (chartStartIndex > maxStart) chartStartIndex = maxStart;
       if (chartStartIndex < 0) chartStartIndex = 0;
 
-      const displayData = is5yr ? schedule.slice(chartStartIndex, chartStartIndex + windowSize) : schedule;
+      const displayData = is10yr ? schedule.slice(chartStartIndex, chartStartIndex + windowSize) : schedule;
       const firstD = displayData[0];
       const lastD = displayData[displayData.length - 1];
 
       // Update UI Banner and Nav Arrow Buttons
       const pagingLabel = document.getElementById('barPagingLabel');
       if (pagingLabel) {
-        if (is5yr) {
+        if (is10yr) {
           pagingLabel.textContent = `Displaying Years ${chartStartIndex + 1}–${chartStartIndex + displayData.length} (Ages ${firstD.age}–${lastD.age})`;
         } else {
           pagingLabel.textContent = `Displaying All ${totalCount} Years (Ages ${schedule[0].age}–${schedule[totalCount - 1].age})`;
@@ -3193,7 +3144,7 @@
       }
       const pageCounter = document.getElementById('barPageCounter');
       if (pageCounter) {
-        if (is5yr) {
+        if (is10yr) {
           const curPage = Math.floor(chartStartIndex / CHART_WINDOW_SIZE) + 1;
           const totalPages = Math.ceil(totalCount / CHART_WINDOW_SIZE);
           pageCounter.textContent = `Page ${curPage} of ${totalPages} (${displayData.length} yrs shown)`;
@@ -3201,10 +3152,10 @@
           pageCounter.textContent = `All ${totalCount} yrs shown`;
         }
       }
-      const btnPrev = document.getElementById('btnPrev5yrBar');
-      const btnNext = document.getElementById('btnNext5yrBar');
-      if (btnPrev) btnPrev.disabled = (!is5yr || chartStartIndex <= 0);
-      if (btnNext) btnNext.disabled = (!is5yr || chartStartIndex >= maxStart);
+      const btnPrev = document.getElementById('btnPrev10yrBar');
+      const btnNext = document.getElementById('btnNext10yrBar');
+      if (btnPrev) btnPrev.disabled = (!is10yr || chartStartIndex <= 0);
+      if (btnNext) btnNext.disabled = (!is10yr || chartStartIndex >= maxStart);
 
       const containerW = svg.parentElement.clientWidth || (window.innerWidth ? Math.min(window.innerWidth - 32, 720) : 360);
       const width = Math.max(260, containerW);
@@ -3251,7 +3202,7 @@
       }
 
       const step = plotW / displayData.length;
-      const barW = is5yr ? Math.max(16, Math.min(42, step * 0.58)) : Math.max(3, Math.min(20, step * 0.72));
+      const barW = is10yr ? Math.max(10, Math.min(26, step * 0.62)) : Math.max(3, Math.min(20, step * 0.72));
 
       displayData.forEach((d, idx) => {
         const cx = padL + idx * step + step / 2;
@@ -3309,17 +3260,17 @@
           svg.appendChild(dot);
         }
 
-        // Always show clear age labels in 5-year view
-        const showLabel = is5yr ? true : ((displayData.length > 30 && isMobile) ? (idx % 10 === 0 || idx === displayData.length - 1) : (idx % 5 === 0 || idx === displayData.length - 1));
+        // Age labels for 10-year view (shows every year on desktop, every 2 years or alternate on compact mobile screens)
+        const showLabel = is10yr ? (isMobile ? (idx % 2 === 0 || idx === displayData.length - 1) : true) : ((displayData.length > 30 && isMobile) ? (idx % 10 === 0 || idx === displayData.length - 1) : (idx % 5 === 0 || idx === displayData.length - 1));
         if (showLabel) {
           const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
           text.setAttribute('x', cx);
           text.setAttribute('y', height - padB + 15);
           text.setAttribute('text-anchor', 'middle');
           text.setAttribute('fill', '#1e293b');
-          text.setAttribute('font-weight', is5yr ? '700' : '500');
-          text.setAttribute('font-size', is5yr ? '13px' : (isMobile ? '11px' : '12px'));
-          text.textContent = 'Age ' + d.age;
+          text.setAttribute('font-weight', is10yr ? '700' : '500');
+          text.setAttribute('font-size', is10yr ? (isMobile ? '11px' : '12px') : (isMobile ? '11px' : '12px'));
+          text.textContent = (isMobile && is10yr && idx % 2 !== 0 && idx !== displayData.length - 1) ? '' : (isMobile ? String(d.age) : 'Age ' + d.age);
           svg.appendChild(text);
         }
 
@@ -3416,41 +3367,9 @@
       svg.innerHTML = '';
       if (!schedule || schedule.length === 0) return;
 
-      // Determine dataset window (5 years or all)
-      const is5yr = (chartViewMode === '5yr');
+      // Area chart always projects all years through age 90
+      const displayData = schedule;
       const totalCount = schedule.length;
-      const windowSize = is5yr ? Math.min(CHART_WINDOW_SIZE, totalCount) : totalCount;
-      const maxStart = Math.max(0, totalCount - windowSize);
-      if (chartStartIndex > maxStart) chartStartIndex = maxStart;
-      if (chartStartIndex < 0) chartStartIndex = 0;
-
-      const displayData = is5yr ? schedule.slice(chartStartIndex, chartStartIndex + windowSize) : schedule;
-      const firstD = displayData[0];
-      const lastD = displayData[displayData.length - 1];
-
-      // Update UI Banner and Nav Arrow Buttons
-      const pagingLabel = document.getElementById('areaPagingLabel');
-      if (pagingLabel) {
-        if (is5yr) {
-          pagingLabel.textContent = `Displaying Years ${chartStartIndex + 1}–${chartStartIndex + displayData.length} (Ages ${firstD.age}–${lastD.age})`;
-        } else {
-          pagingLabel.textContent = `Displaying All ${totalCount} Years (Ages ${schedule[0].age}–${schedule[totalCount - 1].age})`;
-        }
-      }
-      const pageCounter = document.getElementById('areaPageCounter');
-      if (pageCounter) {
-        if (is5yr) {
-          const curPage = Math.floor(chartStartIndex / CHART_WINDOW_SIZE) + 1;
-          const totalPages = Math.ceil(totalCount / CHART_WINDOW_SIZE);
-          pageCounter.textContent = `Page ${curPage} of ${totalPages} (${displayData.length} yrs shown)`;
-        } else {
-          pageCounter.textContent = `All ${totalCount} yrs shown`;
-        }
-      }
-      const btnPrev = document.getElementById('btnPrev5yrArea');
-      const btnNext = document.getElementById('btnNext5yrArea');
-      if (btnPrev) btnPrev.disabled = (!is5yr || chartStartIndex <= 0);
-      if (btnNext) btnNext.disabled = (!is5yr || chartStartIndex >= maxStart);
 
       const containerW = svg.parentElement.clientWidth || (window.innerWidth ? Math.min(window.innerWidth - 32, 720) : 360);
       const width = Math.max(260, containerW);
@@ -3460,7 +3379,7 @@
       svg.style.width = '100%';
       svg.style.height = `${height}px`;
       const padL = isMobile ? 48 : 60;
-      const padR = isMobile ? 10 : 15;
+      const padR = isMobile ? 12 : 20;
       const padT = 20;
       const padB = 32;
       const plotW = width - padL - padR;
@@ -3537,31 +3456,21 @@
       createPath(d => d.balBrokerage, '#9333ea', null);
       createPath(d => d.balRoth, '#16a34a', null);
 
-      // Points and markers for 5-year view
+      // Interactive touch points and markers
       displayData.forEach((d, idx) => {
         const cx = padL + idx * step;
         const cyTotal = padT + plotH - (d.totalEndingBal / maxBal) * plotH;
 
-        if (is5yr) {
-          const dot = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-          dot.setAttribute('cx', cx);
-          dot.setAttribute('cy', cyTotal);
-          dot.setAttribute('r', isMobile ? '3.5' : '4');
-          dot.setAttribute('fill', '#0f172a');
-          dot.setAttribute('stroke', '#ffffff');
-          dot.setAttribute('stroke-width', '1.5');
-          svg.appendChild(dot);
-        }
-
-        const showLabel = is5yr ? true : ((displayData.length > 30 && isMobile) ? (idx % 10 === 0 || idx === displayData.length - 1) : (idx % 5 === 0 || idx === displayData.length - 1));
+        // Show age labels every 5 or 10 years across full horizon (e.g. 50, 55, 60, 65... 90)
+        const showLabel = (isMobile ? (idx % 10 === 0 || idx === displayData.length - 1) : (idx % 5 === 0 || idx === displayData.length - 1));
         if (showLabel) {
           const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
           text.setAttribute('x', cx);
           text.setAttribute('y', height - padB + 15);
           text.setAttribute('text-anchor', 'middle');
           text.setAttribute('fill', '#1e293b');
-          text.setAttribute('font-weight', is5yr ? '700' : '500');
-          text.setAttribute('font-size', is5yr ? '13px' : (isMobile ? '11px' : '12px'));
+          text.setAttribute('font-weight', '600');
+          text.setAttribute('font-size', isMobile ? '11px' : '12px');
           text.textContent = 'Age ' + d.age;
           svg.appendChild(text);
         }
@@ -3651,27 +3560,48 @@
         const tr = document.createElement('tr');
         if (d.isRmd) tr.classList.add('rmd-year');
 
-        // 1. Build Multi-Bucket Withdrawals Horizontal Bar Chart
+        // 1. Build Consolidated Outflows Horizontal Bar Chart: Where Withdrawn Money & SS Goes
+        // Total Inflow = Total Portfolio Withdrawal + Social Security Benefits
         let wBarHtml = '';
         const totalW = d.totalGrossW || 0;
-        if (totalW > 0) {
-          const pPretax = Math.min(100, Math.max(0, ((d.wPretax || 0) / totalW) * 100));
-          const pBrok = Math.min(100, Math.max(0, ((d.wBrokerage || 0) / totalW) * 100));
-          const pRoth = Math.min(100, Math.max(0, ((d.wRoth || 0) / totalW) * 100));
+        const annualSS = d.annualSS || 0;
+        const totalInflow = totalW + annualSS;
+
+        // Breakdown destinations:
+        // - Living Cost: d.targetExpense
+        // - Taxes: d.estTax (Fed + State + Conv Tax + LTCG)
+        // - Other Expenses: Medicare IRMAA + Early Penalty (if any), or excess/reserve
+        const livingCost = Math.min(totalInflow, d.targetExpense || 0);
+        const taxCost = d.estTax || 0;
+        const otherCost = Math.max(0, (d.irmaaSurcharge || 0) + (d.earlyPenalty || 0));
+
+        // Effective total accounted outflow
+        const totalOutflow = Math.max(totalInflow, livingCost + taxCost + otherCost);
+
+        if (totalOutflow > 0) {
+          const pLiving = Math.min(100, Math.max(0, (livingCost / totalOutflow) * 100));
+          const pTax = Math.min(100, Math.max(0, (taxCost / totalOutflow) * 100));
+          const pOther = Math.max(0, 100 - pLiving - pTax);
 
           const segs = [];
           const legend = [];
-          if (pPretax > 0) {
-            segs.push(`<div class="tbl-hbar-seg" style="width:${pPretax.toFixed(1)}%; background:#2563eb;" title="Trad 401k/IRA: ${formatCurrency(d.wPretax)} (${Math.round(pPretax)}%)"></div>`);
-            legend.push(`<span class="tbl-hbar-legend-item"><span class="tbl-hbar-dot" style="background:#2563eb;"></span>401k/Trad ${Math.round(pPretax)}%</span>`);
+
+          // Living Cost: Sky/Teal (#0284c7)
+          if (pLiving > 0) {
+            segs.push(`<div class="tbl-hbar-seg" style="width:${pLiving.toFixed(1)}%; background:#0284c7;" title="Living Cost: ${formatCurrency(livingCost)} (${Math.round(pLiving)}%)"></div>`);
+            legend.push(`<span class="tbl-hbar-legend-item"><span class="tbl-hbar-dot" style="background:#0284c7;"></span>Living ${Math.round(pLiving)}%</span>`);
           }
-          if (pBrok > 0) {
-            segs.push(`<div class="tbl-hbar-seg" style="width:${pBrok.toFixed(1)}%; background:#9333ea;" title="Brokerage: ${formatCurrency(d.wBrokerage)} (${Math.round(pBrok)}%)"></div>`);
-            legend.push(`<span class="tbl-hbar-legend-item"><span class="tbl-hbar-dot" style="background:#9333ea;"></span>Brok ${Math.round(pBrok)}%</span>`);
+
+          // Taxes: Red (#dc2626)
+          if (pTax > 0) {
+            segs.push(`<div class="tbl-hbar-seg" style="width:${pTax.toFixed(1)}%; background:#dc2626;" title="Taxes: ${formatCurrency(taxCost)} (${Math.round(pTax)}%)"></div>`);
+            legend.push(`<span class="tbl-hbar-legend-item"><span class="tbl-hbar-dot" style="background:#dc2626;"></span>Taxes ${Math.round(pTax)}%</span>`);
           }
-          if (pRoth > 0) {
-            segs.push(`<div class="tbl-hbar-seg" style="width:${pRoth.toFixed(1)}%; background:#16a34a;" title="Roth IRA: ${formatCurrency(d.wRoth)} (${Math.round(pRoth)}%)"></div>`);
-            legend.push(`<span class="tbl-hbar-legend-item"><span class="tbl-hbar-dot" style="background:#16a34a;"></span>Roth ${Math.round(pRoth)}%</span>`);
+
+          // Other Expenses (IRMAA / Penalties / Healthcare): Amber (#d97706)
+          if (pOther > 0.5) {
+            segs.push(`<div class="tbl-hbar-seg" style="width:${pOther.toFixed(1)}%; background:#d97706;" title="Other Expenses (IRMAA/Penalties): ${formatCurrency(otherCost)} (${Math.round(pOther)}%)"></div>`);
+            legend.push(`<span class="tbl-hbar-legend-item"><span class="tbl-hbar-dot" style="background:#d97706;"></span>Other ${Math.round(pOther)}%</span>`);
           }
 
           wBarHtml = `
@@ -3681,7 +3611,7 @@
             </div>
           `;
         } else {
-          wBarHtml = '<div style="font-size:0.75rem; color:#94a3b8; margin-top:3px;">$0 withdrawn</div>';
+          wBarHtml = '<div style="font-size:0.80rem; color:#94a3b8; margin-top:3px;">$0 inflow / outflow</div>';
         }
 
         // 2. Build Multi-Bucket Ending Balances Horizontal Bar Chart
@@ -3714,48 +3644,56 @@
             </div>
           `;
         } else {
-          balBarHtml = '<div style="font-size:0.75rem; color:#dc2626; font-weight:600; margin-top:3px;">Portfolio Depleted</div>';
+          balBarHtml = '<div style="font-size:0.80rem; color:#dc2626; font-weight:600; margin-top:3px;">Portfolio Depleted</div>';
         }
 
-        // Build Social Security note for Total Withdrawals
+        // Build Social Security note
         const ssNote = d.annualSS > 0
-          ? `<div style="font-size:0.86rem; color:#15803d; font-weight:600; margin-top:3px;">+ SS: ${formatCurrency(d.annualSS)}</div>`
+          ? `<div style="font-size:0.84rem; color:#15803d; font-weight:600; margin-top:2px;">• Social Security: ${formatCurrency(d.annualSS)}</div>`
           : '';
 
-        // Build IRMAA note for Est Tax
+        // Build IRMAA / Other note
         let irmaaNote = '';
         if (d.age >= 65) {
           if (d.irmaaSurcharge > 0) {
-            irmaaNote = `<div style="font-size:0.86rem; color:#0284c7; font-weight:600; margin-top:2px;">+ IRMAA: ${formatCurrency(d.irmaaSurcharge)} (Tier ${d.irmaaTier})</div>`;
+            irmaaNote = `<div style="font-size:0.82rem; color:#d97706; font-weight:600; margin-top:1px;">• Medicare IRMAA: ${formatCurrency(d.irmaaSurcharge)} (Tier ${d.irmaaTier})</div>`;
           } else {
-            irmaaNote = `<div style="font-size:0.82rem; color:#64748b; margin-top:2px;">IRMAA: $0</div>`;
+            irmaaNote = `<div style="font-size:0.80rem; color:#64748b; margin-top:1px;">• Medicare IRMAA: $0</div>`;
           }
         }
 
+        // Build tax subtext note
+        const taxDetailNote = taxCost > 0
+          ? `<div style="font-size:0.82rem; color:#dc2626; margin-top:2px; line-height:1.35;">• Est. Taxes: <strong>${formatCurrency(taxCost)}</strong> (Fed: ${formatCurrency(d.fedTax)} · ${d.stateCode}: ${formatCurrency(d.stateTax)})</div>`
+          : `<div style="font-size:0.82rem; color:#16a34a; font-weight:600; margin-top:2px;">• Est. Taxes: $0 (Tax-Free)</div>`;
+
         tr.innerHTML = `
-          <td>${d.calendarYear}</td>
           <td>
-            <strong>${d.age}</strong>
-            ${d.isRmd ? '<span class="tag-rmd" title="RMD Required">RMD</span>' : ''}
-            ${d.isEarlyPenalty ? `<span class="tag-rmd" style="background:#fee2e2;color:#b91c1c;border:1px solid #fca5a5;" title="Includes 10% Early Withdrawal Penalty: ${formatCurrency(d.earlyPenalty)}">10% Pen</span>` : ''}
+            <div style="font-size: 0.90rem; color: #64748b; line-height: 1.1;">${d.calendarYear}</div>
+            <div style="font-size: 1.08rem; font-weight: 800; color: #0f172a; margin-top: 1px;">
+              Age ${d.age}
+            </div>
+            ${d.isRmd ? '<div style="margin-top:2px;"><span class="tag-rmd" title="RMD Required">RMD</span></div>' : ''}
+            ${d.isEarlyPenalty ? '<div style="margin-top:2px;"><span class="tag-rmd" style="background:#fee2e2;color:#b91c1c;border:1px solid #fca5a5;" title="Includes 10% Early Withdrawal Penalty">10% Pen</span></div>' : ''}
           </td>
-          <td>${formatCurrency(d.targetExpense)}</td>
           <td>
-            <div style="font-weight:700; color:#0f172a;">${formatCurrency(d.totalGrossW)}</div>
+            <div style="display: flex; justify-content: flex-end; align-items: baseline; gap: 0.5rem;">
+              <span style="font-size: 0.86rem; color: #64748b; font-weight: 600;">Inflow:</span>
+              <strong style="color: #0f172a; font-size: 1.12rem;">${formatCurrency(totalInflow)}</strong>
+            </div>
             ${wBarHtml}
-            ${ssNote}
-          </td>
-          <td style="color: #dc2626;">
-            <div style="font-weight:700; color:#dc2626;">${formatCurrency(d.estTax)}</div>
-            <div style="font-size:0.86rem; color:#64748b; margin-top:2px; line-height:1.4;">Fed: ${formatCurrency(d.fedTax)} · ${d.stateCode}: ${formatCurrency(d.stateTax)}</div>
-            ${d.taxableSS > 0 ? `<div style="font-size:0.84rem; color:#15803d;">(incl. ${formatCurrency(d.taxableSS)} taxable SS)</div>` : ''}
-            ${d.convTax > 0 ? `<div style="font-size:0.84rem; color:#b45309;">(incl. ${formatCurrency(d.convTax)} conv tax)</div>` : ''}
-            ${d.ltcgTax > 0 ? `<div style="font-size:0.84rem; color:#7e22ce;">(incl. ${formatCurrency(d.ltcgTax)} LTCG)</div>` : (d.wBrokerage > 0 ? `<div style="font-size:0.84rem; color:#15803d;">(0% LTCG rate)</div>` : '')}
-            ${d.isEarlyPenalty ? `<div style="font-size:0.84rem; color:#b91c1c; font-weight:600;">(incl. ${formatCurrency(d.earlyPenalty)} pen)</div>` : ''}
-            ${irmaaNote}
+            <div style="margin-top: 4px; border-top: 1px dashed #e2e8f0; padding-top: 3px;">
+              ${ssNote}
+              ${taxDetailNote}
+              ${irmaaNote}
+              ${d.isEarlyPenalty ? `<div style="font-size:0.80rem; color:#b91c1c; font-weight:600; margin-top:1px;">• Early Withdrawal Pen (10%): ${formatCurrency(d.earlyPenalty)}</div>` : ''}
+              ${d.taxableSS > 0 ? `<div style="font-size:0.78rem; color:#15803d;">(incl. ${formatCurrency(d.taxableSS)} taxable SS)</div>` : ''}
+              ${d.convTax > 0 ? `<div style="font-size:0.78rem; color:#b45309;">(incl. ${formatCurrency(d.convTax)} conv tax)</div>` : ''}
+              ${d.ltcgTax > 0 ? `<div style="font-size:0.78rem; color:#7e22ce;">(incl. ${formatCurrency(d.ltcgTax)} LTCG)</div>` : (d.wBrokerage > 0 ? `<div style="font-size:0.78rem; color:#15803d;">(0% LTCG rate)</div>` : '')}
+            </div>
           </td>
           <td>
-            <div style="font-weight: 800; color: #0f172a;">${formatCurrency(d.totalEndingBal)}</div>
+            <div style="font-weight: 800; font-size: 1.08rem; color: #0f172a;">${formatCurrency(d.totalEndingBal)}</div>
             ${balBarHtml}
           </td>
         `;
