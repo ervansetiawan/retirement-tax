@@ -11,23 +11,23 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg-main: #0b0f19;
-      --bg-card: #131b2e;
-      --bg-card-hover: #19243d;
-      --bg-input: #1a233a;
-      --border: #233054;
-      --border-focus: #3b82f6;
-      --text-main: #f1f5f9;
-      --text-muted: #94a3b8;
+      --bg-main: #f8fafc;
+      --bg-card: #ffffff;
+      --bg-card-hover: #f1f5f9;
+      --bg-input: #ffffff;
+      --border: #e2e8f0;
+      --border-focus: #2563eb;
+      --text-main: #0f172a;
+      --text-muted: #475569;
       --text-dim: #64748b;
-      --primary: #3b82f6;
-      --primary-hover: #2563eb;
-      --success: #10b981;
-      --warning: #f59e0b;
-      --danger: #ef4444;
-      --purple: #8b5cf6;
-      --teal: #14b8a6;
-      --amber: #f59e0b;
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --success: #16a34a;
+      --warning: #d97706;
+      --danger: #dc2626;
+      --purple: #9333ea;
+      --teal: #0d9488;
+      --amber: #d97706;
       --font-family: 'Inter', system-ui, -apple-system, sans-serif;
     }
 
@@ -92,9 +92,7 @@
       font-size: 1.4rem;
       font-weight: 800;
       letter-spacing: -0.025em;
-      background: linear-gradient(135deg, #60a5fa 0%, #a78bfa 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      color: #0f172a;
       display: flex;
       align-items: center;
       gap: 0.5rem;
@@ -107,53 +105,53 @@
 
     .brand-subtitle {
       color: var(--text-muted);
-      font-size: 0.825rem;
+      font-size: 0.9rem;
       margin-top: 0.25rem;
     }
 
     .header-badges {
       display: flex;
-      gap: 0.4rem;
+      gap: 0.45rem;
       flex-wrap: wrap;
     }
 
     .badge {
       display: inline-flex;
       align-items: center;
-      padding: 0.2rem 0.65rem;
+      padding: 0.28rem 0.75rem;
       border-radius: 9999px;
-      font-size: 0.7rem;
+      font-size: 0.78rem;
       font-weight: 600;
-      border: 1px solid var(--border);
-      background: var(--bg-card);
-      color: var(--text-muted);
+      border: 1px solid #cbd5e1;
+      background: #f1f5f9;
+      color: #334155;
       white-space: nowrap;
     }
     .badge-blue {
-      background: rgba(59, 130, 246, 0.15);
-      border-color: rgba(59, 130, 246, 0.3);
-      color: #93c5fd;
+      background: #eff6ff;
+      border-color: #bfdbfe;
+      color: #1d4ed8;
     }
     .badge-green {
-      background: rgba(16, 185, 129, 0.15);
-      border-color: rgba(16, 185, 129, 0.3);
-      color: #6ee7b7;
+      background: #f0fdf4;
+      border-color: #bbf7d0;
+      color: #15803d;
     }
 
     /* Mobile Quick Navigation Switcher */
     .mobile-nav-bar {
       display: flex;
-      gap: 0.35rem;
-      background: rgba(19, 27, 46, 0.95);
+      gap: 0.4rem;
+      background: rgba(255, 255, 255, 0.95);
       border: 1px solid var(--border);
-      padding: 0.35rem;
+      padding: 0.4rem;
       border-radius: 12px;
       margin-bottom: 1rem;
       position: sticky;
       top: 0.5rem;
       z-index: 50;
       backdrop-filter: blur(12px);
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
     }
     @media (min-width: 1024px) {
       .mobile-nav-bar {
@@ -162,26 +160,30 @@
     }
     .mobile-tab-btn {
       flex: 1;
-      padding: 0.6rem 0.4rem;
-      border: none;
+      padding: 0.65rem 0.45rem;
+      border: 1px solid transparent;
       border-radius: 8px;
       background: transparent;
       color: var(--text-muted);
-      font-size: 0.8rem;
+      font-size: 0.92rem;
       font-weight: 600;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 0.35rem;
+      gap: 0.4rem;
       transition: all 0.15s ease;
       white-space: nowrap;
-      min-height: 40px;
+      min-height: 44px;
+    }
+    .mobile-tab-btn:hover {
+      background: #f1f5f9;
+      color: var(--text-main);
     }
     .mobile-tab-btn.active {
       background: var(--primary);
       color: #ffffff;
-      box-shadow: 0 2px 8px rgba(59, 130, 246, 0.4);
+      box-shadow: 0 2px 8px rgba(37, 99, 235, 0.35);
     }
 
     /* Grid Layout: Responsive 1-col on mobile, 2-col on desktop */
@@ -269,7 +271,7 @@
       border: 1px solid var(--border);
       border-radius: 12px;
       padding: 1.15rem;
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.03);
     }
     @media (max-width: 640px) {
       .card {
@@ -278,7 +280,7 @@
       }
     }
     .card-title {
-      font-size: 1rem;
+      font-size: 1.1rem;
       font-weight: 700;
       color: var(--text-main);
       margin-bottom: 0.85rem;
@@ -289,33 +291,35 @@
 
     /* Touch-Friendly Slider Cards */
     .slider-card-group {
-      background: rgba(11, 15, 25, 0.45);
+      background: #f8fafc;
       border: 1px solid var(--border);
       border-radius: 10px;
-      padding: 0.8rem 0.85rem;
-      margin-bottom: 0.85rem;
-      transition: border-color 0.15s ease;
+      padding: 0.85rem 0.9rem;
+      margin-bottom: 0.9rem;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
     }
     .slider-card-group:hover,
     .slider-card-group:focus-within {
-      border-color: rgba(59, 130, 246, 0.4);
+      border-color: #cbd5e1;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
     }
     .slider-header-row {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 0.35rem;
+      margin-bottom: 0.4rem;
       gap: 0.5rem;
     }
     .slider-title {
-      font-size: 0.825rem;
+      font-size: 0.92rem;
       font-weight: 600;
       color: var(--text-main);
       display: flex;
       flex-direction: column;
+      gap: 2px;
     }
     .slider-badge {
-      font-size: 0.7rem;
+      font-size: 0.78rem;
       color: var(--text-dim);
       font-weight: 400;
     }
@@ -325,55 +329,56 @@
       position: relative;
       display: flex;
       align-items: center;
-      width: 120px;
+      width: 124px;
       flex-shrink: 0;
     }
     .slider-val-input-wrap .prefix {
       position: absolute;
-      left: 0.6rem;
-      font-size: 0.85rem;
+      left: 0.65rem;
+      font-size: 0.95rem;
       color: var(--text-dim);
       pointer-events: none;
     }
     .slider-val-input-wrap .suffix {
       position: absolute;
-      right: 0.6rem;
-      font-size: 0.85rem;
+      right: 0.65rem;
+      font-size: 0.95rem;
       color: var(--text-dim);
       pointer-events: none;
     }
     .slider-val-input {
       width: 100%;
-      background: var(--bg-input);
-      border: 1px solid var(--border);
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
       color: var(--text-main);
-      padding: 0.4rem 0.5rem;
+      padding: 0.45rem 0.55rem;
       border-radius: 6px;
       font-size: 16px;
       font-weight: 700;
       text-align: right;
       font-family: inherit;
+      box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.03);
     }
     @media (min-width: 640px) {
       .slider-val-input {
-        font-size: 0.875rem;
+        font-size: 0.95rem;
       }
     }
     .slider-val-input.has-prefix {
-      padding-left: 1.4rem;
+      padding-left: 1.5rem;
     }
     .slider-val-input.has-suffix {
-      padding-right: 1.5rem;
+      padding-right: 1.6rem;
     }
     .slider-val-input:focus {
       outline: none;
       border-color: var(--border-focus);
-      box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
     }
 
     /* Touch Range Slider Styling */
     .slider-track-wrap {
-      margin-top: 0.35rem;
+      margin-top: 0.45rem;
       position: relative;
     }
     input[type="range"] {
@@ -382,54 +387,54 @@
       width: 100%;
       height: 10px;
       border-radius: 8px;
-      background: #1e293b;
-      border: 1px solid #334155;
+      background: #e2e8f0;
+      border: none;
       outline: none;
       cursor: pointer;
       margin: 8px 0 4px 0;
       display: block;
     }
-    /* Large 26px touch thumbs for effortless dragging on mobile phones */
+    /* Large 28px touch thumbs for effortless dragging on mobile phones */
     input[type="range"]::-webkit-slider-thumb {
       -webkit-appearance: none;
       appearance: none;
-      width: 26px;
-      height: 26px;
+      width: 28px;
+      height: 28px;
       border-radius: 50%;
-      background: #3b82f6;
-      border: 3px solid #0f172a;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.6), 0 0 0 2px rgba(59, 130, 246, 0.5);
+      background: #2563eb;
+      border: 3px solid #ffffff;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(37, 99, 235, 0.3);
       cursor: grab;
       transition: transform 0.1s ease, box-shadow 0.15s ease;
     }
     input[type="range"]:active::-webkit-slider-thumb {
       cursor: grabbing;
-      transform: scale(1.18);
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.8), 0 0 0 4px rgba(59, 130, 246, 0.7);
+      transform: scale(1.15);
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.28), 0 0 0 3px rgba(37, 99, 235, 0.35);
     }
     input[type="range"]::-moz-range-thumb {
-      width: 24px;
-      height: 24px;
+      width: 26px;
+      height: 26px;
       border-radius: 50%;
-      background: #3b82f6;
-      border: 3px solid #0f172a;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+      background: #2563eb;
+      border: 3px solid #ffffff;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
       cursor: grab;
     }
     .slider-range-labels {
       display: flex;
       justify-content: space-between;
-      font-size: 0.675rem;
+      font-size: 0.78rem;
       color: var(--text-dim);
-      margin-top: 2px;
+      margin-top: 3px;
     }
 
     /* Segmented Touch Controls for Filing Status */
     .segmented-touch-bar {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 0.35rem;
-      margin-top: 0.35rem;
+      gap: 0.4rem;
+      margin-top: 0.45rem;
     }
     @media (min-width: 480px) {
       .segmented-touch-bar {
@@ -437,35 +442,40 @@
       }
     }
     .segment-btn {
-      background: var(--bg-input);
+      background: #ffffff;
       border: 1px solid var(--border);
       border-radius: 8px;
-      padding: 0.55rem 0.3rem;
+      padding: 0.6rem 0.35rem;
       color: var(--text-muted);
-      font-size: 0.78rem;
-      font-weight: 600;
+      font-size: 0.88rem;
+      font-weight: 700;
       cursor: pointer;
       text-align: center;
       transition: all 0.15s ease;
-      min-height: 40px;
+      min-height: 44px;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
     }
+    .segment-btn:hover {
+      background: #f1f5f9;
+      color: var(--text-main);
+    }
     .segment-btn span.sub {
-      font-size: 0.65rem;
+      font-size: 0.74rem;
       font-weight: 400;
       color: var(--text-dim);
+      margin-top: 1px;
     }
     .segment-btn.active {
-      background: rgba(59, 130, 246, 0.2);
-      border-color: var(--primary);
-      color: #93c5fd;
-      box-shadow: 0 2px 8px rgba(59, 130, 246, 0.25);
+      background: #2563eb;
+      border-color: #2563eb;
+      color: #ffffff;
+      box-shadow: 0 2px 6px rgba(37, 99, 235, 0.3);
     }
     .segment-btn.active span.sub {
-      color: #bfdbfe;
+      color: rgba(255, 255, 255, 0.85);
     }
 
     /* Hidden native select for test suite compatibility */
@@ -482,7 +492,7 @@
 
     /* Strategy Switcher */
     .strategy-toggle {
-      background: var(--bg-input);
+      background: #f1f5f9;
       border: 1px solid var(--border);
       border-radius: 8px;
       display: flex;
@@ -492,62 +502,68 @@
     }
     .strategy-btn {
       flex: 1;
-      padding: 0.45rem 0.25rem;
-      border: none;
+      padding: 0.5rem 0.3rem;
+      border: 1px solid transparent;
       border-radius: 6px;
       background: transparent;
       color: var(--text-muted);
       cursor: pointer;
       transition: all 0.15s ease;
       text-align: center;
-      min-height: 48px;
+      min-height: 52px;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       gap: 2px;
     }
+    .strategy-btn:hover {
+      color: var(--text-main);
+      background: rgba(255, 255, 255, 0.7);
+    }
     .strat-btn-title {
-      font-size: 0.72rem;
+      font-size: 0.84rem;
       font-weight: 700;
-      line-height: 1.2;
+      line-height: 1.25;
     }
     .strat-btn-desc {
-      font-size: 0.60rem;
+      font-size: 0.74rem;
       font-weight: 500;
       color: var(--text-dim);
-      line-height: 1.15;
+      line-height: 1.2;
       transition: color 0.15s ease;
     }
     .strategy-btn.active {
-      background: var(--primary);
-      color: #ffffff;
-      box-shadow: 0 2px 8px rgba(59, 130, 246, 0.4);
+      background: #ffffff;
+      border-color: #cbd5e1;
+      color: #2563eb;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
     }
     .strategy-btn.active .strat-btn-desc {
-      color: rgba(255, 255, 255, 0.85);
+      color: #2563eb;
     }
     .strategy-btn#stratConv.active {
-      background: #475569;
-      color: #ffffff;
-      box-shadow: 0 2px 8px rgba(71, 85, 105, 0.4);
+      background: #ffffff;
+      border-color: #cbd5e1;
+      color: #0f172a;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
     }
     .strategy-btn#stratConv.active .strat-btn-desc {
-      color: rgba(255, 255, 255, 0.85);
+      color: #475569;
     }
     .strategy-desc-banner {
-      font-size: 0.71rem;
+      font-size: 0.82rem;
       color: var(--text-muted);
-      background: rgba(15, 23, 42, 0.55);
+      background: #f8fafc;
       border: 1px solid var(--border);
       border-radius: 6px;
-      padding: 0.45rem 0.6rem;
-      margin-bottom: 0.85rem;
-      line-height: 1.35;
+      padding: 0.55rem 0.75rem;
+      margin-bottom: 0.9rem;
+      line-height: 1.45;
       transition: all 0.2s ease;
     }
     .strategy-desc-banner strong {
-      color: #e2e8f0;
+      color: #0f172a;
     }
 
     /* Collapsible advanced */
@@ -586,29 +602,42 @@
       gap: 0.35rem;
       margin-top: 0.35rem;
     }
+    /* Bracket Ceiling Touch Buttons */
+    .bracket-ceiling-bar {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.35rem;
+      margin-top: 0.35rem;
+    }
     .bracket-btn {
-      background: var(--bg-input);
+      background: #ffffff;
       border: 1px solid var(--border);
       border-radius: 6px;
       padding: 0.45rem 0.2rem;
-      font-size: 0.75rem;
+      font-size: 0.82rem;
       font-weight: 700;
       color: var(--text-muted);
       cursor: pointer;
       text-align: center;
-      min-height: 38px;
+      min-height: 42px;
+      transition: all 0.15s ease;
+    }
+    .bracket-btn:hover {
+      background: #f1f5f9;
+      color: var(--text-main);
     }
     .bracket-btn.active {
       background: var(--primary);
       color: #ffffff;
       border-color: var(--primary);
+      box-shadow: 0 2px 6px rgba(37, 99, 235, 0.3);
     }
 
     /* KPI Summary Cards: 2-col on mobile, 4-col on desktop */
     .kpi-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 0.65rem;
+      gap: 0.75rem;
       margin-bottom: 1.25rem;
       width: 100%;
     }
@@ -623,44 +652,46 @@
       background: var(--bg-card);
       border: 1px solid var(--border);
       border-radius: 12px;
-      padding: 0.85rem 0.85rem;
+      padding: 0.95rem 0.95rem;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       min-width: 0;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
     }
     .kpi-label {
-      font-size: 0.7rem;
-      font-weight: 600;
-      color: var(--text-dim);
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: #64748b;
       text-transform: uppercase;
       letter-spacing: 0.04em;
       margin-bottom: 0.25rem;
     }
     .kpi-value {
-      font-size: 1.25rem;
+      font-size: 1.45rem;
       font-weight: 800;
       color: var(--text-main);
       line-height: 1.2;
     }
     @media (min-width: 640px) {
       .kpi-value {
-        font-size: 1.5rem;
+        font-size: 1.65rem;
       }
     }
     .kpi-sub {
-      font-size: 0.68rem;
+      font-size: 0.80rem;
       color: var(--text-muted);
       margin-top: 0.25rem;
+      line-height: 1.4;
     }
     .kpi-success {
-      color: #34d399;
+      color: #16a34a;
     }
     .kpi-warning {
-      color: #fbbf24;
+      color: #d97706;
     }
     .kpi-danger {
-      color: #f87171;
+      color: #dc2626;
     }
 
     /* Charts Section: 100% width on mobile and desktop */
@@ -678,6 +709,7 @@
       padding: 1rem;
       width: 100%;
       box-sizing: border-box;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
     }
     @media (min-width: 640px) {
       .chart-card {
@@ -699,14 +731,14 @@
       }
     }
     .chart-title {
-      font-size: 0.925rem;
+      font-size: 1.05rem;
       font-weight: 700;
       color: var(--text-main);
     }
     .chart-legend {
       display: flex;
-      gap: 0.65rem;
-      font-size: 0.725rem;
+      gap: 0.75rem;
+      font-size: 0.80rem;
       flex-wrap: wrap;
     }
     .legend-item {
@@ -716,8 +748,8 @@
       color: var(--text-muted);
     }
     .legend-color {
-      width: 9px;
-      height: 9px;
+      width: 10px;
+      height: 10px;
       border-radius: 2px;
     }
 
@@ -744,8 +776,8 @@
       display: flex;
       justify-content: flex-end;
       align-items: center;
-      gap: 0.3rem;
-      font-size: 0.7rem;
+      gap: 0.35rem;
+      font-size: 0.78rem;
       color: var(--text-dim);
       margin-top: 0.4rem;
     }
@@ -757,16 +789,18 @@
 
     .chart-tooltip {
       position: absolute;
-      background: rgba(11, 15, 25, 0.95);
-      border: 1px solid var(--border);
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
       border-radius: 8px;
-      padding: 0.5rem 0.75rem;
-      font-size: 0.725rem;
+      padding: 0.65rem 0.85rem;
+      font-size: 0.82rem;
+      line-height: 1.45;
       pointer-events: none;
       display: none;
       z-index: 100;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
-      min-width: 160px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+      min-width: 170px;
+      color: #0f172a;
     }
 
     /* Table Section: 100% responsive card */
@@ -778,6 +812,7 @@
       margin-bottom: 2rem;
       width: 100%;
       box-sizing: border-box;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
     }
     @media (min-width: 640px) {
       .table-card {
@@ -800,17 +835,18 @@
       border: 1px solid var(--border);
       border-radius: 8px;
       width: 100%;
+      background: #ffffff;
     }
     table {
       width: 100%;
       border-collapse: separate;
       border-spacing: 0;
-      font-size: 0.76rem;
+      font-size: 0.90rem;
       text-align: right;
     }
     @media (max-width: 1023px) {
       table {
-        min-width: 720px;
+        min-width: 880px;
       }
     }
     @media (min-width: 1024px) {
@@ -819,99 +855,106 @@
       }
     }
     th {
-      background: #162038;
-      color: var(--text-muted);
-      font-weight: 600;
-      padding: 0.55rem 0.5rem;
-      border-bottom: 1px solid var(--border);
+      background: #f8fafc;
+      color: #334155;
+      font-weight: 700;
+      padding: 0.65rem 0.6rem;
+      border-bottom: 2px solid var(--border);
       position: sticky;
       top: 0;
       z-index: 10;
       white-space: nowrap;
+      font-size: 0.86rem;
     }
     th:first-child, td:first-child {
       position: sticky;
       left: 0;
       z-index: 12;
-      background: #131b2e;
+      background: #ffffff;
       text-align: center;
-      width: 46px;
+      width: 58px;
+      min-width: 58px;
       border-right: 1px solid var(--border);
     }
     th:first-child {
       z-index: 20;
-      background: #162038;
+      background: #f8fafc;
     }
     th:nth-child(2), td:nth-child(2) {
       position: sticky;
-      left: 46px;
+      left: 58px;
       z-index: 12;
-      background: #131b2e;
+      background: #ffffff;
       text-align: center;
-      width: 58px;
-      border-right: 2px solid var(--border);
+      width: 72px;
+      min-width: 72px;
+      border-right: 2px solid #cbd5e1;
     }
     th:nth-child(2) {
       z-index: 20;
-      background: #162038;
+      background: #f8fafc;
     }
 
     td {
-      padding: 0.45rem 0.5rem;
-      border-bottom: 1px solid rgba(35, 48, 84, 0.6);
+      padding: 0.55rem 0.6rem;
+      border-bottom: 1px solid #f1f5f9;
       white-space: nowrap;
       color: var(--text-main);
-      background: inherit;
+      background: #ffffff;
       vertical-align: top;
+      font-size: 0.92rem;
     }
     tr:nth-child(even) td {
-      background: rgba(19, 27, 46, 0.6);
+      background: #f8fafc;
     }
     tr:nth-child(even) td:first-child,
     tr:nth-child(even) td:nth-child(2) {
-      background: #101626;
+      background: #f8fafc;
     }
     tr:hover td {
-      background: rgba(59, 130, 246, 0.12);
+      background: #eff6ff;
     }
     tr.rmd-year td {
-      background: rgba(245, 158, 11, 0.05);
+      background: #fffbeb;
     }
     .tag-rmd {
-      background: rgba(245, 158, 11, 0.18);
-      color: #fbbf24;
-      padding: 0.1rem 0.35rem;
+      background: #fef3c7;
+      color: #92400e;
+      border: 1px solid #fde68a;
+      padding: 0.15rem 0.4rem;
       border-radius: 4px;
-      font-size: 0.65rem;
+      font-size: 0.72rem;
       font-weight: 700;
-      margin-left: 0.2rem;
+      margin-left: 0.25rem;
     }
     .btn-action {
       background: var(--primary);
       color: #ffffff;
       border: none;
       border-radius: 6px;
-      padding: 0.55rem 0.85rem;
-      font-size: 0.8rem;
+      padding: 0.6rem 0.95rem;
+      font-size: 0.88rem;
       font-weight: 600;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
-      gap: 0.4rem;
-      min-height: 38px;
-      transition: background 0.15s;
+      gap: 0.45rem;
+      min-height: 42px;
+      transition: background 0.15s, box-shadow 0.15s;
     }
     .btn-action:hover {
       background: var(--primary-hover);
+      box-shadow: 0 2px 6px rgba(37, 99, 235, 0.25);
     }
     .btn-secondary {
-      background: var(--bg-input);
-      color: var(--text-muted);
-      border: 1px solid var(--border);
+      background: #ffffff;
+      color: #334155;
+      border: 1px solid #cbd5e1;
     }
     .btn-secondary:hover {
       color: var(--text-main);
-      border-color: var(--primary);
+      background: #f8fafc;
+      border-color: #94a3b8;
     }
 
     /* Explanation Guide: 100% width, 1-col on mobile, 2-col on tablet/desktop */
@@ -923,6 +966,7 @@
       margin-top: 1.25rem;
       width: 100%;
       box-sizing: border-box;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
     }
     @media (min-width: 640px) {
       .guide-card {
@@ -930,10 +974,10 @@
       }
     }
     .guide-title {
-      font-size: 1rem;
+      font-size: 1.05rem;
       font-weight: 700;
       margin-bottom: 0.85rem;
-      color: #93c5fd;
+      color: #1d4ed8;
       display: flex;
       align-items: center;
       gap: 0.4rem;
@@ -950,13 +994,13 @@
       }
     }
     .guide-box {
-      background: rgba(11, 15, 25, 0.5);
+      background: #f8fafc;
       border: 1px solid var(--border);
       border-radius: 8px;
       padding: 0.9rem;
     }
     .guide-box h4 {
-      font-size: 0.85rem;
+      font-size: 0.92rem;
       font-weight: 700;
       color: var(--text-main);
       margin-bottom: 0.35rem;
@@ -965,7 +1009,7 @@
       gap: 0.35rem;
     }
     .guide-box p {
-      font-size: 0.78rem;
+      font-size: 0.85rem;
       color: var(--text-muted);
       line-height: 1.5;
     }
@@ -988,7 +1032,7 @@
     <header>
       <div>
         <div class="brand-title">
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="color:#60a5fa">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="color:#2563eb">
             <line x1="12" y1="1" x2="12" y2="23"></line>
             <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
           </svg>
@@ -1002,7 +1046,7 @@
         <span class="badge badge-blue">✓ Immediate Retirement</span>
         <span class="badge badge-green">✓ Smart Bracket-Filling</span>
         <span class="badge">SECURE 2.0 RMDs</span>
-        <span class="badge" style="background: rgba(96, 165, 250, 0.15); border-color: rgba(96, 165, 250, 0.3); color: #93c5fd;">Analyzed through Age 90</span>
+        <span class="badge" style="background: #eff6ff; border-color: #bfdbfe; color: #1d4ed8;">Analyzed through Age 90</span>
       </div>
     </header>
 
@@ -1029,7 +1073,7 @@
         <div class="card">
           <div class="card-title">
             <span>Touch-Friendly Inputs</span>
-            <button class="btn-action btn-secondary" style="padding: 0.2rem 0.65rem; font-size: 0.725rem; min-height: 28px;" onclick="resetInputs()">Reset</button>
+            <button class="btn-action btn-secondary" style="padding: 0.25rem 0.75rem; font-size: 0.82rem; min-height: 34px;" onclick="resetInputs()">Reset</button>
           </div>
 
           <!-- Strategy Toggle: 2 Distinct Objectives -->
@@ -1103,13 +1147,13 @@
             </select>
 
             <!-- State Tax Selection Dropdown -->
-            <div style="margin-top: 0.85rem; padding-top: 0.85rem; border-top: 1px solid rgba(255, 255, 255, 0.08);">
+            <div style="margin-top: 0.85rem; padding-top: 0.85rem; border-top: 1px solid var(--border);">
               <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 0.4rem;">
-                <label for="stateSelect" style="font-size: 0.8rem; font-weight: 600; color: #cbd5e1;">State of Residence</label>
-                <span id="stateTaxInfo" style="font-size: 0.72rem; color: #38bdf8; font-weight: 500;">Minnesota (5.35% – 9.85%)</span>
+                <label for="stateSelect" style="font-size: 0.88rem; font-weight: 600; color: #334155;">State of Residence</label>
+                <span id="stateTaxInfo" style="font-size: 0.80rem; color: #0284c7; font-weight: 600;">Minnesota (5.35% – 9.85%)</span>
               </div>
               <div style="position: relative;">
-                <select id="stateSelect" onchange="onStateChange()" style="width: 100%; padding: 0.65rem 0.85rem; background: var(--bg-input); border: 1px solid var(--border); border-radius: 8px; color: var(--text-main); font-size: 0.875rem; font-weight: 500; cursor: pointer; outline: none; appearance: none; -webkit-appearance: none;">
+                <select id="stateSelect" onchange="onStateChange()" style="width: 100%; padding: 0.65rem 0.85rem; background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px; color: var(--text-main); font-size: 0.875rem; font-weight: 500; cursor: pointer; outline: none; appearance: none; -webkit-appearance: none;">
                   <option value="AL">Alabama (AL) · 2.0% - 5.0%</option>
                   <option value="AK">Alaska (AK) · 0% (No Income Tax)</option>
                   <option value="AZ">Arizona (AZ) · 2.5% Flat</option>
@@ -1190,11 +1234,11 @@
           </div>
 
           <!-- 4. Social Security Benefits Card -->
-          <div class="slider-card-group" style="border-color: rgba(52, 211, 153, 0.4); background: rgba(52, 211, 153, 0.03);">
+          <div class="slider-card-group" style="border-color: #bbf7d0; background: #f0fdf4;">
             <div class="slider-header-row">
               <div class="slider-title">
-                <span style="color: #34d399;">Social Security Benefit</span>
-                <span class="slider-badge" id="ssSummaryBadge">$30,000/yr starting age 67</span>
+                <span style="color: #15803d;">Social Security Benefit</span>
+                <span class="slider-badge" id="ssSummaryBadge" style="background:#dcfce7; color:#15803d; border:1px solid #86efac; padding:0.15rem 0.5rem; border-radius:4px;">$30,000/yr starting age 67</span>
               </div>
               <div class="slider-val-input-wrap">
                 <span class="prefix">$</span>
@@ -1211,10 +1255,10 @@
             </div>
 
             <!-- Starting Age Slider -->
-            <div style="margin-top: 0.85rem; padding-top: 0.75rem; border-top: 1px solid rgba(255, 255, 255, 0.08);">
+            <div style="margin-top: 0.85rem; padding-top: 0.75rem; border-top: 1px solid #bbf7d0;">
               <div class="slider-header-row">
                 <div class="slider-title">
-                  <span style="font-size: 0.8rem; font-weight: 600; color: #cbd5e1;">Claiming Age</span>
+                  <span style="font-size: 0.8rem; font-weight: 600; color: #334155;">Claiming Age</span>
                   <span class="slider-badge">Eligible 62 – 70</span>
                 </div>
                 <div class="slider-val-input-wrap" style="width: 70px;">
@@ -1230,7 +1274,7 @@
                 </div>
               </div>
             </div>
-            <p style="font-size: 0.68rem; color: #94a3b8; margin-top: 6px;">
+            <p style="font-size: 0.78rem; color: #475569; margin-top: 6px; line-height: 1.45;">
               Social Security reduces required portfolio withdrawals and is taxed under IRS § 86 (up to 85% taxable). Inflation-adjusted.
             </p>
           </div>
@@ -1239,7 +1283,7 @@
           <div class="slider-card-group">
             <div class="slider-header-row">
               <div class="slider-title">
-                <span style="color: #93c5fd;">Traditional 401(k)</span>
+                <span style="color: #2563eb;">Traditional 401(k)</span>
                 <span class="slider-badge">Pre-tax balance</span>
               </div>
               <div class="slider-val-input-wrap">
@@ -1261,7 +1305,7 @@
           <div class="slider-card-group">
             <div class="slider-header-row">
               <div class="slider-title">
-                <span style="color: #60a5fa;">Traditional IRA</span>
+                <span style="color: #0284c7;">Traditional IRA</span>
                 <span class="slider-badge">Pre-tax balance</span>
               </div>
               <div class="slider-val-input-wrap">
@@ -1283,7 +1327,7 @@
           <div class="slider-card-group">
             <div class="slider-header-row">
               <div class="slider-title">
-                <span style="color: #34d399;">Roth IRA</span>
+                <span style="color: #16a34a;">Roth IRA</span>
                 <span class="slider-badge">100% Tax-Free</span>
               </div>
               <div class="slider-val-input-wrap">
@@ -1305,7 +1349,7 @@
           <div class="slider-card-group">
             <div class="slider-header-row">
               <div class="slider-title">
-                <span style="color: #c084fc;">Taxable Brokerage</span>
+                <span style="color: #9333ea;">Taxable Brokerage</span>
                 <span class="slider-badge">Capital gains taxed</span>
               </div>
               <div class="slider-val-input-wrap">
@@ -1324,10 +1368,10 @@
           </div>
 
           <!-- 8. Annual Roth IRA Conversion Slider Card -->
-          <div class="slider-card-group" style="border-color: rgba(251, 191, 36, 0.4); background: rgba(251, 191, 36, 0.03);">
+          <div class="slider-card-group" style="border-color: #fde68a; background: #fffbeb;">
             <div class="slider-header-row">
               <div class="slider-title">
-                <span style="color: #fbbf24;">Annual Roth Conversion</span>
+                <span style="color: #b45309;">Annual Roth Conversion</span>
                 <span class="slider-badge">Pre-tax to Roth until depleted</span>
               </div>
               <div class="slider-val-input-wrap">
@@ -1343,7 +1387,7 @@
                 <span>$500k</span>
               </div>
             </div>
-            <p style="font-size: 0.68rem; color: #94a3b8; margin-top: 4px;">
+            <p style="font-size: 0.78rem; color: #475569; margin-top: 4px; line-height: 1.45;">
               Converts pre-tax 401(k)/IRA funds to Roth each year. Taxed as ordinary income with <strong>0% early penalty</strong>.
             </p>
           </div>
@@ -1425,14 +1469,14 @@
               <div class="slider-header-row">
                 <div class="slider-title">
                   <span>Simulation Horizon</span>
-                  <span class="slider-badge" style="color: #6ee7b7; background: rgba(16, 185, 129, 0.15);">Always Age 90</span>
+                  <span class="slider-badge" style="color: #065f46; background: #d1fae5;">Always Age 90</span>
                 </div>
-                <div style="font-size: 0.85rem; font-weight: 700; color: #60a5fa; background: var(--bg-input); padding: 0.35rem 0.65rem; border-radius: 6px; border: 1px solid var(--border);">
+                <div style="font-size: 0.85rem; font-weight: 700; color: #2563eb; background: #eff6ff; padding: 0.35rem 0.65rem; border-radius: 6px; border: 1px solid #bfdbfe;">
                   Age 90
                 </div>
               </div>
               <input type="hidden" id="endAge" value="90" />
-              <p style="font-size: 0.7rem; color: var(--text-dim); margin-top: 4px;">
+              <p style="font-size: 0.78rem; color: var(--text-dim); margin-top: 4px; line-height: 1.45;">
                 Withdrawal plan and lifetime taxes are consistently projected until <strong>Age 90</strong>.
               </p>
             </div>
@@ -1448,7 +1492,7 @@
                   <input type="checkbox" id="exemptRule55" style="width: 20px; height: 20px; accent-color: var(--primary); cursor: pointer;" onchange="calculatePlan()" />
                 </div>
               </div>
-              <p style="font-size: 0.7rem; color: var(--text-dim); margin-top: 4px;">
+              <p style="font-size: 0.78rem; color: var(--text-dim); margin-top: 4px; line-height: 1.45;">
                 Check if you qualify for penalty-free pre-tax access before age 59½ (e.g., leaving job at age 55+ under Rule of 55 or using 72(t) SEPP).
               </p>
             </div>
@@ -1458,13 +1502,13 @@
               <div class="slider-header-row">
                 <div class="slider-title">
                   <span>Medicare IRMAA Surcharges</span>
-                  <span class="slider-badge" style="color: #38bdf8; background: rgba(56, 189, 248, 0.15);">Part B & D (Age 65+)</span>
+                  <span class="slider-badge" style="color: #0369a1; background: #e0f2fe;">Part B & D (Age 65+)</span>
                 </div>
                 <div style="display: flex; align-items: center;">
                   <input type="checkbox" id="enableIrmaa" checked style="width: 20px; height: 20px; accent-color: var(--primary); cursor: pointer;" onchange="calculatePlan()" />
                 </div>
               </div>
-              <p style="font-size: 0.7rem; color: var(--text-dim); margin-top: 4px;">
+              <p style="font-size: 0.78rem; color: var(--text-dim); margin-top: 4px; line-height: 1.45;">
                 Models Medicare Part B & D income-based monthly surcharges starting at age 65, using the official <strong>2-year lookback MAGI rule</strong> (e.g., Age 63 income sets Age 65 premiums).
               </p>
             </div>
@@ -1548,23 +1592,23 @@
             <div class="chart-header">
               <div>
                 <div class="chart-title">Withdrawal Amount by Bucket</div>
-                <div style="font-size: 0.725rem; color: var(--text-dim);">Gross annual withdrawals needed for spending & taxes</div>
+                <div style="font-size: 0.80rem; color: var(--text-dim);">Gross annual withdrawals needed for spending & taxes</div>
               </div>
               <div class="chart-legend">
                 <div class="legend-item">
-                  <div class="legend-color" style="background: #3b82f6;"></div>
+                  <div class="legend-color" style="background: #2563eb;"></div>
                   <span>Trad 401k/IRA</span>
                 </div>
                 <div class="legend-item">
-                  <div class="legend-color" style="background: #c084fc;"></div>
+                  <div class="legend-color" style="background: #9333ea;"></div>
                   <span>Brokerage</span>
                 </div>
                 <div class="legend-item">
-                  <div class="legend-color" style="background: #10b981;"></div>
+                  <div class="legend-color" style="background: #16a34a;"></div>
                   <span>Roth</span>
                 </div>
                 <div class="legend-item">
-                  <div class="legend-color" style="background: #ef4444;"></div>
+                  <div class="legend-color" style="background: #dc2626;"></div>
                   <span>Tax</span>
                 </div>
               </div>
@@ -1583,23 +1627,23 @@
             <div class="chart-header">
               <div>
                 <div class="chart-title">Remaining Balances Over Time</div>
-                <div style="font-size: 0.725rem; color: var(--text-dim);">Year-end portfolio values by account</div>
+                <div style="font-size: 0.80rem; color: var(--text-dim);">Year-end portfolio values by account</div>
               </div>
               <div class="chart-legend">
                 <div class="legend-item">
-                  <div class="legend-color" style="background: #ffffff;"></div>
+                  <div class="legend-color" style="background: #0f172a;"></div>
                   <span>Total</span>
                 </div>
                 <div class="legend-item">
-                  <div class="legend-color" style="background: #3b82f6;"></div>
+                  <div class="legend-color" style="background: #2563eb;"></div>
                   <span>Pre-tax</span>
                 </div>
                 <div class="legend-item">
-                  <div class="legend-color" style="background: #c084fc;"></div>
+                  <div class="legend-color" style="background: #9333ea;"></div>
                   <span>Brokerage</span>
                 </div>
                 <div class="legend-item">
-                  <div class="legend-color" style="background: #10b981;"></div>
+                  <div class="legend-color" style="background: #16a34a;"></div>
                   <span>Roth</span>
                 </div>
               </div>
@@ -1619,7 +1663,7 @@
           <div class="table-actions">
             <div>
               <div class="chart-title">Year-by-Year Schedule</div>
-              <div style="font-size: 0.725rem; color: var(--text-dim);">Multi-bucket withdrawals & ending balances with account-level breakdown subtexts</div>
+              <div style="font-size: 0.80rem; color: var(--text-dim);">Multi-bucket withdrawals & ending balances with account-level breakdown subtexts</div>
             </div>
             <div style="display: flex; gap: 0.5rem;">
               <button class="btn-action btn-secondary" onclick="exportCSV()">
@@ -1640,11 +1684,11 @@
                   <th>Year</th>
                   <th>Age</th>
                   <th>Living Expense</th>
-                  <th style="color: #34d399;">Social Security</th>
-                  <th style="color: #60a5fa;">Total Withdrawals</th>
-                  <th style="color: #f87171;">Est. Tax</th>
-                  <th style="color: #38bdf8;">Medicare IRMAA</th>
-                  <th style="font-weight: 800; color: #ffffff;">Ending Balance</th>
+                  <th style="color: #15803d;">Social Security</th>
+                  <th style="color: #2563eb;">Total Withdrawals</th>
+                  <th style="color: #dc2626;">Est. Tax</th>
+                  <th style="color: #0284c7;">Medicare IRMAA</th>
+                  <th style="font-weight: 800; color: #0f172a;">Ending Balance</th>
                 </tr>
               </thead>
               <tbody id="scheduleTableBody">
@@ -2868,11 +2912,11 @@
           if (finalBrok > 0) {
             const gainPct = Math.round((1 - basisRatioDec) * 100);
             const extraNote = finalRoth > 0 ? ` · Roth: ${formatCurrency(finalRoth)}` : '';
-            elGain.innerHTML = `Unrealized Gain: <strong style="color:#93c5fd;">${formatCurrency(unrealizedBrokGain)}</strong> <span style="font-size:0.62rem;color:#94a3b8;">(${gainPct}% Brok${extraNote})</span>`;
+            elGain.innerHTML = `Unrealized Gain: <strong style="color:#2563eb;">${formatCurrency(unrealizedBrokGain)}</strong> <span style="font-size:0.76rem;color:#64748b;">(${gainPct}% Brok${extraNote})</span>`;
           } else if (finalPretax > 0) {
-            elGain.innerHTML = `Pre-Tax Untaxed: <strong style="color:#93c5fd;">${formatCurrency(finalPretax)}</strong> <span style="font-size:0.62rem;color:#94a3b8;">(100% Taxable)</span>`;
+            elGain.innerHTML = `Pre-Tax Untaxed: <strong style="color:#2563eb;">${formatCurrency(finalPretax)}</strong> <span style="font-size:0.76rem;color:#64748b;">(100% Taxable)</span>`;
           } else if (finalRoth > 0) {
-            elGain.innerHTML = `Unrealized Gain: <strong style="color:#34d399;">${formatCurrency(finalRoth)}</strong> <span style="font-size:0.62rem;color:#34d399;">(100% Roth Tax-Free)</span>`;
+            elGain.innerHTML = `Unrealized Gain: <strong style="color:#16a34a;">${formatCurrency(finalRoth)}</strong> <span style="font-size:0.76rem;color:#16a34a;">(100% Roth Tax-Free)</span>`;
           } else {
             elGain.innerHTML = `Unrealized Gain: <strong>$0</strong>`;
           }
@@ -2880,11 +2924,11 @@
           // Format Potential Tax Display
           if (totalPotentialTax > 0) {
             const breakdown = (finalBrok > 0 && finalPretax > 0)
-              ? ` <span style="font-size:0.62rem;color:#94a3b8;">(Brok: ${formatCurrency(potentialBrokTax)} · Pretax: ${formatCurrency(potentialPretaxTax)})</span>`
-              : ` <span style="font-size:0.62rem;color:#94a3b8;">(Net: ${formatCurrency(netAfterTax)})</span>`;
-            elTax.innerHTML = `Potential Tax: <strong style="color:#f87171;">${formatCurrency(totalPotentialTax)}</strong>${breakdown}`;
+              ? ` <span style="font-size:0.76rem;color:#64748b;">(Brok: ${formatCurrency(potentialBrokTax)} · Pretax: ${formatCurrency(potentialPretaxTax)})</span>`
+              : ` <span style="font-size:0.76rem;color:#64748b;">(Net: ${formatCurrency(netAfterTax)})</span>`;
+            elTax.innerHTML = `Potential Tax: <strong style="color:#dc2626;">${formatCurrency(totalPotentialTax)}</strong>${breakdown}`;
           } else {
-            elTax.innerHTML = `Potential Tax: <strong style="color:#34d399;">$0</strong> <span style="font-size:0.62rem;color:#34d399;">(Tax-Free Estate)</span>`;
+            elTax.innerHTML = `Potential Tax: <strong style="color:#16a34a;">$0</strong> <span style="font-size:0.76rem;color:#16a34a;">(Tax-Free Estate)</span>`;
           }
         }
       }
@@ -2925,7 +2969,7 @@
         line.setAttribute('x2', width - padR);
         line.setAttribute('y1', y);
         line.setAttribute('y2', y);
-        line.setAttribute('stroke', '#233054');
+        line.setAttribute('stroke', '#e2e8f0');
         line.setAttribute('stroke-dasharray', '3,3');
         svg.appendChild(line);
 
@@ -2934,7 +2978,7 @@
         text.setAttribute('y', y + 4);
         text.setAttribute('text-anchor', 'end');
         text.setAttribute('fill', '#64748b');
-        text.setAttribute('font-size', isMobile ? '9px' : '10px');
+        text.setAttribute('font-size', isMobile ? '10.5px' : '11px');
         text.textContent = '$' + (Math.round(val / 1000)) + 'k';
         svg.appendChild(text);
       }
@@ -2957,7 +3001,7 @@
           rect.setAttribute('y', curY - hPretax);
           rect.setAttribute('width', barW);
           rect.setAttribute('height', hPretax);
-          rect.setAttribute('fill', '#3b82f6');
+          rect.setAttribute('fill', '#2563eb');
           rect.setAttribute('rx', '1');
           svg.appendChild(rect);
           curY -= hPretax;
@@ -2969,7 +3013,7 @@
           rect.setAttribute('y', curY - hBrok);
           rect.setAttribute('width', barW);
           rect.setAttribute('height', hBrok);
-          rect.setAttribute('fill', '#c084fc');
+          rect.setAttribute('fill', '#9333ea');
           rect.setAttribute('rx', '1');
           svg.appendChild(rect);
           curY -= hBrok;
@@ -2981,7 +3025,7 @@
           rect.setAttribute('y', curY - hRoth);
           rect.setAttribute('width', barW);
           rect.setAttribute('height', hRoth);
-          rect.setAttribute('fill', '#10b981');
+          rect.setAttribute('fill', '#16a34a');
           rect.setAttribute('rx', '1');
           svg.appendChild(rect);
           curY -= hRoth;
@@ -2994,7 +3038,7 @@
           dot.setAttribute('cx', cx);
           dot.setAttribute('cy', taxY);
           dot.setAttribute('r', isMobile ? '2' : '2.5');
-          dot.setAttribute('fill', '#ef4444');
+          dot.setAttribute('fill', '#dc2626');
           svg.appendChild(dot);
         }
 
@@ -3004,8 +3048,8 @@
           text.setAttribute('x', cx);
           text.setAttribute('y', height - padB + 13);
           text.setAttribute('text-anchor', 'middle');
-          text.setAttribute('fill', '#94a3b8');
-          text.setAttribute('font-size', isMobile ? '8.5px' : '9.5px');
+          text.setAttribute('fill', '#64748b');
+          text.setAttribute('font-size', isMobile ? '10px' : '11px');
           text.textContent = (isMobile && schedule.length > 25) ? d.age : ('Age ' + d.age);
           svg.appendChild(text);
         }
@@ -3023,22 +3067,22 @@
           tooltip.style.left = `${Math.min(width - 180, Math.max(10, cx - 90))}px`;
           tooltip.style.top = `10px`;
           tooltip.innerHTML = `
-            <div style="font-weight:700; color:#f1f5f9; margin-bottom:3px;">Age ${d.age} (${d.calendarYear})</div>
-            ${d.annualSS > 0 ? `<div style="color:#34d399; font-weight:600;">Social Security: ${formatCurrency(d.annualSS)} <span style="font-size:0.68rem;color:#94a3b8;">(Taxable: ${formatCurrency(d.taxableSS)})</span></div>` : ''}
-            <div style="color:#93c5fd;">Trad 401k/IRA: ${formatCurrency(d.wPretax)}</div>
-            <div style="color:#c084fc;">Brokerage: ${formatCurrency(d.wBrokerage)}${d.capitalGain > 0 ? ` <span style="font-size:0.68rem;color:#e9d5ff;">(Gains: ${formatCurrency(d.capitalGain)})</span>` : ''}</div>
-            <div style="color:#34d399;">Roth IRA: ${formatCurrency(d.wRoth)}</div>
-            ${d.rothConv > 0 ? `<div style="color:#fbbf24; font-weight:600;">Roth Conversion: ${formatCurrency(d.rothConv)}</div>` : ''}
-            <div style="color:#f87171; border-top:1px solid #233054; margin-top:3px; padding-top:2px;">
+            <div style="font-weight:700; color:#0f172a; margin-bottom:3px; font-size:0.90rem;">Age ${d.age} (${d.calendarYear})</div>
+            ${d.annualSS > 0 ? `<div style="color:#15803d; font-weight:600;">Social Security: ${formatCurrency(d.annualSS)} <span style="font-size:0.78rem;color:#64748b;">(Taxable: ${formatCurrency(d.taxableSS)})</span></div>` : ''}
+            <div style="color:#2563eb;">Trad 401k/IRA: ${formatCurrency(d.wPretax)}</div>
+            <div style="color:#9333ea;">Brokerage: ${formatCurrency(d.wBrokerage)}${d.capitalGain > 0 ? ` <span style="font-size:0.78rem;color:#7e22ce;">(Gains: ${formatCurrency(d.capitalGain)})</span>` : ''}</div>
+            <div style="color:#16a34a;">Roth IRA: ${formatCurrency(d.wRoth)}</div>
+            ${d.rothConv > 0 ? `<div style="color:#b45309; font-weight:600;">Roth Conversion: ${formatCurrency(d.rothConv)}</div>` : ''}
+            <div style="color:#dc2626; border-top:1px solid #e2e8f0; margin-top:3px; padding-top:2px;">
               Est. Tax: ${formatCurrency(d.estTax)}
-              <div style="font-size:0.68rem;color:#fca5a5;">• Federal: ${formatCurrency(d.fedTax)}</div>
-              ${d.stateTax > 0 ? `<div style="font-size:0.68rem;color:#38bdf8;">• State (${d.stateCode}): ${formatCurrency(d.stateTax)}</div>` : `<div style="font-size:0.68rem;color:#38bdf8;">• State: $0 (0% state rate)</div>`}
-              ${d.convTax > 0 ? `<div style="font-size:0.68rem;color:#fbbf24;">• Conv Tax: ${formatCurrency(d.convTax)}</div>` : ''}
-              ${d.ltcgTax > 0 ? `<div style="font-size:0.68rem;color:#c084fc;">• LTCG Tax: ${formatCurrency(d.ltcgTax)}</div>` : (d.wBrokerage > 0 ? `<div style="font-size:0.68rem;color:#34d399;">• LTCG Tax: $0 (0% bracket)</div>` : '')}
-              ${d.isEarlyPenalty ? `<div style="font-size:0.68rem;color:#fca5a5;">• 10% Penalty: ${formatCurrency(d.earlyPenalty)}</div>` : ''}
+              <div style="font-size:0.78rem;color:#b91c1c;">• Federal: ${formatCurrency(d.fedTax)}</div>
+              ${d.stateTax > 0 ? `<div style="font-size:0.78rem;color:#0284c7;">• State (${d.stateCode}): ${formatCurrency(d.stateTax)}</div>` : `<div style="font-size:0.78rem;color:#0284c7;">• State: $0 (0% state rate)</div>`}
+              ${d.convTax > 0 ? `<div style="font-size:0.78rem;color:#b45309;">• Conv Tax: ${formatCurrency(d.convTax)}</div>` : ''}
+              ${d.ltcgTax > 0 ? `<div style="font-size:0.78rem;color:#9333ea;">• LTCG Tax: ${formatCurrency(d.ltcgTax)}</div>` : (d.wBrokerage > 0 ? `<div style="font-size:0.78rem;color:#16a34a;">• LTCG Tax: $0 (0% bracket)</div>` : '')}
+              ${d.isEarlyPenalty ? `<div style="font-size:0.78rem;color:#b91c1c;">• 10% Penalty: ${formatCurrency(d.earlyPenalty)}</div>` : ''}
             </div>
-            ${d.irmaaSurcharge > 0 ? `<div style="color:#38bdf8; font-size:0.68rem; border-top:1px solid #233054; margin-top:3px; padding-top:2px;">• Medicare IRMAA: ${formatCurrency(d.irmaaSurcharge)} (Tier ${d.irmaaTier})</div>` : (d.age >= 65 ? `<div style="color:#94a3b8; font-size:0.68rem; border-top:1px solid #233054; margin-top:3px; padding-top:2px;">• Medicare IRMAA: $0 (Standard)</div>` : '')}
-            <div style="font-weight:700; color:#ffffff; margin-top:2px;">Portfolio Drawdown: ${formatCurrency(d.totalGrossW)}${d.annualSS > 0 ? ` (Total Cash: ${formatCurrency(d.totalGrossW + d.annualSS)})` : ''}</div>
+            ${d.irmaaSurcharge > 0 ? `<div style="color:#0284c7; font-size:0.78rem; border-top:1px solid #e2e8f0; margin-top:3px; padding-top:2px;">• Medicare IRMAA: ${formatCurrency(d.irmaaSurcharge)} (Tier ${d.irmaaTier})</div>` : (d.age >= 65 ? `<div style="color:#64748b; font-size:0.78rem; border-top:1px solid #e2e8f0; margin-top:3px; padding-top:2px;">• Medicare IRMAA: $0 (Standard)</div>` : '')}
+            <div style="font-weight:700; color:#0f172a; margin-top:2px;">Portfolio Drawdown: ${formatCurrency(d.totalGrossW)}${d.annualSS > 0 ? ` (Total Cash: ${formatCurrency(d.totalGrossW + d.annualSS)})` : ''}</div>
           `;
         }
 
@@ -3089,7 +3133,7 @@
         line.setAttribute('x2', width - padR);
         line.setAttribute('y1', y);
         line.setAttribute('y2', y);
-        line.setAttribute('stroke', '#233054');
+        line.setAttribute('stroke', '#e2e8f0');
         line.setAttribute('stroke-dasharray', '3,3');
         svg.appendChild(line);
 
@@ -3098,7 +3142,7 @@
         text.setAttribute('y', y + 4);
         text.setAttribute('text-anchor', 'end');
         text.setAttribute('fill', '#64748b');
-        text.setAttribute('font-size', isMobile ? '9px' : '10px');
+        text.setAttribute('font-size', isMobile ? '10.5px' : '11px');
         text.textContent = '$' + (Math.round(val / 1000)).toLocaleString() + 'k';
         svg.appendChild(text);
       }
@@ -3139,10 +3183,10 @@
         svg.appendChild(path);
       }
 
-      createPath(d => d.totalEndingBal, '#ffffff', 'rgba(255, 255, 255, 0.05)');
-      createPath(d => d.balPretax, '#3b82f6', null);
-      createPath(d => d.balBrokerage, '#c084fc', null);
-      createPath(d => d.balRoth, '#10b981', null);
+      createPath(d => d.totalEndingBal, '#0f172a', 'rgba(15, 23, 42, 0.05)');
+      createPath(d => d.balPretax, '#2563eb', null);
+      createPath(d => d.balBrokerage, '#9333ea', null);
+      createPath(d => d.balRoth, '#16a34a', null);
 
       const labelInterval = (schedule.length > 30 && isMobile) ? 10 : 5;
       schedule.forEach((d, idx) => {
@@ -3152,8 +3196,8 @@
           text.setAttribute('x', cx);
           text.setAttribute('y', height - padB + 13);
           text.setAttribute('text-anchor', 'middle');
-          text.setAttribute('fill', '#94a3b8');
-          text.setAttribute('font-size', isMobile ? '8.5px' : '9.5px');
+          text.setAttribute('fill', '#64748b');
+          text.setAttribute('font-size', isMobile ? '10px' : '11px');
           text.textContent = (isMobile && schedule.length > 25) ? d.age : ('Age ' + d.age);
           svg.appendChild(text);
         }
@@ -3171,11 +3215,11 @@
           tooltip.style.left = `${Math.min(width - 180, Math.max(10, cx - 90))}px`;
           tooltip.style.top = `10px`;
           tooltip.innerHTML = `
-            <div style="font-weight:700; color:#f1f5f9; margin-bottom:3px;">End of Age ${d.age} (${d.calendarYear})</div>
-            <div style="color:#ffffff; font-weight:700;">Total: ${formatCurrency(d.totalEndingBal)}</div>
-            <div style="color:#93c5fd;">Pre-Tax: ${formatCurrency(d.balPretax)}</div>
-            <div style="color:#c084fc;">Brokerage: ${formatCurrency(d.balBrokerage)}</div>
-            <div style="color:#34d399;">Roth IRA: ${formatCurrency(d.balRoth)}</div>
+            <div style="font-weight:700; color:#0f172a; margin-bottom:3px; font-size:0.90rem;">End of Age ${d.age} (${d.calendarYear})</div>
+            <div style="color:#0f172a; font-weight:700;">Total: ${formatCurrency(d.totalEndingBal)}</div>
+            <div style="color:#2563eb;">Pre-Tax: ${formatCurrency(d.balPretax)}</div>
+            <div style="color:#9333ea;">Brokerage: ${formatCurrency(d.balBrokerage)}</div>
+            <div style="color:#16a34a;">Roth IRA: ${formatCurrency(d.balRoth)}</div>
           `;
         }
 
@@ -3202,25 +3246,25 @@
 
         // Build multi-bucket withdrawals breakdown subtext
         const wItems = [];
-        if (d.w401k > 0) wItems.push(`<span style="color:#93c5fd;">401k: ${formatCurrency(d.w401k)}</span>`);
-        if (d.wIRA > 0) wItems.push(`<span style="color:#60a5fa;">Trad: ${formatCurrency(d.wIRA)}</span>`);
-        if (d.wRoth > 0) wItems.push(`<span style="color:#34d399;">Roth: ${formatCurrency(d.wRoth)}</span>`);
+        if (d.w401k > 0) wItems.push(`<span style="color:#2563eb;">401k: ${formatCurrency(d.w401k)}</span>`);
+        if (d.wIRA > 0) wItems.push(`<span style="color:#0284c7;">Trad: ${formatCurrency(d.wIRA)}</span>`);
+        if (d.wRoth > 0) wItems.push(`<span style="color:#16a34a;">Roth: ${formatCurrency(d.wRoth)}</span>`);
         if (d.wBrokerage > 0) {
-          const capNote = d.capitalGain > 0 ? ` <span style="color:#e9d5ff;font-size:0.62rem;">(gain: ${formatCurrency(d.capitalGain)})</span>` : '';
-          wItems.push(`<span style="color:#c084fc;">Brok: ${formatCurrency(d.wBrokerage)}${capNote}</span>`);
+          const capNote = d.capitalGain > 0 ? ` <span style="color:#7e22ce;font-size:0.76rem;">(gain: ${formatCurrency(d.capitalGain)})</span>` : '';
+          wItems.push(`<span style="color:#9333ea;">Brok: ${formatCurrency(d.wBrokerage)}${capNote}</span>`);
         }
         if (d.rothConv > 0) {
-          wItems.push(`<span style="color:#fbbf24;font-weight:600;">+ Conv: ${formatCurrency(d.rothConv)}</span>`);
+          wItems.push(`<span style="color:#b45309;font-weight:600;">+ Conv: ${formatCurrency(d.rothConv)}</span>`);
         }
         const wSubHtml = wItems.length > 0
-          ? `<div style="font-size:0.65rem; line-height:1.35; margin-top:3px; white-space:normal;">${wItems.join(' · ')}</div>`
-          : '<div style="font-size:0.65rem; color:#64748b; margin-top:3px;">$0 withdrawn</div>';
+          ? `<div style="font-size:0.78rem; line-height:1.45; margin-top:4px; white-space:normal;">${wItems.join(' · ')}</div>`
+          : '<div style="font-size:0.78rem; color:#64748b; margin-top:4px;">$0 withdrawn</div>';
 
         // Build multi-bucket remaining balances breakdown subtext
         const balSubHtml = `
-          <div style="font-size:0.65rem; line-height:1.35; margin-top:3px; white-space:normal;">
-            <div><span style="color:#93c5fd;">401k:</span> ${formatCurrency(d.bal401k)} · <span style="color:#60a5fa;">Trad:</span> ${formatCurrency(d.balIRA)}</div>
-            <div><span style="color:#34d399;">Roth:</span> ${formatCurrency(d.balRoth)} · <span style="color:#c084fc;">Brok:</span> ${formatCurrency(d.balBrokerage)}</div>
+          <div style="font-size:0.78rem; line-height:1.45; margin-top:4px; white-space:normal;">
+            <div><span style="color:#2563eb;">401k:</span> ${formatCurrency(d.bal401k)} · <span style="color:#0284c7;">Trad:</span> ${formatCurrency(d.balIRA)}</div>
+            <div><span style="color:#16a34a;">Roth:</span> ${formatCurrency(d.balRoth)} · <span style="color:#9333ea;">Brok:</span> ${formatCurrency(d.balBrokerage)}</div>
           </div>
         `;
 
@@ -3229,38 +3273,38 @@
           <td>
             <strong>${d.age}</strong>
             ${d.isRmd ? '<span class="tag-rmd" title="RMD Required">RMD</span>' : ''}
-            ${d.isEarlyPenalty ? `<span class="tag-rmd" style="background:rgba(239,68,68,0.25);color:#fca5a5;border:1px solid rgba(239,68,68,0.4);" title="Includes 10% Early Withdrawal Penalty: ${formatCurrency(d.earlyPenalty)}">10% Pen</span>` : ''}
+            ${d.isEarlyPenalty ? `<span class="tag-rmd" style="background:#fee2e2;color:#b91c1c;border:1px solid #fca5a5;" title="Includes 10% Early Withdrawal Penalty: ${formatCurrency(d.earlyPenalty)}">10% Pen</span>` : ''}
           </td>
           <td>${formatCurrency(d.targetExpense)}</td>
           <td>
             ${d.annualSS > 0
-              ? `<div style="font-weight:700; color:#34d399;">${formatCurrency(d.annualSS)}</div>
-                 <div style="font-size:0.65rem; color:#94a3b8; margin-top:2px;">Taxable: <span style="color:${d.taxableSS > 0 ? '#fca5a5' : '#34d399'}; font-weight:600;">${formatCurrency(d.taxableSS)}</span> (${Math.round((d.taxableSS / d.annualSS) * 100)}%)</div>`
-              : `<div style="color:#64748b; font-size:0.8rem;">$0</div>
-                 <div style="font-size:0.65rem; color:#64748b; margin-top:2px;">${d.age < 62 ? 'Pre-eligibility (<62)' : 'Deferred claim'}</div>`
+              ? `<div style="font-weight:700; color:#15803d;">${formatCurrency(d.annualSS)}</div>
+                 <div style="font-size:0.78rem; color:#64748b; margin-top:3px; line-height:1.4;">Taxable: <span style="color:${d.taxableSS > 0 ? '#b91c1c' : '#15803d'}; font-weight:600;">${formatCurrency(d.taxableSS)}</span> (${Math.round((d.taxableSS / d.annualSS) * 100)}%)</div>`
+              : `<div style="color:#64748b; font-size:0.92rem; font-weight:600;">$0</div>
+                 <div style="font-size:0.78rem; color:#64748b; margin-top:3px;">${d.age < 62 ? 'Pre-eligibility (<62)' : 'Deferred claim'}</div>`
             }
           </td>
           <td>
-            <div style="font-weight:700; color:#f1f5f9;">${formatCurrency(d.totalGrossW)}</div>
+            <div style="font-weight:700; color:#0f172a;">${formatCurrency(d.totalGrossW)}</div>
             ${wSubHtml}
           </td>
-          <td style="color: #f87171;">
-            <div style="font-weight:700; color:#f87171;">${formatCurrency(d.estTax)}</div>
-            <div style="font-size:0.65rem;color:#94a3b8;margin-top:2px;">Fed: ${formatCurrency(d.fedTax)} · ${d.stateCode}: ${formatCurrency(d.stateTax)}</div>
-            ${d.taxableSS > 0 ? `<div style="font-size:0.62rem;color:#34d399;">(incl. ${formatCurrency(d.taxableSS)} taxable SS)</div>` : ''}
-            ${d.convTax > 0 ? `<div style="font-size:0.62rem;color:#fbbf24;">(incl. ${formatCurrency(d.convTax)} conv tax)</div>` : ''}
-            ${d.ltcgTax > 0 ? `<div style="font-size:0.62rem;color:#c084fc;">(incl. ${formatCurrency(d.ltcgTax)} LTCG)</div>` : (d.wBrokerage > 0 ? `<div style="font-size:0.62rem;color:#34d399;">(0% LTCG rate)</div>` : '')}
-            ${d.isEarlyPenalty ? `<div style="font-size:0.62rem;color:#fca5a5;font-weight:600;">(incl. ${formatCurrency(d.earlyPenalty)} pen)</div>` : ''}
+          <td style="color: #dc2626;">
+            <div style="font-weight:700; color:#dc2626;">${formatCurrency(d.estTax)}</div>
+            <div style="font-size:0.78rem; color:#64748b; margin-top:3px; line-height:1.4;">Fed: ${formatCurrency(d.fedTax)} · ${d.stateCode}: ${formatCurrency(d.stateTax)}</div>
+            ${d.taxableSS > 0 ? `<div style="font-size:0.76rem; color:#15803d;">(incl. ${formatCurrency(d.taxableSS)} taxable SS)</div>` : ''}
+            ${d.convTax > 0 ? `<div style="font-size:0.76rem; color:#b45309;">(incl. ${formatCurrency(d.convTax)} conv tax)</div>` : ''}
+            ${d.ltcgTax > 0 ? `<div style="font-size:0.76rem; color:#7e22ce;">(incl. ${formatCurrency(d.ltcgTax)} LTCG)</div>` : (d.wBrokerage > 0 ? `<div style="font-size:0.76rem; color:#15803d;">(0% LTCG rate)</div>` : '')}
+            ${d.isEarlyPenalty ? `<div style="font-size:0.76rem; color:#b91c1c; font-weight:600;">(incl. ${formatCurrency(d.earlyPenalty)} pen)</div>` : ''}
           </td>
-          <td style="color: #38bdf8;">
+          <td style="color: #0284c7;">
             ${d.age < 65 
-              ? '<span style="color:#64748b;font-size:0.75rem;">Pre-65</span>' 
+              ? '<span style="color:#64748b; font-size:0.86rem;">Pre-65</span>' 
               : (d.irmaaSurcharge > 0 
-                ? `<div><strong>${formatCurrency(d.irmaaSurcharge)}</strong></div><span class="tag-rmd" style="background:rgba(56,189,248,0.18);color:#38bdf8;border:1px solid rgba(56,189,248,0.4);" title="Tier ${d.irmaaTier} surcharge based on 2-yr lookback MAGI ${formatCurrency(d.lookbackMagi)}">Tier ${d.irmaaTier}</span>` 
-                : '<span style="color:#94a3b8;font-size:0.75rem;">$0 (Base)</span>')}
+                ? `<div><strong>${formatCurrency(d.irmaaSurcharge)}</strong></div><span class="tag-rmd" style="background:#e0f2fe;color:#0369a1;border:1px solid #bae6fd;" title="Tier ${d.irmaaTier} surcharge based on 2-yr lookback MAGI ${formatCurrency(d.lookbackMagi)}">Tier ${d.irmaaTier}</span>` 
+                : '<span style="color:#64748b; font-size:0.86rem;">$0 (Base)</span>')}
           </td>
           <td>
-            <div style="font-weight: 800; color: #ffffff;">${formatCurrency(d.totalEndingBal)}</div>
+            <div style="font-weight: 800; color: #0f172a;">${formatCurrency(d.totalEndingBal)}</div>
             ${balSubHtml}
           </td>
         `;
