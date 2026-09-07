@@ -1,6 +1,7 @@
 
 
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -703,17 +704,18 @@
     }
 
     /* KPI Summary Cards: 2-col on mobile, 4-col on desktop */
+    /* KPI Summary Cards: 1-col on mobile, 3-col on desktop */
     .kpi-grid {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 0.75rem;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 0.85rem;
       margin-bottom: 1.25rem;
       width: 100%;
       max-width: 100%;
     }
-    @media (min-width: 640px) {
+    @media (min-width: 768px) {
       .kpi-grid {
-        grid-template-columns: repeat(4, minmax(0, 1fr));
+        grid-template-columns: repeat(3, minmax(0, 1fr));
         gap: 1rem;
         margin-bottom: 1.5rem;
       }
@@ -766,6 +768,235 @@
     }
     .kpi-danger {
       color: #dc2626;
+    }
+    /* Retirement Target Section ("When can I Retire?") */
+    .retire-target-section {
+      margin-top: 0.75rem;
+      padding-top: 0.65rem;
+      border-top: 1px solid #e2e8f0;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    .retire-section-title {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: #475569;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      margin-bottom: 0.4rem;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+    .retire-btn-group {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.35rem;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    .btn-retire-target {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 0.45rem 0.25rem;
+      border: 1px solid #0284c7;
+      border-radius: 8px;
+      background: linear-gradient(135deg, #0284c7, #0369a1);
+      color: #ffffff;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-align: center;
+      box-sizing: border-box;
+      min-width: 0;
+      box-shadow: 0 2px 4px rgba(2, 132, 199, 0.2);
+    }
+    .btn-retire-target:hover {
+      background: linear-gradient(135deg, #0369a1, #075985);
+      border-color: #0369a1;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 8px rgba(2, 132, 199, 0.3);
+    }
+    .btn-retire-target:active {
+      transform: translateY(0);
+    }
+    .btn-retire-target.active-zero,
+    .btn-retire-target.active-million,
+    .btn-retire-target.active-10million {
+      background: linear-gradient(135deg, #075985, #0c4a6e);
+      border-color: #38bdf8;
+      color: #ffffff;
+      box-shadow: 0 0 0 2px #7dd3fc, 0 3px 6px rgba(2, 132, 199, 0.4);
+      transform: translateY(-1px);
+    }
+    .target-title {
+      font-size: 0.78rem;
+      font-weight: 700;
+      line-height: 1.2;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 100%;
+      color: #ffffff;
+    }
+    .target-sub {
+      font-size: 0.68rem;
+      color: rgba(255, 255, 255, 0.85);
+      margin-top: 2px;
+      line-height: 1.1;
+      white-space: nowrap;
+    }
+    .retire-result-box {
+      margin-top: 0.60rem;
+      padding: 0.60rem 0.65rem;
+      background: #f0fdf4;
+      border: 1px solid #86efac;
+      border-radius: 8px;
+      font-size: 0.82rem;
+      line-height: 1.35;
+      color: #166534;
+      animation: fadeIn 0.25s ease;
+      box-sizing: border-box;
+      word-break: break-word;
+    }
+    .retire-result-box.warning {
+      background: #fffbeb;
+      border-color: #fde68a;
+      color: #92400e;
+    }
+    .retire-result-box.info {
+      background: #eff6ff;
+      border-color: #bfdbfe;
+      color: #1e40af;
+    }
+    .btn-apply-age {
+      display: inline-block;
+      margin-top: 0.40rem;
+      padding: 0.30rem 0.55rem;
+      background: #ffffff;
+      color: #1d4ed8;
+      border: 1px solid #93c5fd;
+      border-radius: 6px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.15s ease;
+    }
+    .btn-apply-age:hover {
+      background: #dbeafe;
+    }
+
+    /* Move State Comparison Section ("Should I move to ?") */
+    .move-state-section {
+      margin-top: 0.75rem;
+      padding-top: 0.65rem;
+      border-top: 1px solid #e2e8f0;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    .btn-move-state {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.35rem;
+      padding: 0.48rem 0.75rem;
+      background: linear-gradient(135deg, #0284c7, #0369a1);
+      color: #ffffff;
+      font-size: 0.84rem;
+      font-weight: 700;
+      border: 1px solid #0284c7;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: 0 2px 4px rgba(2, 132, 199, 0.2);
+      transition: all 0.2s ease;
+      width: 100%;
+      box-sizing: border-box;
+      text-align: center;
+      line-height: 1.25;
+    }
+    .btn-move-state:hover {
+      background: linear-gradient(135deg, #0369a1, #075985);
+      box-shadow: 0 4px 8px rgba(2, 132, 199, 0.3);
+      transform: translateY(-1px);
+    }
+    .btn-move-state:active {
+      transform: translateY(0);
+    }
+    .move-state-box {
+      margin-top: 0.60rem;
+      padding: 0.65rem;
+      background: #f8fafc;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      animation: fadeIn 0.25s ease;
+      box-sizing: border-box;
+    }
+    .move-state-header {
+      margin-bottom: 0.50rem;
+    }
+    .move-state-label {
+      display: block;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: #475569;
+      margin-bottom: 0.30rem;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+    .move-state-dropdown {
+      width: 100%;
+      padding: 0.45rem 1.75rem 0.45rem 0.65rem;
+      background: #ffffff;
+      border: 1px solid #94a3b8;
+      border-radius: 6px;
+      color: var(--text-main);
+      font-size: 0.84rem;
+      font-weight: 600;
+      cursor: pointer;
+      outline: none;
+      appearance: none;
+      -webkit-appearance: none;
+      box-sizing: border-box;
+    }
+    .move-state-dropdown:focus {
+      border-color: #0284c7;
+      box-shadow: 0 0 0 2px rgba(2, 132, 199, 0.2);
+    }
+    .dropdown-chevron {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      pointer-events: none;
+      color: #64748b;
+      font-size: 0.70rem;
+    }
+    .move-state-result {
+      font-size: 0.82rem;
+      line-height: 1.4;
+      color: #334155;
+      padding: 0.50rem;
+      border-radius: 6px;
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      word-break: break-word;
+    }
+    .btn-apply-state {
+      display: inline-block;
+      margin-top: 0.45rem;
+      padding: 0.30rem 0.60rem;
+      background: #0284c7;
+      color: #ffffff;
+      border: none;
+      border-radius: 6px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.15s ease;
+    }
+    .btn-apply-state:hover {
+      background: #0369a1;
     }
 
     /* Charts Section: 100% width on mobile and desktop */
@@ -1168,6 +1399,48 @@
       display: inline-block;
     }
 
+    /* KPI Lifetime Taxes Horizontal Breakdown Bar */
+    .kpi-tax-hbar-wrap {
+      width: 100%;
+      margin-top: 0.65rem;
+      margin-bottom: 0.35rem;
+    }
+    .kpi-tax-hbar {
+      display: flex;
+      width: 100%;
+      height: 12px;
+      border-radius: 6px;
+      overflow: hidden;
+      background: #e2e8f0;
+      box-shadow: inset 0 1px 2px rgba(0,0,0,0.08);
+    }
+    .kpi-tax-hbar-seg {
+      height: 100%;
+      transition: width 0.3s ease;
+    }
+    .kpi-tax-hbar-legend {
+      display: flex;
+      align-items: center;
+      gap: 0.70rem;
+      font-size: 0.88rem;
+      color: #334155;
+      margin-top: 0.35rem;
+      flex-wrap: wrap;
+    }
+    .kpi-tax-hbar-legend-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      line-height: 1.2;
+    }
+    .kpi-tax-hbar-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      display: inline-block;
+      flex-shrink: 0;
+    }
+
     .btn-action {
       background: var(--primary);
       color: #ffffff;
@@ -1316,7 +1589,7 @@
       <aside id="panelInputs" class="panel-view">
         <div class="card">
           <div class="card-title">
-            <span>Touch-Friendly Inputs</span>
+            <span>Tell me about your situation</span>
             <button class="btn-action btn-secondary" style="padding: 0.25rem 0.75rem; font-size: 0.82rem; min-height: 34px;" onclick="resetInputs()">Reset</button>
           </div>
 
@@ -1356,106 +1629,7 @@
             </div>
           </div>
 
-          <!-- 2. Filing Status & State Tax (Touch-Optimized) -->
-          <div class="slider-card-group">
-            <div class="slider-header-row">
-              <div class="slider-title">
-                <span>IRS Filing Status & State</span>
-                <span class="slider-badge">Federal & state tax calculations</span>
-              </div>
-            </div>
-            <div class="segmented-touch-bar">
-              <button class="segment-btn active" id="btnStatusMFJ" onclick="setFilingStatus('MFJ')">
-                <strong>MFJ</strong>
-                <span class="sub">Married Joint</span>
-              </button>
-              <button class="segment-btn" id="btnStatusSingle" onclick="setFilingStatus('Single')">
-                <strong>Single</strong>
-                <span class="sub">Individual</span>
-              </button>
-              <button class="segment-btn" id="btnStatusHoH" onclick="setFilingStatus('HoH')">
-                <strong>HoH</strong>
-                <span class="sub">Head of House</span>
-              </button>
-              <button class="segment-btn" id="btnStatusMFS" onclick="setFilingStatus('MFS')">
-                <strong>MFS</strong>
-                <span class="sub">Married Sep</span>
-              </button>
-            </div>
-            <!-- Hidden native select for DOM script compatibility -->
-            <select id="filingStatus" class="hidden-accessible" onchange="calculatePlan()">
-              <option value="MFJ" selected>Married Filing Jointly (MFJ)</option>
-              <option value="Single">Single</option>
-              <option value="HoH">Head of Household (HoH)</option>
-              <option value="MFS">Married Filing Separately (MFS)</option>
-            </select>
-
-            <!-- State Tax Selection Dropdown -->
-            <div style="margin-top: 0.85rem; padding-top: 0.85rem; border-top: 1px solid var(--border);">
-              <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 0.4rem;">
-                <label for="stateSelect" style="font-size: 0.88rem; font-weight: 600; color: #334155;">State of Residence</label>
-                <span id="stateTaxInfo" style="font-size: 0.80rem; color: #0284c7; font-weight: 600;">Minnesota (5.35% – 9.85%)</span>
-              </div>
-              <div style="position: relative;">
-                <select id="stateSelect" onchange="onStateChange()" style="width: 100%; padding: 0.65rem 0.85rem; background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px; color: var(--text-main); font-size: 0.875rem; font-weight: 500; cursor: pointer; outline: none; appearance: none; -webkit-appearance: none;">
-                  <option value="AL">Alabama (AL) · 2.0% - 5.0%</option>
-                  <option value="AK">Alaska (AK) · 0% (No Income Tax)</option>
-                  <option value="AZ">Arizona (AZ) · 2.5% Flat</option>
-                  <option value="AR">Arkansas (AR) · 2.0% - 4.4%</option>
-                  <option value="CA">California (CA) · 1.0% - 12.3%</option>
-                  <option value="CO">Colorado (CO) · 4.4% Flat</option>
-                  <option value="CT">Connecticut (CT) · 3.0% - 6.99%</option>
-                  <option value="DE">Delaware (DE) · 2.2% - 6.6%</option>
-                  <option value="DC">District of Columbia (DC) · 4.0% - 10.75%</option>
-                  <option value="FL">Florida (FL) · 0% (No Income Tax)</option>
-                  <option value="GA">Georgia (GA) · 5.49% Flat</option>
-                  <option value="HI">Hawaii (HI) · 1.4% - 11.0%</option>
-                  <option value="ID">Idaho (ID) · 5.695% Flat</option>
-                  <option value="IL">Illinois (IL) · 4.95% Flat (Retirement exempt)</option>
-                  <option value="IN">Indiana (IN) · 3.05% Flat</option>
-                  <option value="IA">Iowa (IA) · 3.8% Flat (Retirement exempt)</option>
-                  <option value="KS">Kansas (KS) · 3.1% - 5.7%</option>
-                  <option value="KY">Kentucky (KY) · 4.0% Flat</option>
-                  <option value="LA">Louisiana (LA) · 1.85% - 4.25%</option>
-                  <option value="ME">Maine (ME) · 5.8% - 7.15%</option>
-                  <option value="MD">Maryland (MD) · 2.0% - 5.75%</option>
-                  <option value="MA">Massachusetts (MA) · 5.0% Flat</option>
-                  <option value="MI">Michigan (MI) · 4.25% Flat</option>
-                  <option value="MN" selected>Minnesota (MN) · 5.35% - 9.85% (Default)</option>
-                  <option value="MS">Mississippi (MS) · 4.7% Flat (Retirement exempt)</option>
-                  <option value="MO">Missouri (MO) · 2.0% - 4.8%</option>
-                  <option value="MT">Montana (MT) · 4.7% - 5.9%</option>
-                  <option value="NE">Nebraska (NE) · 2.46% - 5.84%</option>
-                  <option value="NV">Nevada (NV) · 0% (No Income Tax)</option>
-                  <option value="NH">New Hampshire (NH) · 0% (No Income Tax)</option>
-                  <option value="NJ">New Jersey (NJ) · 1.4% - 10.75%</option>
-                  <option value="NM">New Mexico (NM) · 1.7% - 5.9%</option>
-                  <option value="NY">New York (NY) · 4.0% - 10.9%</option>
-                  <option value="NC">North Carolina (NC) · 4.5% Flat</option>
-                  <option value="ND">North Dakota (ND) · 1.95% - 2.5%</option>
-                  <option value="OH">Ohio (OH) · 0% - 3.5%</option>
-                  <option value="OK">Oklahoma (OK) · 0.25% - 4.75%</option>
-                  <option value="OR">Oregon (OR) · 4.75% - 9.9%</option>
-                  <option value="PA">Pennsylvania (PA) · 3.07% Flat (Retirement exempt)</option>
-                  <option value="RI">Rhode Island (RI) · 3.75% - 5.99%</option>
-                  <option value="SC">South Carolina (SC) · 0% - 6.4%</option>
-                  <option value="SD">South Dakota (SD) · 0% (No Income Tax)</option>
-                  <option value="TN">Tennessee (TN) · 0% (No Income Tax)</option>
-                  <option value="TX">Texas (TX) · 0% (No Income Tax)</option>
-                  <option value="UT">Utah (UT) · 4.65% Flat</option>
-                  <option value="VT">Vermont (VT) · 3.35% - 8.75%</option>
-                  <option value="VA">Virginia (VA) · 2.0% - 5.75%</option>
-                  <option value="WA">Washington (WA) · 0% (No Income Tax)</option>
-                  <option value="WV">West Virginia (WV) · 2.36% - 5.12%</option>
-                  <option value="WI">Wisconsin (WI) · 3.54% - 7.65%</option>
-                  <option value="WY">Wyoming (WY) · 0% (No Income Tax)</option>
-                </select>
-                <div style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); pointer-events: none; color: #64748b; font-size: 0.75rem;">▼</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- 3. Yearly Expense Slider Card -->
+          <!-- 2. Yearly Expense Slider Card -->
           <div class="slider-card-group">
             <div class="slider-header-row">
               <div class="slider-title">
@@ -1594,11 +1768,11 @@
               </div>
               <div class="slider-val-input-wrap">
                 <span class="prefix">$</span>
-                <input type="number" inputmode="decimal" id="annualRothConv" value="50000" step="5000" class="slider-val-input has-prefix" oninput="syncFromNumber('annualRothConv', 'annualRothConvSlider')" />
+                <input type="number" inputmode="decimal" id="annualRothConv" value="0" step="5000" class="slider-val-input has-prefix" oninput="syncFromNumber('annualRothConv', 'annualRothConvSlider')" />
               </div>
             </div>
             <div class="slider-track-wrap">
-              <input type="range" id="annualRothConvSlider" min="0" max="500000" value="50000" step="5000" oninput="syncFromSlider('annualRothConvSlider', 'annualRothConv')" />
+              <input type="range" id="annualRothConvSlider" min="0" max="500000" value="0" step="5000" oninput="syncFromSlider('annualRothConvSlider', 'annualRothConv')" />
               <div class="slider-range-labels">
                 <span>$0</span>
                 <span>$250k</span>
@@ -1612,10 +1786,108 @@
 
           <!-- Advanced Collapsible Sliders -->
           <button class="collapsible-trigger" onclick="toggleAdvanced()">
-            <span>⚙ Advanced Assumptions (Touch Sliders)</span>
+            <span>⚙ Advanced Assumptions</span>
             <span id="advChevron">▼</span>
           </button>
           <div class="collapsible-content" id="advContent">
+            <!-- IRS Filing Status & State Tax -->
+            <div class="slider-card-group">
+              <div class="slider-header-row">
+                <div class="slider-title">
+                  <span>IRS Filing Status & State</span>
+                  <span class="slider-badge">Federal & state tax calculations</span>
+                </div>
+              </div>
+              <div class="segmented-touch-bar">
+                <button class="segment-btn active" id="btnStatusMFJ" onclick="setFilingStatus('MFJ')">
+                  <strong>MFJ</strong>
+                  <span class="sub">Married Joint</span>
+                </button>
+                <button class="segment-btn" id="btnStatusSingle" onclick="setFilingStatus('Single')">
+                  <strong>Single</strong>
+                  <span class="sub">Individual</span>
+                </button>
+                <button class="segment-btn" id="btnStatusHoH" onclick="setFilingStatus('HoH')">
+                  <strong>HoH</strong>
+                  <span class="sub">Head of House</span>
+                </button>
+                <button class="segment-btn" id="btnStatusMFS" onclick="setFilingStatus('MFS')">
+                  <strong>MFS</strong>
+                  <span class="sub">Married Sep</span>
+                </button>
+              </div>
+              <!-- Hidden native select for DOM script compatibility -->
+              <select id="filingStatus" class="hidden-accessible" onchange="calculatePlan()">
+                <option value="MFJ" selected>Married Filing Jointly (MFJ)</option>
+                <option value="Single">Single</option>
+                <option value="HoH">Head of Household (HoH)</option>
+                <option value="MFS">Married Filing Separately (MFS)</option>
+              </select>
+
+              <!-- State Tax Selection Dropdown -->
+              <div style="margin-top: 0.85rem; padding-top: 0.85rem; border-top: 1px solid var(--border);">
+                <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 0.4rem;">
+                  <label for="stateSelect" style="font-size: 0.88rem; font-weight: 600; color: #334155;">State of Residence</label>
+                  <span id="stateTaxInfo" style="font-size: 0.80rem; color: #0284c7; font-weight: 600;">Minnesota (5.35% – 9.85%)</span>
+                </div>
+                <div style="position: relative;">
+                  <select id="stateSelect" onchange="onStateChange()" style="width: 100%; padding: 0.65rem 0.85rem; background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px; color: var(--text-main); font-size: 0.875rem; font-weight: 500; cursor: pointer; outline: none; appearance: none; -webkit-appearance: none;">
+                    <option value="AL">Alabama (AL) · 2.0% - 5.0%</option>
+                    <option value="AK">Alaska (AK) · 0% (No Income Tax)</option>
+                    <option value="AZ">Arizona (AZ) · 2.5% Flat</option>
+                    <option value="AR">Arkansas (AR) · 2.0% - 4.4%</option>
+                    <option value="CA">California (CA) · 1.0% - 12.3%</option>
+                    <option value="CO">Colorado (CO) · 4.4% Flat</option>
+                    <option value="CT">Connecticut (CT) · 3.0% - 6.99%</option>
+                    <option value="DE">Delaware (DE) · 2.2% - 6.6%</option>
+                    <option value="DC">District of Columbia (DC) · 4.0% - 10.75%</option>
+                    <option value="FL">Florida (FL) · 0% (No Income Tax)</option>
+                    <option value="GA">Georgia (GA) · 5.49% Flat</option>
+                    <option value="HI">Hawaii (HI) · 1.4% - 11.0%</option>
+                    <option value="ID">Idaho (ID) · 5.695% Flat</option>
+                    <option value="IL">Illinois (IL) · 4.95% Flat (Retirement exempt)</option>
+                    <option value="IN">Indiana (IN) · 3.05% Flat</option>
+                    <option value="IA">Iowa (IA) · 3.8% Flat (Retirement exempt)</option>
+                    <option value="KS">Kansas (KS) · 3.1% - 5.7%</option>
+                    <option value="KY">Kentucky (KY) · 4.0% Flat</option>
+                    <option value="LA">Louisiana (LA) · 1.85% - 4.25%</option>
+                    <option value="ME">Maine (ME) · 5.8% - 7.15%</option>
+                    <option value="MD">Maryland (MD) · 2.0% - 5.75%</option>
+                    <option value="MA">Massachusetts (MA) · 5.0% Flat</option>
+                    <option value="MI">Michigan (MI) · 4.25% Flat</option>
+                    <option value="MN" selected>Minnesota (MN) · 5.35% - 9.85% (Default)</option>
+                    <option value="MS">Mississippi (MS) · 4.7% Flat (Retirement exempt)</option>
+                    <option value="MO">Missouri (MO) · 2.0% - 4.8%</option>
+                    <option value="MT">Montana (MT) · 4.7% - 5.9%</option>
+                    <option value="NE">Nebraska (NE) · 2.46% - 5.84%</option>
+                    <option value="NV">Nevada (NV) · 0% (No Income Tax)</option>
+                    <option value="NH">New Hampshire (NH) · 0% (No Income Tax)</option>
+                    <option value="NJ">New Jersey (NJ) · 1.4% - 10.75%</option>
+                    <option value="NM">New Mexico (NM) · 1.7% - 5.9%</option>
+                    <option value="NY">New York (NY) · 4.0% - 10.9%</option>
+                    <option value="NC">North Carolina (NC) · 4.5% Flat</option>
+                    <option value="ND">North Dakota (ND) · 1.95% - 2.5%</option>
+                    <option value="OH">Ohio (OH) · 0% - 3.5%</option>
+                    <option value="OK">Oklahoma (OK) · 0.25% - 4.75%</option>
+                    <option value="OR">Oregon (OR) · 4.75% - 9.9%</option>
+                    <option value="PA">Pennsylvania (PA) · 3.07% Flat (Retirement exempt)</option>
+                    <option value="RI">Rhode Island (RI) · 3.75% - 5.99%</option>
+                    <option value="SC">South Carolina (SC) · 0% - 6.4%</option>
+                    <option value="SD">South Dakota (SD) · 0% (No Income Tax)</option>
+                    <option value="TN">Tennessee (TN) · 0% (No Income Tax)</option>
+                    <option value="TX">Texas (TX) · 0% (No Income Tax)</option>
+                    <option value="UT">Utah (UT) · 4.65% Flat</option>
+                    <option value="VT">Vermont (VT) · 3.35% - 8.75%</option>
+                    <option value="VA">Virginia (VA) · 2.0% - 5.75%</option>
+                    <option value="WA">Washington (WA) · 0% (No Income Tax)</option>
+                    <option value="WV">West Virginia (WV) · 2.36% - 5.12%</option>
+                    <option value="WI">Wisconsin (WI) · 3.54% - 7.65%</option>
+                    <option value="WY">Wyoming (WY) · 0% (No Income Tax)</option>
+                  </select>
+                  <div style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); pointer-events: none; color: #64748b; font-size: 0.75rem;">▼</div>
+                </div>
+              </div>
+            </div>
             <!-- Expected Return Slider -->
             <div class="slider-card-group">
               <div class="slider-header-row">
@@ -1820,26 +2092,67 @@
 
         <!-- KPI Cards -->
         <div class="kpi-grid">
-          <div class="kpi-card">
-            <div class="kpi-label">Final Balance</div>
-            <div class="kpi-value" id="kpiFinalBalance">--</div>
-            <div class="kpi-sub" id="kpiStartingBalance">--</div>
-            <div class="kpi-sub" id="kpiFinalGain" style="margin-top: 0.25rem;">--</div>
-            <div class="kpi-sub" id="kpiFinalTax" style="margin-top: 0.15rem;">--</div>
+          <div class="kpi-card" id="kpiCardFinalBalance">
+            <div>
+              <div class="kpi-label">Final Balance (End of Simulation · Age 90)</div>
+              <div class="kpi-value" id="kpiFinalBalance">--</div>
+              <div class="kpi-sub" id="kpiStartingBalance">--</div>
+              <div class="kpi-tax-hbar-wrap" id="kpiFinalBalHBarWrap">
+                <div class="kpi-tax-hbar" id="kpiFinalBalHBar"></div>
+                <div class="kpi-tax-hbar-legend" id="kpiFinalBalHBarLegend"></div>
+              </div>
+              <div class="kpi-sub" id="kpiFinalGain" style="margin-top: 0.25rem;">--</div>
+              <div class="kpi-sub" id="kpiFinalTax" style="margin-top: 0.15rem;">--</div>
+            </div>
+            <div class="retire-target-section" id="btnWhenCanIRetire">
+              <div class="retire-section-title">When can I Retire?</div>
+              <div class="retire-btn-group">
+                <button type="button" class="btn-retire-target" id="btnDieWithZero" onclick="calculateOptimalRetirement(0)" title="Calculate optimal age to die with zero at Age 90">
+                  <span class="target-title">Die with Zero</span>
+                  <span class="target-sub">$0 at 90</span>
+                </button>
+                <button type="button" class="btn-retire-target" id="btnDieWithMillion" onclick="calculateOptimalRetirement(1000000)" title="Calculate optimal age to die with $1M at Age 90">
+                  <span class="target-title">Die with 1M</span>
+                  <span class="target-sub">$1M at 90</span>
+                </button>
+                <button type="button" class="btn-retire-target" id="btnDieWith10Million" onclick="calculateOptimalRetirement(10000000)" title="Calculate optimal age to die with $10M at Age 90">
+                  <span class="target-title">Die with 10M</span>
+                  <span class="target-sub">$10M at 90</span>
+                </button>
+              </div>
+              <div id="retireCalcResult" class="retire-result-box" style="display: none;"></div>
+            </div>
           </div>
 
-          <div class="kpi-card">
-            <div class="kpi-label">Longevity</div>
-            <div class="kpi-value" id="kpiLongevity">--</div>
-            <div class="kpi-sub" id="kpiLongevitySub">--</div>
-          </div>
-
-          <div class="kpi-card">
-            <div class="kpi-label">Lifetime Taxes</div>
-            <div class="kpi-value" id="kpiTaxes">--</div>
-            <div class="kpi-sub" id="kpiTaxRate">--</div>
-            <div class="kpi-sub" id="kpiMnTaxComp" style="margin-top: 0.25rem;">--</div>
-            <div class="kpi-sub" id="kpiTaxSplit" style="margin-top: 0.15rem;">--</div>
+          <div class="kpi-card" id="kpiCardLifetimeTaxes">
+            <div>
+              <div class="kpi-label">Lifetime Taxes</div>
+              <div class="kpi-value" id="kpiTaxes">--</div>
+              <div class="kpi-sub" id="kpiTaxRate">--</div>
+              <div class="kpi-tax-hbar-wrap" id="kpiTaxHBarWrap">
+                <div class="kpi-tax-hbar" id="kpiTaxHBar"></div>
+                <div class="kpi-tax-hbar-legend" id="kpiTaxHBarLegend"></div>
+              </div>
+              <div class="kpi-sub" id="kpiMnTaxComp" style="margin-top: 0.25rem;">--</div>
+              <div class="kpi-sub" id="kpiTaxSplit" style="margin-top: 0.15rem;">--</div>
+            </div>
+            <div class="move-state-section" id="sectionMoveState">
+              <button type="button" class="btn-move-state" id="btnShouldIMove" onclick="toggleMoveStateComparison()">
+                <span>✈️ Should I move to another state?</span>
+              </button>
+              <div id="moveStateBox" class="move-state-box" style="display: none;">
+                <div class="move-state-header">
+                  <label for="moveStateSelect" class="move-state-label">Compare moving to:</label>
+                  <div style="position: relative;">
+                    <select id="moveStateSelect" class="move-state-dropdown" onchange="calculateMoveStateSavings()">
+                      <!-- State options populated dynamically -->
+                    </select>
+                    <div class="dropdown-chevron">▼</div>
+                  </div>
+                </div>
+                <div id="moveStateResult" class="move-state-result"></div>
+              </div>
+            </div>
           </div>
 
           <div class="kpi-card">
@@ -1883,6 +2196,10 @@
                   <div class="legend-item">
                     <div class="legend-color" style="background: #0284c7;"></div>
                     <span>Pre-Tax W/D</span>
+                  </div>
+                  <div class="legend-item">
+                    <div class="legend-color" style="background: #f59e0b;"></div>
+                    <span>Mandatory RMD</span>
                   </div>
                   <div class="legend-item">
                     <div class="legend-color" style="background: #c084fc;"></div>
@@ -2290,6 +2607,9 @@
       const number = document.getElementById(numberId);
       if (slider && number) {
         number.value = slider.value;
+        if (typeof onUserInputChange === 'function') {
+          onUserInputChange(numberId, parseFloat(slider.value) || 0);
+        }
         calculatePlan();
       }
     }
@@ -2300,6 +2620,9 @@
       if (slider && number) {
         const val = parseFloat(number.value) || 0;
         slider.value = Math.min(parseFloat(slider.max), Math.max(parseFloat(slider.min), val));
+        if (typeof onUserInputChange === 'function') {
+          onUserInputChange(numberId, val);
+        }
         calculatePlan();
       }
     }
@@ -2407,8 +2730,8 @@
       document.getElementById('balBrokerage').value = 1000000;
       document.getElementById('balBrokerageSlider').value = 1000000;
 
-      if (document.getElementById('annualRothConv')) document.getElementById('annualRothConv').value = 50000;
-      if (document.getElementById('annualRothConvSlider')) document.getElementById('annualRothConvSlider').value = 50000;
+      if (document.getElementById('annualRothConv')) document.getElementById('annualRothConv').value = 0;
+      if (document.getElementById('annualRothConvSlider')) document.getElementById('annualRothConvSlider').value = 0;
 
       document.getElementById('rateReturn').value = 6.0;
       document.getElementById('rateReturnSlider').value = 6.0;
@@ -2923,6 +3246,64 @@
         const fedConvTax = Math.max(0, fedTax - fedTaxWithoutConv);
         const stateConvTax = Math.max(0, stateTax - stateTaxWithoutConv);
 
+        // Breakdown tax specifically attributable to mandatory RMD
+        let rmdTax = 0;
+        let fedRmdTax = 0;
+        let stateRmdTax = 0;
+        if (mandatoryRmd > 0) {
+          const wPretaxWithoutRmd = Math.max(0, wPretax - mandatoryRmd);
+          const otherAgiWithoutRmd = wPretaxWithoutRmd + actualConv + finalCapGain;
+          const taxableSSWithoutRmd = computeTaxableSS(annualSS, otherAgiWithoutRmd, status);
+          const taxableOrdWithoutRmd = Math.max(0, wPretaxWithoutRmd + actualConv + taxableSSWithoutRmd - stdDed);
+          const ordTaxWithoutRmd = computeOrdinaryTax(taxableOrdWithoutRmd, status, inflFactor);
+          const ltcgTaxWithoutRmd = computeLtcgTax(taxableOrdWithoutRmd, finalCapGain, status, inflFactor);
+          const earlyPenWithoutRmd = penalizePretax ? (wPretaxWithoutRmd * 0.10) : 0;
+          const fedTaxWithoutRmd = ordTaxWithoutRmd + ltcgTaxWithoutRmd + earlyPenWithoutRmd;
+          const stateTaxWithoutRmd = computeStateTax(stateCode, status, age, wPretaxWithoutRmd, actualConv, finalCapGain, inflFactor);
+          const taxWithoutRmd = fedTaxWithoutRmd + stateTaxWithoutRmd;
+          rmdTax = Math.max(0, estTax - taxWithoutRmd);
+          fedRmdTax = Math.max(0, fedTax - fedTaxWithoutRmd);
+          stateRmdTax = Math.max(0, stateTax - stateTaxWithoutRmd);
+        }
+
+        // Breakdown tax specifically attributable to Capital Gains
+        let capGainTax = 0;
+        let fedCapGainTax = 0;
+        let stateCapGainTax = 0;
+        if (finalCapGain > 0) {
+          const otherAgiWithoutCG = wPretax + actualConv;
+          const taxableSSWithoutCG = computeTaxableSS(annualSS, otherAgiWithoutCG, status);
+          const taxableOrdWithoutCG = Math.max(0, wPretax + actualConv + taxableSSWithoutCG - stdDed);
+          const ordTaxWithoutCG = computeOrdinaryTax(taxableOrdWithoutCG, status, inflFactor);
+          const earlyPenWithoutCG = penalizePretax ? (wPretax * 0.10) : 0;
+          const fedTaxWithoutCG = ordTaxWithoutCG + 0 + earlyPenWithoutCG;
+          const stateTaxWithoutCG = computeStateTax(stateCode, status, age, wPretax, actualConv, 0, inflFactor);
+          const taxWithoutCG = fedTaxWithoutCG + stateTaxWithoutCG;
+          capGainTax = Math.max(0, estTax - taxWithoutCG);
+          fedCapGainTax = Math.max(0, fedTax - fedTaxWithoutCG);
+          stateCapGainTax = Math.max(0, stateTax - stateTaxWithoutCG);
+        }
+
+        // Breakdown tax specifically attributable to Social Security
+        let ssTax = 0;
+        let fedSsTax = 0;
+        let stateSsTax = 0;
+        if (taxableSS > 0) {
+          const taxableOrdWithoutSS = Math.max(0, wPretax + actualConv - stdDed);
+          const ordTaxWithoutSS = computeOrdinaryTax(taxableOrdWithoutSS, status, inflFactor);
+          const ltcgTaxWithoutSS = computeLtcgTax(taxableOrdWithoutSS, finalCapGain, status, inflFactor);
+          const earlyPenWithoutSS = penalizePretax ? (wPretax * 0.10) : 0;
+          const fedTaxWithoutSS = ordTaxWithoutSS + ltcgTaxWithoutSS + earlyPenWithoutSS;
+          const stateTaxWithoutSS = computeStateTax(stateCode, status, age, wPretax, actualConv, finalCapGain, inflFactor);
+          const taxWithoutSS = fedTaxWithoutSS + stateTaxWithoutSS;
+          ssTax = Math.max(0, estTax - taxWithoutSS);
+          fedSsTax = Math.max(0, fedTax - fedTaxWithoutSS);
+          stateSsTax = Math.max(0, stateTax - stateTaxWithoutSS);
+        }
+
+        // Breakdown tax attributable to other incomes (ordinary pre-tax living withdrawals & early penalties)
+        const otherTax = Math.max(0, estTax - rmdTax - convTax - capGainTax - ssTax);
+
         // -----------------------------------------------------------------
         // MEDICARE IRMAA SURCHARGES (Age 65+, 2-Year Lookback Rule)
         // -----------------------------------------------------------------
@@ -2983,6 +3364,16 @@
           isSSEligible: age >= ssStartAge,
           isRmd: isRmdEligible,
           mandatoryRmd: mandatoryRmd,
+          rmdTax: rmdTax,
+          fedRmdTax: fedRmdTax,
+          stateRmdTax: stateRmdTax,
+          capGainTax: capGainTax,
+          fedCapGainTax: fedCapGainTax,
+          stateCapGainTax: stateCapGainTax,
+          ssTax: ssTax,
+          fedSsTax: fedSsTax,
+          stateSsTax: stateSsTax,
+          otherTax: otherTax,
           isEarlyPenalty: earlyPenalty > 0,
           earlyPenalty: earlyPenalty,
           targetExpense: targetExpense,
@@ -3019,6 +3410,20 @@
 
       const totalLifetimeSS = schedule.reduce((acc, r) => acc + (r.annualSS || 0), 0);
       const totalLifetimeTaxableSS = schedule.reduce((acc, r) => acc + (r.taxableSS || 0), 0);
+      const totalLifetimeRmd = schedule.reduce((acc, r) => acc + (r.mandatoryRmd || 0), 0);
+      const totalLifetimeRmdTax = schedule.reduce((acc, r) => acc + (r.rmdTax || 0), 0);
+      const totalLifetimeFedRmdTax = schedule.reduce((acc, r) => acc + (r.fedRmdTax || 0), 0);
+      const totalLifetimeStateRmdTax = schedule.reduce((acc, r) => acc + (r.stateRmdTax || 0), 0);
+      const totalLifetimeConvTax = schedule.reduce((acc, r) => acc + (r.convTax || 0), 0);
+      const totalLifetimeFedConvTax = schedule.reduce((acc, r) => acc + (r.fedConvTax || 0), 0);
+      const totalLifetimeStateConvTax = schedule.reduce((acc, r) => acc + (r.stateConvTax || 0), 0);
+      const totalLifetimeCapGainTax = schedule.reduce((acc, r) => acc + (r.capGainTax || 0), 0);
+      const totalLifetimeFedCapGainTax = schedule.reduce((acc, r) => acc + (r.fedCapGainTax || 0), 0);
+      const totalLifetimeStateCapGainTax = schedule.reduce((acc, r) => acc + (r.stateCapGainTax || 0), 0);
+      const totalLifetimeSsTax = schedule.reduce((acc, r) => acc + (r.ssTax || 0), 0);
+      const totalLifetimeFedSsTax = schedule.reduce((acc, r) => acc + (r.fedSsTax || 0), 0);
+      const totalLifetimeStateSsTax = schedule.reduce((acc, r) => acc + (r.stateSsTax || 0), 0);
+      const totalLifetimeOtherTax = schedule.reduce((acc, r) => acc + (r.otherTax || 0), 0);
 
       return {
         schedule,
@@ -3027,6 +3432,20 @@
         totalLifetimeGrossWithdrawn,
         totalLifetimeSS,
         totalLifetimeTaxableSS,
+        totalLifetimeRmd,
+        totalLifetimeRmdTax,
+        totalLifetimeFedRmdTax,
+        totalLifetimeStateRmdTax,
+        totalLifetimeConvTax,
+        totalLifetimeFedConvTax,
+        totalLifetimeStateConvTax,
+        totalLifetimeCapGainTax,
+        totalLifetimeFedCapGainTax,
+        totalLifetimeStateCapGainTax,
+        totalLifetimeSsTax,
+        totalLifetimeFedSsTax,
+        totalLifetimeStateSsTax,
+        totalLifetimeOtherTax,
         depletedAge,
         finalBalance: schedule[schedule.length - 1]?.totalEndingBal || 0
       };
@@ -3067,6 +3486,9 @@
       renderBarChart(activeResult.schedule);
       renderAreaChart(activeResult.schedule);
       renderTable(activeResult.schedule);
+      if (typeof updateRetirementSolverBanner === 'function' && typeof activeRetirementTarget !== 'undefined' && activeRetirementTarget !== null) {
+        updateRetirementSolverBanner(activeRetirementTarget);
+      }
     }
 
     function formatCurrency(val) {
@@ -3077,14 +3499,16 @@
     function updateKpis(smart, conv, active, params) {
       const kpiLongevity = document.getElementById('kpiLongevity');
       const kpiLongevitySub = document.getElementById('kpiLongevitySub');
-      if (active.depletedAge === null) {
-        kpiLongevity.textContent = 'Age 90+';
-        kpiLongevity.className = 'kpi-value kpi-success';
-        kpiLongevitySub.textContent = 'Solvent through Age 90';
-      } else {
-        kpiLongevity.textContent = `Age ${active.depletedAge}`;
-        kpiLongevity.className = 'kpi-value kpi-danger';
-        kpiLongevitySub.textContent = `Depleted in Year ${active.depletedAge - params.startAge}`;
+      if (kpiLongevity && kpiLongevitySub) {
+        if (active.depletedAge === null) {
+          kpiLongevity.textContent = 'Age 90+';
+          kpiLongevity.className = 'kpi-value kpi-success';
+          kpiLongevitySub.textContent = 'Solvent through Age 90';
+        } else {
+          kpiLongevity.textContent = `Age ${active.depletedAge}`;
+          kpiLongevity.className = 'kpi-value kpi-danger';
+          kpiLongevitySub.textContent = `Depleted in Year ${active.depletedAge - params.startAge}`;
+        }
       }
 
       document.getElementById('kpiTaxes').textContent = formatCurrency(active.totalLifetimeTaxes);
@@ -3100,6 +3524,104 @@
       const penText = totalEarlyPen > 0 ? ` (incl. ${formatCurrency(totalEarlyPen)} early pen)` : '';
       const irmaaSub = totalIrmaa > 0 ? ` · IRMAA: ${formatCurrency(totalIrmaa)}` : '';
       document.getElementById('kpiTaxRate').textContent = `${effTaxRate}% effective tax rate${penText}${irmaaSub}`;
+
+      // Render Horizontal Stacked Bar for Lifetime Taxes Breakdown:
+      // RMD, Conversion, Capital Gains, Social Security, Other Incomes
+      const elTaxHBar = document.getElementById('kpiTaxHBar');
+      const elTaxHBarLegend = document.getElementById('kpiTaxHBarLegend');
+      if (elTaxHBar && elTaxHBarLegend) {
+        const tTot = active.totalLifetimeTaxes || 0;
+        const tRmdRaw = active.totalLifetimeRmdTax || 0;
+        const tConvRaw = active.totalLifetimeConvTax || 0;
+        const tCapGainRaw = active.totalLifetimeCapGainTax || 0;
+        const tSSRaw = active.totalLifetimeSsTax || 0;
+        const tOtherRaw = Math.max(0, tTot - tRmdRaw - tConvRaw - tCapGainRaw - tSSRaw);
+
+        const rawSum = tRmdRaw + tConvRaw + tCapGainRaw + tSSRaw + tOtherRaw;
+        let tRmd = tRmdRaw, tConv = tConvRaw, tCapGain = tCapGainRaw, tSS = tSSRaw, tOther = tOtherRaw;
+        if (rawSum > 0 && Math.abs(rawSum - tTot) > 1) {
+          const ratio = tTot / rawSum;
+          tRmd *= ratio;
+          tConv *= ratio;
+          tCapGain *= ratio;
+          tSS *= ratio;
+          tOther *= ratio;
+        }
+
+        if (tTot > 0) {
+          const pRmd = (tRmd / tTot) * 100;
+          const pConv = (tConv / tTot) * 100;
+          const pCapGain = (tCapGain / tTot) * 100;
+          const pSS = (tSS / tTot) * 100;
+          const pOther = Math.max(0, 100 - pRmd - pConv - pCapGain - pSS);
+
+          const barSegs = [];
+          const barLegend = [];
+
+          // 1. Mandatory RMD Taxes (Amber / Gold: #f59e0b)
+          if (pRmd > 0.5) {
+            barSegs.push(`<div class="kpi-tax-hbar-seg" style="width:${pRmd.toFixed(1)}%; background:#f59e0b;" title="Taxes from RMD: ${formatCurrency(tRmd)} (${pRmd.toFixed(1)}%)"></div>`);
+            barLegend.push(`<span class="kpi-tax-hbar-legend-item"><span class="kpi-tax-hbar-dot" style="background:#f59e0b;"></span><strong>RMD:</strong> ${formatCurrency(tRmd)} (${Math.round(pRmd)}%)</span>`);
+          }
+
+          // 2. Roth Conversion Taxes (Purple: #8b5cf6)
+          if (pConv > 0.5) {
+            barSegs.push(`<div class="kpi-tax-hbar-seg" style="width:${pConv.toFixed(1)}%; background:#8b5cf6;" title="Taxes from Conversion: ${formatCurrency(tConv)} (${pConv.toFixed(1)}%)"></div>`);
+            barLegend.push(`<span class="kpi-tax-hbar-legend-item"><span class="kpi-tax-hbar-dot" style="background:#8b5cf6;"></span><strong>Conversion:</strong> ${formatCurrency(tConv)} (${Math.round(pConv)}%)</span>`);
+          }
+
+          // 3. Capital Gains Taxes (Lavender / Orchid: #c084fc)
+          if (pCapGain > 0.5) {
+            barSegs.push(`<div class="kpi-tax-hbar-seg" style="width:${pCapGain.toFixed(1)}%; background:#c084fc;" title="Taxes from Capital Gains: ${formatCurrency(tCapGain)} (${pCapGain.toFixed(1)}%)"></div>`);
+            barLegend.push(`<span class="kpi-tax-hbar-legend-item"><span class="kpi-tax-hbar-dot" style="background:#c084fc;"></span><strong>Cap Gains:</strong> ${formatCurrency(tCapGain)} (${Math.round(pCapGain)}%)</span>`);
+          }
+
+          // 4. Social Security Taxes (Emerald Green: #16a34a)
+          if (pSS > 0.5) {
+            barSegs.push(`<div class="kpi-tax-hbar-seg" style="width:${pSS.toFixed(1)}%; background:#16a34a;" title="Taxes from Social Security: ${formatCurrency(tSS)} (${pSS.toFixed(1)}%)"></div>`);
+            barLegend.push(`<span class="kpi-tax-hbar-legend-item"><span class="kpi-tax-hbar-dot" style="background:#16a34a;"></span><strong>Soc Sec:</strong> ${formatCurrency(tSS)} (${Math.round(pSS)}%)</span>`);
+          }
+
+          // 5. Other Incomes (Sky Blue: #0284c7)
+          if (pOther > 0.5) {
+            barSegs.push(`<div class="kpi-tax-hbar-seg" style="width:${pOther.toFixed(1)}%; background:#0284c7;" title="Taxes from Other Incomes: ${formatCurrency(tOther)} (${pOther.toFixed(1)}%)"></div>`);
+            barLegend.push(`<span class="kpi-tax-hbar-legend-item"><span class="kpi-tax-hbar-dot" style="background:#0284c7;"></span><strong>Other Incomes:</strong> ${formatCurrency(tOther)} (${Math.round(pOther)}%)</span>`);
+          }
+
+          elTaxHBar.innerHTML = barSegs.join('');
+          elTaxHBarLegend.innerHTML = barLegend.join('');
+        } else {
+          elTaxHBar.innerHTML = '<div class="kpi-tax-hbar-seg" style="width:100%; background:#e2e8f0;"></div>';
+          elTaxHBarLegend.innerHTML = '<span style="font-size:0.86rem; color:#94a3b8;">$0 Lifetime Taxes</span>';
+        }
+      }
+
+      // RMD tax analysis on active drawdown schedule
+      const elRmdTax = document.getElementById('kpiRmdTax');
+      if (elRmdTax) {
+        const totalRmd = active.totalLifetimeRmd || 0;
+        const totalRmdTax = active.totalLifetimeRmdTax || 0;
+        const rmdPctOfTax = active.totalLifetimeTaxes > 0
+          ? ((totalRmdTax / active.totalLifetimeTaxes) * 100).toFixed(1)
+          : '0.0';
+        const convRmdTax = conv.totalLifetimeRmdTax || 0;
+        const smartRmdTax = smart.totalLifetimeRmdTax || 0;
+        const rmdTaxSaved = convRmdTax - smartRmdTax;
+
+        if (totalRmd > 0) {
+          let rmdMsg = `Taxes from RMD: <strong>${formatCurrency(totalRmdTax)}</strong> (${rmdPctOfTax}% of taxes) · RMDs: ${formatCurrency(totalRmd)}`;
+          if (rmdTaxSaved > 100) {
+            if (active === smart) {
+              rmdMsg += ` · <span class="kpi-success">Smart saves ${formatCurrency(rmdTaxSaved)} RMD tax</span>`;
+            } else {
+              rmdMsg += ` · <span style="color: #6ee7b7;">Smart saves ${formatCurrency(rmdTaxSaved)} RMD tax</span>`;
+            }
+          }
+          elRmdTax.innerHTML = rmdMsg;
+        } else {
+          elRmdTax.innerHTML = `<span class="kpi-success">Taxes from RMD: $0</span> (Pre-tax balances depleted/converted prior to RMD age)`;
+        }
+      }
 
       // Minnesota State Tax computation on active drawdown schedule
       const getRowInfl = (r) => (r.inflFactor && !isNaN(r.inflFactor))
@@ -3142,7 +3664,7 @@
             : 0;
           elMnComp.innerHTML = `MN State Tax: <strong>${formatCurrency(totalStateTax)}</strong> (${mnSharePct}% of total taxes)`;
           
-          let splitText = `Fed: ${formatCurrency(totalFedTax)} · vs 0% State (FL/TX): +${formatCurrency(totalStateTax)}`;
+          let splitText = `Federal: ${formatCurrency(totalFedTax)}`;
           if (mnTaxSavings > 0 && active === smart) {
             splitText += ` · <span class="kpi-success">Smart saves ${formatCurrency(mnTaxSavings)} MN tax</span>`;
           }
@@ -3184,10 +3706,56 @@
 
       document.getElementById('kpiFinalBalance').textContent = formatCurrency(active.finalBalance);
       const totalStart = params.bal401kInit + params.balIRAInit + params.balRothInit + params.balBrokerageInit;
-      document.getElementById('kpiStartingBalance').textContent = `From ${formatCurrency(totalStart)} start`;
+      document.getElementById('kpiStartingBalance').textContent = `From ${formatCurrency(totalStart)} start (Age ${params.startAge}) → Remaining at Age 90`;
       const balBadge = document.getElementById('startingBalancesTotalBadge');
       if (balBadge) {
         balBadge.textContent = `${formatCurrency(totalStart)} Total`;
+      }
+
+      // Render Horizontal Stacked Bar for Final Balance Breakdown (Taxable vs Non-Taxable)
+      const elFinalHBar = document.getElementById('kpiFinalBalHBar');
+      const elFinalHBarLegend = document.getElementById('kpiFinalBalHBarLegend');
+      if (elFinalHBar && elFinalHBarLegend) {
+        const lastRow = (active.schedule && active.schedule.length > 0) ? active.schedule[active.schedule.length - 1] : null;
+        const totalEnding = (lastRow && active.finalBalance > 0) ? active.finalBalance : 0;
+        if (lastRow && totalEnding > 0) {
+          const finalBrok = Math.max(0, lastRow.balBrokerage || 0);
+          const finalPretax = Math.max(0, lastRow.balPretax || 0);
+          const finalRoth = Math.max(0, lastRow.balRoth || 0);
+
+          const pBrok = (finalBrok / totalEnding) * 100;
+          const pPretax = (finalPretax / totalEnding) * 100;
+          const pRoth = Math.max(0, 100 - pBrok - pPretax);
+
+          const barSegs = [];
+          const barLegend = [];
+
+          // 1. Taxable Brokerage (Purple: #7e22ce)
+          if (pBrok > 0.5) {
+            const brokLabel = finalPretax > 0.5 ? 'Taxable (Brok):' : 'Taxable:';
+            barSegs.push(`<div class="kpi-tax-hbar-seg" style="width:${pBrok.toFixed(1)}%; background:#7e22ce;" title="Taxable Brokerage: ${formatCurrency(finalBrok)} (${pBrok.toFixed(1)}%)"></div>`);
+            barLegend.push(`<span class="kpi-tax-hbar-legend-item"><span class="kpi-tax-hbar-dot" style="background:#7e22ce;"></span><strong>${brokLabel}</strong> ${formatCurrency(finalBrok)} (${Math.round(pBrok)}%)</span>`);
+          }
+
+          // 2. Pre-Tax 401(k)/IRA (Blue: #1d4ed8) - only if remaining
+          if (pPretax > 0.5) {
+            barSegs.push(`<div class="kpi-tax-hbar-seg" style="width:${pPretax.toFixed(1)}%; background:#1d4ed8;" title="Pre-Tax 401(k)/IRA (Taxable): ${formatCurrency(finalPretax)} (${pPretax.toFixed(1)}%)"></div>`);
+            barLegend.push(`<span class="kpi-tax-hbar-legend-item"><span class="kpi-tax-hbar-dot" style="background:#1d4ed8;"></span><strong>Pre-Tax:</strong> ${formatCurrency(finalPretax)} (${Math.round(pPretax)}%)</span>`);
+          }
+
+          // 3. Non-Taxable Roth IRA (Emerald Green: #16a34a)
+          if (pRoth > 0.5) {
+            const rothLabel = (pBrok > 0.5 || pPretax > 0.5) ? 'Non-Taxable:' : 'Non-Taxable (Roth):';
+            barSegs.push(`<div class="kpi-tax-hbar-seg" style="width:${pRoth.toFixed(1)}%; background:#16a34a;" title="Non-Taxable Roth IRA (100% Tax-Free): ${formatCurrency(finalRoth)} (${pRoth.toFixed(1)}%)"></div>`);
+            barLegend.push(`<span class="kpi-tax-hbar-legend-item"><span class="kpi-tax-hbar-dot" style="background:#16a34a;"></span><strong>${rothLabel}</strong> ${formatCurrency(finalRoth)} (${Math.round(pRoth)}%)</span>`);
+          }
+
+          elFinalHBar.innerHTML = barSegs.join('');
+          elFinalHBarLegend.innerHTML = barLegend.join('');
+        } else {
+          elFinalHBar.innerHTML = '<div class="kpi-tax-hbar-seg" style="width:100%; background:#e2e8f0;"></div>';
+          elFinalHBarLegend.innerHTML = '<span style="font-size:0.86rem; color:#94a3b8;">$0 Final Balance (Depleted)</span>';
+        }
       }
 
       // Unrealized Gain and Potential Tax on Final Balance
@@ -3249,6 +3817,527 @@
           }
         }
       }
+    }
+
+    /* ==========================================================================
+       AUTOMATIC RETIREMENT TARGET SOLVERS ("When can I Retire?")
+       Die with Zero ($0) | Die with Million ($1M) | Die with 10 Million ($10M)
+       ========================================================================== */
+    let originalRetirementBaseline = null;
+    let activeRetirementTarget = null;
+
+    function onUserInputChange(numberId, val) {
+      if (originalRetirementBaseline) {
+        if (numberId === 'annualExpense') {
+          originalRetirementBaseline.annualExpense = val;
+        } else if (numberId === 'currentAge') {
+          originalRetirementBaseline.currentAge = Math.round(val);
+        } else if (numberId === 'bal401k') {
+          originalRetirementBaseline.bal401k = val;
+        } else if (numberId === 'balIRA') {
+          originalRetirementBaseline.balIRA = val;
+        } else if (numberId === 'balRoth') {
+          originalRetirementBaseline.balRoth = val;
+        } else if (numberId === 'balBrokerage') {
+          originalRetirementBaseline.balBrokerage = val;
+        }
+      }
+    }
+
+    function saveOriginalBaseline() {
+      if (!originalRetirementBaseline) {
+        originalRetirementBaseline = {
+          currentAge: parseInt(document.getElementById('currentAge').value) || 50,
+          bal401k: parseFloat(document.getElementById('bal401k').value) || 0,
+          balIRA: parseFloat(document.getElementById('balIRA').value) || 0,
+          balRoth: parseFloat(document.getElementById('balRoth').value) || 0,
+          balBrokerage: parseFloat(document.getElementById('balBrokerage').value) || 0,
+          annualExpense: parseFloat(document.getElementById('annualExpense').value) || 100000
+        };
+      }
+    }
+
+    function resetRetirementBaseline() {
+      if (originalRetirementBaseline) {
+        const b = originalRetirementBaseline;
+        document.getElementById('currentAge').value = b.currentAge;
+        const sAge = document.getElementById('currentAgeSlider');
+        if (sAge) sAge.value = Math.min(parseFloat(sAge.max), Math.max(parseFloat(sAge.min), b.currentAge));
+
+        document.getElementById('bal401k').value = b.bal401k;
+        const s401k = document.getElementById('bal401kSlider');
+        if (s401k) s401k.value = Math.min(parseFloat(s401k.max), Math.max(parseFloat(s401k.min), b.bal401k));
+
+        document.getElementById('balIRA').value = b.balIRA;
+        const sIRA = document.getElementById('balIRASlider');
+        if (sIRA) sIRA.value = Math.min(parseFloat(sIRA.max), Math.max(parseFloat(sIRA.min), b.balIRA));
+
+        document.getElementById('balRoth').value = b.balRoth;
+        const sRoth = document.getElementById('balRothSlider');
+        if (sRoth) sRoth.value = Math.min(parseFloat(sRoth.max), Math.max(parseFloat(sRoth.min), b.balRoth));
+
+        document.getElementById('balBrokerage').value = b.balBrokerage;
+        const sBrok = document.getElementById('balBrokerageSlider');
+        if (sBrok) sBrok.value = Math.min(parseFloat(sBrok.max), Math.max(parseFloat(sBrok.min), b.balBrokerage));
+
+        document.getElementById('annualExpense').value = b.annualExpense;
+        const sExp = document.getElementById('annualExpenseSlider');
+        if (sExp) sExp.value = Math.min(parseFloat(sExp.max), Math.max(parseFloat(sExp.min), b.annualExpense));
+
+        ['btnDieWithZero', 'btnDieWithMillion', 'btnDieWith10Million'].forEach(id => {
+          const btn = document.getElementById(id);
+          if (btn) btn.className = 'btn-retire-target';
+        });
+
+        const resultBox = document.getElementById('retireCalcResult');
+        if (resultBox) resultBox.style.display = 'none';
+
+        originalRetirementBaseline = null;
+        activeRetirementTarget = null;
+        calculatePlan();
+      }
+    }
+
+    function calculateOptimalRetirement(targetBalance) {
+      saveOriginalBaseline();
+      const baseParams = getFormValues();
+      const currentExpense = (originalRetirementBaseline && originalRetirementBaseline.annualExpense) 
+        ? originalRetirementBaseline.annualExpense 
+        : baseParams.initialExpense;
+
+      // Always synchronize baseline annualExpense with the latest user input
+      if (originalRetirementBaseline) {
+        originalRetirementBaseline.annualExpense = currentExpense;
+      }
+      const baseline = originalRetirementBaseline;
+      const currentAge = baseline.currentAge;
+      activeRetirementTarget = targetBalance;
+
+      const resultBox = document.getElementById('retireCalcResult');
+      if (!resultBox) return;
+
+      const activeStrat = activeStrategy || 'smart';
+
+      // Update button active classes
+      const btnZero = document.getElementById('btnDieWithZero');
+      const btnMillion = document.getElementById('btnDieWithMillion');
+      const btn10Million = document.getElementById('btnDieWith10Million');
+      if (btnZero) btnZero.className = 'btn-retire-target' + (targetBalance === 0 ? ' active-zero' : '');
+      if (btnMillion) btnMillion.className = 'btn-retire-target' + (targetBalance === 1000000 ? ' active-million' : '');
+      if (btn10Million) btn10Million.className = 'btn-retire-target' + (targetBalance === 10000000 ? ' active-10million' : '');
+
+      const targetLabels = {
+        0: 'Die with Zero ($0 at 90)',
+        1000000: 'Die with Million ($1M at 90)',
+        10000000: 'Die with 10 Million ($10M at 90)'
+      };
+      const targetLabel = targetLabels[targetBalance] || `Target ${formatCurrency(targetBalance)}`;
+
+      // Search across candidate retirement ages 40 to 90 using latest inputs
+      let optimalAge = null;
+      let optimalFinalBal = 0;
+      let optimalGrownAssets = null;
+
+      for (let a = 40; a <= 90; a++) {
+        let testP;
+        if (a <= currentAge) {
+          testP = {
+            ...baseParams,
+            startAge: a,
+            bal401kInit: baseline.bal401k,
+            balIRAInit: baseline.balIRA,
+            balRothInit: baseline.balRoth,
+            balBrokerageInit: baseline.balBrokerage,
+            initialExpense: currentExpense
+          };
+        } else {
+          const yrs = a - currentAge;
+          const gFactor = Math.pow(1 + (baseParams.rateReturn || 6) / 100, yrs);
+          const iFactor = Math.pow(1 + (baseParams.rateInflation || 2.5) / 100, yrs);
+          testP = {
+            ...baseParams,
+            startAge: a,
+            bal401kInit: baseline.bal401k * gFactor,
+            balIRAInit: baseline.balIRA * gFactor,
+            balRothInit: baseline.balRoth * gFactor,
+            balBrokerageInit: baseline.balBrokerage * gFactor,
+            initialExpense: currentExpense * iFactor
+          };
+        }
+
+        const res = simulateRetirement(activeStrat, testP);
+        if (res.depletedAge === null && res.finalBalance >= targetBalance) {
+          optimalAge = a;
+          optimalFinalBal = res.finalBalance;
+          if (a > currentAge) {
+            const yrs = a - currentAge;
+            const gFactor = Math.pow(1 + (baseParams.rateReturn || 6) / 100, yrs);
+            const iFactor = Math.pow(1 + (baseParams.rateInflation || 2.5) / 100, yrs);
+            optimalGrownAssets = {
+              bal401k: Math.round(baseline.bal401k * gFactor),
+              balIRA: Math.round(baseline.balIRA * gFactor),
+              balRoth: Math.round(baseline.balRoth * gFactor),
+              balBrokerage: Math.round(baseline.balBrokerage * gFactor),
+              total: Math.round((baseline.bal401k + baseline.balIRA + baseline.balRoth + baseline.balBrokerage) * gFactor),
+              inflatedExpense: Math.round(currentExpense * iFactor)
+            };
+          }
+          break;
+        }
+      }
+
+      resultBox.style.display = 'block';
+
+      if (optimalAge !== null) {
+        // Apply optimal age to form
+        const ageInput = document.getElementById('currentAge');
+        const ageSlider = document.getElementById('currentAgeSlider');
+        if (ageInput) ageInput.value = optimalAge;
+        if (ageSlider) {
+          ageSlider.value = Math.min(parseFloat(ageSlider.max), Math.max(parseFloat(ageSlider.min), optimalAge));
+        }
+
+        // If age > currentAge, update starting balances to compounded assets and expenses to inflated level
+        if (optimalGrownAssets) {
+          document.getElementById('bal401k').value = optimalGrownAssets.bal401k;
+          const s401k = document.getElementById('bal401kSlider');
+          if (s401k) s401k.value = Math.min(parseFloat(s401k.max), Math.max(parseFloat(s401k.min), optimalGrownAssets.bal401k));
+
+          document.getElementById('balIRA').value = optimalGrownAssets.balIRA;
+          const sIRA = document.getElementById('balIRASlider');
+          if (sIRA) sIRA.value = Math.min(parseFloat(sIRA.max), Math.max(parseFloat(sIRA.min), optimalGrownAssets.balIRA));
+
+          document.getElementById('balRoth').value = optimalGrownAssets.balRoth;
+          const sRoth = document.getElementById('balRothSlider');
+          if (sRoth) sRoth.value = Math.min(parseFloat(sRoth.max), Math.max(parseFloat(sRoth.min), optimalGrownAssets.balRoth));
+
+          document.getElementById('balBrokerage').value = optimalGrownAssets.balBrokerage;
+          const sBrok = document.getElementById('balBrokerageSlider');
+          if (sBrok) sBrok.value = Math.min(parseFloat(sBrok.max), Math.max(parseFloat(sBrok.min), optimalGrownAssets.balBrokerage));
+
+          document.getElementById('annualExpense').value = optimalGrownAssets.inflatedExpense;
+          const sExp = document.getElementById('annualExpenseSlider');
+          if (sExp) sExp.value = Math.min(parseFloat(sExp.max), Math.max(parseFloat(sExp.min), optimalGrownAssets.inflatedExpense));
+        } else {
+          // Restore baseline balances and expense if optimal age <= currentAge
+          document.getElementById('bal401k').value = baseline.bal401k;
+          document.getElementById('balIRA').value = baseline.balIRA;
+          document.getElementById('balRoth').value = baseline.balRoth;
+          document.getElementById('balBrokerage').value = baseline.balBrokerage;
+
+          document.getElementById('annualExpense').value = baseline.annualExpense;
+          const sExp = document.getElementById('annualExpenseSlider');
+          if (sExp) sExp.value = Math.min(parseFloat(sExp.max), Math.max(parseFloat(sExp.min), baseline.annualExpense));
+        }
+
+        calculatePlan();
+
+        resultBox.className = 'retire-result-box';
+        let html = `<div><strong>🎯 ${targetLabel}: Optimal Age ${optimalAge}</strong></div>`;
+        html += `<div style="margin-top: 0.25rem;">Projected balance at Age 90: <strong style="color:#15803d;">${formatCurrency(optimalFinalBal)}</strong></div>`;
+        if (optimalGrownAssets) {
+          html += `<div style="margin-top: 0.25rem; font-size: 0.78rem; opacity: 0.9;">Working until Age ${optimalAge} allows assets to compound to <strong>${formatCurrency(optimalGrownAssets.total)}</strong> at retirement with annual living expense adjusted for inflation to <strong>${formatCurrency(optimalGrownAssets.inflatedExpense)}</strong>.</div>`;
+        } else if (optimalAge < currentAge) {
+          html += `<div style="margin-top: 0.25rem; font-size: 0.78rem; opacity: 0.9;">With your current assets, retiring as early as Age ${optimalAge} fulfills this target.</div>`;
+        } else {
+          html += `<div style="margin-top: 0.25rem; font-size: 0.78rem; opacity: 0.9;">Retiring at current Age ${optimalAge} fulfills this target.</div>`;
+        }
+        html += `<div style="margin-top: 0.40rem;"><button type="button" class="btn-apply-age" onclick="resetRetirementBaseline()">↺ Reset to Original</button></div>`;
+        resultBox.innerHTML = html;
+      } else {
+        resultBox.className = 'retire-result-box warning';
+        let html = `<div><strong>⚠️ Target Not Reachable: ${targetLabel}</strong></div>`;
+        html += `<div style="margin-top: 0.25rem;">Even retiring past Age 85, annual expenses of ${formatCurrency(currentExpense)} prevent reaching ${formatCurrency(targetBalance)} at Age 90. Try reducing expenses or increasing starting assets.</div>`;
+        html += `<div style="margin-top: 0.40rem;"><button type="button" class="btn-apply-age" onclick="resetRetirementBaseline()">↺ Reset to Original</button></div>`;
+        resultBox.innerHTML = html;
+      }
+    }
+
+    function updateRetirementSolverBanner(targetBalance) {
+      if (targetBalance === null || targetBalance === undefined) return;
+      const resultBox = document.getElementById('retireCalcResult');
+      if (!resultBox || resultBox.style.display === 'none') return;
+
+      const baseParams = getFormValues();
+      const currentExpense = baseParams.initialExpense;
+      if (originalRetirementBaseline) {
+        originalRetirementBaseline.annualExpense = currentExpense;
+      }
+      const baseline = originalRetirementBaseline || {
+        currentAge: baseParams.startAge,
+        bal401k: baseParams.bal401kInit,
+        balIRA: baseParams.balIRAInit,
+        balRoth: baseParams.balRothInit,
+        balBrokerage: baseParams.balBrokerageInit,
+        annualExpense: currentExpense
+      };
+      const currentAge = baseline.currentAge;
+      const activeStrat = activeStrategy || 'smart';
+
+      const targetLabels = {
+        0: 'Die with Zero ($0 at 90)',
+        1000000: 'Die with Million ($1M at 90)',
+        10000000: 'Die with 10 Million ($10M at 90)'
+      };
+      const targetLabel = targetLabels[targetBalance] || `Target ${formatCurrency(targetBalance)}`;
+
+      let optimalAge = null;
+      let optimalFinalBal = 0;
+      let optimalGrownAssets = null;
+
+      for (let a = 40; a <= 90; a++) {
+        let testP;
+        if (a <= currentAge) {
+          testP = {
+            ...baseParams,
+            startAge: a,
+            bal401kInit: baseline.bal401k,
+            balIRAInit: baseline.balIRA,
+            balRothInit: baseline.balRoth,
+            balBrokerageInit: baseline.balBrokerage,
+            initialExpense: currentExpense
+          };
+        } else {
+          const yrs = a - currentAge;
+          const gFactor = Math.pow(1 + (baseParams.rateReturn || 6) / 100, yrs);
+          const iFactor = Math.pow(1 + (baseParams.rateInflation || 2.5) / 100, yrs);
+          testP = {
+            ...baseParams,
+            startAge: a,
+            bal401kInit: baseline.bal401k * gFactor,
+            balIRAInit: baseline.balIRA * gFactor,
+            balRothInit: baseline.balRoth * gFactor,
+            balBrokerageInit: baseline.balBrokerage * gFactor,
+            initialExpense: currentExpense * iFactor
+          };
+        }
+
+        const res = simulateRetirement(activeStrat, testP);
+        if (res.depletedAge === null && res.finalBalance >= targetBalance) {
+          optimalAge = a;
+          optimalFinalBal = res.finalBalance;
+          if (a > currentAge) {
+            const yrs = a - currentAge;
+            const gFactor = Math.pow(1 + (baseParams.rateReturn || 6) / 100, yrs);
+            const iFactor = Math.pow(1 + (baseParams.rateInflation || 2.5) / 100, yrs);
+            optimalGrownAssets = {
+              bal401k: Math.round(baseline.bal401k * gFactor),
+              balIRA: Math.round(baseline.balIRA * gFactor),
+              balRoth: Math.round(baseline.balRoth * gFactor),
+              balBrokerage: Math.round(baseline.balBrokerage * gFactor),
+              total: Math.round((baseline.bal401k + baseline.balIRA + baseline.balRoth + baseline.balBrokerage) * gFactor),
+              inflatedExpense: Math.round(currentExpense * iFactor)
+            };
+          }
+          break;
+        }
+      }
+
+      if (optimalAge !== null) {
+        resultBox.className = 'retire-result-box';
+        let html = `<div><strong>🎯 ${targetLabel}: Optimal Age ${optimalAge}</strong></div>`;
+        html += `<div style="margin-top: 0.25rem;">Projected balance at Age 90: <strong style="color:#15803d;">${formatCurrency(optimalFinalBal)}</strong></div>`;
+        if (optimalGrownAssets) {
+          html += `<div style="margin-top: 0.25rem; font-size: 0.78rem; opacity: 0.9;">Working until Age ${optimalAge} allows assets to compound to <strong>${formatCurrency(optimalGrownAssets.total)}</strong> at retirement with annual living expense adjusted for inflation to <strong>${formatCurrency(optimalGrownAssets.inflatedExpense)}</strong>.</div>`;
+        } else if (optimalAge < currentAge) {
+          html += `<div style="margin-top: 0.25rem; font-size: 0.78rem; opacity: 0.9;">With your current assets, retiring as early as Age ${optimalAge} fulfills this target.</div>`;
+        } else {
+          html += `<div style="margin-top: 0.25rem; font-size: 0.78rem; opacity: 0.9;">Retiring at current Age ${optimalAge} fulfills this target.</div>`;
+        }
+        html += `<div style="margin-top: 0.40rem;"><button type="button" class="btn-apply-age" onclick="resetRetirementBaseline()">↺ Reset to Original</button></div>`;
+        resultBox.innerHTML = html;
+      } else {
+        resultBox.className = 'retire-result-box warning';
+        let html = `<div><strong>⚠️ Target Not Reachable: ${targetLabel}</strong></div>`;
+        html += `<div style="margin-top: 0.25rem;">Even retiring past Age 85, annual expenses of ${formatCurrency(currentExpense)} prevent reaching ${formatCurrency(targetBalance)} at Age 90. Try reducing expenses or increasing starting assets.</div>`;
+        html += `<div style="margin-top: 0.40rem;"><button type="button" class="btn-apply-age" onclick="resetRetirementBaseline()">↺ Reset to Original</button></div>`;
+        resultBox.innerHTML = html;
+      }
+    }
+
+    // Retain calculateRetirementAge as alias to calculateOptimalRetirement(0)
+    function calculateRetirementAge() {
+      calculateOptimalRetirement(0);
+    }
+
+    function applyRetirementAge(targetAge) {
+      calculateOptimalRetirement(0);
+    }
+
+    /* ==========================================================================
+       RELOCATION TAX SAVINGS ENGINE ("Should I move to ?")
+       ========================================================================== */
+    function initMoveStateDropdown() {
+      const select = document.getElementById('moveStateSelect');
+      if (!select || select.options.length > 0) return;
+
+      const currentStateCode = document.getElementById('stateSelect')?.value || 'MN';
+
+      // 1. Zero Income Tax States
+      const zeroStates = ['FL', 'TX', 'NV', 'TN', 'WA', 'WY', 'SD', 'AK', 'NH'];
+      // 2. Retirement-Exempt States
+      const exemptStates = ['IL', 'IA', 'MS', 'PA'];
+      
+      const zeroGroup = document.createElement('optgroup');
+      zeroGroup.label = '0% No-Tax States (Sunbelt / Tax Havens)';
+      zeroStates.forEach(code => {
+        const s = STATE_TAX_DATA[code];
+        if (s) {
+          const opt = document.createElement('option');
+          opt.value = code;
+          opt.textContent = `${s.name} (${code}) · 0% No Income Tax`;
+          zeroGroup.appendChild(opt);
+        }
+      });
+      select.appendChild(zeroGroup);
+
+      const exemptGroup = document.createElement('optgroup');
+      exemptGroup.label = 'Retirement Distribution Exempt States';
+      exemptStates.forEach(code => {
+        const s = STATE_TAX_DATA[code];
+        if (s) {
+          const opt = document.createElement('option');
+          opt.value = code;
+          opt.textContent = `${s.name} (${code}) · ${s.desc}`;
+          exemptGroup.appendChild(opt);
+        }
+      });
+      select.appendChild(exemptGroup);
+
+      const otherGroup = document.createElement('optgroup');
+      otherGroup.label = 'All Other States';
+      const allCodes = Object.keys(STATE_TAX_DATA).sort((a, b) => {
+        return STATE_TAX_DATA[a].name.localeCompare(STATE_TAX_DATA[b].name);
+      });
+
+      allCodes.forEach(code => {
+        if (!zeroStates.includes(code) && !exemptStates.includes(code)) {
+          const s = STATE_TAX_DATA[code];
+          const opt = document.createElement('option');
+          opt.value = code;
+          opt.textContent = `${s.name} (${code}) · ${s.desc || ''}`;
+          otherGroup.appendChild(opt);
+        }
+      });
+      select.appendChild(otherGroup);
+
+      // Default selection: If currently in FL, select TX; otherwise default to FL
+      select.value = (currentStateCode === 'FL') ? 'TX' : 'FL';
+    }
+
+    function toggleMoveStateComparison() {
+      const box = document.getElementById('moveStateBox');
+      if (!box) return;
+      initMoveStateDropdown();
+      const isHidden = (box.style.display === 'none' || !box.style.display);
+      box.style.display = isHidden ? 'block' : 'none';
+      if (isHidden) {
+        calculateMoveStateSavings();
+      }
+    }
+
+    function calculateMoveStateSavings() {
+      initMoveStateDropdown();
+      const params = getFormValues();
+      const currentStateCode = params.stateCode || 'MN';
+      const select = document.getElementById('moveStateSelect');
+      const targetStateCode = select ? select.value : (currentStateCode === 'FL' ? 'TX' : 'FL');
+      const resultEl = document.getElementById('moveStateResult');
+      if (!resultEl) return;
+
+      const currentState = STATE_TAX_DATA[currentStateCode] || { name: currentStateCode, desc: '' };
+      const targetState = STATE_TAX_DATA[targetStateCode] || { name: targetStateCode, desc: '' };
+
+      const activeStrat = activeStrategy || 'smart';
+
+      // 1. Run simulation for current state
+      const currentRes = simulateRetirement(activeStrat, params);
+      const currentLifetimeTaxes = currentRes.totalLifetimeTaxes;
+      const currentStateTaxesPaid = currentRes.schedule.reduce((acc, r) => acc + (r.stateTax || 0), 0);
+
+      // 2. Run simulation for target state
+      const targetParams = { ...params, stateCode: targetStateCode };
+      const targetRes = simulateRetirement(activeStrat, targetParams);
+      const targetLifetimeTaxes = targetRes.totalLifetimeTaxes;
+      const targetStateTaxesPaid = targetRes.schedule.reduce((acc, r) => acc + (r.stateTax || 0), 0);
+
+      // 3. Savings metrics
+      const taxSavings = currentLifetimeTaxes - targetLifetimeTaxes;
+      const finalBalDiff = targetRes.finalBalance - currentRes.finalBalance;
+
+      if (currentStateCode === targetStateCode) {
+        resultEl.style.background = '#eff6ff';
+        resultEl.style.borderColor = '#bfdbfe';
+        resultEl.style.color = '#1e40af';
+        resultEl.innerHTML = `
+          <div><strong>📍 Current Home State: ${currentState.name}</strong></div>
+          <div style="margin-top: 0.25rem; font-size: 0.78rem;">
+            You currently reside in <strong>${currentState.name}</strong> with <strong>${formatCurrency(currentLifetimeTaxes)}</strong> in lifetime taxes (State: ${formatCurrency(currentStateTaxesPaid)}).
+            Choose a different state above to calculate relocation savings!
+          </div>
+        `;
+        return;
+      }
+
+      if (taxSavings > 0) {
+        resultEl.style.background = '#f0fdf4';
+        resultEl.style.borderColor = '#86efac';
+        resultEl.style.color = '#166534';
+        resultEl.innerHTML = `
+          <div><strong>🌴 Moving to ${targetState.name} saves ${formatCurrency(taxSavings)}!</strong></div>
+          <div style="margin-top: 0.30rem; font-size: 0.78rem; line-height: 1.45;">
+            • <strong>${currentState.name}</strong>: ${formatCurrency(currentLifetimeTaxes)} lifetime taxes (State: ${formatCurrency(currentStateTaxesPaid)})<br/>
+            • <strong>${targetState.name}</strong>: ${formatCurrency(targetLifetimeTaxes)} lifetime taxes (State: ${formatCurrency(targetStateTaxesPaid)})<br/>
+            • <strong>Compound Wealth Gain</strong>: +${formatCurrency(Math.max(0, finalBalDiff))} higher balance at Age 90!
+          </div>
+          <div style="margin-top: 0.45rem;">
+            <button type="button" class="btn-apply-state" onclick="applyMovedState('${targetStateCode}')">
+              Set ${targetState.name} as My State
+            </button>
+          </div>
+        `;
+      } else if (taxSavings < 0) {
+        resultEl.style.background = '#fffbeb';
+        resultEl.style.borderColor = '#fde68a';
+        resultEl.style.color = '#92400e';
+        resultEl.innerHTML = `
+          <div><strong>⚠️ Moving to ${targetState.name} costs +${formatCurrency(Math.abs(taxSavings))} more tax</strong></div>
+          <div style="margin-top: 0.30rem; font-size: 0.78rem; line-height: 1.45;">
+            • <strong>${currentState.name}</strong>: ${formatCurrency(currentLifetimeTaxes)} lifetime taxes (State: ${formatCurrency(currentStateTaxesPaid)})<br/>
+            • <strong>${targetState.name}</strong>: ${formatCurrency(targetLifetimeTaxes)} lifetime taxes (State: ${formatCurrency(targetStateTaxesPaid)})<br/>
+            • <strong>Portfolio Impact</strong>: Final balance at Age 90 is -${formatCurrency(Math.abs(finalBalDiff))} lower.
+          </div>
+          <div style="margin-top: 0.45rem;">
+            <button type="button" class="btn-apply-state" style="background:#d97706;" onclick="applyMovedState('${targetStateCode}')">
+              Set ${targetState.name} as My State anyway
+            </button>
+          </div>
+        `;
+      } else {
+        resultEl.style.background = '#f8fafc';
+        resultEl.style.borderColor = '#cbd5e1';
+        resultEl.style.color = '#475569';
+        resultEl.innerHTML = `
+          <div><strong>Equal Tax Burden: ${targetState.name}</strong></div>
+          <div style="margin-top: 0.30rem; font-size: 0.78rem;">
+            Moving from <strong>${currentState.name}</strong> to <strong>${targetState.name}</strong> yields identical lifetime taxes of <strong>${formatCurrency(currentLifetimeTaxes)}</strong>.
+          </div>
+          <div style="margin-top: 0.45rem;">
+            <button type="button" class="btn-apply-state" onclick="applyMovedState('${targetStateCode}')">
+              Set ${targetState.name} as My State
+            </button>
+          </div>
+        `;
+      }
+    }
+
+    function applyMovedState(stateCode) {
+      const stateSelect = document.getElementById('stateSelect');
+      if (stateSelect) {
+        stateSelect.value = stateCode;
+      }
+      onStateChange();
+      calculateMoveStateSavings();
     }
 
     function renderBarChart(schedule) {
@@ -3483,16 +4572,20 @@
         // -------------------------------------------------------------
         let curBotY = bottomBaseY;
         const wPretax = d.wPretax || 0;
+        const mandatoryRmd = d.mandatoryRmd || 0;
+        const wRmd = Math.min(wPretax, mandatoryRmd);
+        const wPretaxDiscretionary = Math.max(0, wPretax - wRmd);
         const wBrok = d.wBrokerage || 0;
         const wRoth = d.wRoth || 0;
         const taxVal = d.estTax || 0;
 
-        const hPretaxW = (wPretax / maxW) * bottomPlotH;
+        const hPretaxW = (wPretaxDiscretionary / maxW) * bottomPlotH;
+        const hRmd = (wRmd / maxW) * bottomPlotH;
         const hBrokW = (wBrok / maxW) * bottomPlotH;
         const hRothW = (wRoth / maxW) * bottomPlotH;
         const hTax = (taxVal / maxW) * bottomPlotH;
 
-        // Segment 1: Pre-Tax Withdrawal (Sky Blue: #0284c7)
+        // Segment 1: Pre-Tax Withdrawal (Discretionary) (Sky Blue: #0284c7)
         if (hPretaxW > 0.5) {
           const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
           rect.setAttribute('x', x);
@@ -3504,7 +4597,19 @@
           curBotY += hPretaxW;
         }
 
-        // Segment 2: Brokerage Withdrawal (Lavender / Orchid: #c084fc)
+        // Segment 2: Mandatory RMD (Amber / Golden Orange: #f59e0b)
+        if (hRmd > 0.5) {
+          const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+          rect.setAttribute('x', x);
+          rect.setAttribute('y', curBotY);
+          rect.setAttribute('width', barW);
+          rect.setAttribute('height', hRmd);
+          rect.setAttribute('fill', '#f59e0b');
+          svg.appendChild(rect);
+          curBotY += hRmd;
+        }
+
+        // Segment 3: Brokerage Withdrawal (Lavender / Orchid: #c084fc)
         if (hBrokW > 0.5) {
           const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
           rect.setAttribute('x', x);
@@ -3516,7 +4621,7 @@
           curBotY += hBrokW;
         }
 
-        // Segment 3: Roth IRA Withdrawal (Mint Green: #10b981)
+        // Segment 4: Roth IRA Withdrawal (Mint Green: #10b981)
         if (hRothW > 0.5) {
           const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
           rect.setAttribute('x', x);
@@ -3528,7 +4633,7 @@
           curBotY += hRothW;
         }
 
-        // Segment 4: Taxes (Coral Red: #ef4444)
+        // Segment 5: Taxes (Coral Red: #ef4444)
         if (hTax > 0.5) {
           const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
           rect.setAttribute('x', x);
@@ -3602,7 +4707,8 @@
                 Annual Outflows: ${formatCurrency(d.totalGrossW + d.annualSS)}
               </div>
               ${d.annualSS > 0 ? `<div style="color:#15803d; font-weight:600; font-size:0.92rem;">• Social Security: ${formatCurrency(d.annualSS)} <span style="font-size:0.84rem;color:#64748b;">(${formatCurrency(d.taxableSS)} taxable)</span></div>` : ''}
-              <div style="color:#0284c7; font-size:0.92rem;">• Pre-Tax W/D: ${formatCurrency(d.wPretax)}</div>
+              ${wRmd > 0 ? `<div style="color:#d97706; font-weight:700; font-size:0.92rem;">• Mandatory RMD: ${formatCurrency(wRmd)}${d.rmdTax > 0 ? ` <span style="font-size:0.84rem;color:#b91c1c;">(${formatCurrency(d.rmdTax)} tax)</span>` : ''}</div>` : ''}
+              ${wPretaxDiscretionary > 0 ? `<div style="color:#0284c7; font-size:0.92rem;">• Pre-Tax W/D${wRmd > 0 ? ' (Discretionary)' : ''}: ${formatCurrency(wPretaxDiscretionary)}</div>` : (wRmd === 0 && d.wPretax > 0 ? `<div style="color:#0284c7; font-size:0.92rem;">• Pre-Tax W/D: ${formatCurrency(d.wPretax)}</div>` : '')}
               <div style="color:#c084fc; font-size:0.92rem;">• Brokerage W/D: ${formatCurrency(d.wBrokerage)}${d.capitalGain > 0 ? ` <span style="font-size:0.84rem;color:#7e22ce;">(${formatCurrency(d.capitalGain)} gain)</span>` : ''}</div>
               <div style="color:#10b981; font-size:0.92rem;">• Roth IRA W/D: ${formatCurrency(d.wRoth)}</div>
               <div style="color:#ef4444; font-size:0.92rem; margin-top:2px;">
