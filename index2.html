@@ -125,33 +125,116 @@
       margin-top: 0.25rem;
     }
 
-    .header-badges {
+    /* What-If Scenario Quick Slider Card at Top of All Tabs */
+    .what-if-card {
+      background: #f8fafc;
+      border: 1px solid #bfdbfe;
+      border-radius: 12px;
+      padding: 0.75rem 1rem;
+      margin-bottom: 1.15rem;
+      box-shadow: 0 1px 3px rgba(37, 99, 235, 0.05);
+    }
+    .what-if-header {
       display: flex;
-      gap: 0.45rem;
-      flex-wrap: wrap;
-    }
-
-    .badge {
-      display: inline-flex;
+      justify-content: space-between;
       align-items: center;
-      padding: 0.28rem 0.75rem;
-      border-radius: 9999px;
-      font-size: 0.78rem;
+      margin-bottom: 0.65rem;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+    }
+    .what-if-title {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: #1e3a8a;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .what-if-subtitle {
+      font-size: 0.74rem;
+      color: #64748b;
+      font-weight: 500;
+    }
+    .what-if-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.85rem;
+    }
+    @media (max-width: 768px) {
+      .what-if-grid {
+        grid-template-columns: 1fr;
+        gap: 0.65rem;
+      }
+    }
+    .what-if-item {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 0.60rem 0.75rem;
+      display: flex;
+      flex-direction: column;
+    }
+    .what-if-item-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.25rem;
+    }
+    .what-if-label {
+      font-size: 0.80rem;
       font-weight: 600;
-      border: 1px solid #cbd5e1;
-      background: #f1f5f9;
       color: #334155;
-      white-space: nowrap;
     }
-    .badge-blue {
+    .what-if-val {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: #2563eb;
       background: #eff6ff;
-      border-color: #bfdbfe;
-      color: #1d4ed8;
+      padding: 0.12rem 0.45rem;
+      border-radius: 4px;
+      border: 1px solid #dbeafe;
     }
-    .badge-green {
-      background: #f0fdf4;
-      border-color: #bbf7d0;
-      color: #15803d;
+    .what-if-slider {
+      width: 100%;
+      height: 6px;
+      border-radius: 3px;
+      outline: none;
+      -webkit-appearance: none;
+      appearance: none;
+      background: #e2e8f0;
+      cursor: pointer;
+      margin: 0.45rem 0 0.25rem 0;
+    }
+    .what-if-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #2563eb;
+      cursor: pointer;
+      border: 2px solid #ffffff;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.28);
+      transition: transform 0.1s ease;
+    }
+    .what-if-slider::-webkit-slider-thumb:hover {
+      transform: scale(1.15);
+    }
+    .what-if-slider::-moz-range-thumb {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #2563eb;
+      cursor: pointer;
+      border: 2px solid #ffffff;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.28);
+    }
+    .what-if-range-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.68rem;
+      color: #94a3b8;
+      margin-top: 2px;
     }
 
     /* Mobile Quick Navigation Switcher */
@@ -292,6 +375,201 @@
       font-size: 0.98rem;
       font-weight: 700;
       border-radius: 8px;
+    }
+
+    /* ==========================================================================
+       MOBILE RESULTS CAROUSEL (One Card at a Time with Swipe Gesture)
+       ========================================================================== */
+    .mobile-carousel-nav {
+      display: none;
+    }
+    .mobile-carousel-hint {
+      display: none;
+    }
+
+    @media (max-width: 1023px) {
+      .mobile-carousel-nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background: #ffffff;
+        border: 1.5px solid #cbd5e1;
+        border-radius: 12px;
+        padding: 0.55rem 0.85rem;
+        margin-bottom: 0.75rem;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+        position: sticky;
+        top: 0.25rem;
+        z-index: 25;
+      }
+      .carousel-nav-arrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.25rem;
+        background: #f8fafc;
+        color: #1e293b;
+        border: 1px solid #cbd5e1;
+        border-radius: 8px;
+        padding: 0.4rem 0.65rem;
+        font-size: 0.86rem;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.15s ease;
+        touch-action: manipulation;
+        user-select: none;
+      }
+      .carousel-nav-arrow:hover:not(:disabled) {
+        background: #e2e8f0;
+        color: #0f172a;
+      }
+      .carousel-nav-arrow:disabled {
+        opacity: 0.35;
+        cursor: not-allowed;
+      }
+      .carousel-nav-center {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 0.2rem;
+        min-width: 0;
+      }
+      .carousel-step-title {
+        font-size: 0.96rem;
+        font-weight: 800;
+        color: #0f172a;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 190px;
+      }
+      .carousel-dots-row {
+        display: flex;
+        align-items: center;
+        gap: 0.45rem;
+      }
+      .carousel-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #cbd5e1;
+        border: none;
+        padding: 0;
+        cursor: pointer;
+        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        touch-action: manipulation;
+      }
+      .carousel-dot.active {
+        background: #2563eb;
+        width: 22px;
+        border-radius: 4px;
+      }
+      .carousel-counter {
+        font-size: 0.78rem;
+        color: #64748b;
+        font-weight: 600;
+      }
+
+      .mobile-carousel-hint {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 0.35rem;
+        font-size: 0.82rem;
+        color: #64748b;
+        font-weight: 500;
+        margin-top: 0.6rem;
+        margin-bottom: 1.15rem;
+        user-select: none;
+      }
+
+      /* Swipeable results carousel track */
+      .results-carousel-track {
+        display: flex !important;
+        flex-direction: row !important;
+        flex-wrap: nowrap !important;
+        overflow-x: auto !important;
+        overflow-y: hidden !important;
+        scroll-snap-type: x mandatory !important;
+        -webkit-overflow-scrolling: touch !important;
+        scroll-behavior: smooth !important;
+        gap: 0 !important;
+        margin-left: -0.5rem !important;
+        margin-right: -0.5rem !important;
+        padding: 0 0.5rem !important;
+        scrollbar-width: none !important;
+        width: calc(100% + 1rem) !important;
+        box-sizing: border-box !important;
+      }
+      .results-carousel-track::-webkit-scrollbar {
+        display: none !important;
+      }
+
+      /* KPI grid dissolves as contents so its 3 children become direct carousel slides */
+      .kpi-grid {
+        display: contents !important;
+      }
+
+      .carousel-slide {
+        min-width: 100% !important;
+        max-width: 100% !important;
+        width: 100% !important;
+        flex: 0 0 100% !important;
+        scroll-snap-align: start !important;
+        scroll-snap-stop: always !important;
+        box-sizing: border-box !important;
+        padding: 0 0.25rem !important;
+      }
+
+      .carousel-slide .kpi-card {
+        margin: 0 !important;
+        min-height: 240px;
+        box-sizing: border-box !important;
+      }
+
+      .carousel-slide .charts-container {
+        margin: 0 !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+      }
+
+      .carousel-slide .table-card {
+        margin: 0 !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .mobile-carousel-nav,
+      .mobile-carousel-hint {
+        display: none !important;
+      }
+      .results-carousel-track {
+        display: block !important;
+      }
+      .carousel-slide {
+        display: block !important;
+      }
+      .kpi-grid {
+        display: grid !important;
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        gap: 1rem !important;
+        margin-bottom: 1.5rem !important;
+      }
+      .kpi-grid .carousel-slide {
+        display: flex !important;
+        flex-direction: column !important;
+        height: 100% !important;
+      }
+      .kpi-grid .carousel-slide .kpi-card {
+        flex: 1 1 auto !important;
+        height: 100% !important;
+      }
+      #slideTable {
+        display: block !important;
+        margin-bottom: 1.5rem !important;
+      }
     }
 
     /* Cards */
@@ -715,7 +993,7 @@
     }
     @media (min-width: 768px) {
       .kpi-grid {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
+        grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 1rem;
         margin-bottom: 1.5rem;
       }
@@ -769,6 +1047,115 @@
     .kpi-danger {
       color: #dc2626;
     }
+
+    /* Balance Growth Line Chart inside Final Balance Card */
+    .balance-growth-card {
+      margin-top: 0.65rem;
+      margin-bottom: 0.55rem;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 0.55rem 0.65rem 0.45rem 0.65rem;
+      position: relative;
+    }
+    .balance-growth-header {
+      margin-bottom: 0.35rem;
+    }
+    .balance-growth-title-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.25rem;
+    }
+    .balance-growth-title {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: #334155;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+    .balance-growth-peak {
+      font-size: 0.76rem;
+      font-weight: 700;
+      color: #1e40af;
+      background: #dbeafe;
+      padding: 0.12rem 0.45rem;
+      border-radius: 9999px;
+      white-space: nowrap;
+    }
+    .balance-growth-legend {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-top: 0.2rem;
+      font-size: 0.74rem;
+      font-weight: 600;
+      color: #475569;
+    }
+    .bg-legend-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+    .bg-legend-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      display: inline-block;
+      flex-shrink: 0;
+    }
+    .balance-growth-canvas-wrap {
+      position: relative;
+      width: 100%;
+      height: 85px;
+      cursor: crosshair;
+      touch-action: pan-y;
+      user-select: none;
+    }
+    .balance-growth-svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+      overflow: visible;
+    }
+    .balance-growth-tooltip {
+      position: absolute;
+      top: 0px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(15, 23, 42, 0.95);
+      color: #ffffff;
+      padding: 0.3rem 0.55rem;
+      border-radius: 6px;
+      font-size: 0.74rem;
+      line-height: 1.35;
+      pointer-events: none;
+      z-index: 20;
+      white-space: nowrap;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    .balance-growth-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 0.25rem;
+      font-size: 0.74rem;
+      font-weight: 600;
+      color: #64748b;
+    }
+    .bg-retire-badge {
+      color: #b45309;
+      background: #fef3c7;
+      border: 1px solid #fde68a;
+      padding: 0.08rem 0.35rem;
+      border-radius: 4px;
+      font-size: 0.72rem;
+      font-weight: 700;
+    }
+
     /* Retirement Target Section ("When can I Retire?") */
     .retire-target-section {
       margin-top: 0.75rem;
@@ -997,6 +1384,140 @@
     }
     .btn-apply-state:hover {
       background: #0369a1;
+    }
+
+    /* Important Age Milestones & Tax Implications */
+    .milestones-card-wrap {
+      margin-top: 0.85rem;
+      background: #f8fafc;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .btn-milestones-toggle {
+      width: 100%;
+      background: #f1f5f9;
+      border: none;
+      padding: 0.65rem 0.85rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      font-size: 0.84rem;
+      font-weight: 700;
+      color: #1e293b;
+      transition: background 0.15s ease;
+      text-align: left;
+    }
+    .btn-milestones-toggle:hover {
+      background: #e2e8f0;
+    }
+    .milestones-chevron {
+      font-size: 0.72rem;
+      color: #64748b;
+      transition: transform 0.2s ease;
+    }
+    .milestones-chevron.rotated {
+      transform: rotate(180deg);
+    }
+    .milestones-content {
+      padding: 0.75rem 0.85rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+      font-size: 0.82rem;
+      color: #334155;
+    }
+    .milestone-item {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 0.60rem 0.75rem;
+      position: relative;
+      border-left: 4px solid #94a3b8;
+      transition: all 0.2s ease;
+    }
+    .milestone-item.active-user-age {
+      border-left-color: #2563eb;
+      background: #f0f7ff;
+    }
+    .milestone-item.active-retire-age {
+      border-left-color: #16a34a;
+      background: #f0fdf4;
+    }
+    .milestone-item.active-ss-age {
+      border-left-color: #8b5cf6;
+      background: #faf5ff;
+    }
+    .milestone-item.active-rmd-age {
+      border-left-color: #f59e0b;
+      background: #fffbeb;
+    }
+    .milestone-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      margin-bottom: 0.30rem;
+    }
+    .milestone-age-tag {
+      font-size: 0.82rem;
+      font-weight: 800;
+      color: #0f172a;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+    .milestone-pill {
+      font-size: 0.70rem;
+      font-weight: 700;
+      padding: 0.10rem 0.45rem;
+      border-radius: 9999px;
+      background: #f1f5f9;
+      color: #475569;
+    }
+    .milestone-user-badge {
+      font-size: 0.68rem;
+      font-weight: 700;
+      padding: 0.10rem 0.40rem;
+      border-radius: 4px;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.2rem;
+    }
+    .milestone-desc {
+      font-size: 0.78rem;
+      line-height: 1.4;
+      color: #475569;
+      margin-bottom: 0.30rem;
+    }
+    .milestone-tax-impact {
+      font-size: 0.76rem;
+      line-height: 1.35;
+      background: #f8fafc;
+      border: 1px dashed #cbd5e1;
+      border-radius: 6px;
+      padding: 0.35rem 0.50rem;
+      color: #334155;
+    }
+    .milestone-tax-impact strong {
+      color: #0f172a;
+    }
+    .btn-milestones-link {
+      transition: all 0.15s ease;
+    }
+    .btn-milestones-link:hover {
+      background: #f8fafc !important;
+      border-color: #94a3b8 !important;
+      color: #0f172a !important;
+    }
+    @keyframes milestoneFlash {
+      0% { box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.5); }
+      100% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0); }
+    }
+    .milestone-highlight {
+      animation: milestoneFlash 1.5s ease-out;
     }
 
     /* Charts Section: 100% width on mobile and desktop */
@@ -1559,12 +2080,6 @@
           Touch-friendly year-by-year tax-minimizing withdrawal planner.
         </div>
       </div>
-      <div class="header-badges">
-        <span class="badge badge-blue">✓ Immediate Retirement</span>
-        <span class="badge badge-green">✓ Smart Bracket-Filling</span>
-        <span class="badge">SECURE 2.0 RMDs</span>
-        <span class="badge" style="background: #eff6ff; border-color: #bfdbfe; color: #1d4ed8;">Analyzed through Age 90</span>
-      </div>
     </header>
 
     <!-- Mobile Quick View Navigation -->
@@ -1573,13 +2088,9 @@
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
         <span>Inputs</span>
       </button>
-      <button class="mobile-tab-btn" id="btnTabCharts" onclick="switchMobileTab('charts')">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
-        <span>Charts</span>
-      </button>
-      <button class="mobile-tab-btn" id="btnTabTable" onclick="switchMobileTab('table')">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="3" y1="15" x2="21" y2="15"></line><line x1="9" y1="3" x2="9" y2="21"></line></svg>
-        <span>Table</span>
+      <button class="mobile-tab-btn" id="btnTabResults" onclick="switchMobileTab('results')">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10"></path><path d="M12 20V4"></path><path d="M6 20V14"></path></svg>
+        <span>Results</span>
       </button>
     </nav>
 
@@ -1663,6 +2174,28 @@
                     <span>Age 65</span>
                     <span>Age 85</span>
                   </div>
+                </div>
+
+                <div class="retire-target-section" id="btnWhenCanIRetire" style="margin-top: 0.65rem; border-top: 1px dashed #cbd5e1; padding-top: 0.55rem;">
+                  <div class="retire-section-title" style="font-size: 0.76rem; color: #475569; margin-bottom: 0.35rem; display: flex; justify-content: space-between; align-items: center;">
+                    <span>Auto-Calculate Retirement Age</span>
+                    <span style="font-weight: normal; font-size: 0.70rem; color: #64748b; text-transform: none;">Click to solve &amp; set</span>
+                  </div>
+                  <div class="retire-btn-group">
+                    <button type="button" class="btn-retire-target" id="btnDieWithZero" onclick="calculateOptimalRetirement(0)" title="Auto-calculate and set optimal retirement age to die with zero at Age 90">
+                      <span class="target-title">Die with Zero</span>
+                      <span class="target-sub">$0 at 90</span>
+                    </button>
+                    <button type="button" class="btn-retire-target" id="btnDieWithMillion" onclick="calculateOptimalRetirement(1000000)" title="Auto-calculate and set optimal retirement age to die with $1M at Age 90">
+                      <span class="target-title">Die with 1M</span>
+                      <span class="target-sub">$1M at 90</span>
+                    </button>
+                    <button type="button" class="btn-retire-target" id="btnDieWith10Million" onclick="calculateOptimalRetirement(10000000)" title="Auto-calculate and set optimal retirement age to die with $10M at Age 90">
+                      <span class="target-title">Die with 10M</span>
+                      <span class="target-sub">$10M at 90</span>
+                    </button>
+                  </div>
+                  <div id="retireCalcResult" class="retire-result-box" style="display: none;"></div>
                 </div>
               </div>
 
@@ -2114,7 +2647,7 @@
 
           <!-- Mobile Jump Action Button -->
           <div class="mobile-jump-wrap">
-            <button class="btn-action mobile-jump-btn" onclick="switchMobileTab('charts')">
+            <button class="btn-action mobile-jump-btn" onclick="switchMobileTab('results')">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
               View Results & Visualizations (Age 90) →
             </button>
@@ -2130,209 +2663,563 @@
           </button>
         </div>
 
-        <!-- KPI Cards -->
-        <div class="kpi-grid">
-          <div class="kpi-card" id="kpiCardFinalBalance">
-            <div>
-              <div class="kpi-label">Final Balance (End of Simulation · Age 90)</div>
-              <div class="kpi-value" id="kpiFinalBalance">--</div>
-              <div class="kpi-sub" id="kpiStartingBalance">--</div>
-              <div class="kpi-tax-hbar-wrap" id="kpiFinalBalHBarWrap">
-                <div class="kpi-tax-hbar" id="kpiFinalBalHBar"></div>
-                <div class="kpi-tax-hbar-legend" id="kpiFinalBalHBarLegend"></div>
-              </div>
-              <div class="kpi-sub" id="kpiFinalGain" style="margin-top: 0.25rem;">--</div>
-              <div class="kpi-sub" id="kpiFinalTax" style="margin-top: 0.15rem;">--</div>
+        <!-- What-If Scenario Quick Slider Bar (At Top of All Tabs) -->
+        <div class="what-if-card" id="whatIfSection">
+          <div class="what-if-header">
+            <div class="what-if-title">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+              </svg>
+              <span>What-If Scenarios</span>
             </div>
-            <div class="retire-target-section" id="btnWhenCanIRetire">
-              <div class="retire-section-title">When can I Retire?</div>
-              <div class="retire-btn-group">
-                <button type="button" class="btn-retire-target" id="btnDieWithZero" onclick="calculateOptimalRetirement(0)" title="Calculate optimal age to die with zero at Age 90">
-                  <span class="target-title">Die with Zero</span>
-                  <span class="target-sub">$0 at 90</span>
-                </button>
-                <button type="button" class="btn-retire-target" id="btnDieWithMillion" onclick="calculateOptimalRetirement(1000000)" title="Calculate optimal age to die with $1M at Age 90">
-                  <span class="target-title">Die with 1M</span>
-                  <span class="target-sub">$1M at 90</span>
-                </button>
-                <button type="button" class="btn-retire-target" id="btnDieWith10Million" onclick="calculateOptimalRetirement(10000000)" title="Calculate optimal age to die with $10M at Age 90">
-                  <span class="target-title">Die with 10M</span>
-                  <span class="target-sub">$10M at 90</span>
-                </button>
-              </div>
-              <div id="retireCalcResult" class="retire-result-box" style="display: none;"></div>
-            </div>
+            <span class="what-if-subtitle">Adjust assumptions to test scenarios in real time across all tabs</span>
           </div>
 
-          <div class="kpi-card" id="kpiCardLifetimeTaxes">
-            <div>
-              <div class="kpi-label">Lifetime Taxes</div>
-              <div class="kpi-value" id="kpiTaxes">--</div>
-              <div class="kpi-sub" id="kpiTaxRate">--</div>
-              <div class="kpi-tax-hbar-wrap" id="kpiTaxHBarWrap">
-                <div class="kpi-tax-hbar" id="kpiTaxHBar"></div>
-                <div class="kpi-tax-hbar-legend" id="kpiTaxHBarLegend"></div>
+          <div class="what-if-grid">
+            <!-- 1. Investment Growth Rate Slider -->
+            <div class="what-if-item">
+              <div class="what-if-item-header">
+                <span class="what-if-label">Investment Return</span>
+                <span class="what-if-val" id="whatIfReturnVal">6.0%</span>
               </div>
-              <div class="kpi-sub" id="kpiMnTaxComp" style="margin-top: 0.25rem;">--</div>
-              <div class="kpi-sub" id="kpiTaxSplit" style="margin-top: 0.15rem;">--</div>
-            </div>
-            <div class="move-state-section" id="sectionMoveState">
-              <button type="button" class="btn-move-state" id="btnShouldIMove" onclick="toggleMoveStateComparison()">
-                <span>✈️ Should I move to another state?</span>
-              </button>
-              <div id="moveStateBox" class="move-state-box" style="display: none;">
-                <div class="move-state-header">
-                  <label for="moveStateSelect" class="move-state-label">Compare moving to:</label>
-                  <div style="position: relative;">
-                    <select id="moveStateSelect" class="move-state-dropdown" onchange="calculateMoveStateSavings()">
-                      <!-- State options populated dynamically -->
-                    </select>
-                    <div class="dropdown-chevron">▼</div>
-                  </div>
-                </div>
-                <div id="moveStateResult" class="move-state-result"></div>
-              </div>
-            </div>
-          </div>
-
-          <div class="kpi-card">
-            <div class="kpi-label">Tax Savings</div>
-            <div class="kpi-value kpi-success" id="kpiSavings">--</div>
-            <div class="kpi-sub" id="kpiSavingsSub">--</div>
-          </div>
-        </div>
-
-        <!-- Charts Section: Combined Dual-Axis Stacked Bar Chart -->
-        <div class="charts-container" id="sectionCharts">
-          <div class="chart-card">
-            <div class="chart-header">
-              <div>
-                <div class="chart-title">Remaining Balance & Annual Withdrawals</div>
-                <div style="font-size: 1.0rem; color: var(--text-muted); font-weight: 500; margin-top: 2px;">
-                  Top axis: Remaining portfolio balances by bucket · Bottom axis: Annual gross withdrawals & taxes
-                </div>
-              </div>
-
-              <!-- Dual Legend: Top Axis (Balances) and Bottom Axis (Withdrawals) -->
-              <div class="chart-dual-legend">
-                <div class="legend-group">
-                  <span class="legend-group-title" style="color: #1d4ed8;">Balance (Top Axis):</span>
-                  <div class="legend-item">
-                    <div class="legend-color" style="background: #1d4ed8;"></div>
-                    <span>Pre-Tax 401k/IRA</span>
-                  </div>
-                  <div class="legend-item">
-                    <div class="legend-color" style="background: #7e22ce;"></div>
-                    <span>Brokerage</span>
-                  </div>
-                  <div class="legend-item">
-                    <div class="legend-color" style="background: #15803d;"></div>
-                    <span>Roth IRA</span>
-                  </div>
-                </div>
-
-                <div class="legend-group">
-                  <span class="legend-group-title" style="color: #b91c1c;">Withdrawal (Bottom Axis):</span>
-                  <div class="legend-item">
-                    <div class="legend-color" style="background: #0284c7;"></div>
-                    <span>Pre-Tax W/D</span>
-                  </div>
-                  <div class="legend-item">
-                    <div class="legend-color" style="background: #f59e0b;"></div>
-                    <span>Mandatory RMD</span>
-                  </div>
-                  <div class="legend-item">
-                    <div class="legend-color" style="background: #c084fc;"></div>
-                    <span>Brokerage W/D</span>
-                  </div>
-                  <div class="legend-item">
-                    <div class="legend-color" style="background: #10b981;"></div>
-                    <span>Roth W/D</span>
-                  </div>
-                  <div class="legend-item">
-                    <div class="legend-color" style="background: #ef4444;"></div>
-                    <span>Taxes</span>
-                  </div>
-                </div>
+              <input type="range" class="what-if-slider" id="whatIfReturnSlider" min="2.0" max="12.0" step="0.1" value="6.0" oninput="syncWhatIfReturn(this.value)" aria-label="What-if Investment Return" />
+              <div class="what-if-range-labels">
+                <span>2.0%</span>
+                <span>6.0%</span>
+                <span>12.0%</span>
               </div>
             </div>
 
-            <!-- 10-Year Window Paging Banner -->
-            <div class="chart-paging-banner">
-              <span id="barPagingLabel" style="font-weight: 600;">Displaying Years 1–10 (Ages 60–69)</span>
-              <div class="chart-viewmode-toggle">
-                <button type="button" class="chart-viewmode-btn active" id="btnMode10yrBar" onclick="setChartViewMode('10yr')">10 Years</button>
-                <button type="button" class="chart-viewmode-btn" id="btnModeAllBar" onclick="setChartViewMode('all')">All Years</button>
+            <!-- 2. Retirement Age Slider -->
+            <div class="what-if-item">
+              <div class="what-if-item-header">
+                <span class="what-if-label">Retirement Age</span>
+                <span class="what-if-val" id="whatIfRetireAgeVal">Age 50</span>
+              </div>
+              <input type="range" class="what-if-slider" id="whatIfRetireAgeSlider" min="30" max="85" step="1" value="50" oninput="syncWhatIfRetireAge(this.value)" aria-label="What-if Retirement Age" />
+              <div class="what-if-range-labels">
+                <span id="whatIfRetireMinLabel">Age 50</span>
+                <span>Age 65</span>
+                <span>Age 85</span>
               </div>
             </div>
 
-            <div class="chart-stage-container">
-              <!-- Left Arrow Button on side of graph -->
-              <button type="button" class="chart-nav-btn" id="btnPrev10yrBar" onclick="prevChart10Years()" aria-label="Previous 10 Years">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
-                <span class="chart-nav-subtext">PREV</span>
-              </button>
-
-              <div class="chart-viewport">
-                <div class="chart-svg-wrap" id="barChartContainer">
-                  <svg id="barChartSvg" class="chart-svg"></svg>
-                  <div id="barTooltip" class="chart-tooltip"></div>
-                </div>
+            <!-- 3. Annual Roth Conversion Slider -->
+            <div class="what-if-item">
+              <div class="what-if-item-header">
+                <span class="what-if-label">Annual Roth Conversion</span>
+                <span class="what-if-val" id="whatIfRothConvVal">$0/yr</span>
               </div>
-
-              <!-- Right Arrow Button on side of graph -->
-              <button type="button" class="chart-nav-btn" id="btnNext10yrBar" onclick="nextChart10Years()" aria-label="Next 10 Years">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                <span class="chart-nav-subtext">NEXT</span>
-              </button>
-            </div>
-
-            <div class="chart-mobile-hint">
-              <span>💡 Press and hold along any bar for full balance & withdrawal breakdown</span>
-              <span id="barPageCounter" style="font-size:0.96rem; color:#334155; font-weight:700;">Page 1 of 4</span>
-            </div>
-
-            <!-- Preserved hidden area chart container for test harness and fallback DOM compatibility -->
-            <div id="areaChartContainer" style="display: none;" aria-hidden="true">
-              <svg id="areaChartSvg" class="chart-svg"></svg>
-              <div id="areaTooltip" class="chart-tooltip"></div>
+              <input type="range" class="what-if-slider" id="whatIfRothConvSlider" min="0" max="300000" step="5000" value="0" oninput="syncWhatIfRothConv(this.value)" aria-label="What-if Annual Roth Conversion" />
+              <div class="what-if-range-labels">
+                <span>$0</span>
+                <span>$150k</span>
+                <span>$300k</span>
+              </div>
             </div>
           </div>
         </div>
 
-        <!-- Detailed Table -->
-        <div class="table-card" id="sectionTable">
-          <div class="table-actions">
-            <div>
-              <div class="chart-title">Year-by-Year Schedule</div>
-              <div style="font-size: 1.0rem; color: var(--text-muted); font-weight: 500; margin-top: 2px;">Total inflows (withdrawal + Social Security) and where money goes: living expenses, taxes & healthcare</div>
+        <!-- Mobile Results Carousel Navigation Header -->
+        <div class="mobile-carousel-nav" id="mobileCarouselNav" role="navigation" aria-label="Mobile results card navigation">
+          <button type="button" class="carousel-nav-arrow" id="btnCarouselPrev" onclick="stepMobileCard(-1)" aria-label="Previous card">
+            ‹ Prev
+          </button>
+          <div class="carousel-nav-center">
+            <div class="carousel-step-title" id="carouselCardTitle">Net Worth Analysis</div>
+            <div class="carousel-dots-row" id="carouselDotsRow">
+              <button type="button" class="carousel-dot active" onclick="goToMobileCard(0)" aria-label="Card 1: Net Worth Analysis"></button>
+              <button type="button" class="carousel-dot" onclick="goToMobileCard(1)" aria-label="Card 2: Withdrawal and Taxes"></button>
+              <button type="button" class="carousel-dot" onclick="goToMobileCard(2)" aria-label="Card 3: Year-by-Year Schedule"></button>
             </div>
-            <div style="display: flex; gap: 0.5rem;">
-              <button class="btn-action btn-secondary" onclick="exportCSV()">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                  <polyline points="7 10 12 15 17 10"></polyline>
-                  <line x1="12" y1="15" x2="12" y2="3"></line>
-                </svg>
-                CSV Export
-              </button>
+            <div class="carousel-counter" id="carouselCardCounter">1 of 3: Net Worth Analysis</div>
+          </div>
+          <button type="button" class="carousel-nav-arrow" id="btnCarouselNext" onclick="stepMobileCard(1)" aria-label="Next card">
+            Next ›
+          </button>
+        </div>
+
+        <!-- Swipeable Results Track containing the 5 items -->
+        <div class="results-carousel-track" id="resultsCarouselTrack">
+          <!-- KPI Cards Grid (on mobile displays as contents so 3 children are direct sequential slides 0, 1, 2) -->
+          <div class="kpi-grid">
+            <div class="carousel-slide" id="slideFinalBalance">
+              <div class="kpi-card" id="kpiCardFinalBalance">
+                <div>
+                  <div class="kpi-label">Final Balance (End of Simulation · Age 90)</div>
+                  <div class="kpi-value" id="kpiFinalBalance">--</div>
+                  <div class="kpi-tax-hbar-wrap" id="kpiFinalBalHBarWrap">
+                    <div class="kpi-tax-hbar" id="kpiFinalBalHBar"></div>
+                    <div class="kpi-tax-hbar-legend" id="kpiFinalBalHBarLegend"></div>
+                  </div>
+                </div>
+
+                <!-- Balance Growth Area Line Chart (Taxable & Non-Taxable Breakdown) -->
+                <div class="balance-growth-card" id="balanceGrowthSection">
+                  <div class="balance-growth-header">
+                    <div class="balance-growth-title-row">
+                      <span class="balance-growth-title">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4f46e5" stroke-width="2.5"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline><polyline points="16 7 22 7 22 13"></polyline></svg>
+                        Balance Growth Breakdown (Age <span id="bgStartAge">50</span> → 90)
+                      </span>
+                      <span class="balance-growth-peak" id="bgPeakBadge">Peak: $0</span>
+                    </div>
+                    <div class="balance-growth-legend" id="bgGrowthLegend">
+                      <span class="bg-legend-item"><span class="bg-legend-dot" style="background: #4f46e5;"></span>Taxable</span>
+                      <span class="bg-legend-item"><span class="bg-legend-dot" style="background: #10b981;"></span>Non-Taxable (Roth)</span>
+                    </div>
+                  </div>
+                  <div class="balance-growth-canvas-wrap" id="bgCanvasWrap">
+                    <svg id="bgGrowthSvg" class="balance-growth-svg" viewBox="0 0 360 85" preserveAspectRatio="none"></svg>
+                    <div id="bgGrowthTooltip" class="balance-growth-tooltip" style="display: none;"></div>
+                  </div>
+                  <div class="balance-growth-footer">
+                    <span id="bgAxisStart">Age 50: $0</span>
+                    <span id="bgAxisRetire" class="bg-retire-badge" style="display: none;">Retire: Age 60</span>
+                    <span id="bgAxisEnd">Age 90: $0</span>
+                  </div>
+                </div>
+
+                <!-- Retirement Situation Analysis Section -->
+                <div class="retirement-situation-card" id="retirementSituationSection" style="margin-top: 0.85rem; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 0.75rem 0.85rem; box-shadow: 0 1px 3px rgba(0,0,0,0.03);">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.45rem; flex-wrap: wrap; gap: 0.3rem;">
+                    <div style="font-size: 0.82rem; font-weight: 700; color: #1e293b; display: flex; align-items: center; gap: 0.4rem;">
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                        <polyline points="14 2 14 8 20 8"></polyline>
+                        <line x1="16" y1="13" x2="8" y2="13"></line>
+                        <line x1="16" y1="17" x2="8" y2="17"></line>
+                        <polyline points="10 9 9 9 8 9"></polyline>
+                      </svg>
+                      <span>Retirement Situation Analysis</span>
+                    </div>
+                    <span id="situationStatusBadge" style="font-size: 0.72rem; font-weight: 700; padding: 0.15rem 0.50rem; border-radius: 9999px; background: #dcfce7; color: #15803d; border: 1px solid #86efac;">
+                      Analyzing...
+                    </span>
+                  </div>
+                  <div id="situationSummaryText" style="font-size: 0.78rem; color: #334155; line-height: 1.4;">
+                    Calculating simulation analysis...
+                  </div>
+                </div>
+
+                <!-- How Final Balance is Calculated Section -->
+                <div class="milestones-card-wrap" id="finalBalanceCalcSection" style="margin-top: 0.85rem;">
+                  <button type="button" class="btn-milestones-toggle" id="btnToggleFinalBalCalc" onclick="toggleFinalBalanceCalc()" aria-expanded="false">
+                    <span style="display: flex; align-items: center; gap: 0.45rem;">
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#4f46e5" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                        <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                      </svg>
+                      <span>How We Calculate Final Balance</span>
+                    </span>
+                    <span id="finalBalCalcChevron" class="milestones-chevron">▼</span>
+                  </button>
+
+                  <div id="finalBalCalcBox" class="milestones-content" style="display: none;">
+                    <div style="font-size: 0.76rem; color: #64748b; margin-bottom: 0.20rem; line-height: 1.4;">
+                      Your <strong>Final Balance</strong> represents total remaining portfolio net worth at the conclusion of the simulation (Age 90), calculated through five sequential steps:
+                    </div>
+
+                    <!-- Step 1: Starting Accounts -->
+                    <div class="milestone-item" style="border-left: 3px solid #4f46e5;">
+                      <div class="milestone-header">
+                        <div class="milestone-age-tag">
+                          <span style="color:#4f46e5; font-weight:700;">1. Starting Balances &amp; Asset Classification</span>
+                        </div>
+                      </div>
+                      <div class="milestone-desc">
+                        Initial capital starts across 4 accounts categorized by tax treatment: <strong>Traditional 401(k) / IRA</strong> (pre-tax, taxable upon withdrawal), <strong>Taxable Brokerage</strong> (taxed on capital gains), and <strong>Roth IRA</strong> (100% tax-free).
+                      </div>
+                    </div>
+
+                    <!-- Step 2: Accumulation Phase -->
+                    <div class="milestone-item" style="border-left: 3px solid #0284c7;">
+                      <div class="milestone-header">
+                        <div class="milestone-age-tag">
+                          <span style="color:#0284c7; font-weight:700;">2. Accumulation Phase (Current Age → Retirement Age)</span>
+                        </div>
+                      </div>
+                      <div class="milestone-desc">
+                        While working, living expenses are funded by active employment earnings ($0 portfolio withdrawals). All balances compound annually at your expected return (default 6.0%/yr):
+                        <div style="font-family: monospace; font-size: 0.74rem; background: #f8fafc; padding: 3px 6px; border-radius: 4px; margin-top: 3px; color: #334155;">Balance(t+1) = Balance(t) × (1 + Annual Return)</div>
+                      </div>
+                    </div>
+
+                    <!-- Step 3: Decumulation & Net Withdrawal Need -->
+                    <div class="milestone-item" style="border-left: 3px solid #f59e0b;">
+                      <div class="milestone-header">
+                        <div class="milestone-age-tag">
+                          <span style="color:#f59e0b; font-weight:700;">3. Decumulation Phase &amp; Inflation Indexing</span>
+                        </div>
+                      </div>
+                      <div class="milestone-desc">
+                        Beginning at Retirement Age, living expenses increase annually with inflation (default 2.5%/yr). Portfolio withdrawal requirements are reduced by net Social Security benefits once claimed:
+                        <div style="font-family: monospace; font-size: 0.74rem; background: #f8fafc; padding: 3px 6px; border-radius: 4px; margin-top: 3px; color: #334155;">Annual Withdrawal = Inflated Living Expense − Net Social Security</div>
+                      </div>
+                    </div>
+
+                    <!-- Step 4: Tax-Efficient Sequencing & RMDs -->
+                    <div class="milestone-item" style="border-left: 3px solid #10b981;">
+                      <div class="milestone-header">
+                        <div class="milestone-age-tag">
+                          <span style="color:#10b981; font-weight:700;">4. Drawdown Sequencing, RMDs &amp; Annual Taxes</span>
+                        </div>
+                      </div>
+                      <div class="milestone-desc">
+                        Withdrawals are sequenced by strategy (filling lower tax brackets with Pre-tax/Brokerage, preserving Roth). Statutory RMDs (starting Age 73 or 75 under SECURE 2.0) are enforced. Federal, state, and Medicare IRMAA taxes are deducted, and remaining balances compound each year:
+                        <div style="font-family: monospace; font-size: 0.74rem; background: #f8fafc; padding: 3px 6px; border-radius: 4px; margin-top: 3px; color: #334155;">Remaining Balance(t+1) = (Balance(t) − Withdrawals(t)) × (1 + Annual Return)</div>
+                      </div>
+                    </div>
+
+                    <!-- Step 5: Ending Balance at Age 90 -->
+                    <div class="milestone-item" style="border-left: 3px solid #8b5cf6;">
+                      <div class="milestone-header">
+                        <div class="milestone-age-tag">
+                          <span style="color:#8b5cf6; font-weight:700;">5. Final Balance at Age 90 (Taxable vs. Non-Taxable)</span>
+                        </div>
+                      </div>
+                      <div class="milestone-desc">
+                        At Age 90, ending balances across all accounts are summed:
+                        <div style="font-family: monospace; font-size: 0.74rem; background: #f8fafc; padding: 3px 6px; border-radius: 4px; margin-top: 3px; color: #334155;">Final Balance = Pre-Tax (401k/IRA) + Brokerage + Roth IRA</div>
+                        The horizontal bar breaks down the final total into <strong>Taxable</strong> (Pre-Tax &amp; Brokerage) vs. <strong>Non-Taxable</strong> (100% Tax-Free Roth).
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
+
+            <div class="carousel-slide" id="slideLifetimeTaxes">
+              <div class="kpi-card" id="kpiCardLifetimeTaxes">
+                <div>
+                  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; width: 100%;">
+                    <!-- Left Column: Paid Taxes -->
+                    <div>
+                      <div class="kpi-label">Paid Taxes</div>
+                      <div class="kpi-value" id="kpiTaxes">--</div>
+                      <div class="kpi-sub" id="kpiTaxRate">--</div>
+                      <div class="kpi-tax-hbar-wrap" id="kpiTaxHBarWrap" style="margin-top: 0.50rem;">
+                        <div class="kpi-tax-hbar" id="kpiTaxHBar"></div>
+                        <div class="kpi-tax-hbar-legend" id="kpiTaxHBarLegend"></div>
+                      </div>
+                    </div>
+
+                    <!-- Right Column: Estimated Taxes on Unrealized Gain -->
+                    <div style="text-align: right;">
+                      <div class="kpi-label" style="text-align: right;">Est. Tax on Unrealized Gain</div>
+                      <div class="kpi-value" id="kpiUnrealizedTax" style="color: #7c3aed; text-align: right;">$0</div>
+                      <div class="kpi-sub" id="kpiUnrealizedTaxSub" style="text-align: right;">--</div>
+                      <div class="kpi-tax-hbar-wrap" id="kpiUnrealizedTaxHBarWrap" style="margin-top: 0.50rem; margin-left: auto;">
+                        <div class="kpi-tax-hbar" id="kpiUnrealizedTaxHBar"></div>
+                        <div class="kpi-tax-hbar-legend" id="kpiUnrealizedTaxHBarLegend" style="justify-content: flex-end;"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Annual Withdrawals by Source Stacked Bar Chart -->
+                <div class="balance-growth-card" id="withdrawalsOverTimeSection">
+                  <div class="balance-growth-header">
+                    <div class="balance-growth-title-row">
+                      <span class="balance-growth-title">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0284c7" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+                          <rect x="2" y="6" width="20" height="12" rx="2"></rect>
+                          <circle cx="12" cy="12" r="2"></circle>
+                          <path d="M6 12h.01M18 12h.01"></path>
+                        </svg>
+                        Annual Withdrawals by Source (Age <span id="wotStartAge">50</span> → 90)
+                      </span>
+                      <span class="balance-growth-peak" id="wotPeakBadge" style="background:#e0f2fe; color:#0369a1;">Peak: $0/yr</span>
+                    </div>
+                    <div class="balance-growth-legend" id="wotGrowthLegend" style="flex-wrap: wrap; gap: 0.35rem 0.65rem;">
+                      <span class="bg-legend-item"><span class="bg-legend-dot" style="background: #0284c7;"></span>Pre-Tax</span>
+                      <span class="bg-legend-item"><span class="bg-legend-dot" style="background: #f59e0b;"></span>Mandatory RMD</span>
+                      <span class="bg-legend-item"><span class="bg-legend-dot" style="background: #a855f7;"></span>Brokerage</span>
+                      <span class="bg-legend-item"><span class="bg-legend-dot" style="background: #10b981;"></span>Roth IRA</span>
+                    </div>
+                  </div>
+                  <div class="balance-growth-canvas-wrap" id="wotCanvasWrap">
+                    <svg id="wotGrowthSvg" class="balance-growth-svg" viewBox="0 0 360 85" preserveAspectRatio="none"></svg>
+                    <div id="wotGrowthTooltip" class="balance-growth-tooltip" style="display: none;"></div>
+                  </div>
+                  <div class="balance-growth-footer">
+                    <span id="wotAxisStart">Age 50: $0/yr</span>
+                    <span id="wotAxisRetire" class="bg-retire-badge" style="display: none;">Retire: Age 60</span>
+                    <span id="wotAxisTotal">Lifetime: $0</span>
+                  </div>
+                </div>
+
+                <!-- Taxes Over Time Area Line Chart (RMD, Cap Gains, Social Security, Ordinary Incomes Breakdown) -->
+                <div class="balance-growth-card" id="taxesOverTimeSection">
+                  <div class="balance-growth-header">
+                    <div class="balance-growth-title-row">
+                      <span class="balance-growth-title">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2.5"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline><polyline points="16 7 22 7 22 13"></polyline></svg>
+                        Taxes Paid Over Time (Age <span id="totStartAge">50</span> → 90)
+                      </span>
+                      <span class="balance-growth-peak" id="totPeakBadge" style="background:#fee2e2; color:#991b1b;">Peak: $0/yr</span>
+                    </div>
+                    <div class="balance-growth-legend" id="totGrowthLegend" style="flex-wrap: wrap; gap: 0.35rem 0.65rem;">
+                      <span class="bg-legend-item"><span class="bg-legend-dot" style="background: #f59e0b;"></span>RMD</span>
+                      <span class="bg-legend-item"><span class="bg-legend-dot" style="background: #8b5cf6;"></span>Capital Gains</span>
+                      <span class="bg-legend-item"><span class="bg-legend-dot" style="background: #10b981;"></span>Social Security</span>
+                      <span class="bg-legend-item"><span class="bg-legend-dot" style="background: #2563eb;"></span>Ordinary Incomes</span>
+                    </div>
+                  </div>
+                  <div class="balance-growth-canvas-wrap" id="totCanvasWrap">
+                    <svg id="totGrowthSvg" class="balance-growth-svg" viewBox="0 0 360 85" preserveAspectRatio="none"></svg>
+                    <div id="totGrowthTooltip" class="balance-growth-tooltip" style="display: none;"></div>
+                  </div>
+                  <div class="balance-growth-footer">
+                    <span id="totAxisStart">Age 50: $0/yr</span>
+                    <span id="totAxisRetire" class="bg-retire-badge" style="display: none;">Retire: Age 60</span>
+                    <span id="totAxisTotal">Lifetime: $0</span>
+                  </div>
+                </div>
+
+                <!-- Retirement Tax Situation Analysis Section -->
+                <div class="retirement-situation-card" id="taxSituationSection" style="margin-top: 0.85rem; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 0.75rem 0.85rem; box-shadow: 0 1px 3px rgba(0,0,0,0.03);">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.45rem; flex-wrap: wrap; gap: 0.3rem;">
+                    <div style="font-size: 0.82rem; font-weight: 700; color: #1e293b; display: flex; align-items: center; gap: 0.4rem;">
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                        <polyline points="14 2 14 8 20 8"></polyline>
+                        <line x1="16" y1="13" x2="8" y2="13"></line>
+                        <line x1="16" y1="17" x2="8" y2="17"></line>
+                        <polyline points="10 9 9 9 8 9"></polyline>
+                      </svg>
+                      <span>Retirement Tax Situation Analysis</span>
+                    </div>
+                    <span id="taxSituationStatusBadge" style="font-size: 0.72rem; font-weight: 700; padding: 0.15rem 0.50rem; border-radius: 9999px; background: #dcfce7; color: #15803d; border: 1px solid #86efac;">
+                      Analyzing...
+                    </span>
+                  </div>
+                  <div id="taxSituationSummaryText" style="font-size: 0.78rem; color: #334155; line-height: 1.4;">
+                    Calculating tax analysis...
+                  </div>
+                </div>
+
+                <div class="move-state-section" id="sectionMoveState">
+                  <button type="button" class="btn-move-state" id="btnShouldIMove" onclick="toggleMoveStateComparison()">
+                    <span>✈️ Should I move to another state?</span>
+                  </button>
+                  <div id="moveStateBox" class="move-state-box" style="display: none;">
+                    <div class="move-state-header">
+                      <label for="moveStateSelect" class="move-state-label">Compare moving to:</label>
+                      <div style="position: relative;">
+                        <select id="moveStateSelect" class="move-state-dropdown" onchange="calculateMoveStateSavings()">
+                          <!-- State options populated dynamically -->
+                        </select>
+                        <div class="dropdown-chevron">▼</div>
+                      </div>
+                    </div>
+                    <div id="moveStateResult" class="move-state-result"></div>
+                  </div>
+                  <!-- Important Age Milestones & Tax Implications Section -->
+                  <div class="milestones-card-wrap" id="milestonesSection">
+                    <button type="button" class="btn-milestones-toggle" id="btnToggleMilestones" onclick="toggleAgeMilestones()" aria-expanded="false">
+                      <span style="display: flex; align-items: center; gap: 0.45rem;">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+                          <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                          <line x1="16" y1="2" x2="16" y2="6"></line>
+                          <line x1="8" y1="2" x2="8" y2="6"></line>
+                          <line x1="3" y1="10" x2="21" y2="10"></line>
+                        </svg>
+                        <span>Important Age Milestones & Tax Implications</span>
+                      </span>
+                      <span id="milestoneToggleChevron" class="milestones-chevron">▼</span>
+                    </button>
+
+                    <div id="milestonesBox" class="milestones-content" style="display: none;">
+                      <div style="font-size: 0.74rem; color: #64748b; margin-bottom: 0.10rem; line-height: 1.35;">
+                        Key statutory milestones governing retirement penalties, Social Security haircuts, Medicare IRMAA lookback, and mandatory RMDs:
+                      </div>
+
+                      <!-- Age 50 -->
+                      <div class="milestone-item" id="msItem50">
+                        <div class="milestone-header">
+                          <div class="milestone-age-tag">
+                            <span style="color:#2563eb;">Age 50</span>
+                            <span class="milestone-pill" style="background:#dbeafe; color:#1e40af;">Catch-Up Contributions</span>
+                          </div>
+                          <span class="milestone-user-badge" id="msBadge50" style="display: none;"></span>
+                        </div>
+                        <div class="milestone-desc">
+                          Catch-up limits unlock: extra $1,000/yr for IRAs and $7,500+/yr for 401(k)/403(b) plans (higher for ages 60–63 under SECURE 2.0).
+                        </div>
+                        <div class="milestone-tax-impact">
+                          <strong>Tax Implication:</strong> Pre-tax contributions directly lower your current top marginal income tax bracket during peak earning years.
+                        </div>
+                      </div>
+
+                      <!-- Age 55 -->
+                      <div class="milestone-item" id="msItem55">
+                        <div class="milestone-header">
+                          <div class="milestone-age-tag">
+                            <span style="color:#0284c7;">Age 55</span>
+                            <span class="milestone-pill" style="background:#e0f2fe; color:#0369a1;">IRS "Rule of 55"</span>
+                          </div>
+                          <span class="milestone-user-badge" id="msBadge55" style="display: none;"></span>
+                        </div>
+                        <div class="milestone-desc">
+                          If you separate from your employer during or after the calendar year you reach Age 55, you can take penalty-free distributions from that employer's 401(k)/403(b).
+                        </div>
+                        <div class="milestone-tax-impact">
+                          <strong>Tax Implication:</strong> Distributions are taxed as ordinary income at normal brackets, but exempt from the 10% early withdrawal penalty (IRC § 72(t)(2)(A)(v)). Does <em>not</em> apply to IRAs.
+                        </div>
+                      </div>
+
+                      <!-- Age 59½ -->
+                      <div class="milestone-item" id="msItem59">
+                        <div class="milestone-header">
+                          <div class="milestone-age-tag">
+                            <span style="color:#16a34a;">Age 59½</span>
+                            <span class="milestone-pill" style="background:#dcfce7; color:#15803d;">10% Penalty Relief</span>
+                          </div>
+                          <span class="milestone-user-badge" id="msBadge59" style="display: none;"></span>
+                        </div>
+                        <div class="milestone-desc">
+                          Universal penalty relief threshold: the IRS 10% early withdrawal penalty fully ends across all Traditional IRAs, 401(k)s, 403(b)s, and Roth earnings.
+                        </div>
+                        <div class="milestone-tax-impact">
+                          <strong>Tax Implication:</strong> Pre-tax withdrawals taxed as regular ordinary income with zero penalties. Roth distributions are 100% tax-free (assuming the 5-year holding rule is met).
+                        </div>
+                      </div>
+
+                      <!-- Age 62 -->
+                      <div class="milestone-item" id="msItem62">
+                        <div class="milestone-header">
+                          <div class="milestone-age-tag">
+                            <span style="color:#d97706;">Age 62</span>
+                            <span class="milestone-pill" style="background:#fef3c7; color:#b45309;">Earliest Social Security</span>
+                          </div>
+                          <span class="milestone-user-badge" id="msBadge62" style="display: none;"></span>
+                        </div>
+                        <div class="milestone-desc">
+                          Earliest age to claim Social Security retirement benefits, with a permanent benefit reduction of up to 30% compared to Full Retirement Age (FRA).
+                        </div>
+                        <div class="milestone-tax-impact">
+                          <strong>Tax Implication:</strong> Triggers IRS § 86 "Tax Torpedo" sooner (up to 85% of Social Security becomes taxable if provisional income exceeds $32k MFJ / $25k Single). Also subject to annual earnings test withholding if working.
+                        </div>
+                      </div>
+
+                      <!-- Age 65 -->
+                      <div class="milestone-item" id="msItem65">
+                        <div class="milestone-header">
+                          <div class="milestone-age-tag">
+                            <span style="color:#dc2626;">Age 65</span>
+                            <span class="milestone-pill" style="background:#fee2e2; color:#991b1b;">Medicare & IRMAA Lookback</span>
+                          </div>
+                          <span class="milestone-user-badge" id="msBadge65" style="display: none;"></span>
+                        </div>
+                        <div class="milestone-desc">
+                          Initial Enrollment Period for Medicare Part A & Part B. High earners face IRMAA premium surcharges if MAGI exceeds statutory tiers ($206k MFJ / $103k Single).
+                        </div>
+                        <div class="milestone-tax-impact">
+                          <strong>2-Year Lookback Rule:</strong> Your Age 65 Medicare premiums are based on your tax return from <strong>Age 63</strong>! Large capital gains or Roth conversions at Ages 63–64 can trigger steep surcharges. Unlocks senior state tax deductions in many states.
+                        </div>
+                      </div>
+
+                      <!-- Age 67 -->
+                      <div class="milestone-item" id="msItem67">
+                        <div class="milestone-header">
+                          <div class="milestone-age-tag">
+                            <span style="color:#4f46e5;">Age 67</span>
+                            <span class="milestone-pill" style="background:#e0e7ff; color:#3730a3;">Full Retirement Age (FRA)</span>
+                          </div>
+                          <span class="milestone-user-badge" id="msBadge67" style="display: none;"></span>
+                        </div>
+                        <div class="milestone-desc">
+                          Full Retirement Age for anyone born 1960 or later, unlocking 100% of your earned Primary Insurance Amount (PIA).
+                        </div>
+                        <div class="milestone-tax-impact">
+                          <strong>Tax Implication:</strong> The Social Security Retirement Earnings Test permanently ends, allowing you to earn unlimited wages without any benefit clawbacks or withholding.
+                        </div>
+                      </div>
+
+                      <!-- Age 70 -->
+                      <div class="milestone-item" id="msItem70">
+                        <div class="milestone-header">
+                          <div class="milestone-age-tag">
+                            <span style="color:#7c3aed;">Age 70</span>
+                            <span class="milestone-pill" style="background:#ede9fe; color:#5b21b6;">Max Social Security (+24% to +32%)</span>
+                          </div>
+                          <span class="milestone-user-badge" id="msBadge70" style="display: none;"></span>
+                        </div>
+                        <div class="milestone-desc">
+                          Delayed retirement credits reach maximum potential (+8%/yr compounding between FRA and 70 = 124%–132% of standard FRA benefit).
+                        </div>
+                        <div class="milestone-tax-impact">
+                          <strong>Tax Implication:</strong> Maximizes guaranteed inflation-adjusted income floor. Social Security is at least 15% federally tax-free, making delayed benefits more tax-efficient than pre-tax 401(k) withdrawals. Claiming should never be delayed past Age 70.
+                        </div>
+                      </div>
+
+                      <!-- Age 73 / 75 -->
+                      <div class="milestone-item" id="msItemRmd">
+                        <div class="milestone-header">
+                          <div class="milestone-age-tag">
+                            <span style="color:#b45309;">Age 73 & 75</span>
+                            <span class="milestone-pill" style="background:#fef3c7; color:#92400e;">Mandatory RMDs (SECURE 2.0)</span>
+                          </div>
+                          <span class="milestone-user-badge" id="msBadgeRmd" style="display: none;"></span>
+                        </div>
+                        <div class="milestone-desc">
+                          Forced annual Required Minimum Distributions from Traditional 401(k)s and IRAs based on IRS life expectancy tables (Age 73 if born 1951–1959; Age 75 if born 1960+).
+                        </div>
+                        <div class="milestone-tax-impact">
+                          <strong>Tax Implication:</strong> 100% ordinary income taxation with mandatory distributions that cannot be reinvested into tax-sheltered accounts. Missed RMDs trigger a 25% excise tax penalty. Strategic Roth conversions prior to RMD age permanently mitigate this forced tax.
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
           </div>
 
-          <div class="table-wrapper">
-            <table>
-              <thead>
-                <tr>
-                  <th style="text-align: center;">Year / Age</th>
-                  <th style="color: #2563eb;">Total Inflows & Where Money Goes</th>
-                  <th style="font-weight: 800; color: #0f172a;">Ending Balance</th>
-                </tr>
-              </thead>
-              <tbody id="scheduleTableBody">
-                <!-- Rows injected dynamically -->
-              </tbody>
-            </table>
+          <!-- Slide 3: Detailed Table -->
+          <div class="carousel-slide" id="slideTable">
+            <div class="table-card" id="sectionTable">
+              <div class="table-actions">
+                <div>
+                  <div class="chart-title">Year-by-Year Schedule</div>
+                  <div style="font-size: 1.0rem; color: var(--text-muted); font-weight: 500; margin-top: 2px;">Total inflows (withdrawal + Social Security) and where money goes: living expenses, taxes & healthcare</div>
+                </div>
+                <div style="display: flex; gap: 0.5rem;">
+                  <button class="btn-action btn-secondary" onclick="exportCSV()">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                      <polyline points="7 10 12 15 17 10"></polyline>
+                      <line x1="12" y1="15" x2="12" y2="3"></line>
+                    </svg>
+                    CSV Export
+                  </button>
+                </div>
+              </div>
+
+              <div class="table-wrapper">
+                <table>
+                  <thead>
+                    <tr>
+                      <th style="text-align: center;">Year / Age</th>
+                      <th style="color: #2563eb;">Total Inflows & Where Money Goes</th>
+                      <th style="font-weight: 800; color: #0f172a;">Ending Balance</th>
+                    </tr>
+                  </thead>
+                  <tbody id="scheduleTableBody">
+                    <!-- Rows injected dynamically -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
           </div>
+        </div>
+
+        <!-- Mobile Carousel Swipe Hint -->
+        <div class="mobile-carousel-hint" id="mobileCarouselHint">
+          <span>👈 Swipe left or right to switch cards 👉</span>
         </div>
 
         <!-- Strategy Explanatory Guide -->
@@ -2609,6 +3496,7 @@
 
     let activeStrategy = 'smart';
     let currentSchedule = [];
+    let currentPlanParams = null;
     let chartViewMode = '10yr'; // '10yr' or 'all'
     let chartStartIndex = 0;    // Start index for 10-year window
     const CHART_WINDOW_SIZE = 10;
@@ -2727,6 +3615,112 @@
       if (retMinLabel) {
         retMinLabel.textContent = `Age ${curAge}`;
       }
+
+      updateMilestoneBadges();
+    }
+
+    function toggleFinalBalanceCalc() {
+      const box = document.getElementById('finalBalCalcBox');
+      const chev = document.getElementById('finalBalCalcChevron');
+      const btn = document.getElementById('btnToggleFinalBalCalc');
+      if (!box) return;
+      const isHidden = (box.style.display === 'none');
+      box.style.display = isHidden ? 'block' : 'none';
+      if (chev) chev.classList.toggle('rotated', isHidden);
+      if (btn) btn.setAttribute('aria-expanded', isHidden ? 'true' : 'false');
+    }
+
+    function toggleAgeMilestones() {
+      const box = document.getElementById('milestonesBox');
+      const chev = document.getElementById('milestoneToggleChevron');
+      const btn = document.getElementById('btnToggleMilestones');
+      if (!box) return;
+      const isHidden = (box.style.display === 'none');
+      box.style.display = isHidden ? 'block' : 'none';
+      if (chev) chev.classList.toggle('rotated', isHidden);
+      if (btn) btn.setAttribute('aria-expanded', isHidden ? 'true' : 'false');
+    }
+
+    function openAgeMilestonesModalOrSection() {
+      // If on mobile, switch to Inputs tab
+      if (window.innerWidth < 1024) {
+        switchMobileTab('inputs');
+      }
+      // Ensure milestones box is expanded
+      const box = document.getElementById('milestonesBox');
+      const chev = document.getElementById('milestoneToggleChevron');
+      const btn = document.getElementById('btnToggleMilestones');
+      if (box) box.style.display = 'block';
+      if (chev) chev.classList.add('rotated');
+      if (btn) btn.setAttribute('aria-expanded', 'true');
+
+      // Scroll into view smoothly and flash highlight
+      const target = document.getElementById('milestonesSection');
+      if (target) {
+        setTimeout(() => {
+          target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          target.classList.remove('milestone-highlight');
+          void target.offsetWidth;
+          target.classList.add('milestone-highlight');
+        }, 100);
+      }
+    }
+
+    function updateMilestoneBadges() {
+      const curInput = document.getElementById('currentAge');
+      const retInput = document.getElementById('retirementAge');
+      const ssInput = document.getElementById('ssStartAge');
+      if (!curInput) return;
+
+      const curAge = parseInt(curInput.value) || 50;
+      const retAge = parseInt(retInput?.value) || curAge;
+      const ssAge = parseInt(ssInput?.value) || 67;
+      const rmdAge = (curAge <= 64) ? 75 : 73;
+
+      const milestoneList = [
+        { id: 'msItem50', badgeId: 'msBadge50', age: 50 },
+        { id: 'msItem55', badgeId: 'msBadge55', age: 55 },
+        { id: 'msItem59', badgeId: 'msBadge59', age: 59 },
+        { id: 'msItem62', badgeId: 'msBadge62', age: 62 },
+        { id: 'msItem65', badgeId: 'msBadge65', age: 65 },
+        { id: 'msItem67', badgeId: 'msBadge67', age: 67 },
+        { id: 'msItem70', badgeId: 'msBadge70', age: 70 },
+        { id: 'msItemRmd', badgeId: 'msBadgeRmd', age: rmdAge }
+      ];
+
+      milestoneList.forEach(item => {
+        const el = document.getElementById(item.id);
+        const badge = document.getElementById(item.badgeId);
+        if (!el || !badge) return;
+
+        el.classList.remove('active-user-age', 'active-retire-age', 'active-ss-age', 'active-rmd-age');
+        const tags = [];
+
+        if (curAge === item.age || (item.age === 59 && curAge >= 59 && curAge < 60)) {
+          el.classList.add('active-user-age');
+          tags.push(`<span class="milestone-user-badge" style="background:#dbeafe; color:#1e40af; border:1px solid #93c5fd;">📍 You: Age ${curAge}</span>`);
+        }
+        if (retAge === item.age || (item.age === 59 && retAge >= 59 && retAge < 60)) {
+          el.classList.add('active-retire-age');
+          tags.push(`<span class="milestone-user-badge" style="background:#dcfce7; color:#15803d; border:1px solid #86efac;">🎯 Retire: Age ${retAge}</span>`);
+        }
+        if (ssAge === item.age) {
+          el.classList.add('active-ss-age');
+          tags.push(`<span class="milestone-user-badge" style="background:#f3e8ff; color:#7e22ce; border:1px solid #d8b4fe;">💵 SS Claim: Age ${ssAge}</span>`);
+        }
+        if (item.id === 'msItemRmd') {
+          el.classList.add('active-rmd-age');
+          tags.push(`<span class="milestone-user-badge" style="background:#fef3c7; color:#92400e; border:1px solid #fde68a;">⚠️ Your RMD: Age ${rmdAge}</span>`);
+        }
+
+        if (tags.length > 0) {
+          badge.style.display = 'inline-flex';
+          badge.style.gap = '0.25rem';
+          badge.innerHTML = tags.join('');
+        } else {
+          badge.style.display = 'none';
+        }
+      });
     }
 
     function handleCurrentAgeChange(val) {
@@ -2762,6 +3756,9 @@
     }
 
     function handleRetirementAgeChange(val) {
+      if (typeof activeRetirementTarget !== 'undefined' && activeRetirementTarget !== null) {
+        resetRetirementBaseline();
+      }
       const curAge = parseInt(document.getElementById('currentAge')?.value) || 50;
       let retAge = parseInt(val) || curAge;
       // Constraint: Retirement Age can't be earlier than current age
@@ -2804,6 +3801,255 @@
     }
 
     /* ==========================================================================
+       WHAT-IF SCENARIO QUICK SLIDER CONTROLLERS
+       Synchronizes investment return, retirement age, and annual Roth conversion
+       between the top What-If toolbar and sidebar inputs.
+       ========================================================================== */
+    function syncWhatIfReturn(val) {
+      const numVal = parseFloat(val) || 6.0;
+      const rateInput = document.getElementById('rateReturn');
+      const rateSlider = document.getElementById('rateReturnSlider');
+      const whatIfSlider = document.getElementById('whatIfReturnSlider');
+      const whatIfVal = document.getElementById('whatIfReturnVal');
+
+      if (rateInput) rateInput.value = numVal.toFixed(1);
+      if (rateSlider) rateSlider.value = numVal;
+      if (whatIfSlider) whatIfSlider.value = numVal;
+      if (whatIfVal) whatIfVal.textContent = numVal.toFixed(1) + '%';
+
+      calculatePlan();
+    }
+
+    function syncWhatIfRetireAge(val) {
+      const curAge = parseInt(document.getElementById('currentAge')?.value) || 50;
+      let retAge = parseInt(val) || curAge;
+      if (retAge < curAge) retAge = curAge;
+      retAge = Math.min(85, Math.max(curAge, retAge));
+
+      const whatIfSlider = document.getElementById('whatIfRetireAgeSlider');
+      const whatIfVal = document.getElementById('whatIfRetireAgeVal');
+      if (whatIfSlider) whatIfSlider.value = retAge;
+      if (whatIfVal) whatIfVal.textContent = 'Age ' + retAge;
+
+      handleRetirementAgeChange(retAge);
+    }
+
+    function syncWhatIfRothConv(val) {
+      const numVal = parseFloat(val) || 0;
+      const convInput = document.getElementById('annualRothConv');
+      const convSlider = document.getElementById('annualRothConvSlider');
+      const whatIfSlider = document.getElementById('whatIfRothConvSlider');
+      const whatIfVal = document.getElementById('whatIfRothConvVal');
+
+      if (convInput) convInput.value = numVal;
+      if (convSlider) convSlider.value = numVal;
+      if (whatIfSlider) whatIfSlider.value = numVal;
+      if (whatIfVal) whatIfVal.textContent = formatCurrency(numVal) + '/yr';
+
+      calculatePlan();
+    }
+
+    function updateWhatIfUIFromInputs() {
+      // Sync Return
+      const rateInput = document.getElementById('rateReturn');
+      const whatIfReturnSlider = document.getElementById('whatIfReturnSlider');
+      const whatIfReturnVal = document.getElementById('whatIfReturnVal');
+      if (rateInput && whatIfReturnSlider) {
+        const rate = parseFloat(rateInput.value) || 6.0;
+        whatIfReturnSlider.value = rate;
+        if (whatIfReturnVal) whatIfReturnVal.textContent = rate.toFixed(1) + '%';
+      }
+
+      // Sync Retirement Age
+      const curAgeInput = document.getElementById('currentAge');
+      const retAgeInput = document.getElementById('retirementAge');
+      const whatIfRetireSlider = document.getElementById('whatIfRetireAgeSlider');
+      const whatIfRetireVal = document.getElementById('whatIfRetireAgeVal');
+      const whatIfRetireMin = document.getElementById('whatIfRetireMinLabel');
+      if (curAgeInput && retAgeInput && whatIfRetireSlider) {
+        const curAge = parseInt(curAgeInput.value) || 50;
+        const retAge = parseInt(retAgeInput.value) || curAge;
+        whatIfRetireSlider.min = curAge;
+        whatIfRetireSlider.value = retAge;
+        if (whatIfRetireVal) whatIfRetireVal.textContent = 'Age ' + retAge;
+        if (whatIfRetireMin) whatIfRetireMin.textContent = 'Age ' + curAge;
+      }
+
+      // Sync Roth Conversion
+      const convInput = document.getElementById('annualRothConv');
+      const whatIfRothSlider = document.getElementById('whatIfRothConvSlider');
+      const whatIfRothVal = document.getElementById('whatIfRothConvVal');
+      if (convInput && whatIfRothSlider) {
+        const conv = parseFloat(convInput.value) || 0;
+        whatIfRothSlider.value = conv;
+        if (whatIfRothVal) whatIfRothVal.textContent = formatCurrency(conv) + '/yr';
+      }
+    }
+
+    /* ==========================================================================
+       MOBILE RESULTS 3-CARD SWIPEABLE CAROUSEL CONTROLLER
+       Cards:
+       0: Net Worth Analysis
+       1: Withdrawal and Taxes
+       2: Year-by-Year Schedule
+       ========================================================================== */
+    const MOBILE_CARDS = [
+      { id: 'slideFinalBalance', title: 'Net Worth Analysis', label: '1 of 3: Net Worth Analysis' },
+      { id: 'slideLifetimeTaxes', title: 'Withdrawal and Taxes', label: '2 of 3: Withdrawal and Taxes' },
+      { id: 'slideTable', title: 'Year-by-Year Schedule', label: '3 of 3: Schedule Table' }
+    ];
+    let currentMobileCardIndex = 0;
+    let isCarouselScrolling = false;
+
+    function updateMobileCarouselUI(index) {
+      if (index < 0) index = 0;
+      if (index >= MOBILE_CARDS.length) index = MOBILE_CARDS.length - 1;
+      currentMobileCardIndex = index;
+
+      const card = MOBILE_CARDS[index];
+      const titleEl = document.getElementById('carouselCardTitle');
+      const counterEl = document.getElementById('carouselCardCounter');
+      const prevBtn = document.getElementById('btnCarouselPrev');
+      const nextBtn = document.getElementById('btnCarouselNext');
+      const dots = document.querySelectorAll('.carousel-dot');
+
+      if (titleEl) titleEl.textContent = card.title;
+      if (counterEl) counterEl.textContent = card.label;
+      if (prevBtn) prevBtn.disabled = (index === 0);
+      if (nextBtn) nextBtn.disabled = (index === MOBILE_CARDS.length - 1);
+
+      dots.forEach((dot, idx) => {
+        dot.classList.toggle('active', idx === index);
+      });
+
+      // Synchronize top mobile navigation tabs (Inputs, Results)
+      if (window.innerWidth < 1024) {
+        const btnInputs = document.getElementById('btnTabInputs');
+        const btnResults = document.getElementById('btnTabResults');
+        const panelResults = document.getElementById('panelResults');
+        if (panelResults && !panelResults.classList.contains('hidden-mobile')) {
+          if (btnResults) btnResults.classList.add('active');
+          if (btnInputs) btnInputs.classList.remove('active');
+        }
+      }
+    }
+
+    function goToMobileCard(index, smooth = true) {
+      if (index < 0) index = 0;
+      if (index >= MOBILE_CARDS.length) index = MOBILE_CARDS.length - 1;
+      currentMobileCardIndex = index;
+      updateMobileCarouselUI(index);
+
+      const track = document.getElementById('resultsCarouselTrack');
+      const slide = document.getElementById(MOBILE_CARDS[index].id);
+      if (track && slide) {
+        isCarouselScrolling = true;
+        const targetLeft = slide.offsetLeft;
+        track.scrollTo({
+          left: targetLeft,
+          behavior: smooth ? 'smooth' : 'auto'
+        });
+        setTimeout(() => {
+          isCarouselScrolling = false;
+        }, 350);
+      }
+
+      // If switching to Net Worth Analysis (card 0), re-render Balance Growth SVG
+      if (index === 0 && currentSchedule && currentSchedule.length > 0 && currentPlanParams) {
+        setTimeout(() => {
+          renderBalanceGrowthChart(currentSchedule, currentPlanParams);
+        }, 50);
+      }
+
+      // If switching to Withdrawal and Taxes (card 1), re-render Withdrawals and Taxes SVGs
+      if (index === 1 && currentSchedule && currentSchedule.length > 0 && currentPlanParams) {
+        setTimeout(() => {
+          renderWithdrawalsBySourceChart(currentSchedule, currentPlanParams);
+          renderTaxesOverTimeChart(currentSchedule, currentPlanParams);
+        }, 50);
+      }
+    }
+
+    function stepMobileCard(delta) {
+      goToMobileCard(currentMobileCardIndex + delta, true);
+    }
+
+    function handleCarouselScroll() {
+      if (isCarouselScrolling || window.innerWidth >= 1024) return;
+      const track = document.getElementById('resultsCarouselTrack');
+      if (!track) return;
+
+      const scrollLeft = track.scrollLeft;
+      const trackW = track.clientWidth || window.innerWidth;
+      if (trackW <= 0) return;
+
+      // Find slide closest to scroll position
+      let closestIdx = 0;
+      let minDiff = Infinity;
+      MOBILE_CARDS.forEach((card, idx) => {
+        const slide = document.getElementById(card.id);
+        if (slide) {
+          const diff = Math.abs(slide.offsetLeft - scrollLeft);
+          if (diff < minDiff) {
+            minDiff = diff;
+            closestIdx = idx;
+          }
+        } else {
+          const expectedLeft = idx * trackW;
+          const diff = Math.abs(expectedLeft - scrollLeft);
+          if (diff < minDiff) {
+            minDiff = diff;
+            closestIdx = idx;
+          }
+        }
+      });
+
+      if (closestIdx !== currentMobileCardIndex) {
+        updateMobileCarouselUI(closestIdx);
+      }
+    }
+
+    function initMobileCarousel() {
+      const track = document.getElementById('resultsCarouselTrack');
+      if (!track) return;
+
+      let scrollDebounce;
+      track.addEventListener('scroll', () => {
+        clearTimeout(scrollDebounce);
+        scrollDebounce = setTimeout(handleCarouselScroll, 50);
+      }, { passive: true });
+
+      // Touch gesture support: swiping left/right
+      let touchStartX = 0;
+      let touchStartY = 0;
+      track.addEventListener('touchstart', (e) => {
+        if (e.touches && e.touches.length === 1) {
+          touchStartX = e.touches[0].clientX;
+          touchStartY = e.touches[0].clientY;
+        }
+      }, { passive: true });
+
+      track.addEventListener('touchend', (e) => {
+        if (e.changedTouches && e.changedTouches.length === 1) {
+          const endX = e.changedTouches[0].clientX;
+          const endY = e.changedTouches[0].clientY;
+          const dx = endX - touchStartX;
+          const dy = endY - touchStartY;
+          // Trigger card switch if decisive horizontal swipe (> 50px and dx > 1.8 * dy)
+          if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.8) {
+            if (dx < 0 && currentMobileCardIndex < MOBILE_CARDS.length - 1) {
+              stepMobileCard(1);
+            } else if (dx > 0 && currentMobileCardIndex > 0) {
+              stepMobileCard(-1);
+            }
+          }
+        }
+      }, { passive: true });
+
+      updateMobileCarouselUI(0);
+    }
+
+    /* ==========================================================================
        MOBILE TAB SWITCHING
        ========================================================================== */
     function switchMobileTab(tab) {
@@ -2811,37 +4057,35 @@
 
       const panelInputs = document.getElementById('panelInputs');
       const panelResults = document.getElementById('panelResults');
-      const sectionCharts = document.getElementById('sectionCharts');
-      const sectionTable = document.getElementById('sectionTable');
+      const btnInputs = document.getElementById('btnTabInputs');
+      const btnResults = document.getElementById('btnTabResults');
 
       const buttons = document.querySelectorAll('.mobile-tab-btn');
       buttons.forEach(b => b.classList.remove('active'));
 
       if (tab === 'inputs') {
-        buttons[0].classList.add('active');
-        panelInputs.classList.remove('hidden-mobile');
-        panelResults.classList.add('hidden-mobile');
+        if (btnInputs) btnInputs.classList.add('active');
+        panelInputs?.classList.remove('hidden-mobile');
+        panelResults?.classList.add('hidden-mobile');
         window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else if (tab === 'results') {
+        if (btnResults) btnResults.classList.add('active');
+        panelInputs?.classList.add('hidden-mobile');
+        panelResults?.classList.remove('hidden-mobile');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        goToMobileCard(currentMobileCardIndex, false);
       } else if (tab === 'charts') {
-        buttons[1].classList.add('active');
-        panelInputs.classList.add('hidden-mobile');
-        panelResults.classList.remove('hidden-mobile');
-        sectionCharts.style.display = 'grid';
-        sectionTable.style.display = 'block';
+        if (btnResults) btnResults.classList.add('active');
+        panelInputs?.classList.add('hidden-mobile');
+        panelResults?.classList.remove('hidden-mobile');
         window.scrollTo({ top: 0, behavior: 'smooth' });
-        setTimeout(() => {
-          renderBarChart(currentSchedule);
-          renderAreaChart(currentSchedule);
-        }, 50);
+        goToMobileCard(3, false);
       } else if (tab === 'table') {
-        buttons[2].classList.add('active');
-        panelInputs.classList.add('hidden-mobile');
-        panelResults.classList.remove('hidden-mobile');
-        sectionCharts.style.display = 'grid';
-        sectionTable.style.display = 'block';
-        setTimeout(() => {
-          sectionTable.scrollIntoView({ behavior: 'smooth' });
-        }, 50);
+        if (btnResults) btnResults.classList.add('active');
+        panelInputs?.classList.add('hidden-mobile');
+        panelResults?.classList.remove('hidden-mobile');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        goToMobileCard(4, false);
       }
     }
 
@@ -3659,10 +4903,14 @@
       const totalLifetimeFedSsTax = schedule.reduce((acc, r) => acc + (r.fedSsTax || 0), 0);
       const totalLifetimeStateSsTax = schedule.reduce((acc, r) => acc + (r.stateSsTax || 0), 0);
       const totalLifetimeOtherTax = schedule.reduce((acc, r) => acc + (r.otherTax || 0), 0);
+      const totalLifetimeFedTax = schedule.reduce((acc, r) => acc + (r.fedTax || 0), 0);
+      const totalLifetimeStateTax = schedule.reduce((acc, r) => acc + (r.stateTax || 0), 0);
 
       return {
         schedule,
         totalLifetimeTaxes,
+        totalLifetimeFedTax,
+        totalLifetimeStateTax,
         totalLifetimeIrmaa,
         totalLifetimeGrossWithdrawn,
         totalLifetimeSS,
@@ -3722,6 +4970,7 @@
 
       const activeResult = (activeStrategy === 'smart') ? smartResult : convResult;
       currentSchedule = activeResult.schedule;
+      currentPlanParams = params;
 
       updateKpis(smartResult, convResult, activeResult, params);
       renderBarChart(activeResult.schedule);
@@ -3729,6 +4978,9 @@
       renderTable(activeResult.schedule);
       if (typeof updateRetirementSolverBanner === 'function' && typeof activeRetirementTarget !== 'undefined' && activeRetirementTarget !== null) {
         updateRetirementSolverBanner(activeRetirementTarget);
+      }
+      if (typeof updateWhatIfUIFromInputs === 'function') {
+        updateWhatIfUIFromInputs();
       }
     }
 
@@ -3766,68 +5018,116 @@
       const irmaaSub = totalIrmaa > 0 ? ` · IRMAA: ${formatCurrency(totalIrmaa)}` : '';
       document.getElementById('kpiTaxRate').textContent = `${effTaxRate}% effective tax rate${penText}${irmaaSub}`;
 
+      // Calculate Estimated Taxes on Final Unrealized Capital Gain and render bar chart
+      const elUnrealizedTax = document.getElementById('kpiUnrealizedTax');
+      const elUnrealizedTaxSub = document.getElementById('kpiUnrealizedTaxSub');
+      const elUnrealizedHBar = document.getElementById('kpiUnrealizedTaxHBar');
+      const elUnrealizedHBarLegend = document.getElementById('kpiUnrealizedTaxHBarLegend');
+
+      if (elUnrealizedTax && elUnrealizedTaxSub) {
+        const lastRow = (active.schedule && active.schedule.length > 0) ? active.schedule[active.schedule.length - 1] : null;
+        if (lastRow && active.finalBalance > 0) {
+          const finalBrok = Math.max(0, lastRow.balBrokerage || 0);
+          const basisRatio = (params.costBasisRatio !== undefined ? params.costBasisRatio : 60) / 100;
+          const unrealizedGain = Math.max(0, finalBrok * (1 - basisRatio));
+
+          const fedLtcgRate = 0.15;
+          let stateRate = 0.0;
+          const stateCode = params.stateCode || 'MN';
+          const stateObj = (typeof STATE_TAX_DATA !== 'undefined') ? STATE_TAX_DATA[stateCode] : null;
+          if (stateObj && stateObj.type === 'none') {
+            stateRate = 0.0;
+          } else if (stateObj && stateObj.type === 'flat') {
+            stateRate = stateObj.rate || 0.0;
+          } else if (stateCode === 'MN') {
+            stateRate = 0.068;
+          } else if (stateObj && stateObj.brackets) {
+            const brks = stateObj.brackets[params.filingStatus || 'MFJ'] || stateObj.brackets.Single || [];
+            stateRate = brks.length > 0 ? (brks[brks.length - 1].rate || 0.05) : 0.05;
+          } else {
+            stateRate = 0.05;
+          }
+
+          const fedUnrealizedTax = Math.round(unrealizedGain * fedLtcgRate);
+          const stateUnrealizedTax = Math.round(unrealizedGain * stateRate);
+          const totalUnrealizedTax = fedUnrealizedTax + stateUnrealizedTax;
+
+          elUnrealizedTax.textContent = formatCurrency(totalUnrealizedTax);
+          if (unrealizedGain > 0) {
+            elUnrealizedTaxSub.textContent = `On ${formatCurrency(unrealizedGain)} gain (${formatCurrency(finalBrok)} brokerage)`;
+          } else {
+            elUnrealizedTaxSub.textContent = '100% basis · $0 gain';
+          }
+
+          // Render Horizontal Stacked Bar for Unrealized Gain Taxes (Federal vs State)
+          if (elUnrealizedHBar && elUnrealizedHBarLegend) {
+            if (totalUnrealizedTax > 0) {
+              const pFed = (fedUnrealizedTax / totalUnrealizedTax) * 100;
+              const pState = Math.max(0, 100 - pFed);
+
+              const barSegs = [];
+              const barLegend = [];
+
+              // 1. Federal LTCG Tax (Royal Blue: #2563eb)
+              if (pFed > 0.5) {
+                barSegs.push(`<div class="kpi-tax-hbar-seg" style="width:${pFed.toFixed(1)}%; background:#2563eb;" title="Federal LTCG Tax: ${formatCurrency(fedUnrealizedTax)} (${pFed.toFixed(1)}%)"></div>`);
+              }
+              barLegend.push(`<span class="kpi-tax-hbar-legend-item"><span class="kpi-tax-hbar-dot" style="background:#2563eb;"></span><strong>Federal:</strong> ${formatCurrency(fedUnrealizedTax)} (${Math.round(pFed)}%)</span>`);
+
+              // 2. State Tax (Indigo / Purple: #7c3aed)
+              const stateLabel = params.stateCode ? `State (${params.stateCode})` : 'State';
+              if (pState > 0.5) {
+                barSegs.push(`<div class="kpi-tax-hbar-seg" style="width:${pState.toFixed(1)}%; background:#7c3aed;" title="${stateLabel} Tax: ${formatCurrency(stateUnrealizedTax)} (${pState.toFixed(1)}%)"></div>`);
+                barLegend.push(`<span class="kpi-tax-hbar-legend-item"><span class="kpi-tax-hbar-dot" style="background:#7c3aed;"></span><strong>${stateLabel}:</strong> ${formatCurrency(stateUnrealizedTax)} (${Math.round(pState)}%)</span>`);
+              } else if (pFed >= 99.5) {
+                barLegend.push(`<span class="kpi-tax-hbar-legend-item"><span class="kpi-tax-hbar-dot" style="background:#7c3aed;"></span><strong>${stateLabel}:</strong> $0 (0%)</span>`);
+              }
+
+              elUnrealizedHBar.innerHTML = barSegs.join('');
+              elUnrealizedHBarLegend.innerHTML = barLegend.join('');
+            } else {
+              elUnrealizedHBar.innerHTML = '<div class="kpi-tax-hbar-seg" style="width:100%; background:#e2e8f0;"></div>';
+              elUnrealizedHBarLegend.innerHTML = '<span style="font-size:0.84rem; color:#94a3b8;">$0 Unrealized Tax</span>';
+            }
+          }
+        } else {
+          elUnrealizedTax.textContent = '$0';
+          elUnrealizedTaxSub.textContent = active.finalBalance <= 0 ? 'Portfolio depleted' : '$0 final brokerage';
+          if (elUnrealizedHBar && elUnrealizedHBarLegend) {
+            elUnrealizedHBar.innerHTML = '<div class="kpi-tax-hbar-seg" style="width:100%; background:#e2e8f0;"></div>';
+            elUnrealizedHBarLegend.innerHTML = '<span style="font-size:0.84rem; color:#94a3b8;">$0 Unrealized Tax</span>';
+          }
+        }
+      }
+
       // Render Horizontal Stacked Bar for Lifetime Taxes Breakdown:
-      // RMD, Conversion, Capital Gains, Social Security, Other Incomes
+      // Federal vs State
       const elTaxHBar = document.getElementById('kpiTaxHBar');
       const elTaxHBarLegend = document.getElementById('kpiTaxHBarLegend');
       if (elTaxHBar && elTaxHBarLegend) {
         const tTot = active.totalLifetimeTaxes || 0;
-        const tRmdRaw = active.totalLifetimeRmdTax || 0;
-        const tConvRaw = active.totalLifetimeConvTax || 0;
-        const tCapGainRaw = active.totalLifetimeCapGainTax || 0;
-        const tSSRaw = active.totalLifetimeSsTax || 0;
-        const tOtherRaw = Math.max(0, tTot - tRmdRaw - tConvRaw - tCapGainRaw - tSSRaw);
-
-        const rawSum = tRmdRaw + tConvRaw + tCapGainRaw + tSSRaw + tOtherRaw;
-        let tRmd = tRmdRaw, tConv = tConvRaw, tCapGain = tCapGainRaw, tSS = tSSRaw, tOther = tOtherRaw;
-        if (rawSum > 0 && Math.abs(rawSum - tTot) > 1) {
-          const ratio = tTot / rawSum;
-          tRmd *= ratio;
-          tConv *= ratio;
-          tCapGain *= ratio;
-          tSS *= ratio;
-          tOther *= ratio;
-        }
+        const totalFed = Math.max(0, totalFedTax || 0);
+        const totalState = Math.max(0, totalStateTax || 0);
 
         if (tTot > 0) {
-          const pRmd = (tRmd / tTot) * 100;
-          const pConv = (tConv / tTot) * 100;
-          const pCapGain = (tCapGain / tTot) * 100;
-          const pSS = (tSS / tTot) * 100;
-          const pOther = Math.max(0, 100 - pRmd - pConv - pCapGain - pSS);
+          const pFed = (totalFed / tTot) * 100;
+          const pState = Math.max(0, 100 - pFed);
 
           const barSegs = [];
           const barLegend = [];
 
-          // 1. Mandatory RMD Taxes (Amber / Gold: #f59e0b)
-          if (pRmd > 0.5) {
-            barSegs.push(`<div class="kpi-tax-hbar-seg" style="width:${pRmd.toFixed(1)}%; background:#f59e0b;" title="Taxes from RMD: ${formatCurrency(tRmd)} (${pRmd.toFixed(1)}%)"></div>`);
-            barLegend.push(`<span class="kpi-tax-hbar-legend-item"><span class="kpi-tax-hbar-dot" style="background:#f59e0b;"></span><strong>RMD:</strong> ${formatCurrency(tRmd)} (${Math.round(pRmd)}%)</span>`);
+          // 1. Federal Taxes (Royal Blue: #2563eb)
+          if (pFed > 0.5) {
+            barSegs.push(`<div class="kpi-tax-hbar-seg" style="width:${pFed.toFixed(1)}%; background:#2563eb;" title="Federal Taxes: ${formatCurrency(totalFed)} (${pFed.toFixed(1)}%)"></div>`);
           }
+          barLegend.push(`<span class="kpi-tax-hbar-legend-item"><span class="kpi-tax-hbar-dot" style="background:#2563eb;"></span><strong>Federal:</strong> ${formatCurrency(totalFed)} (${Math.round(pFed)}%)</span>`);
 
-          // 2. Roth Conversion Taxes (Purple: #8b5cf6)
-          if (pConv > 0.5) {
-            barSegs.push(`<div class="kpi-tax-hbar-seg" style="width:${pConv.toFixed(1)}%; background:#8b5cf6;" title="Taxes from Conversion: ${formatCurrency(tConv)} (${pConv.toFixed(1)}%)"></div>`);
-            barLegend.push(`<span class="kpi-tax-hbar-legend-item"><span class="kpi-tax-hbar-dot" style="background:#8b5cf6;"></span><strong>Conversion:</strong> ${formatCurrency(tConv)} (${Math.round(pConv)}%)</span>`);
+          // 2. State Taxes (Indigo / Purple: #7c3aed)
+          const stateLabel = params.stateCode ? `State (${params.stateCode})` : 'State';
+          if (pState > 0.5) {
+            barSegs.push(`<div class="kpi-tax-hbar-seg" style="width:${pState.toFixed(1)}%; background:#7c3aed;" title="${stateLabel} Taxes: ${formatCurrency(totalState)} (${pState.toFixed(1)}%)"></div>`);
           }
-
-          // 3. Capital Gains Taxes (Lavender / Orchid: #c084fc)
-          if (pCapGain > 0.5) {
-            barSegs.push(`<div class="kpi-tax-hbar-seg" style="width:${pCapGain.toFixed(1)}%; background:#c084fc;" title="Taxes from Capital Gains: ${formatCurrency(tCapGain)} (${pCapGain.toFixed(1)}%)"></div>`);
-            barLegend.push(`<span class="kpi-tax-hbar-legend-item"><span class="kpi-tax-hbar-dot" style="background:#c084fc;"></span><strong>Cap Gains:</strong> ${formatCurrency(tCapGain)} (${Math.round(pCapGain)}%)</span>`);
-          }
-
-          // 4. Social Security Taxes (Emerald Green: #16a34a)
-          if (pSS > 0.5) {
-            barSegs.push(`<div class="kpi-tax-hbar-seg" style="width:${pSS.toFixed(1)}%; background:#16a34a;" title="Taxes from Social Security: ${formatCurrency(tSS)} (${pSS.toFixed(1)}%)"></div>`);
-            barLegend.push(`<span class="kpi-tax-hbar-legend-item"><span class="kpi-tax-hbar-dot" style="background:#16a34a;"></span><strong>Soc Sec:</strong> ${formatCurrency(tSS)} (${Math.round(pSS)}%)</span>`);
-          }
-
-          // 5. Other Incomes (Sky Blue: #0284c7)
-          if (pOther > 0.5) {
-            barSegs.push(`<div class="kpi-tax-hbar-seg" style="width:${pOther.toFixed(1)}%; background:#0284c7;" title="Taxes from Other Incomes: ${formatCurrency(tOther)} (${pOther.toFixed(1)}%)"></div>`);
-            barLegend.push(`<span class="kpi-tax-hbar-legend-item"><span class="kpi-tax-hbar-dot" style="background:#0284c7;"></span><strong>Other Incomes:</strong> ${formatCurrency(tOther)} (${Math.round(pOther)}%)</span>`);
-          }
+          barLegend.push(`<span class="kpi-tax-hbar-legend-item"><span class="kpi-tax-hbar-dot" style="background:#7c3aed;"></span><strong>${stateLabel}:</strong> ${formatCurrency(totalState)} (${Math.round(pState)}%)</span>`);
 
           elTaxHBar.innerHTML = barSegs.join('');
           elTaxHBarLegend.innerHTML = barLegend.join('');
@@ -3837,120 +5137,31 @@
         }
       }
 
-      // RMD tax analysis on active drawdown schedule
-      const elRmdTax = document.getElementById('kpiRmdTax');
-      if (elRmdTax) {
-        const totalRmd = active.totalLifetimeRmd || 0;
-        const totalRmdTax = active.totalLifetimeRmdTax || 0;
-        const rmdPctOfTax = active.totalLifetimeTaxes > 0
-          ? ((totalRmdTax / active.totalLifetimeTaxes) * 100).toFixed(1)
-          : '0.0';
-        const convRmdTax = conv.totalLifetimeRmdTax || 0;
-        const smartRmdTax = smart.totalLifetimeRmdTax || 0;
-        const rmdTaxSaved = convRmdTax - smartRmdTax;
-
-        if (totalRmd > 0) {
-          let rmdMsg = `Taxes from RMD: <strong>${formatCurrency(totalRmdTax)}</strong> (${rmdPctOfTax}% of taxes) · RMDs: ${formatCurrency(totalRmd)}`;
-          if (rmdTaxSaved > 100) {
-            if (active === smart) {
-              rmdMsg += ` · <span class="kpi-success">Smart saves ${formatCurrency(rmdTaxSaved)} RMD tax</span>`;
-            } else {
-              rmdMsg += ` · <span style="color: #6ee7b7;">Smart saves ${formatCurrency(rmdTaxSaved)} RMD tax</span>`;
-            }
-          }
-          elRmdTax.innerHTML = rmdMsg;
-        } else {
-          elRmdTax.innerHTML = `<span class="kpi-success">Taxes from RMD: $0</span> (Pre-tax balances depleted/converted prior to RMD age)`;
-        }
-      }
-
-      // Minnesota State Tax computation on active drawdown schedule
-      const getRowInfl = (r) => (r.inflFactor && !isNaN(r.inflFactor))
-        ? r.inflFactor
-        : Math.pow(1 + (params.rateInflation || 2.5) / 100, (r.year || 1) - 1);
-
-      const totalMnTax = (params.stateCode === 'MN')
-        ? totalStateTax
-        : active.schedule.reduce((acc, r) => {
-            const infl = getRowInfl(r);
-            const mnT = computeStateTax('MN', params.status, r.age, r.wPretax, r.rothConv || 0, r.capitalGain || 0, infl);
-            return acc + (isNaN(mnT) ? 0 : mnT);
-          }, 0);
-
-      // Conventional vs Smart state tax comparison
-      const convMnTax = (params.stateCode === 'MN')
-        ? conv.schedule.reduce((acc, r) => acc + (r.stateTax || 0), 0)
-        : conv.schedule.reduce((acc, r) => {
-            const infl = getRowInfl(r);
-            const mnT = computeStateTax('MN', params.status, r.age, r.wPretax, r.rothConv || 0, r.capitalGain || 0, infl);
-            return acc + (isNaN(mnT) ? 0 : mnT);
-          }, 0);
-
-      const smartMnTax = (params.stateCode === 'MN')
-        ? smart.schedule.reduce((acc, r) => acc + (r.stateTax || 0), 0)
-        : smart.schedule.reduce((acc, r) => {
-            const infl = getRowInfl(r);
-            const mnT = computeStateTax('MN', params.status, r.age, r.wPretax, r.rothConv || 0, r.capitalGain || 0, infl);
-            return acc + (isNaN(mnT) ? 0 : mnT);
-          }, 0);
-
-      const mnTaxSavings = convMnTax - smartMnTax;
-
-      const elMnComp = document.getElementById('kpiMnTaxComp');
-      const elTaxSplit = document.getElementById('kpiTaxSplit');
-      if (elMnComp && elTaxSplit) {
-        if (params.stateCode === 'MN') {
-          const mnSharePct = active.totalLifetimeTaxes > 0
-            ? Math.round((totalStateTax / active.totalLifetimeTaxes) * 100)
-            : 0;
-          elMnComp.innerHTML = `MN State Tax: <strong>${formatCurrency(totalStateTax)}</strong> (${mnSharePct}% of total taxes)`;
-          
-          let splitText = `Federal: ${formatCurrency(totalFedTax)}`;
-          if (mnTaxSavings > 0 && active === smart) {
-            splitText += ` · <span class="kpi-success">Smart saves ${formatCurrency(mnTaxSavings)} MN tax</span>`;
-          }
-          elTaxSplit.innerHTML = splitText;
-        } else {
-          const diffVsMn = totalStateTax - totalMnTax;
-          elMnComp.innerHTML = `${params.stateCode} State Tax: <strong>${formatCurrency(totalStateTax)}</strong> vs MN: <strong>${formatCurrency(totalMnTax)}</strong>`;
-          
-          if (diffVsMn < -1) {
-            elTaxSplit.innerHTML = `<span class="kpi-success">Saves ${formatCurrency(Math.abs(diffVsMn))} vs Minnesota!</span> (Fed: ${formatCurrency(totalFedTax)})`;
-          } else if (diffVsMn > 1) {
-            elTaxSplit.innerHTML = `<span class="kpi-danger">+${formatCurrency(diffVsMn)} higher than Minnesota</span> (Fed: ${formatCurrency(totalFedTax)})`;
-          } else {
-            elTaxSplit.innerHTML = `<span>Equal to Minnesota state tax</span> (Fed: ${formatCurrency(totalFedTax)})`;
-          }
-        }
-      }
-
       const taxSavings = conv.totalLifetimeTaxes - smart.totalLifetimeTaxes;
       const irmaaSavings = (conv.totalLifetimeIrmaa || 0) - (smart.totalLifetimeIrmaa || 0);
       const combinedSavings = taxSavings + irmaaSavings;
       const kpiSavings = document.getElementById('kpiSavings');
       const kpiSavingsSub = document.getElementById('kpiSavingsSub');
-      if (combinedSavings > 0) {
-        kpiSavings.textContent = formatCurrency(combinedSavings);
-        kpiSavings.className = 'kpi-value kpi-success';
-        const irmaaSubLabel = irmaaSavings > 0 ? ` (incl. ${formatCurrency(irmaaSavings)} IRMAA)` : '';
-        const mnExtra = (params.stateCode === 'MN' && mnTaxSavings > 0) ? ` · incl. ${formatCurrency(mnTaxSavings)} MN tax saved` : '';
-        kpiSavingsSub.textContent = `Smart Drawdown beats Conventional${irmaaSubLabel}${mnExtra}`;
-      } else if (combinedSavings === 0) {
-        kpiSavings.textContent = '$0';
-        kpiSavings.className = 'kpi-value';
-        kpiSavingsSub.textContent = 'Equal tax & IRMAA impact';
-      } else {
-        kpiSavings.textContent = formatCurrency(Math.abs(combinedSavings));
-        kpiSavings.className = 'kpi-value kpi-warning';
-        kpiSavingsSub.textContent = 'Higher conventional taxes';
+      if (kpiSavings && kpiSavingsSub) {
+        if (combinedSavings > 0) {
+          kpiSavings.textContent = formatCurrency(combinedSavings);
+          kpiSavings.className = 'kpi-value kpi-success';
+          const irmaaSubLabel = irmaaSavings > 0 ? ` (incl. ${formatCurrency(irmaaSavings)} IRMAA)` : '';
+          const mnExtra = (params.stateCode === 'MN' && mnTaxSavings > 0) ? ` · incl. ${formatCurrency(mnTaxSavings)} MN tax saved` : '';
+          kpiSavingsSub.textContent = `Smart Drawdown beats Conventional${irmaaSubLabel}${mnExtra}`;
+        } else if (combinedSavings === 0) {
+          kpiSavings.textContent = '$0';
+          kpiSavings.className = 'kpi-value';
+          kpiSavingsSub.textContent = 'Equal tax & IRMAA impact';
+        } else {
+          kpiSavings.textContent = formatCurrency(Math.abs(combinedSavings));
+          kpiSavings.className = 'kpi-value kpi-warning';
+          kpiSavingsSub.textContent = 'Higher conventional taxes';
+        }
       }
 
       document.getElementById('kpiFinalBalance').textContent = formatCurrency(active.finalBalance);
       const totalStart = params.bal401kInit + params.balIRAInit + params.balRothInit + params.balBrokerageInit;
-      const retAgeDisplay = params.retirementAge > params.currentAge 
-        ? ` (Age ${params.currentAge}, Retire Age ${params.retirementAge})`
-        : ` (Age ${params.currentAge})`;
-      document.getElementById('kpiStartingBalance').textContent = `From ${formatCurrency(totalStart)} start${retAgeDisplay} → Remaining at Age 90`;
       const balBadge = document.getElementById('startingBalancesTotalBadge');
       if (balBadge) {
         balBadge.textContent = `${formatCurrency(totalStart)} Total`;
@@ -4002,65 +5213,1138 @@
         }
       }
 
-      // Unrealized Gain and Potential Tax on Final Balance
-      const elGain = document.getElementById('kpiFinalGain');
-      const elTax = document.getElementById('kpiFinalTax');
-      if (elGain && elTax) {
-        const lastRow = (active.schedule && active.schedule.length > 0) ? active.schedule[active.schedule.length - 1] : null;
-        if (!lastRow || active.finalBalance <= 0) {
-          elGain.innerHTML = `Unrealized Gain: <strong>$0</strong>`;
-          elTax.innerHTML = `Potential Tax: <strong>$0</strong>`;
+      // Render Balance Growth Trajectory Line Chart
+      renderBalanceGrowthChart(active.schedule, params);
+      // Render Withdrawals by Source Stacked Bar Chart
+      renderWithdrawalsBySourceChart(active.schedule, params);
+      // Render Taxes Over Time Stacked Area Line Chart
+      renderTaxesOverTimeChart(active.schedule, params);
+
+      // Update Retirement Situation Analysis Summary
+      updateRetirementSituation(active, params);
+
+      // Update Retirement Tax Situation Analysis Summary
+      if (typeof updateTaxSituation === 'function') {
+        updateTaxSituation(smart, conv, active, params);
+      }
+    }
+
+    /* ==========================================================================
+       RETIREMENT SITUATION ANALYSIS
+       Summarizes the user's retirement outlook, solvency, lifestyle coverage,
+       and key financial takeaways based on active simulation results.
+       ========================================================================== */
+    function updateRetirementSituation(active, params) {
+      const container = document.getElementById('situationSummaryText');
+      const badge = document.getElementById('situationStatusBadge');
+      if (!container || !badge || !active || !params) return;
+
+      const curAge = params.currentAge || params.startAge || 50;
+      const retAge = params.retirementAge || curAge;
+      const initialExp = params.initialExpense || 100000;
+      const isSolvent = (active.depletedAge === null);
+      const finalBal = active.finalBalance || 0;
+      const totalStartAssets = (params.bal401kInit || 0) + (params.balIRAInit || 0) + (params.balRothInit || 0) + (params.balBrokerageInit || 0);
+      const ssAge = params.ssStartAge || 67;
+      const annualSS = (params.ssMonthly || 0) * 12;
+
+      // Find peak balance across schedule
+      let peakBal = totalStartAssets;
+      let peakAge = curAge;
+      if (active.schedule && active.schedule.length > 0) {
+        active.schedule.forEach(r => {
+          const tot = (r.balBrokerage || 0) + (r.balPretax || 0) + (r.balRoth || 0);
+          if (tot > peakBal) {
+            peakBal = tot;
+            peakAge = r.age;
+          }
+        });
+      }
+
+      // Final balance breakdown
+      let finalTaxable = 0;
+      let finalRoth = 0;
+      if (active.schedule && active.schedule.length > 0) {
+        const last = active.schedule[active.schedule.length - 1];
+        finalTaxable = (last.balBrokerage || 0) + (last.balPretax || 0);
+        finalRoth = (last.balRoth || 0);
+      }
+
+      const items = [];
+
+      if (isSolvent) {
+        badge.textContent = '✅ Fully Funded Through Age 90+';
+        badge.style.background = '#dcfce7';
+        badge.style.color = '#15803d';
+        badge.style.border = '1px solid #86efac';
+
+        let wealthText = `Your plan is <strong>solvent through Age 90</strong>, leaving a projected <strong>${formatCurrency(finalBal)}</strong> estate`;
+        if (finalBal > 0) {
+          wealthText += ` (${formatCurrency(finalRoth)} tax-free Roth, ${formatCurrency(finalTaxable)} taxable)`;
+        }
+        wealthText += `. Your portfolio peaks at <strong>${formatCurrency(peakBal)}</strong> at Age ${peakAge}.`;
+        items.push({ icon: '🛡️', title: 'Solvency & Estate', text: wealthText });
+
+        if (retAge > curAge) {
+          const yrs = retAge - curAge;
+          items.push({
+            icon: '💼',
+            title: 'Working Horizon',
+            text: `Working the next <strong>${yrs} year${yrs > 1 ? 's' : ''} to Age ${retAge}</strong> lets salary cover expenses while current assets of ${formatCurrency(totalStartAssets)} compound uninterrupted before drawdown begins.`
+          });
         } else {
-          const finalBrok = lastRow.balBrokerage || 0;
-          const finalPretax = lastRow.balPretax || 0;
-          const finalRoth = lastRow.balRoth || 0;
-          const finalYearIdx = active.schedule.length - 1;
-          const finalInfl = Math.pow(1 + (params.rateInflation / 100), finalYearIdx);
-          const basisRatioDec = params.costBasisRatio / 100;
+          items.push({
+            icon: '🏖️',
+            title: 'Immediate Drawdown',
+            text: `Retiring now at <strong>Age ${curAge}</strong>, your ${formatCurrency(totalStartAssets)} portfolio fully supports your <strong>${formatCurrency(initialExp)}/yr</strong> inflation-adjusted lifestyle through Age 90.`
+          });
+        }
 
-          // 1. Brokerage Unrealized Capital Gain & Potential Tax (LTCG + State)
-          const unrealizedBrokGain = Math.max(0, finalBrok * (1 - basisRatioDec));
-          const brokFedTax = computeLtcgTax(0, unrealizedBrokGain, params.status, finalInfl);
-          const brokStateTax = computeStateTax(params.stateCode, params.status, lastRow.age, 0, 0, unrealizedBrokGain, finalInfl);
-          const potentialBrokTax = brokFedTax + brokStateTax;
+        if (annualSS > 0) {
+          items.push({
+            icon: '🏛️',
+            title: 'Social Security',
+            text: `Beginning at <strong>Age ${ssAge}</strong>, Social Security injects <strong>${formatCurrency(annualSS)}/yr</strong> in inflation-adjusted income, reducing annual portfolio withdrawal strain.`
+          });
+        }
 
-          // 2. Pre-Tax Traditional 401(k)/IRA Potential Ordinary Tax (if any remaining)
-          const stdDed = getStandardDeduction(params.status, lastRow.age, finalInfl);
-          const pretaxFedTax = computeOrdinaryTax(Math.max(0, finalPretax - stdDed), params.status, finalInfl);
-          const pretaxStateTax = computeStateTax(params.stateCode, params.status, lastRow.age, finalPretax, 0, 0, finalInfl);
-          const potentialPretaxTax = pretaxFedTax + pretaxStateTax;
+        items.push({
+          icon: '✨',
+          title: 'Key Takeaway',
+          text: `You are in <strong>great shape</strong> with a durable financial safety cushion against market dips and long-term inflation.`
+        });
 
-          // 3. Roth IRA (Tax-Free Growth)
-          const rothGain = Math.max(0, finalRoth - params.balRothInit);
+      } else {
+        const depAge = active.depletedAge;
+        const yrsFunded = Math.max(0, depAge - curAge);
+        const shortfallYrs = Math.max(0, 90 - depAge);
 
-          // Total Potential Tax & Net After-Tax Estate
-          const totalPotentialTax = potentialBrokTax + potentialPretaxTax;
-          const netAfterTax = Math.max(0, active.finalBalance - totalPotentialTax);
+        badge.textContent = `⚠️ Depleted at Age ${depAge}`;
+        badge.style.background = '#fef2f2';
+        badge.style.color = '#b91c1c';
+        badge.style.border = '1px solid #fca5a5';
 
-          // Format Unrealized Gain Display
-          if (finalBrok > 0) {
-            const gainPct = Math.round((1 - basisRatioDec) * 100);
-            const extraNote = finalRoth > 0 ? ` · Roth: ${formatCurrency(finalRoth)}` : '';
-            elGain.innerHTML = `Unrealized Gain: <strong style="color:#2563eb;">${formatCurrency(unrealizedBrokGain)}</strong> <span style="font-size:0.88rem;color:#64748b;">(${gainPct}% Brok${extraNote})</span>`;
-          } else if (finalPretax > 0) {
-            elGain.innerHTML = `Pre-Tax Untaxed: <strong style="color:#2563eb;">${formatCurrency(finalPretax)}</strong> <span style="font-size:0.88rem;color:#64748b;">(100% Taxable)</span>`;
-          } else if (finalRoth > 0) {
-            elGain.innerHTML = `Unrealized Gain: <strong style="color:#16a34a;">${formatCurrency(finalRoth)}</strong> <span style="font-size:0.88rem;color:#16a34a;">(100% Roth Tax-Free)</span>`;
-          } else {
-            elGain.innerHTML = `Unrealized Gain: <strong>$0</strong>`;
+        items.push({
+          icon: '⚠️',
+          title: 'Shortfall Projected',
+          text: `Your investments are projected to <strong>run out at Age ${depAge}</strong>, covering <strong>${yrsFunded} years</strong> of retirement but leaving a <strong>${shortfallYrs}-year shortfall</strong> before Age 90.`
+        });
+
+        items.push({
+          icon: '📉',
+          title: 'Withdrawal Strain',
+          text: `Withdrawing <strong>${formatCurrency(initialExp)}/yr</strong> (adjusted for inflation) exhausts your ${formatCurrency(totalStartAssets)} starting portfolio faster than annual returns can replenish it.`
+        });
+
+        items.push({
+          icon: '💡',
+          title: 'How to Fix It',
+          text: `To achieve lifetime solvency, consider <strong>delaying retirement</strong> (click the <em>Die with Zero</em> button under Retirement Age to auto-calculate your solvent age), <strong>trimming annual spending</strong>, or boosting starting savings.`
+        });
+      }
+
+      let html = '<div style="display: flex; flex-direction: column; gap: 0.4rem;">';
+      items.forEach(item => {
+        html += `<div style="display: flex; align-items: flex-start; gap: 0.4rem; font-size: 0.77rem; line-height: 1.35;">`;
+        html += `<span style="font-size: 0.85rem; line-height: 1.2;">${item.icon}</span>`;
+        html += `<div><strong>${item.title}:</strong> ${item.text}</div>`;
+        html += `</div>`;
+      });
+      html += '</div>';
+
+      container.innerHTML = html;
+    }
+
+    /* ==========================================================================
+       RETIREMENT TAX SITUATION ANALYSIS
+       Summarizes the user's retirement tax burden, effective rate, peak tax year,
+       key tax drivers, Social Security/IRMAA impacts, and optimization takeaways.
+       ========================================================================== */
+    function updateTaxSituation(smart, conv, active, params) {
+      const container = document.getElementById('taxSituationSummaryText');
+      const badge = document.getElementById('taxSituationStatusBadge');
+      if (!container || !badge || !active || !params) return;
+
+      const totalTaxes = active.totalLifetimeTaxes || 0;
+      const totalFed = (active.totalLifetimeFedTax !== undefined)
+        ? Math.max(0, active.totalLifetimeFedTax)
+        : (active.schedule ? active.schedule.reduce((acc, r) => acc + (r.fedTax || 0), 0) : 0);
+      const totalState = (active.totalLifetimeStateTax !== undefined)
+        ? Math.max(0, active.totalLifetimeStateTax)
+        : (active.schedule ? active.schedule.reduce((acc, r) => acc + (r.stateTax || 0), 0) : 0);
+      const totalGrossWithdrawals = active.totalLifetimeGrossWithdrawn || 0;
+      const totalSS = active.totalLifetimeSS || 0;
+      const totalGrossInflow = totalGrossWithdrawals + totalSS;
+      const stateCode = params.stateCode || 'MN';
+
+      const effRate = totalGrossInflow > 0
+        ? ((totalTaxes / totalGrossInflow) * 100).toFixed(1)
+        : '0.0';
+
+      let pFed = 0;
+      let pState = 0;
+      if (totalTaxes > 0) {
+        pFed = Math.round((totalFed / totalTaxes) * 100);
+        pState = Math.max(0, 100 - pFed);
+      }
+
+      // Find peak tax year and RMD metrics across schedule
+      let peakTax = 0;
+      let peakAge = params.currentAge || 50;
+      let peakYearRecord = null;
+      let totalRmdTaxes = (active.totalLifetimeRmdTax !== undefined) ? active.totalLifetimeRmdTax : 0;
+      let totalRmdDist = (active.totalLifetimeRmd !== undefined) ? active.totalLifetimeRmd : 0;
+      let peakRmdDist = 0;
+      let peakRmdAge = (params.currentAge || 50) <= 64 ? 75 : 73;
+      let totalIrmaaSurcharges = 0;
+      let preTaxDepletedAge = null;
+      const rmdStartAge = (params.currentAge || 50) <= 64 ? 75 : 73;
+
+      if (active.schedule && active.schedule.length > 0) {
+        active.schedule.forEach(r => {
+          const annualTax = Math.max(0, (r.estTax !== undefined) ? r.estTax : ((r.fedTax || 0) + (r.stateTax || 0)));
+          if (annualTax > peakTax) {
+            peakTax = annualTax;
+            peakAge = r.age;
+            peakYearRecord = r;
           }
-
-          // Format Potential Tax Display
-          if (totalPotentialTax > 0) {
-            const breakdown = (finalBrok > 0 && finalPretax > 0)
-              ? ` <span style="font-size:0.88rem;color:#64748b;">(Brok: ${formatCurrency(potentialBrokTax)} · Pretax: ${formatCurrency(potentialPretaxTax)})</span>`
-              : ` <span style="font-size:0.88rem;color:#64748b;">(Net: ${formatCurrency(netAfterTax)})</span>`;
-            elTax.innerHTML = `Potential Tax: <strong style="color:#dc2626;">${formatCurrency(totalPotentialTax)}</strong>${breakdown}`;
-          } else {
-            elTax.innerHTML = `Potential Tax: <strong style="color:#16a34a;">$0</strong> <span style="font-size:0.88rem;color:#16a34a;">(Tax-Free Estate)</span>`;
+          const mRmd = r.mandatoryRmd || 0;
+          if (mRmd > peakRmdDist) {
+            peakRmdDist = mRmd;
+            peakRmdAge = r.age;
           }
+          if (active.totalLifetimeRmd === undefined) totalRmdDist += mRmd;
+          if (active.totalLifetimeRmdTax === undefined) totalRmdTaxes += (r.rmdTax || 0);
+          totalIrmaaSurcharges += (r.irmaaSurcharge || 0);
+          if (preTaxDepletedAge === null && r.balPretax <= 0 && ((params.bal401kInit || 0) + (params.balIRAInit || 0) > 0)) {
+            preTaxDepletedAge = r.age;
+          }
+        });
+      }
+
+      // Determine primary driver of peak tax year
+      let peakDriver = 'ordinary pre-tax withdrawals';
+      if (peakYearRecord) {
+        const peakTotalTax = Math.max(0, (peakYearRecord.estTax !== undefined) ? peakYearRecord.estTax : ((peakYearRecord.fedTax || 0) + (peakYearRecord.stateTax || 0)));
+        if ((peakYearRecord.rmdTax || 0) > 0 && (peakYearRecord.rmdTax >= peakTotalTax * 0.35)) {
+          peakDriver = 'mandatory RMD distributions';
+        } else if ((peakYearRecord.convTax || 0) > 0 && (peakYearRecord.convTax >= peakTotalTax * 0.35)) {
+          peakDriver = 'annual Roth conversions';
+        } else if ((peakYearRecord.ltcgTax || 0) > 0 && (peakYearRecord.ltcgTax >= peakTotalTax * 0.35)) {
+          peakDriver = 'taxable brokerage capital gains';
+        } else if ((peakYearRecord.taxableSS || 0) > 0 && (peakYearRecord.wPretax || 0) === 0) {
+          peakDriver = 'taxable Social Security benefits';
         }
       }
+
+      // Tax savings from smart bracket filling vs conventional
+      let stratTaxSavings = 0;
+      if (conv && smart && conv.totalLifetimeTaxes !== undefined && smart.totalLifetimeTaxes !== undefined) {
+        stratTaxSavings = Math.round(conv.totalLifetimeTaxes - smart.totalLifetimeTaxes);
+      }
+
+      // 1. Configure Status Badge
+      const effNum = parseFloat(effRate);
+      if (totalTaxes === 0) {
+        badge.textContent = '⭐ 0% Tax-Free Retirement';
+        badge.style.background = '#dcfce7';
+        badge.style.color = '#15803d';
+        badge.style.border = '1px solid #86efac';
+      } else if (effNum < 8.0) {
+        badge.textContent = `🟢 Very Low Tax Burden (${effRate}% Effective)`;
+        badge.style.background = '#dcfce7';
+        badge.style.color = '#15803d';
+        badge.style.border = '1px solid #86efac';
+      } else if (effNum < 15.0) {
+        badge.textContent = `🟢 Low Tax Burden (${effRate}% Effective)`;
+        badge.style.background = '#dcfce7';
+        badge.style.color = '#15803d';
+        badge.style.border = '1px solid #86efac';
+      } else if (effNum < 22.0) {
+        badge.textContent = `🔵 Moderate Tax Burden (${effRate}% Effective)`;
+        badge.style.background = '#dbeafe';
+        badge.style.color = '#1d4ed8';
+        badge.style.border = '1px solid #93c5fd';
+      } else {
+        badge.textContent = `🟠 Elevated Tax Burden (${effRate}% Effective)`;
+        badge.style.background = '#fef3c7';
+        badge.style.color = '#b45309';
+        badge.style.border = '1px solid #fcd34d';
+      }
+
+      // 2. Build Concise, Readable Insights
+      const items = [];
+
+      // Item 1: Overall Tax Burden & Split
+      let burdenText = `You are projected to pay <strong>${formatCurrency(totalTaxes)}</strong> in total lifetime taxes on <strong>${formatCurrency(totalGrossInflow)}</strong> of gross cash flow, yielding an effective tax rate of <strong>${effRate}%</strong>.`;
+      if (totalTaxes > 0) {
+        burdenText += ` Federal taxes comprise <strong>${pFed}%</strong> (${formatCurrency(totalFed)}), and ${stateCode} state taxes comprise <strong>${pState}%</strong> (${formatCurrency(totalState)}).`;
+      }
+      items.push({ icon: '📊', title: 'Lifetime Tax Burden', text: burdenText });
+
+      // Item 2: Peak Tax Phase & Timing
+      if (peakTax > 0) {
+        let peakText = `Your annual tax bill peaks at <strong>${formatCurrency(peakTax)}</strong> at <strong>Age ${peakAge}</strong>, driven primarily by ${peakDriver}.`;
+        if (preTaxDepletedAge && preTaxDepletedAge < rmdStartAge) {
+          peakText += ` Pre-tax funds are fully drawn down by Age ${preTaxDepletedAge}, transitioning subsequent years into tax-free Roth withdrawals.`;
+        }
+        items.push({ icon: '⏱️', title: 'Peak Tax Phase', text: peakText });
+      } else {
+        items.push({ icon: '⏱️', title: 'Peak Tax Phase', text: 'You enjoy <strong>$0 in annual taxes</strong> across retirement thanks to tax-free Roth distributions and standard deductions.' });
+      }
+
+      // Item 3: Mandatory RMD Analysis
+      let rmdText = '';
+      const initialPretax = (params.bal401kInit || 0) + (params.balIRAInit || 0);
+
+      if (totalRmdDist <= 0 || totalRmdTaxes <= 0) {
+        if (initialPretax > 0) {
+          rmdText = `By strategically drawing down pre-tax accounts before SECURE 2.0 statutory age (<strong>Age ${rmdStartAge}</strong>), your Traditional 401(k)/IRA balance is depleted ahead of time. You <strong>completely eliminate mandatory RMDs ($0 RMD taxes)</strong>, successfully avoiding late-life tax bracket spikes.`;
+        } else {
+          rmdText = `With no Traditional 401(k) or Traditional IRA accounts, your retirement withdrawals are <strong>100% exempt from IRS Required Minimum Distributions ($0 RMD)</strong>.`;
+        }
+      } else {
+        const rmdShare = totalTaxes > 0 ? Math.round((totalRmdTaxes / totalTaxes) * 100) : 0;
+        rmdText = `Under SECURE 2.0 rules, mandatory RMDs begin at <strong>Age ${rmdStartAge}</strong>. The IRS will require <strong>${formatCurrency(totalRmdDist)}</strong> in forced lifetime distributions, generating <strong>${formatCurrency(totalRmdTaxes)}</strong> in cumulative taxes (${rmdShare}% of all taxes paid). Forced distributions peak at <strong>${formatCurrency(peakRmdDist)}/yr</strong> at Age ${peakRmdAge}.`;
+
+        const convRmdTax = (conv && conv.totalLifetimeRmdTax) ? conv.totalLifetimeRmdTax : 0;
+        const smartRmdTax = (smart && smart.totalLifetimeRmdTax) ? smart.totalLifetimeRmdTax : totalRmdTaxes;
+        const rmdSavings = Math.round(convRmdTax - smartRmdTax);
+
+        if (activeStrategy === 'smart' && rmdSavings > 1000) {
+          rmdText += ` Smart Bracket-Filling saves you <strong>${formatCurrency(rmdSavings)}</strong> in forced RMD taxes compared to conventional deferral.`;
+        } else if (params.annualRothConv > 0) {
+          rmdText += ` Your annual Roth conversions actively reduce this pre-tax balance before Age ${rmdStartAge}, mitigating peak RMD brackets.`;
+        }
+      }
+      items.push({ icon: '📜', title: 'Mandatory RMD Analysis', text: rmdText });
+
+      // Item 4: Strategy & Conversion Impact
+      const annualConv = params.annualRothConv || 0;
+      if (activeStrategy === 'smart' && stratTaxSavings > 1000) {
+        items.push({
+          icon: '🎯',
+          title: 'Smart Bracket-Filling',
+          text: `Smart Bracket-Filling saves you <strong>${formatCurrency(stratTaxSavings)}</strong> in lifetime taxes compared to conventional drawdown by strategically filling lower tax brackets early.`
+        });
+      } else if (annualConv > 0) {
+        items.push({
+          icon: '🔄',
+          title: 'Roth Conversions',
+          text: `Converting <strong>${formatCurrency(annualConv)}/yr</strong> pre-pays taxes in lower brackets today, locking in permanent tax-free growth and protecting your estate from future tax spikes.`
+        });
+      } else {
+        items.push({
+          icon: '🎯',
+          title: 'Tax Deferral',
+          text: `Your plan follows standard withdrawal ordering. Utilizing annual Roth conversions or Smart Bracket-Filling can help fill lower brackets early before mandatory RMDs take effect.`
+        });
+      }
+
+      // Item 4: Social Security & Medicare Impact
+      if (totalSS > 0 || totalIrmaaSurcharges > 0) {
+        let govtText = '';
+        if (totalSS > 0) {
+          govtText += `Social Security delivers <strong>${formatCurrency(totalSS)}</strong> in lifetime benefits, with favorable IRS § 86 tax sheltering on non-taxable distributions.`;
+        }
+        if (totalIrmaaSurcharges > 0) {
+          govtText += ` Medicare IRMAA surcharges add <strong>${formatCurrency(totalIrmaaSurcharges)}</strong> starting at Age 65 due to higher provisional MAGI tiers.`;
+        } else if (params.enableIrmaa) {
+          govtText += ` Your retirement MAGI remains safely below Medicare IRMAA surcharge cliff thresholds ($0 surcharges).`;
+        }
+        items.push({ icon: '🏛️', title: 'Social Security & Medicare', text: govtText });
+      }
+
+      // Item 5: Key Takeaway
+      let takeaway = '';
+      if (pState > 20 && totalState > 25000) {
+        takeaway = `State tax is a notable factor (${formatCurrency(totalState)}). Use the <em>'Should I move to another state?'</em> comparison below to see how relocating to a 0% tax state (e.g. Florida, Texas) could reduce your tax bill.`;
+      } else if (effNum < 12.0) {
+        takeaway = `Your retirement plan is <strong>exceptionally tax-efficient</strong> with an effective rate under 12%, maximizing spendable retirement wealth.`;
+      } else {
+        takeaway = `You have strong opportunities to optimize by adjusting the What-If Roth conversion slider above to smooth out lifetime tax brackets.`;
+      }
+      items.push({ icon: '💡', title: 'Key Takeaway', text: takeaway });
+
+      let html = '<div style="display: flex; flex-direction: column; gap: 0.4rem;">';
+      items.forEach(item => {
+        html += `<div style="display: flex; align-items: flex-start; gap: 0.4rem; font-size: 0.77rem; line-height: 1.35;">`;
+        html += `<span style="font-size: 0.85rem; line-height: 1.2;">${item.icon}</span>`;
+        html += `<div><strong>${item.title}:</strong> ${item.text}</div>`;
+        html += `</div>`;
+      });
+      html += '</div>';
+
+      container.innerHTML = html;
+    }
+
+    /* ==========================================================================
+       BALANCE GROWTH STACKED AREA LINE CHART (Final Balance KPI Card)
+       Visualizes portfolio trajectory broken down by Taxable (Brokerage & Pre-Tax)
+       and Non-Taxable (Roth IRA) from current age through Age 90.
+       ========================================================================== */
+    function renderBalanceGrowthChart(schedule, params) {
+      const svg = document.getElementById('bgGrowthSvg');
+      const tooltip = document.getElementById('bgGrowthTooltip');
+      const wrap = document.getElementById('bgCanvasWrap');
+      if (!svg || !schedule || schedule.length === 0) return;
+
+      const currentAge = params ? params.currentAge : (schedule[0] ? schedule[0].age : 50);
+      const retirementAge = params ? params.retirementAge : currentAge;
+
+      const startTaxable = params
+        ? ((params.balBrokerageInit || 0) + (params.bal401kInit || 0) + (params.balIRAInit || 0))
+        : ((schedule[0].balBrokerage || 0) + (schedule[0].balPretax || 0));
+      const startNonTaxable = params
+        ? (params.balRothInit || 0)
+        : (schedule[0].balRoth || 0);
+      const startTotal = startTaxable + startNonTaxable;
+
+      // Build data points list starting from initial start of plan
+      const dataPoints = [{
+        age: currentAge,
+        year: 0,
+        taxable: Math.max(0, startTaxable),
+        nonTaxable: Math.max(0, startNonTaxable),
+        total: Math.max(0, startTotal),
+        isWorking: (currentAge < retirementAge),
+        isStart: true
+      }];
+
+      schedule.forEach((row) => {
+        const tBrok = Math.max(0, row.balBrokerage || 0);
+        const tPretax = Math.max(0, row.balPretax !== undefined ? row.balPretax : ((row.bal401k || 0) + (row.balIRA || 0)));
+        const taxBal = tBrok + tPretax;
+        const nonTaxBal = Math.max(0, row.balRoth || 0);
+        const totBal = Math.max(0, row.totalEndingBal !== undefined ? row.totalEndingBal : (taxBal + nonTaxBal));
+
+        dataPoints.push({
+          age: row.age,
+          year: row.year,
+          taxable: taxBal,
+          nonTaxable: nonTaxBal,
+          total: totBal,
+          isWorking: row.isWorking,
+          isStart: false
+        });
+      });
+
+      // Find max balance and peak point across entire trajectory
+      let maxBal = startTotal;
+      let peakPoint = dataPoints[0];
+      dataPoints.forEach(p => {
+        if (p.total > maxBal) {
+          maxBal = p.total;
+          peakPoint = p;
+        }
+      });
+      if (maxBal <= 0) maxBal = 1;
+
+      // Update header badges
+      const bgStartAgeEl = document.getElementById('bgStartAge');
+      if (bgStartAgeEl) bgStartAgeEl.textContent = currentAge;
+
+      const bgPeakBadge = document.getElementById('bgPeakBadge');
+      if (bgPeakBadge) {
+        bgPeakBadge.textContent = `Peak: ${formatCurrency(peakPoint.total)} (Age ${peakPoint.age})`;
+      }
+
+      const bgAxisStart = document.getElementById('bgAxisStart');
+      if (bgAxisStart) {
+        bgAxisStart.textContent = `Start: ${formatCurrency(startTotal)} (Age ${currentAge})`;
+      }
+
+      const lastPoint = dataPoints[dataPoints.length - 1];
+      const bgAxisEnd = document.getElementById('bgAxisEnd');
+      if (bgAxisEnd) {
+        bgAxisEnd.textContent = `End (90): ${formatCurrency(lastPoint.total)}`;
+        bgAxisEnd.style.color = lastPoint.total > 0 ? '#10b981' : '#dc2626';
+      }
+
+      const bgAxisRetire = document.getElementById('bgAxisRetire');
+      if (bgAxisRetire) {
+        if (retirementAge > currentAge) {
+          bgAxisRetire.style.display = 'inline-block';
+          bgAxisRetire.textContent = `Retire: Age ${retirementAge}`;
+        } else {
+          bgAxisRetire.style.display = 'none';
+        }
+      }
+
+      // SVG coordinates
+      const W = 360;
+      const H = 85;
+      const padL = 10;
+      const padR = 10;
+      const padT = 8;
+      const padB = 8;
+      const plotW = W - padL - padR;
+      const plotH = H - padT - padB;
+      const zeroY = padT + plotH;
+      const numPoints = dataPoints.length;
+
+      const getX = (i) => padL + (i / (numPoints - 1)) * plotW;
+      const getY = (bal) => padT + (1 - (bal / maxBal)) * plotH;
+
+      const coords = dataPoints.map((p, i) => {
+        const x = getX(i);
+        const yTaxable = getY(p.taxable);
+        const yTotal = getY(p.total);
+        return {
+          x: x,
+          yTaxable: yTaxable,
+          yTotal: yTotal,
+          point: p
+        };
+      });
+
+      // 1. Path for Taxable Area (from baseline zeroY up to yTaxable)
+      let taxAreaD = `M ${coords[0].x.toFixed(1)} ${zeroY.toFixed(1)} L ${coords[0].x.toFixed(1)} ${coords[0].yTaxable.toFixed(1)}`;
+      for (let i = 1; i < coords.length; i++) {
+        taxAreaD += ` L ${coords[i].x.toFixed(1)} ${coords[i].yTaxable.toFixed(1)}`;
+      }
+      taxAreaD += ` L ${coords[coords.length - 1].x.toFixed(1)} ${zeroY.toFixed(1)} Z`;
+
+      // 2. Path for Non-Taxable (Roth) Area (stacked from yTaxable up to yTotal)
+      let nonTaxAreaD = `M ${coords[0].x.toFixed(1)} ${coords[0].yTaxable.toFixed(1)} L ${coords[0].x.toFixed(1)} ${coords[0].yTotal.toFixed(1)}`;
+      for (let i = 1; i < coords.length; i++) {
+        nonTaxAreaD += ` L ${coords[i].x.toFixed(1)} ${coords[i].yTotal.toFixed(1)}`;
+      }
+      nonTaxAreaD += ` L ${coords[coords.length - 1].x.toFixed(1)} ${coords[coords.length - 1].yTaxable.toFixed(1)}`;
+      for (let i = coords.length - 2; i >= 0; i--) {
+        nonTaxAreaD += ` L ${coords[i].x.toFixed(1)} ${coords[i].yTaxable.toFixed(1)}`;
+      }
+      nonTaxAreaD += ` Z`;
+
+      // 3. Stroke lines for boundaries
+      let taxLineD = `M ${coords[0].x.toFixed(1)} ${coords[0].yTaxable.toFixed(1)}`;
+      for (let i = 1; i < coords.length; i++) {
+        taxLineD += ` L ${coords[i].x.toFixed(1)} ${coords[i].yTaxable.toFixed(1)}`;
+      }
+
+      let totalLineD = `M ${coords[0].x.toFixed(1)} ${coords[0].yTotal.toFixed(1)}`;
+      for (let i = 1; i < coords.length; i++) {
+        totalLineD += ` L ${coords[i].x.toFixed(1)} ${coords[i].yTotal.toFixed(1)}`;
+      }
+
+      // Retirement milestone vertical line
+      let retireLineSvg = '';
+      if (retirementAge > currentAge) {
+        const retIdx = dataPoints.findIndex(p => p.age === retirementAge);
+        if (retIdx >= 0) {
+          const rx = coords[retIdx].x.toFixed(1);
+          retireLineSvg = `<line x1="${rx}" y1="${padT}" x2="${rx}" y2="${zeroY.toFixed(1)}" stroke="#d97706" stroke-width="1.5" stroke-dasharray="3,3" />`;
+        }
+      }
+
+      const startCoord = coords[0];
+      const endCoord = coords[coords.length - 1];
+      const peakIdx = dataPoints.indexOf(peakPoint);
+      const peakCoord = coords[peakIdx >= 0 ? peakIdx : 0];
+
+      svg.innerHTML = `
+        <defs>
+          <linearGradient id="bgTaxableGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#4f46e5" stop-opacity="0.48" />
+            <stop offset="100%" stop-color="#4f46e5" stop-opacity="0.10" />
+          </linearGradient>
+          <linearGradient id="bgNonTaxGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#10b981" stop-opacity="0.55" />
+            <stop offset="100%" stop-color="#10b981" stop-opacity="0.16" />
+          </linearGradient>
+        </defs>
+        <!-- Horizontal baseline ($0) -->
+        <line x1="${padL}" y1="${zeroY.toFixed(1)}" x2="${(padL + plotW).toFixed(1)}" y2="${zeroY.toFixed(1)}" stroke="#e2e8f0" stroke-width="1" />
+        <!-- Retirement vertical milestone line -->
+        ${retireLineSvg}
+        <!-- Layer 1: Taxable Area (Indigo) -->
+        <path d="${taxAreaD}" fill="url(#bgTaxableGrad)" />
+        <!-- Layer 2: Non-Taxable Roth Area (Emerald) -->
+        <path d="${nonTaxAreaD}" fill="url(#bgNonTaxGrad)" />
+        <!-- Line for Taxable Boundary -->
+        <path d="${taxLineD}" fill="none" stroke="#4f46e5" stroke-width="1.8" stroke-linejoin="round" />
+        <!-- Line for Total Portfolio Boundary -->
+        <path d="${totalLineD}" fill="none" stroke="#059669" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+        <!-- Milestone circles on Total line -->
+        <circle cx="${startCoord.x.toFixed(1)}" cy="${startCoord.yTotal.toFixed(1)}" r="3" fill="#3b82f6" stroke="#ffffff" stroke-width="1.5" />
+        <circle cx="${peakCoord.x.toFixed(1)}" cy="${peakCoord.yTotal.toFixed(1)}" r="4.5" fill="#1e40af" stroke="#ffffff" stroke-width="2" />
+        <circle cx="${endCoord.x.toFixed(1)}" cy="${endCoord.yTotal.toFixed(1)}" r="3.8" fill="${endCoord.point.total > 0 ? '#10b981' : '#dc2626'}" stroke="#ffffff" stroke-width="1.8" />
+        <!-- Interactive crosshair scrubber elements -->
+        <line id="bgScrubLine" x1="0" y1="${padT}" x2="0" y2="${zeroY.toFixed(1)}" stroke="#0f172a" stroke-width="1" stroke-dasharray="2,2" style="display:none;" />
+        <circle id="bgScrubDotTotal" cx="0" cy="0" r="4.5" fill="#059669" stroke="#ffffff" stroke-width="2" style="display:none;" />
+        <circle id="bgScrubDotTax" cx="0" cy="0" r="3.5" fill="#4f46e5" stroke="#ffffff" stroke-width="1.5" style="display:none;" />
+      `;
+
+      // Interactive hover / touch scrubber
+      const scrubLine = svg.querySelector('#bgScrubLine');
+      const scrubDotTotal = svg.querySelector('#bgScrubDotTotal');
+      const scrubDotTax = svg.querySelector('#bgScrubDotTax');
+
+      function updateScrub(clientX) {
+        if (!wrap || !scrubLine || !scrubDotTotal || !tooltip) return;
+        const rect = wrap.getBoundingClientRect();
+        if (rect.width <= 0) return;
+        const normX = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
+        const targetX = padL + normX * plotW;
+
+        let closestCoord = coords[0];
+        let minDist = Infinity;
+        coords.forEach(c => {
+          const d = Math.abs(c.x - targetX);
+          if (d < minDist) {
+            minDist = d;
+            closestCoord = c;
+          }
+        });
+
+        const p = closestCoord.point;
+        scrubLine.setAttribute('x1', closestCoord.x.toFixed(1));
+        scrubLine.setAttribute('x2', closestCoord.x.toFixed(1));
+        scrubLine.style.display = 'block';
+
+        scrubDotTotal.setAttribute('cx', closestCoord.x.toFixed(1));
+        scrubDotTotal.setAttribute('cy', closestCoord.yTotal.toFixed(1));
+        scrubDotTotal.style.display = 'block';
+
+        if (scrubDotTax && p.taxable > 0) {
+          scrubDotTax.setAttribute('cx', closestCoord.x.toFixed(1));
+          scrubDotTax.setAttribute('cy', closestCoord.yTaxable.toFixed(1));
+          scrubDotTax.style.display = 'block';
+        } else if (scrubDotTax) {
+          scrubDotTax.style.display = 'none';
+        }
+
+        const phaseText = p.isStart
+          ? ' (Start)'
+          : (p.isWorking ? ' (Working)' : ' (Retirement)');
+
+        const taxPct = p.total > 0 ? Math.round((p.taxable / p.total) * 100) : 0;
+        const nonTaxPct = p.total > 0 ? Math.max(0, 100 - taxPct) : 0;
+
+        tooltip.innerHTML = `
+          <div style="font-weight:700; margin-bottom:2px; color:#ffffff;">
+            Age ${p.age}${phaseText} · Total: ${formatCurrency(p.total)}
+          </div>
+          <div style="display:flex; gap:8px; font-size:0.71rem; opacity:0.95;">
+            <span><strong style="color:#a5b4fc;">● Taxable:</strong> ${formatCurrency(p.taxable)} (${taxPct}%)</span>
+            <span><strong style="color:#6ee7b7;">● Non-Tax:</strong> ${formatCurrency(p.nonTaxable)} (${nonTaxPct}%)</span>
+          </div>
+        `;
+        tooltip.style.display = 'block';
+
+        const pct = (closestCoord.x / W) * 100;
+        tooltip.style.left = `${pct.toFixed(1)}%`;
+      }
+
+      function hideScrub() {
+        if (scrubLine) scrubLine.style.display = 'none';
+        if (scrubDotTotal) scrubDotTotal.style.display = 'none';
+        if (scrubDotTax) scrubDotTax.style.display = 'none';
+        if (tooltip) tooltip.style.display = 'none';
+      }
+
+      wrap.onmousemove = (e) => updateScrub(e.clientX);
+      wrap.onmouseleave = () => hideScrub();
+
+      wrap.ontouchstart = (e) => {
+        if (e.touches && e.touches[0]) updateScrub(e.touches[0].clientX);
+      };
+      wrap.ontouchmove = (e) => {
+        if (e.touches && e.touches[0]) updateScrub(e.touches[0].clientX);
+      };
+      wrap.ontouchend = () => {
+        setTimeout(hideScrub, 1800);
+      };
+    }
+
+    /* ==========================================================================
+       ANNUAL WITHDRAWALS BY SOURCE STACKED BAR CHART (Withdrawal & Taxes Card)
+       Visualizes annual withdrawals broken down by account sources:
+       - Pre-Tax 401(k) / IRA (Sky Blue: #0284c7)
+       - Mandatory RMD (Amber: #f59e0b)
+       - Brokerage (Purple: #a855f7)
+       - Roth IRA (Emerald Green: #10b981)
+       from current age through Age 90.
+       ========================================================================== */
+    function renderWithdrawalsBySourceChart(schedule, params) {
+      const svg = document.getElementById('wotGrowthSvg');
+      const tooltip = document.getElementById('wotGrowthTooltip');
+      const wrap = document.getElementById('wotCanvasWrap');
+      if (!svg || !schedule || schedule.length === 0) return;
+
+      const currentAge = params ? params.currentAge : (schedule[0] ? schedule[0].age : 50);
+      const retirementAge = params ? params.retirementAge : currentAge;
+
+      // Extract year-by-year withdrawal sources
+      const dataPoints = schedule.map((row) => {
+        const wBrok = Math.max(0, row.wBrokerage || 0);
+        const wPretaxTotal = Math.max(0, row.wPretax || 0);
+        const mandatoryRmd = Math.max(0, row.mandatoryRmd || 0);
+        const wRmd = Math.min(wPretaxTotal, mandatoryRmd);
+        const wPretax = Math.max(0, wPretaxTotal - wRmd);
+        const wRoth = Math.max(0, row.wRoth || 0);
+        const totalW = wBrok + wPretax + wRmd + wRoth;
+
+        return {
+          age: row.age,
+          year: row.year,
+          calendarYear: row.calendarYear,
+          isWorking: row.isWorking,
+          phaseLabel: row.isWorking ? 'Working' : 'Retirement',
+          wBrok: wBrok,
+          wPretax: wPretax,
+          wRmd: wRmd,
+          wRoth: wRoth,
+          totalW: totalW,
+          annualSS: Math.max(0, row.annualSS || 0)
+        };
+      });
+
+      // Find peak withdrawal for Y scale
+      let maxW = 0;
+      let peakPoint = dataPoints[0];
+      dataPoints.forEach(p => {
+        if (p.totalW > maxW) {
+          maxW = p.totalW;
+          peakPoint = p;
+        }
+      });
+      if (maxW <= 0) maxW = 50000; // baseline scale if $0
+
+      // Update header badges
+      const wotStartAgeEl = document.getElementById('wotStartAge');
+      if (wotStartAgeEl) wotStartAgeEl.textContent = currentAge;
+
+      const wotPeakBadge = document.getElementById('wotPeakBadge');
+      if (wotPeakBadge) {
+        if (peakPoint && peakPoint.totalW > 0) {
+          wotPeakBadge.textContent = `Peak: ${formatCurrency(peakPoint.totalW)}/yr (Age ${peakPoint.age})`;
+        } else {
+          wotPeakBadge.textContent = `Peak: $0/yr`;
+        }
+      }
+
+      const wotAxisStart = document.getElementById('wotAxisStart');
+      if (wotAxisStart) {
+        wotAxisStart.textContent = `Start: ${formatCurrency(dataPoints[0].totalW)}/yr`;
+      }
+
+      const totalLifetimeW = dataPoints.reduce((sum, p) => sum + p.totalW, 0);
+      const wotAxisTotal = document.getElementById('wotAxisTotal');
+      if (wotAxisTotal) {
+        wotAxisTotal.textContent = `Lifetime: ${formatCurrency(totalLifetimeW)}`;
+      }
+
+      const wotAxisRetire = document.getElementById('wotAxisRetire');
+      if (wotAxisRetire) {
+        if (retirementAge > currentAge) {
+          wotAxisRetire.style.display = 'inline-block';
+          wotAxisRetire.textContent = `Retire: Age ${retirementAge}`;
+        } else {
+          wotAxisRetire.style.display = 'none';
+        }
+      }
+
+      // SVG coordinates
+      const W = 360;
+      const H = 85;
+      const padL = 10;
+      const padR = 10;
+      const padT = 8;
+      const padB = 8;
+      const plotW = W - padL - padR;
+      const plotH = H - padT - padB;
+      const zeroY = padT + plotH;
+      const numPoints = dataPoints.length;
+
+      const step = plotW / Math.max(1, numPoints);
+      const barW = Math.max(2.5, Math.min(8.5, step * 0.72));
+
+      // Build stacked bar SVG rects
+      let barsSvg = '';
+      dataPoints.forEach((p, i) => {
+        const x = padL + (i + 0.5) * step - barW / 2;
+        let curY = zeroY;
+
+        // 1. Pre-Tax Discretionary (#0284c7)
+        const hPretax = (p.wPretax / maxW) * plotH;
+        if (hPretax > 0.4) {
+          barsSvg += `<rect x="${x.toFixed(1)}" y="${(curY - hPretax).toFixed(1)}" width="${barW.toFixed(1)}" height="${hPretax.toFixed(1)}" fill="#0284c7" />`;
+          curY -= hPretax;
+        }
+
+        // 2. Mandatory RMD (#f59e0b)
+        const hRmd = (p.wRmd / maxW) * plotH;
+        if (hRmd > 0.4) {
+          barsSvg += `<rect x="${x.toFixed(1)}" y="${(curY - hRmd).toFixed(1)}" width="${barW.toFixed(1)}" height="${hRmd.toFixed(1)}" fill="#f59e0b" />`;
+          curY -= hRmd;
+        }
+
+        // 3. Brokerage (#a855f7)
+        const hBrok = (p.wBrok / maxW) * plotH;
+        if (hBrok > 0.4) {
+          barsSvg += `<rect x="${x.toFixed(1)}" y="${(curY - hBrok).toFixed(1)}" width="${barW.toFixed(1)}" height="${hBrok.toFixed(1)}" fill="#a855f7" />`;
+          curY -= hBrok;
+        }
+
+        // 4. Roth IRA (#10b981)
+        const hRoth = (p.wRoth / maxW) * plotH;
+        if (hRoth > 0.4) {
+          barsSvg += `<rect x="${x.toFixed(1)}" y="${(curY - hRoth).toFixed(1)}" width="${barW.toFixed(1)}" height="${hRoth.toFixed(1)}" fill="#10b981" rx="1.2" />`;
+          curY -= hRoth;
+        }
+      });
+
+      // Retirement milestone vertical line
+      let retireLineSvg = '';
+      if (retirementAge > currentAge) {
+        const retIdx = dataPoints.findIndex(p => p.age === retirementAge);
+        if (retIdx >= 0) {
+          const rx = (padL + (retIdx + 0.5) * step).toFixed(1);
+          retireLineSvg = `<line x1="${rx}" y1="${padT}" x2="${rx}" y2="${zeroY.toFixed(1)}" stroke="#0284c7" stroke-width="1.3" stroke-dasharray="3,3" />`;
+        }
+      }
+
+      svg.innerHTML = `
+        <!-- Baseline ($0) -->
+        <line x1="${padL}" y1="${zeroY.toFixed(1)}" x2="${(padL + plotW).toFixed(1)}" y2="${zeroY.toFixed(1)}" stroke="#e2e8f0" stroke-width="1" />
+        <!-- Midline dashed guide -->
+        <line x1="${padL}" y1="${(padT + plotH * 0.5).toFixed(1)}" x2="${(padL + plotW).toFixed(1)}" y2="${(padT + plotH * 0.5).toFixed(1)}" stroke="#f1f5f9" stroke-width="1" stroke-dasharray="3,3" />
+        <!-- Retirement vertical milestone line -->
+        ${retireLineSvg}
+        <!-- Stacked Bars -->
+        ${barsSvg}
+        <!-- Interactive hover highlight rect and crosshair -->
+        <rect id="wotHoverBar" x="0" y="${padT}" width="${step.toFixed(1)}" height="${plotH.toFixed(1)}" fill="#0284c7" opacity="0.12" rx="2" style="display:none;" />
+      `;
+
+      // Interactive hover / touch scrubber
+      const hoverBar = svg.querySelector('#wotHoverBar');
+
+      function updateScrub(clientX) {
+        if (!wrap || !hoverBar || !tooltip) return;
+        const rect = wrap.getBoundingClientRect();
+        if (rect.width <= 0) return;
+        const normX = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
+        const idx = Math.min(numPoints - 1, Math.max(0, Math.floor(normX * numPoints)));
+        const p = dataPoints[idx];
+
+        const barX = padL + idx * step;
+        hoverBar.setAttribute('x', barX.toFixed(1));
+        hoverBar.style.display = 'block';
+
+        // Format breakdown items
+        const parts = [];
+        if (p.wBrok > 0) parts.push(`<span style="color:#c084fc;">● Brok:</span> <span style="color:#f1f5f9;">${formatCurrency(p.wBrok)}</span>`);
+        if (p.wPretax > 0) parts.push(`<span style="color:#38bdf8;">● Pre-Tax:</span> <span style="color:#f1f5f9;">${formatCurrency(p.wPretax)}</span>`);
+        if (p.wRmd > 0) parts.push(`<span style="color:#fbbf24;">● RMD:</span> <span style="color:#f1f5f9;">${formatCurrency(p.wRmd)}</span>`);
+        if (p.wRoth > 0) parts.push(`<span style="color:#34d399;">● Roth:</span> <span style="color:#f1f5f9;">${formatCurrency(p.wRoth)}</span>`);
+        if (parts.length === 0) parts.push(`<span style="color:#94a3b8;">$0 Withdrawals (${p.phaseLabel})</span>`);
+        if (p.annualSS > 0) parts.push(`<span style="color:#a7f3d0;">· SS:</span> <span style="color:#f1f5f9;">${formatCurrency(p.annualSS)}</span>`);
+
+        tooltip.innerHTML = `
+          <div style="font-weight: 700; color: #ffffff; margin-bottom: 2px;">
+            Age ${p.age} (${p.phaseLabel}) · Withdrawal: <span style="color: #38bdf8;">${formatCurrency(p.totalW)}</span>
+          </div>
+          <div style="font-size: 0.75rem; color: #cbd5e1; line-height: 1.35; display: flex; flex-wrap: wrap; gap: 0.35rem 0.60rem;">
+            ${parts.join('')}
+          </div>
+        `;
+
+        const tooltipW = 220;
+        let leftPx = clientX - rect.left - (tooltipW / 2);
+        if (leftPx < 6) leftPx = 6;
+        if (leftPx + tooltipW > rect.width - 6) leftPx = rect.width - tooltipW - 6;
+        tooltip.style.left = `${leftPx}px`;
+        tooltip.style.top = '6px';
+        tooltip.style.display = 'block';
+      }
+
+      function hideScrub() {
+        if (hoverBar) hoverBar.style.display = 'none';
+        if (tooltip) tooltip.style.display = 'none';
+      }
+
+      // Mouse & Touch listeners on wrap
+      wrap.onmousemove = (e) => updateScrub(e.clientX);
+      wrap.onmouseleave = hideScrub;
+      wrap.ontouchstart = (e) => {
+        if (e.touches && e.touches[0]) updateScrub(e.touches[0].clientX);
+      };
+      wrap.ontouchmove = (e) => {
+        if (e.touches && e.touches[0]) updateScrub(e.touches[0].clientX);
+      };
+      wrap.ontouchend = hideScrub;
+    }
+
+    /* ==========================================================================
+       TAXES OVER TIME STACKED AREA LINE CHART (Taxes KPI Card)
+       Visualizes annual taxes paid over time broken down by:
+       - RMD: Taxes attributable to mandatory RMD distributions
+       - Capital Gains: Taxes from taxable brokerage capital gains
+       - Social Security: Taxes attributable to taxable Social Security
+       - Ordinary Incomes: Ordinary income taxes on pre-tax withdrawals & conversions
+       ========================================================================== */
+    function renderTaxesOverTimeChart(schedule, params) {
+      const svg = document.getElementById('totGrowthSvg');
+      const tooltip = document.getElementById('totGrowthTooltip');
+      const wrap = document.getElementById('totCanvasWrap');
+      if (!svg || !schedule || schedule.length === 0) return;
+
+      const currentAge = params ? params.currentAge : (schedule[0] ? schedule[0].age : 50);
+      const retirementAge = params ? params.retirementAge : currentAge;
+
+      // Extract year-by-year tax data points
+      const dataPoints = schedule.map((row) => {
+        const total = Math.max(0, row.estTax || 0);
+        const rmd = Math.max(0, row.rmdTax || 0);
+        const capGain = Math.max(0, row.capGainTax || 0);
+        const ss = Math.max(0, row.ssTax || 0);
+        // Ordinary income tax accounts for the remainder: conversion tax + ordinary living withdrawals
+        const ord = Math.max(0, total - rmd - capGain - ss);
+
+        return {
+          age: row.age,
+          year: row.year,
+          calendarYear: row.calendarYear,
+          isWorking: row.isWorking,
+          phaseLabel: row.isWorking ? 'Working' : 'Retirement',
+          ord: ord,
+          ss: ss,
+          capGain: capGain,
+          rmd: rmd,
+          total: total
+        };
+      });
+
+      // Find maximum annual tax for Y scaling
+      let maxTax = 0;
+      let peakPoint = dataPoints[0];
+      dataPoints.forEach(p => {
+        if (p.total > maxTax) {
+          maxTax = p.total;
+          peakPoint = p;
+        }
+      });
+      if (maxTax <= 0) maxTax = 1000; // default baseline scale if 0 taxes
+
+      // Update header badges
+      const totStartAgeEl = document.getElementById('totStartAge');
+      if (totStartAgeEl) totStartAgeEl.textContent = currentAge;
+
+      const totPeakBadge = document.getElementById('totPeakBadge');
+      if (totPeakBadge) {
+        if (peakPoint && peakPoint.total > 0) {
+          totPeakBadge.textContent = `Peak: ${formatCurrency(peakPoint.total)}/yr (Age ${peakPoint.age})`;
+        } else {
+          totPeakBadge.textContent = `Peak: $0/yr`;
+        }
+      }
+
+      const totAxisStart = document.getElementById('totAxisStart');
+      if (totAxisStart) {
+        totAxisStart.textContent = `Start: ${formatCurrency(dataPoints[0].total)}/yr`;
+      }
+
+      const totalLifetime = dataPoints.reduce((sum, p) => sum + p.total, 0);
+      const totAxisTotal = document.getElementById('totAxisTotal');
+      if (totAxisTotal) {
+        totAxisTotal.textContent = `Lifetime: ${formatCurrency(totalLifetime)}`;
+      }
+
+      const totAxisRetire = document.getElementById('totAxisRetire');
+      if (totAxisRetire) {
+        if (retirementAge > currentAge) {
+          totAxisRetire.style.display = 'inline-block';
+          totAxisRetire.textContent = `Retire: Age ${retirementAge}`;
+        } else {
+          totAxisRetire.style.display = 'none';
+        }
+      }
+
+      // SVG coordinates
+      const W = 360;
+      const H = 85;
+      const padL = 10;
+      const padR = 10;
+      const padT = 8;
+      const padB = 8;
+      const plotW = W - padL - padR;
+      const plotH = H - padT - padB;
+      const zeroY = padT + plotH;
+      const numPoints = dataPoints.length;
+
+      const getX = (i) => padL + (i / Math.max(1, numPoints - 1)) * plotW;
+      const getY = (val) => padT + (1 - Math.min(1, Math.max(0, val / maxTax))) * plotH;
+
+      // Calculate stacked Y boundaries for each coordinate:
+      // Base: zeroY
+      // Stack 1: Ordinary Incomes [zeroY -> yOrd]
+      // Stack 2: Social Security [yOrd -> ySS]
+      // Stack 3: Capital Gains [ySS -> yCap]
+      // Stack 4: RMD [yCap -> yTotal]
+      const coords = dataPoints.map((p, i) => {
+        const x = getX(i);
+        const cumOrd = p.ord;
+        const cumSS = cumOrd + p.ss;
+        const cumCap = cumSS + p.capGain;
+        const cumTotal = p.total;
+
+        return {
+          x: x,
+          yZero: zeroY,
+          yOrd: getY(cumOrd),
+          ySS: getY(cumSS),
+          yCap: getY(cumCap),
+          yTotal: getY(cumTotal),
+          point: p
+        };
+      });
+
+      function buildStackedAreaPath(topKey, botKey) {
+        let d = `M ${coords[0].x.toFixed(1)} ${coords[0][botKey].toFixed(1)}`;
+        for (let i = 0; i < coords.length; i++) {
+          d += ` L ${coords[i].x.toFixed(1)} ${coords[i][topKey].toFixed(1)}`;
+        }
+        for (let i = coords.length - 1; i >= 0; i--) {
+          d += ` L ${coords[i].x.toFixed(1)} ${coords[i][botKey].toFixed(1)}`;
+        }
+        d += ` Z`;
+        return d;
+      }
+
+      const ordAreaD = buildStackedAreaPath('yOrd', 'yZero');
+      const ssAreaD = buildStackedAreaPath('ySS', 'yOrd');
+      const capAreaD = buildStackedAreaPath('yCap', 'ySS');
+      const rmdAreaD = buildStackedAreaPath('yTotal', 'yCap');
+
+      let totalLineD = `M ${coords[0].x.toFixed(1)} ${coords[0].yTotal.toFixed(1)}`;
+      for (let i = 1; i < coords.length; i++) {
+        totalLineD += ` L ${coords[i].x.toFixed(1)} ${coords[i].yTotal.toFixed(1)}`;
+      }
+
+      // Retirement milestone vertical line
+      let retireLineSvg = '';
+      if (retirementAge > currentAge) {
+        const retIdx = dataPoints.findIndex(p => p.age === retirementAge);
+        if (retIdx >= 0) {
+          const rx = coords[retIdx].x.toFixed(1);
+          retireLineSvg = `<line x1="${rx}" y1="${padT}" x2="${rx}" y2="${zeroY.toFixed(1)}" stroke="#d97706" stroke-width="1.5" stroke-dasharray="3,3" />`;
+        }
+      }
+
+      const peakIdx = dataPoints.indexOf(peakPoint);
+      const peakCoord = coords[peakIdx >= 0 ? peakIdx : 0];
+
+      svg.innerHTML = `
+        <defs>
+          <linearGradient id="totOrdGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#2563eb" stop-opacity="0.65" />
+            <stop offset="100%" stop-color="#2563eb" stop-opacity="0.20" />
+          </linearGradient>
+          <linearGradient id="totSSGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#10b981" stop-opacity="0.65" />
+            <stop offset="100%" stop-color="#10b981" stop-opacity="0.20" />
+          </linearGradient>
+          <linearGradient id="totCapGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#8b5cf6" stop-opacity="0.65" />
+            <stop offset="100%" stop-color="#8b5cf6" stop-opacity="0.20" />
+          </linearGradient>
+          <linearGradient id="totRmdGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#f59e0b" stop-opacity="0.75" />
+            <stop offset="100%" stop-color="#f59e0b" stop-opacity="0.25" />
+          </linearGradient>
+        </defs>
+        <!-- Horizontal baseline ($0) -->
+        <line x1="${padL}" y1="${zeroY.toFixed(1)}" x2="${(padL + plotW).toFixed(1)}" y2="${zeroY.toFixed(1)}" stroke="#e2e8f0" stroke-width="1" />
+        <!-- Retirement vertical milestone line -->
+        ${retireLineSvg}
+        <!-- Layer 1: Ordinary Incomes Area (Blue) -->
+        <path d="${ordAreaD}" fill="url(#totOrdGrad)" />
+        <!-- Layer 2: Social Security Area (Green) -->
+        <path d="${ssAreaD}" fill="url(#totSSGrad)" />
+        <!-- Layer 3: Capital Gains Area (Purple) -->
+        <path d="${capAreaD}" fill="url(#totCapGrad)" />
+        <!-- Layer 4: RMD Area (Amber) -->
+        <path d="${rmdAreaD}" fill="url(#totRmdGrad)" />
+        <!-- Boundary curve for Total Annual Tax -->
+        <path d="${totalLineD}" fill="none" stroke="#dc2626" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+        <!-- Peak marker circle on Total line -->
+        ${peakPoint && peakPoint.total > 0 ? `<circle cx="${peakCoord.x.toFixed(1)}" cy="${peakCoord.yTotal.toFixed(1)}" r="4.2" fill="#b91c1c" stroke="#ffffff" stroke-width="1.8" />` : ''}
+        <!-- Interactive crosshair scrubber elements -->
+        <line id="totScrubLine" x1="0" y1="${padT}" x2="0" y2="${zeroY.toFixed(1)}" stroke="#0f172a" stroke-width="1" stroke-dasharray="2,2" style="display:none;" />
+        <circle id="totScrubDotTotal" cx="0" cy="0" r="4.2" fill="#dc2626" stroke="#ffffff" stroke-width="2" style="display:none;" />
+      `;
+
+      // Interactive hover / touch scrubber
+      const scrubLine = svg.querySelector('#totScrubLine');
+      const scrubDotTotal = svg.querySelector('#totScrubDotTotal');
+
+      function updateScrub(clientX) {
+        if (!wrap || !scrubLine || !scrubDotTotal || !tooltip) return;
+        const rect = wrap.getBoundingClientRect();
+        if (rect.width <= 0) return;
+        const normX = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
+        const targetX = padL + normX * plotW;
+
+        let closestCoord = coords[0];
+        let minDist = Infinity;
+        coords.forEach(c => {
+          const d = Math.abs(c.x - targetX);
+          if (d < minDist) {
+            minDist = d;
+            closestCoord = c;
+          }
+        });
+
+        const p = closestCoord.point;
+        scrubLine.setAttribute('x1', closestCoord.x.toFixed(1));
+        scrubLine.setAttribute('x2', closestCoord.x.toFixed(1));
+        scrubLine.style.display = 'block';
+
+        scrubDotTotal.setAttribute('cx', closestCoord.x.toFixed(1));
+        scrubDotTotal.setAttribute('cy', closestCoord.yTotal.toFixed(1));
+        scrubDotTotal.style.display = 'block';
+
+        // Format breakdown items
+        const parts = [];
+        if (p.rmd > 0) parts.push(`<span style="color:#fbbf24;">● RMD:</span> ${formatCurrency(p.rmd)}`);
+        if (p.capGain > 0) parts.push(`<span style="color:#c084fc;">● Cap Gains:</span> ${formatCurrency(p.capGain)}`);
+        if (p.ss > 0) parts.push(`<span style="color:#34d399;">● Soc Sec:</span> ${formatCurrency(p.ss)}`);
+        if (p.ord > 0) parts.push(`<span style="color:#60a5fa;">● Ordinary:</span> ${formatCurrency(p.ord)}`);
+
+        const breakdownHtml = parts.length > 0
+          ? `<div style="margin-top:2px; font-size:0.70rem; color:#cbd5e1;">${parts.join(' · ')}</div>`
+          : `<div style="margin-top:2px; font-size:0.70rem; color:#94a3b8;">$0 Taxes (Tax-Free Year)</div>`;
+
+        tooltip.innerHTML = `
+          <div style="font-weight:700; margin-bottom:2px; color:#ffffff;">Age ${p.age} (${p.phaseLabel}) · Total: <span style="color:#f87171;">${formatCurrency(p.total)}</span></div>
+          ${breakdownHtml}
+        `;
+        tooltip.style.display = 'block';
+
+        const pct = (closestCoord.x / W) * 100;
+        tooltip.style.left = `${pct.toFixed(1)}%`;
+      }
+
+      function hideScrub() {
+        if (scrubLine) scrubLine.style.display = 'none';
+        if (scrubDotTotal) scrubDotTotal.style.display = 'none';
+        if (tooltip) tooltip.style.display = 'none';
+      }
+
+      wrap.onmousemove = (e) => updateScrub(e.clientX);
+      wrap.onmouseleave = () => hideScrub();
+
+      wrap.ontouchstart = (e) => {
+        if (e.touches && e.touches[0]) updateScrub(e.touches[0].clientX);
+      };
+      wrap.ontouchmove = (e) => {
+        if (e.touches && e.touches[0]) updateScrub(e.touches[0].clientX);
+      };
+      wrap.ontouchend = () => {
+        setTimeout(hideScrub, 1800);
+      };
     }
 
     /* ==========================================================================
@@ -4118,10 +6402,10 @@
       if (btnMillion) btnMillion.className = 'btn-retire-target' + (targetBalance === 1000000 ? ' active-million' : '');
       if (btn10Million) btn10Million.className = 'btn-retire-target' + (targetBalance === 10000000 ? ' active-10million' : '');
 
-      updateRetirementSolverBanner(targetBalance);
+      updateRetirementSolverBanner(targetBalance, true);
     }
 
-    function updateRetirementSolverBanner(targetBalance) {
+    function updateRetirementSolverBanner(targetBalance, autoApply = false) {
       if (targetBalance === null || targetBalance === undefined) return;
       const resultBox = document.getElementById('retireCalcResult');
       if (!resultBox) return;
@@ -4170,18 +6454,29 @@
         }
       }
 
+      // If autoApply is requested and a viable retirement age is found, immediately apply it to the input/slider
+      if (autoApply && optimalRetireAge !== null && optimalRetireAge !== currentRetireAge) {
+        const retInput = document.getElementById('retirementAge');
+        const retSlider = document.getElementById('retirementAgeSlider');
+        if (retInput) retInput.value = optimalRetireAge;
+        if (retSlider) retSlider.value = Math.min(parseFloat(retSlider.max), Math.max(parseFloat(retSlider.min), optimalRetireAge));
+        updateAgeBadges();
+        calculatePlan();
+        return; // calculatePlan re-invokes updateRetirementSolverBanner(activeRetirementTarget, false) which displays the confirmation below
+      }
+
       resultBox.style.display = 'block';
 
       if (optimalRetireAge !== null) {
         resultBox.className = 'retire-result-box';
-        let html = `<div><strong>🎯 ${targetLabel}: Optimal Retirement Age ${optimalRetireAge}</strong></div>`;
+        let html = `<div><strong>🎯 Calculated Retirement Age: ${optimalRetireAge} (${targetLabel})</strong></div>`;
         html += `<div style="margin-top: 0.25rem;">Projected balance at Age 90: <strong style="color:#15803d;">${formatCurrency(optimalFinalBal)}</strong></div>`;
         if (optimalGrownAssets) {
-          html += `<div style="margin-top: 0.25rem; font-size: 0.80rem; line-height: 1.35; opacity: 0.95;">Working from current Age ${currentAge} until Retirement Age ${optimalRetireAge} allows your ${formatCurrency(totalStartAssets)} current assets to compound to <strong>${formatCurrency(optimalGrownAssets.total)}</strong> at retirement, funding your <strong>${formatCurrency(optimalGrownAssets.inflatedExpense)}/yr</strong> inflation-adjusted living expenses. Retiring at Age ${optimalRetireAge - 1} would run out of money before Age 90, making Age ${optimalRetireAge} the earliest solvent retirement age.</div>`;
+          html += `<div style="margin-top: 0.25rem; font-size: 0.78rem; line-height: 1.35; opacity: 0.95;">Working from current Age ${currentAge} until Retirement Age ${optimalRetireAge} allows your ${formatCurrency(totalStartAssets)} current assets to compound to <strong>${formatCurrency(optimalGrownAssets.total)}</strong> at retirement, funding your <strong>${formatCurrency(optimalGrownAssets.inflatedExpense)}/yr</strong> inflation-adjusted living expenses through Age 90.</div>`;
         } else if (optimalRetireAge === currentAge) {
-          html += `<div style="margin-top: 0.25rem; font-size: 0.80rem; line-height: 1.35; opacity: 0.95;">With your current assets of ${formatCurrency(totalStartAssets)}, your plan is already solvent! Retiring right now at current Age ${currentAge} achieves this target (Projected balance at Age 90: ${formatCurrency(optimalFinalBal)}).</div>`;
+          html += `<div style="margin-top: 0.25rem; font-size: 0.78rem; line-height: 1.35; opacity: 0.95;">With your current assets of ${formatCurrency(totalStartAssets)}, your plan is already solvent! Retiring right now at current Age ${currentAge} achieves this target (Projected balance at Age 90: ${formatCurrency(optimalFinalBal)}).</div>`;
         } else {
-          html += `<div style="margin-top: 0.25rem; font-size: 0.80rem; line-height: 1.35; opacity: 0.95;">Retiring at Retirement Age ${optimalRetireAge} achieves this target.</div>`;
+          html += `<div style="margin-top: 0.25rem; font-size: 0.78rem; line-height: 1.35; opacity: 0.95;">Retiring at Retirement Age ${optimalRetireAge} achieves this target.</div>`;
         }
         html += `<div style="margin-top: 0.45rem; display: flex; gap: 0.4rem; align-items: center; flex-wrap: wrap;">`;
         if (optimalRetireAge !== currentRetireAge) {
@@ -4193,7 +6488,7 @@
       } else {
         resultBox.className = 'retire-result-box warning';
         let html = `<div><strong>⚠️ Target Not Reachable: ${targetLabel}</strong></div>`;
-        html += `<div style="margin-top: 0.25rem;">Even delaying retirement from current Age ${currentAge} to Age 90, annual expenses of ${formatCurrency(currentExpense)} prevent reaching ${formatCurrency(targetBalance)} at Age 90. Try reducing expenses or increasing starting assets.</div>`;
+        html += `<div style="margin-top: 0.25rem; font-size: 0.78rem;">Even delaying retirement from current Age ${currentAge} to Age 90, annual expenses of ${formatCurrency(currentExpense)} prevent reaching ${formatCurrency(targetBalance)} at Age 90. Try reducing expenses or increasing starting assets.</div>`;
         html += `<div style="margin-top: 0.45rem;"><button type="button" class="btn-apply-age" style="background:#f1f5f9; color:#475569; border-color:#cbd5e1;" onclick="resetRetirementBaseline()">✕ Close</button></div>`;
         resultBox.innerHTML = html;
       }
@@ -5066,6 +7361,11 @@
       if (currentSchedule && currentSchedule.length > 0) {
         renderBarChart(currentSchedule);
         renderAreaChart(currentSchedule);
+        if (currentPlanParams) {
+          renderBalanceGrowthChart(currentSchedule, currentPlanParams);
+          renderWithdrawalsBySourceChart(currentSchedule, currentPlanParams);
+          renderTaxesOverTimeChart(currentSchedule, currentPlanParams);
+        }
       }
     });
 
@@ -5073,8 +7373,12 @@
       if (window.innerWidth < 1024) {
         document.getElementById('panelResults')?.classList.add('hidden-mobile');
       }
+      initMobileCarousel();
       updateAgeBadges();
       updateSSBadge();
+      if (typeof updateWhatIfUIFromInputs === 'function') {
+        updateWhatIfUIFromInputs();
+      }
       onStateChange();
     });
   </script>
