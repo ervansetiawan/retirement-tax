@@ -2184,6 +2184,244 @@
       }
     }
 
+    /* Withdrawal & Tax Strategy Timeline Roadmap */
+    .timeline-card {
+      margin-bottom: 1rem;
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+      transition: all 0.2s ease;
+    }
+    .timeline-toggle-btn {
+      width: 100%;
+      background: #f8fafc;
+      border: none;
+      padding: 0.75rem 0.95rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+      transition: background 0.15s ease;
+      font-family: inherit;
+    }
+    .timeline-toggle-btn:hover {
+      background: #f1f5f9;
+    }
+    .timeline-header-left {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .timeline-title {
+      font-size: 0.96rem;
+      font-weight: 700;
+      color: #1e3a8a;
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+    }
+    .timeline-subtitle {
+      font-size: 0.80rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+    .timeline-header-right {
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+      flex-shrink: 0;
+    }
+    .timeline-preview-badge {
+      font-size: 0.80rem;
+      font-weight: 700;
+      color: #2563eb;
+      background: #eff6ff;
+      border: 1px solid #dbeafe;
+      padding: 0.18rem 0.55rem;
+      border-radius: 9999px;
+      white-space: nowrap;
+    }
+    @media (max-width: 640px) {
+      .timeline-subtitle {
+        display: none;
+      }
+    }
+    .timeline-content {
+      padding: 0.95rem 1rem 0.5rem 1rem;
+    }
+    .timeline-flow {
+      display: flex;
+      flex-direction: column;
+    }
+    .timeline-step {
+      display: flex;
+      gap: 0.75rem;
+      position: relative;
+      padding-bottom: 0.95rem;
+    }
+    .timeline-spine-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 32px;
+      flex-shrink: 0;
+    }
+    .timeline-node {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.95rem;
+      border: 2px solid;
+      background: #ffffff;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+      z-index: 2;
+      flex-shrink: 0;
+    }
+    .timeline-line {
+      width: 2px;
+      flex-grow: 1;
+      background: #cbd5e1;
+      margin-top: 4px;
+      min-height: 20px;
+    }
+    .timeline-step:last-child .timeline-line {
+      display: none;
+    }
+    .timeline-card-box {
+      flex-grow: 1;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 0.65rem 0.85rem;
+      transition: all 0.15s ease;
+    }
+    .timeline-card-box:hover {
+      border-color: #cbd5e1;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+    }
+    .timeline-phase-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      margin-bottom: 0.3rem;
+    }
+    .timeline-age-badge {
+      font-size: 0.82rem;
+      font-weight: 800;
+      color: #0f172a;
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      padding: 0.15rem 0.45rem;
+      border-radius: 4px;
+    }
+    .timeline-category-badge {
+      font-size: 0.76rem;
+      font-weight: 700;
+      padding: 0.15rem 0.50rem;
+      border-radius: 9999px;
+      border: 1px solid;
+    }
+    .timeline-phase-title {
+      font-size: 0.94rem;
+      font-weight: 700;
+      color: #0f172a;
+      margin-bottom: 0.25rem;
+      line-height: 1.35;
+    }
+    .timeline-phase-desc {
+      font-size: 0.84rem;
+      color: #475569;
+      line-height: 1.45;
+    }
+    .timeline-metrics-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem 0.60rem;
+      margin-top: 0.45rem;
+      padding-top: 0.35rem;
+      border-top: 1px dashed #e2e8f0;
+    }
+    .timeline-metric-chip {
+      font-size: 0.78rem;
+      color: #334155;
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      padding: 0.15rem 0.45rem;
+      border-radius: 4px;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+    @media (max-width: 640px) {
+      .timeline-card-box {
+        padding: 0.55rem 0.70rem;
+      }
+      .timeline-step {
+        gap: 0.55rem;
+        padding-bottom: 0.80rem;
+      }
+      .timeline-spine-wrap {
+        width: 28px;
+      }
+      .timeline-node {
+        width: 28px;
+        height: 28px;
+        font-size: 0.85rem;
+      }
+      .timeline-phase-title {
+        font-size: 0.90rem;
+      }
+      .timeline-phase-desc {
+        font-size: 0.80rem;
+      }
+      .timeline-metric-chip {
+        font-size: 0.74rem;
+      }
+    }
+
+    /* Out-of-Money / Depleted Milestone Timeline Styling */
+    .timeline-step-depleted .timeline-node {
+      background: #fef2f2 !important;
+      border-color: #ef4444 !important;
+      color: #dc2626 !important;
+      box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.22) !important;
+      animation: pulse-depleted 2.5s infinite ease-in-out;
+    }
+    @keyframes pulse-depleted {
+      0%, 100% { box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.22); }
+      50% { box-shadow: 0 0 0 9px rgba(239, 68, 68, 0.08); }
+    }
+    .timeline-card-box-depleted {
+      background: linear-gradient(135deg, #fff5f5 0%, #fef2f2 100%) !important;
+      border: 1.5px solid #f87171 !important;
+      box-shadow: 0 3px 12px rgba(220, 38, 38, 0.08) !important;
+    }
+    .timeline-card-box-depleted .timeline-phase-title {
+      color: #991b1b !important;
+      font-weight: 800 !important;
+    }
+    .timeline-card-box-depleted .timeline-phase-desc {
+      color: #7f1d1d !important;
+    }
+    .timeline-card-box-depleted .timeline-metrics-row {
+      border-top-color: #fca5a5 !important;
+    }
+    .timeline-card-box-depleted .timeline-metric-chip {
+      background: #ffffff !important;
+      border-color: #fca5a5 !important;
+      color: #991b1b !important;
+      font-weight: 600;
+    }
+
     /* KPI Lifetime Taxes Horizontal Breakdown Bar */
     .kpi-tax-hbar-wrap {
       width: 100%;
@@ -3367,15 +3605,30 @@
                   <div class="chart-title">Year-by-Year Schedule</div>
                   <div style="font-size: 1.0rem; color: var(--text-muted); font-weight: 500; margin-top: 2px;">Total inflows (withdrawal + Social Security) and where money goes: living expenses, taxes & healthcare</div>
                 </div>
-                <div style="display: flex; gap: 0.5rem;">
-                  <button class="btn-action btn-secondary" onclick="exportCSV()">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                      <polyline points="7 10 12 15 17 10"></polyline>
-                      <line x1="12" y1="15" x2="12" y2="3"></line>
-                    </svg>
-                    CSV Export
-                  </button>
+              </div>
+              <!-- Withdrawal & Tax Strategy Timeline Visualization -->
+              <div class="timeline-card" id="timelineSection">
+                <button type="button" class="timeline-toggle-btn" id="btnToggleTimeline" onclick="toggleTimelineSection()" aria-expanded="true">
+                  <div class="timeline-header-left">
+                    <div class="timeline-title">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <polyline points="12 6 12 12 16 14"></polyline>
+                      </svg>
+                      <span>Withdrawal &amp; Tax Strategy Roadmap</span>
+                    </div>
+                    <span class="timeline-subtitle">Lifecycle phases grouped by withdrawal source, tax strategies &amp; statutory milestones</span>
+                  </div>
+                  <div class="timeline-header-right">
+                    <span class="timeline-preview-badge" id="timelineSummaryBadge">Analyzing Roadmap...</span>
+                    <span id="timelineChevron" class="milestones-chevron rotated">▼</span>
+                  </div>
+                </button>
+
+                <div class="timeline-content" id="timelineContent">
+                  <div class="timeline-flow" id="timelineFlow">
+                    <!-- Dynamic timeline phases injected by renderTimelineVisualization() -->
+                  </div>
                 </div>
               </div>
 
@@ -3626,6 +3879,7 @@
     let activeStrategy = 'smart';
     let currentSchedule = [];
     let currentPlanParams = null;
+    let currentDepletedAge = null;
     let chartViewMode = '10yr'; // '10yr' or 'all'
     let chartStartIndex = 0;    // Start index for 10-year window
     const CHART_WINDOW_SIZE = 10;
@@ -4111,6 +4365,13 @@
         setTimeout(() => {
           renderWithdrawalsBySourceChart(currentSchedule, currentPlanParams);
           renderTaxesOverTimeChart(currentSchedule, currentPlanParams);
+        }, 50);
+      }
+
+      // If switching to Schedule Table & Roadmap (card 2), re-render Timeline Visualization
+      if (index === 2 && currentSchedule && currentSchedule.length > 0 && currentPlanParams) {
+        setTimeout(() => {
+          renderTimelineVisualization(currentSchedule, currentPlanParams, currentDepletedAge);
         }, 50);
       }
     }
@@ -5272,11 +5533,13 @@
       const activeResult = smartResult;
       currentSchedule = activeResult.schedule;
       currentPlanParams = params;
+      currentDepletedAge = activeResult.depletedAge;
 
       updateKpis(smartResult, convResult, activeResult, params);
       renderBarChart(activeResult.schedule);
       renderAreaChart(activeResult.schedule);
       renderTable(activeResult.schedule);
+      renderTimelineVisualization(activeResult.schedule, params, activeResult.depletedAge);
       if (typeof updateRetirementSolverBanner === 'function' && typeof activeRetirementTarget !== 'undefined' && activeRetirementTarget !== null) {
         updateRetirementSolverBanner(activeRetirementTarget);
       }
@@ -7434,6 +7697,334 @@
       if (svg) svg.innerHTML = '';
     }
 
+    /* ==========================================================================
+       WITHDRAWAL & TAX STRATEGY TIMELINE ROADMAP
+       Dynamically groups simulated drawdown into lifecycle phases by withdrawal
+       sources, tax strategies, and statutory milestones.
+       ========================================================================== */
+    function toggleTimelineSection() {
+      const content = document.getElementById('timelineContent');
+      const chev = document.getElementById('timelineChevron');
+      const btn = document.getElementById('btnToggleTimeline');
+      if (!content) return;
+      const isHidden = (content.style.display === 'none');
+      content.style.display = isHidden ? 'block' : 'none';
+      if (chev) chev.classList.toggle('rotated', isHidden);
+      if (btn) btn.setAttribute('aria-expanded', isHidden ? 'true' : 'false');
+    }
+
+    function generateTimelinePhases(schedule, params, depletedAge) {
+      if (!schedule || schedule.length === 0) return [];
+
+      // Determine depleted age if not provided
+      if (depletedAge === undefined || depletedAge === null) {
+        for (let i = 0; i < schedule.length; i++) {
+          const d = schedule[i];
+          if (d.age >= params.retirementAge) {
+            const prevBal = (i > 0) ? (schedule[i - 1].totalEndingBal || 0) : Infinity;
+            if ((d.totalEndingBal <= 1 && (d.totalGrossW || 0) <= 1) || (prevBal <= 1 && d.totalEndingBal <= 1)) {
+              depletedAge = d.age;
+              break;
+            }
+          }
+        }
+      }
+
+      const phases = [];
+      let currentPhase = null;
+
+      for (let i = 0; i < schedule.length; i++) {
+        const d = schedule[i];
+        const isWorking = (d.age < params.retirementAge);
+        const isDepleted = (!isWorking && (
+          (depletedAge !== null && depletedAge !== undefined && d.age >= depletedAge) ||
+          ((d.totalEndingBal || 0) <= 1 && (d.totalGrossW || 0) <= 1)
+        ));
+        const isRothFree = (!isWorking && !isDepleted && (d.balPretax || 0) <= 0 && (d.balBrokerage || 0) <= 0 && (d.wRoth || 0) > 0);
+        const isRmdPhase = (!isWorking && !isDepleted && d.isRmd && (d.mandatoryRmd || 0) > 0 && (d.balPretax || 0) > 0);
+        const isSSActive = (!isWorking && !isDepleted && (d.annualSS || 0) > 0 && !isRmdPhase && !isRothFree);
+        const isEarlyBridge = (!isWorking && !isDepleted && d.age < 60 && (d.wBrokerage || 0) > 0 && !isSSActive);
+
+        let type = 'PRETAX_DRAW';
+        if (isDepleted) type = 'DEPLETED';
+        else if (isWorking) type = 'WORKING';
+        else if (isRothFree) type = 'ROTH_FREE';
+        else if (isRmdPhase) type = 'RMD';
+        else if (isSSActive) type = 'SS_ACTIVE';
+        else if (isEarlyBridge) type = 'BROKERAGE_BRIDGE';
+        else if ((d.wBrokerage || 0) > 0 && (d.wPretax || 0) <= 0 && (d.wRoth || 0) <= 0) type = 'BROKERAGE_BRIDGE';
+
+        if (!currentPhase || currentPhase.type !== type) {
+          if (currentPhase) {
+            phases.push(currentPhase);
+          }
+          currentPhase = {
+            type: type,
+            startAge: d.age,
+            endAge: d.age,
+            startYear: d.calendarYear,
+            endYear: d.calendarYear,
+            yearsCount: 1,
+            totalGrossW: d.totalGrossW || 0,
+            totalTax: d.estTax || 0,
+            totalSS: d.annualSS || 0,
+            totalRothConv: d.rothConv || 0,
+            totalTargetExpense: d.targetExpense || 0,
+            hasEarlyPenalty: d.isEarlyPenalty || false,
+            totalEarlyPenalty: d.earlyPenalty || 0,
+            hasIrmaa: (d.irmaaSurcharge || 0) > 0,
+            totalIrmaa: d.irmaaSurcharge || 0,
+            wBrokerageSum: d.wBrokerage || 0,
+            wPretaxSum: d.wPretax || 0,
+            wRothSum: d.wRoth || 0
+          };
+        } else {
+          currentPhase.endAge = d.age;
+          currentPhase.endYear = d.calendarYear;
+          currentPhase.yearsCount++;
+          currentPhase.totalGrossW += (d.totalGrossW || 0);
+          currentPhase.totalTax += (d.estTax || 0);
+          currentPhase.totalSS += (d.annualSS || 0);
+          currentPhase.totalRothConv += (d.rothConv || 0);
+          currentPhase.totalTargetExpense += (d.targetExpense || 0);
+          if (d.isEarlyPenalty) currentPhase.hasEarlyPenalty = true;
+          currentPhase.totalEarlyPenalty += (d.earlyPenalty || 0);
+          if ((d.irmaaSurcharge || 0) > 0) currentPhase.hasIrmaa = true;
+          currentPhase.totalIrmaa += (d.irmaaSurcharge || 0);
+          currentPhase.wBrokerageSum += (d.wBrokerage || 0);
+          currentPhase.wPretaxSum += (d.wPretax || 0);
+          currentPhase.wRothSum += (d.wRoth || 0);
+        }
+      }
+      if (currentPhase) {
+        phases.push(currentPhase);
+      }
+
+      return phases;
+    }
+
+    function renderTimelineVisualization(schedule, params, depletedAge) {
+      const container = document.getElementById('timelineFlow');
+      const badge = document.getElementById('timelineSummaryBadge');
+      if (!container) return;
+
+      if (!schedule || schedule.length === 0 || !params) {
+        container.innerHTML = '<div style="color:#64748b; font-size:0.88rem; padding:0.5rem 0;">No schedule data available.</div>';
+        if (badge) badge.textContent = '0 Phases';
+        return;
+      }
+
+      // Determine depleted age if not provided
+      if (depletedAge === undefined || depletedAge === null) {
+        for (let i = 0; i < schedule.length; i++) {
+          const d = schedule[i];
+          if (d.age >= params.retirementAge) {
+            const prevBal = (i > 0) ? (schedule[i - 1].totalEndingBal || 0) : Infinity;
+            if ((d.totalEndingBal <= 1 && (d.totalGrossW || 0) <= 1) || (prevBal <= 1 && d.totalEndingBal <= 1)) {
+              depletedAge = d.age;
+              break;
+            }
+          }
+        }
+      }
+
+      const phases = generateTimelinePhases(schedule, params, depletedAge);
+      if (badge) {
+        const startAge = schedule[0].age;
+        const endAge = schedule[schedule.length - 1].age;
+        if (depletedAge !== null && depletedAge !== undefined) {
+          badge.textContent = `⚠️ Out of Money at Age ${depletedAge} · ${phases.length} Phases`;
+          badge.style.background = '#fee2e2';
+          badge.style.color = '#dc2626';
+          badge.style.borderColor = '#fca5a5';
+        } else {
+          badge.textContent = `${phases.length} Lifecycle Phase${phases.length === 1 ? '' : 's'} · Age ${startAge} → ${endAge}`;
+          badge.style.background = '#eff6ff';
+          badge.style.color = '#1d4ed8';
+          badge.style.borderColor = '#bfdbfe';
+        }
+      }
+
+      let html = '';
+      phases.forEach((phase) => {
+        const yrs = phase.yearsCount;
+        const avgW = Math.round(phase.totalGrossW / yrs);
+        const avgTax = Math.round(phase.totalTax / yrs);
+        const avgSS = Math.round(phase.totalSS / yrs);
+        const avgConv = Math.round(phase.totalRothConv / yrs);
+        const avgExpense = Math.round((phase.totalTargetExpense || 0) / yrs);
+        const shortfall = Math.max(0, avgExpense - avgSS);
+        const retRate = (params.rateReturn !== undefined) ? params.rateReturn : (params.returnRate || 6.0);
+
+        let isDepletedPhase = false;
+        let icon = '📌';
+        let nodeBg = '#eff6ff';
+        let nodeBorder = '#93c5fd';
+        let nodeColor = '#1d4ed8';
+        let catBadge = 'Strategy Phase';
+        let catBg = '#eff6ff';
+        let catColor = '#1d4ed8';
+        let title = '';
+        let desc = '';
+        let chips = [];
+
+        switch (phase.type) {
+          case 'WORKING':
+            icon = '💼';
+            nodeBg = '#eff6ff';
+            nodeBorder = '#bfdbfe';
+            nodeColor = '#2563eb';
+            catBadge = 'Accumulation & Growth';
+            catBg = '#eff6ff';
+            catColor = '#1d4ed8';
+            title = 'Working & Wealth Accumulation';
+            desc = `Active employment wages fund baseline living expenses ($0 portfolio withdrawals). Pre-tax 401(k), IRA, Brokerage, and Roth accounts compound uninterrupted at ${retRate}% annual return.`;
+            chips.push(`<span>💼 Inflow: <strong>Active Wages</strong></span>`);
+            chips.push(`<span>📈 Growth: <strong>${retRate}% Compounding</strong></span>`);
+            chips.push(`<span>🛡️ Taxes: <strong>$0 Retirement Tax</strong></span>`);
+            break;
+
+          case 'BROKERAGE_BRIDGE':
+            icon = '🛡️';
+            nodeBg = '#f3e8ff';
+            nodeBorder = '#d8b4fe';
+            nodeColor = '#7e22ce';
+            catBadge = 'Early Penalty Avoidance';
+            catBg = '#f3e8ff';
+            catColor = '#7e22ce';
+            title = 'Early Retirement & Brokerage Bridge';
+            desc = `Retirement begins before Age 59½. Living expenses are primarily funded by drawing from taxable brokerage to safely avoid the 10% early distribution penalty on pre-tax 401(k)/IRAs. Long-term capital gains remain within the 0% federal bracket.`;
+            chips.push(`<span>💵 Avg W/D: <strong>${formatCurrency(avgW)}/yr</strong></span>`);
+            chips.push(`<span>🏛️ Primary: <strong>Taxable Brokerage</strong></span>`);
+            chips.push(`<span>📊 Tax Rate: <strong>0% Fed LTCG</strong></span>`);
+            if (avgConv > 0) {
+              chips.push(`<span>🔄 Conversions: <strong>${formatCurrency(avgConv)}/yr to Roth</strong></span>`);
+            }
+            break;
+
+          case 'PRETAX_DRAW':
+            icon = '🔓';
+            nodeBg = '#e0f2fe';
+            nodeBorder = '#7dd3fc';
+            nodeColor = '#0284c7';
+            catBadge = 'Penalty-Free · Bracket Fill';
+            catBg = '#e0f2fe';
+            catColor = '#0284c7';
+            title = 'Pre-Tax 401(k) & IRA Distributions';
+            desc = `Age 59½ reached: Penalty-free access to traditional 401(k) and IRA distributions is officially unlocked. Drawdowns fill the standard deduction and low 10% / 12% ordinary income brackets before Social Security and mandatory RMDs commence.`;
+            chips.push(`<span>💵 Avg W/D: <strong>${formatCurrency(avgW)}/yr</strong></span>`);
+            chips.push(`<span>🏛️ Primary: <strong>Traditional 401(k)/IRA</strong></span>`);
+            chips.push(`<span>📊 Tax: <strong>Low Ordinary Brackets (10%–12%)</strong></span>`);
+            if (avgConv > 0) {
+              chips.push(`<span>🔄 Roth Conv: <strong>${formatCurrency(avgConv)}/yr</strong></span>`);
+            }
+            break;
+
+          case 'SS_ACTIVE':
+            icon = '🏛️';
+            nodeBg = '#ccfbf1';
+            nodeBorder = '#5eead4';
+            nodeColor = '#0d9488';
+            catBadge = 'Social Security Active';
+            catBg = '#ccfbf1';
+            catColor = '#0d9488';
+            title = 'Social Security Integration & Tax Smoothing';
+            desc = `Guaranteed Social Security benefits start at Age ${params.ssStartAge || 67} (${formatCurrency(avgSS)}/yr). Portfolio withdrawal requirements drop substantially, significantly reducing portfolio longevity strain while taxes are coordinated under IRS § 86 provisional income rules.`;
+            chips.push(`<span>🏛️ Social Security: <strong>${formatCurrency(avgSS)}/yr</strong></span>`);
+            chips.push(`<span>💵 Portfolio W/D: <strong>${formatCurrency(avgW)}/yr</strong></span>`);
+            chips.push(`<span>📊 Avg Taxes: <strong>${formatCurrency(avgTax)}/yr</strong></span>`);
+            break;
+
+          case 'RMD':
+            icon = '📜';
+            nodeBg = '#fef3c7';
+            nodeBorder = '#fcd34d';
+            nodeColor = '#d97706';
+            catBadge = 'Statutory RMD Phase';
+            catBg = '#fef3c7';
+            catColor = '#d97706';
+            title = 'Mandatory Required Minimum Distributions (RMDs)';
+            desc = `Statutory SECURE 2.0 RMD age reached. Annual distributions from pre-tax accounts are legally mandated using the IRS Uniform Lifetime Table. Tax-free Roth accounts continue compounding and absorb any residual needs beyond RMD proceeds.`;
+            chips.push(`<span>📜 Mandatory RMDs Active</span>`);
+            chips.push(`<span>💵 Total Inflow: <strong>${formatCurrency(avgW + avgSS)}/yr</strong></span>`);
+            chips.push(`<span>💎 Roth IRA: <strong>Preserved Tax-Free</strong></span>`);
+            break;
+
+          case 'ROTH_FREE':
+            icon = '💎';
+            nodeBg = '#dcfce7';
+            nodeBorder = '#86efac';
+            nodeColor = '#15803d';
+            catBadge = '100% Tax-Free Roth';
+            catBg = '#dcfce7';
+            catColor = '#15803d';
+            title = '100% Tax-Free Roth Drawdown Phase';
+            desc = `Pre-tax and brokerage accounts have been fully drawn down or converted. All remaining retirement living costs are funded 100% tax-free from Roth IRA distributions with $0 federal and $0 state taxes through Age 90.`;
+            chips.push(`<span>💵 Avg W/D: <strong>${formatCurrency(avgW)}/yr</strong></span>`);
+            chips.push(`<span>💎 Source: <strong>100% Roth IRA</strong></span>`);
+            chips.push(`<span>🎉 Taxes: <strong>$0 Lifetime Taxes</strong></span>`);
+            break;
+
+          case 'DEPLETED':
+            icon = '🚨';
+            isDepletedPhase = true;
+            nodeBg = '#fef2f2';
+            nodeBorder = '#ef4444';
+            nodeColor = '#dc2626';
+            catBadge = '🚨 Critical Milestone · Out of Money';
+            catBg = '#fee2e2';
+            catColor = '#b91c1c';
+            title = `🚨 Money Runs Out: Portfolio Depleted at Age ${phase.startAge}`;
+            desc = `All investment accounts (Brokerage, 401(k)/IRA, and Roth) are completely exhausted at Age ${phase.startAge} (${phase.startYear}). Portfolio distributions drop to $0/yr for the remaining ${yrs} year${yrs === 1 ? '' : 's'} through Age 90.` +
+                   (avgSS > 0
+                     ? ` Guaranteed Social Security provides ${formatCurrency(avgSS)}/yr, leaving an annual unfunded spending deficit of ${formatCurrency(shortfall)}/yr against the target ${formatCurrency(avgExpense)}/yr lifestyle.`
+                     : ` With no Social Security active, your target lifestyle of ${formatCurrency(avgExpense)}/yr is 100% unfunded.`);
+            chips.push(`<span>⚠️ Balance: <strong>$0 Remaining</strong></span>`);
+            chips.push(`<span>📉 Outflow Deficit: <strong>${formatCurrency(shortfall)}/yr Shortfall</strong></span>`);
+            if (avgSS > 0) {
+              chips.push(`<span>🏛️ Income: <strong>${formatCurrency(avgSS)}/yr Social Security</strong></span>`);
+            } else {
+              chips.push(`<span>🏛️ Income: <strong>$0 Social Security</strong></span>`);
+            }
+            chips.push(`<span>⏱️ Shortfall: <strong>${yrs} Year${yrs === 1 ? '' : 's'} to Age 90</strong></span>`);
+            chips.push(`<span>💡 Action: <strong>Delay Retirement or Reduce Spending</strong></span>`);
+            break;
+        }
+
+        const ageSpan = (phase.startAge === phase.endAge)
+          ? `Age ${phase.startAge} (${phase.startYear})`
+          : `Age ${phase.startAge}–${phase.endAge} (${phase.startYear}–${phase.endYear}) · ${yrs} Year${yrs === 1 ? '' : 's'}`;
+
+        const stepClass = isDepletedPhase ? 'timeline-step timeline-step-depleted' : 'timeline-step';
+        const cardBoxClass = isDepletedPhase ? 'timeline-card-box timeline-card-box-depleted' : 'timeline-card-box';
+        const ageBadgeStyle = isDepletedPhase ? 'background:#fee2e2; border-color:#fca5a5; color:#991b1b;' : '';
+
+        html += `
+          <div class="${stepClass}">
+            <div class="timeline-spine-wrap">
+              <div class="timeline-node" style="background: ${nodeBg}; border-color: ${nodeBorder}; color: ${nodeColor};">
+                ${icon}
+              </div>
+              <div class="timeline-line"></div>
+            </div>
+            <div class="${cardBoxClass}">
+              <div class="timeline-phase-top">
+                <span class="timeline-age-badge" style="${ageBadgeStyle}">${ageSpan}</span>
+                <span class="timeline-category-badge" style="background: ${catBg}; color: ${catColor}; border-color: ${nodeBorder};">${catBadge}</span>
+              </div>
+              <div class="timeline-phase-title">${title}</div>
+              <div class="timeline-phase-desc">${desc}</div>
+              <div class="timeline-metrics-row">
+                ${chips.map(c => `<span class="timeline-metric-chip">${c}</span>`).join('')}
+              </div>
+            </div>
+          </div>
+        `;
+      });
+
+      container.innerHTML = html;
+    }
+
     function renderTable(schedule) {
       const tbody = document.getElementById('scheduleTableBody');
       tbody.innerHTML = '';
@@ -7582,49 +8173,6 @@
       });
     }
 
-    function exportCSV() {
-      if (!currentSchedule || currentSchedule.length === 0) return;
-      let csv = 'Calendar Year,Age,Living Expense,Social Security,Taxable Social Security,Brokerage Withdrawal,Trad 401(k) Withdrawal,Trad IRA Withdrawal,Roth IRA Withdrawal,Roth Conversion,Conversion Tax,Total Gross Withdrawal,Federal Tax,State Tax,State Code,Estimated Total Tax,Medicare IRMAA Surcharge,IRMAA Tier,Lookback MAGI,Remaining Brokerage,Remaining 401(k),Remaining Trad IRA,Remaining Roth IRA,Total Remaining Balance\n';
-
-      currentSchedule.forEach(r => {
-        csv += [
-          r.calendarYear,
-          r.age,
-          Math.round(r.targetExpense),
-          Math.round(r.annualSS || 0),
-          Math.round(r.taxableSS || 0),
-          Math.round(r.wBrokerage),
-          Math.round(r.w401k),
-          Math.round(r.wIRA),
-          Math.round(r.wRoth),
-          Math.round(r.rothConv || 0),
-          Math.round(r.convTax || 0),
-          Math.round(r.totalGrossW),
-          Math.round(r.fedTax || 0),
-          Math.round(r.stateTax || 0),
-          r.stateCode || 'MN',
-          Math.round(r.estTax),
-          Math.round(r.irmaaSurcharge || 0),
-          r.irmaaTier || 0,
-          Math.round(r.lookbackMagi || 0),
-          Math.round(r.balBrokerage),
-          Math.round(r.bal401k),
-          Math.round(r.balIRA),
-          Math.round(r.balRoth),
-          Math.round(r.totalEndingBal)
-        ].join(',') + '\n';
-      });
-
-      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      link.setAttribute('href', url);
-      link.setAttribute('download', `retirement_drawdown_plan_${activeStrategy}.csv`);
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    }
-
     // Dismiss chart tooltips when tapping or touching anywhere else on mobile or desktop
     function dismissAllTooltips(e) {
       const barTip = document.getElementById('barTooltip');
@@ -7664,6 +8212,7 @@
           renderBalanceGrowthChart(currentSchedule, currentPlanParams);
           renderWithdrawalsBySourceChart(currentSchedule, currentPlanParams);
           renderTaxesOverTimeChart(currentSchedule, currentPlanParams);
+          renderTimelineVisualization(currentSchedule, currentPlanParams, currentDepletedAge);
         }
       }
     });
