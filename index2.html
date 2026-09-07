@@ -282,7 +282,7 @@
       }
     }
     .card-title {
-      font-size: 1.1rem;
+      font-size: 1.25rem;
       font-weight: 700;
       color: var(--text-main);
       margin-bottom: 0.85rem;
@@ -296,7 +296,7 @@
       background: #f8fafc;
       border: 1px solid var(--border);
       border-radius: 10px;
-      padding: 0.85rem 0.9rem;
+      padding: 0.95rem 1rem;
       margin-bottom: 0.9rem;
       transition: border-color 0.15s ease, box-shadow 0.15s ease;
     }
@@ -313,17 +313,17 @@
       gap: 0.5rem;
     }
     .slider-title {
-      font-size: 0.92rem;
-      font-weight: 600;
+      font-size: 1.05rem;
+      font-weight: 700;
       color: var(--text-main);
       display: flex;
       flex-direction: column;
       gap: 2px;
     }
     .slider-badge {
-      font-size: 0.78rem;
+      font-size: 0.86rem;
       color: var(--text-dim);
-      font-weight: 400;
+      font-weight: 500;
     }
 
     /* Synced input box */
@@ -331,20 +331,20 @@
       position: relative;
       display: flex;
       align-items: center;
-      width: 124px;
+      width: 135px;
       flex-shrink: 0;
     }
     .slider-val-input-wrap .prefix {
       position: absolute;
       left: 0.65rem;
-      font-size: 0.95rem;
+      font-size: 1.05rem;
       color: var(--text-dim);
       pointer-events: none;
     }
     .slider-val-input-wrap .suffix {
       position: absolute;
       right: 0.65rem;
-      font-size: 0.95rem;
+      font-size: 1.05rem;
       color: var(--text-dim);
       pointer-events: none;
     }
@@ -355,7 +355,7 @@
       color: var(--text-main);
       padding: 0.45rem 0.55rem;
       border-radius: 6px;
-      font-size: 16px;
+      font-size: 17px;
       font-weight: 700;
       text-align: right;
       font-family: inherit;
@@ -363,14 +363,14 @@
     }
     @media (min-width: 640px) {
       .slider-val-input {
-        font-size: 0.95rem;
+        font-size: 1.05rem;
       }
     }
     .slider-val-input.has-prefix {
-      padding-left: 1.5rem;
+      padding-left: 1.65rem;
     }
     .slider-val-input.has-suffix {
-      padding-right: 1.6rem;
+      padding-right: 1.75rem;
     }
     .slider-val-input:focus {
       outline: none;
@@ -426,7 +426,7 @@
     .slider-range-labels {
       display: flex;
       justify-content: space-between;
-      font-size: 0.78rem;
+      font-size: 0.88rem;
       color: var(--text-dim);
       margin-top: 3px;
     }
@@ -447,14 +447,14 @@
       background: #ffffff;
       border: 1px solid var(--border);
       border-radius: 8px;
-      padding: 0.6rem 0.35rem;
+      padding: 0.65rem 0.4rem;
       color: var(--text-muted);
-      font-size: 0.88rem;
+      font-size: 0.96rem;
       font-weight: 700;
       cursor: pointer;
       text-align: center;
       transition: all 0.15s ease;
-      min-height: 44px;
+      min-height: 48px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -465,8 +465,8 @@
       color: var(--text-main);
     }
     .segment-btn span.sub {
-      font-size: 0.74rem;
-      font-weight: 400;
+      font-size: 0.82rem;
+      font-weight: 500;
       color: var(--text-dim);
       margin-top: 1px;
     }
@@ -504,7 +504,7 @@
     }
     .strategy-btn {
       flex: 1;
-      padding: 0.5rem 0.3rem;
+      padding: 0.55rem 0.4rem;
       border: 1px solid transparent;
       border-radius: 6px;
       background: transparent;
@@ -512,7 +512,7 @@
       cursor: pointer;
       transition: all 0.15s ease;
       text-align: center;
-      min-height: 52px;
+      min-height: 56px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -524,12 +524,12 @@
       background: rgba(255, 255, 255, 0.7);
     }
     .strat-btn-title {
-      font-size: 0.84rem;
+      font-size: 0.95rem;
       font-weight: 700;
       line-height: 1.25;
     }
     .strat-btn-desc {
-      font-size: 0.74rem;
+      font-size: 0.82rem;
       font-weight: 500;
       color: var(--text-dim);
       line-height: 1.2;
@@ -554,12 +554,12 @@
       color: #475569;
     }
     .strategy-desc-banner {
-      font-size: 0.82rem;
+      font-size: 0.90rem;
       color: var(--text-muted);
       background: #f8fafc;
       border: 1px solid var(--border);
       border-radius: 6px;
-      padding: 0.55rem 0.75rem;
+      padding: 0.65rem 0.85rem;
       margin-bottom: 0.9rem;
       line-height: 1.45;
       transition: all 0.2s ease;
@@ -577,7 +577,7 @@
       background: none;
       border: none;
       color: var(--text-muted);
-      font-size: 0.825rem;
+      font-size: 0.90rem;
       font-weight: 600;
       padding: 0.75rem 0;
       cursor: pointer;
@@ -604,24 +604,17 @@
       gap: 0.35rem;
       margin-top: 0.35rem;
     }
-    /* Bracket Ceiling Touch Buttons */
-    .bracket-ceiling-bar {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 0.35rem;
-      margin-top: 0.35rem;
-    }
     .bracket-btn {
       background: #ffffff;
       border: 1px solid var(--border);
       border-radius: 6px;
       padding: 0.45rem 0.2rem;
-      font-size: 0.82rem;
+      font-size: 0.92rem;
       font-weight: 700;
       color: var(--text-muted);
       cursor: pointer;
       text-align: center;
-      min-height: 42px;
+      min-height: 44px;
       transition: all 0.15s ease;
     }
     .bracket-btn:hover {
@@ -654,7 +647,7 @@
       background: var(--bg-card);
       border: 1px solid var(--border);
       border-radius: 12px;
-      padding: 0.95rem 0.95rem;
+      padding: 1rem 1rem;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -662,7 +655,7 @@
       box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
     }
     .kpi-label {
-      font-size: 0.78rem;
+      font-size: 0.85rem;
       font-weight: 700;
       color: #64748b;
       text-transform: uppercase;
@@ -670,18 +663,18 @@
       margin-bottom: 0.25rem;
     }
     .kpi-value {
-      font-size: 1.45rem;
+      font-size: 1.6rem;
       font-weight: 800;
       color: var(--text-main);
       line-height: 1.2;
     }
     @media (min-width: 640px) {
       .kpi-value {
-        font-size: 1.65rem;
+        font-size: 1.85rem;
       }
     }
     .kpi-sub {
-      font-size: 0.80rem;
+      font-size: 0.88rem;
       color: var(--text-muted);
       margin-top: 0.25rem;
       line-height: 1.4;
@@ -708,14 +701,14 @@
       background: var(--bg-card);
       border: 1px solid var(--border);
       border-radius: 12px;
-      padding: 1rem;
+      padding: 1.15rem;
       width: 100%;
       box-sizing: border-box;
       box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
     }
     @media (min-width: 640px) {
       .chart-card {
-        padding: 1.25rem;
+        padding: 1.35rem;
       }
     }
     .chart-header {
@@ -733,25 +726,25 @@
       }
     }
     .chart-title {
-      font-size: 1.05rem;
+      font-size: 1.15rem;
       font-weight: 700;
       color: var(--text-main);
     }
     .chart-legend {
       display: flex;
-      gap: 0.75rem;
-      font-size: 0.80rem;
+      gap: 0.85rem;
+      font-size: 0.88rem;
       flex-wrap: wrap;
     }
     .legend-item {
       display: flex;
       align-items: center;
-      gap: 0.35rem;
+      gap: 0.4rem;
       color: var(--text-muted);
     }
     .legend-color {
-      width: 10px;
-      height: 10px;
+      width: 12px;
+      height: 12px;
       border-radius: 2px;
     }
 
@@ -764,9 +757,9 @@
       gap: 0.25rem;
     }
     .chart-nav-btn {
-      flex: 0 0 34px;
-      width: 34px;
-      height: 60px;
+      flex: 0 0 36px;
+      width: 36px;
+      height: 64px;
       border: 1px solid #cbd5e1;
       background: #ffffff;
       color: #334155;
@@ -799,7 +792,7 @@
       border-color: #e2e8f0;
     }
     .chart-nav-subtext {
-      font-size: 0.62rem;
+      font-size: 0.70rem;
       font-weight: 700;
       line-height: 1;
       margin-top: 2px;
@@ -815,13 +808,14 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 0.35rem 0.65rem;
+      padding: 0.45rem 0.75rem;
       margin-bottom: 0.5rem;
       background: #f8fafc;
       border: 1px solid #e2e8f0;
       border-radius: 6px;
-      font-size: 0.78rem;
-      color: #475569;
+      font-size: 0.88rem;
+      color: #334155;
+      font-weight: 600;
     }
     .chart-viewmode-toggle {
       display: inline-flex;
@@ -833,8 +827,8 @@
     .chart-viewmode-btn {
       border: none;
       background: transparent;
-      padding: 0.2rem 0.55rem;
-      font-size: 0.72rem;
+      padding: 0.25rem 0.65rem;
+      font-size: 0.80rem;
       font-weight: 600;
       border-radius: 4px;
       color: #64748b;
@@ -942,12 +936,12 @@
       width: 100%;
       border-collapse: separate;
       border-spacing: 0;
-      font-size: 0.90rem;
+      font-size: 1rem;
       text-align: right;
     }
     @media (max-width: 1023px) {
       table {
-        min-width: 620px;
+        min-width: 660px;
       }
     }
     @media (min-width: 1024px) {
@@ -959,13 +953,13 @@
       background: #f8fafc;
       color: #334155;
       font-weight: 700;
-      padding: 0.65rem 0.6rem;
+      padding: 0.75rem 0.65rem;
       border-bottom: 2px solid var(--border);
       position: sticky;
       top: 0;
       z-index: 10;
       white-space: nowrap;
-      font-size: 0.86rem;
+      font-size: 0.95rem;
     }
     th:first-child, td:first-child {
       position: sticky;
@@ -973,8 +967,8 @@
       z-index: 12;
       background: #ffffff;
       text-align: center;
-      width: 58px;
-      min-width: 58px;
+      width: 62px;
+      min-width: 62px;
       border-right: 1px solid var(--border);
     }
     th:first-child {
@@ -983,12 +977,12 @@
     }
     th:nth-child(2), td:nth-child(2) {
       position: sticky;
-      left: 58px;
+      left: 62px;
       z-index: 12;
       background: #ffffff;
       text-align: center;
-      width: 72px;
-      min-width: 72px;
+      width: 78px;
+      min-width: 78px;
       border-right: 2px solid #cbd5e1;
     }
     th:nth-child(2) {
@@ -997,13 +991,13 @@
     }
 
     td {
-      padding: 0.55rem 0.6rem;
+      padding: 0.65rem 0.65rem;
       border-bottom: 1px solid #f1f5f9;
       white-space: nowrap;
       color: var(--text-main);
       background: #ffffff;
       vertical-align: top;
-      font-size: 0.92rem;
+      font-size: 1.02rem;
     }
     tr:nth-child(even) td {
       background: #f8fafc;
@@ -1022,9 +1016,9 @@
       background: #fef3c7;
       color: #92400e;
       border: 1px solid #fde68a;
-      padding: 0.15rem 0.4rem;
+      padding: 0.18rem 0.45rem;
       border-radius: 4px;
-      font-size: 0.72rem;
+      font-size: 0.82rem;
       font-weight: 700;
       margin-left: 0.25rem;
     }
@@ -1032,15 +1026,15 @@
     /* Table Mini Horizontal Stacked Bar Charts */
     .tbl-hbar-wrap {
       width: 100%;
-      min-width: 110px;
-      max-width: 160px;
+      min-width: 120px;
+      max-width: 180px;
       margin-left: auto;
-      margin-top: 4px;
+      margin-top: 5px;
     }
     .tbl-hbar {
       display: flex;
       width: 100%;
-      height: 7px;
+      height: 9px;
       border-radius: 4px;
       overflow: hidden;
       background: #e2e8f0;
@@ -1054,21 +1048,21 @@
       display: flex;
       justify-content: flex-end;
       align-items: center;
-      gap: 0.35rem;
-      font-size: 0.70rem;
+      gap: 0.45rem;
+      font-size: 0.82rem;
       color: #64748b;
-      margin-top: 2px;
+      margin-top: 3px;
       flex-wrap: wrap;
     }
     .tbl-hbar-legend-item {
       display: inline-flex;
       align-items: center;
-      gap: 2px;
-      line-height: 1;
+      gap: 3px;
+      line-height: 1.1;
     }
     .tbl-hbar-dot {
-      width: 6px;
-      height: 6px;
+      width: 7px;
+      height: 7px;
       border-radius: 50%;
       display: inline-block;
     }
@@ -3250,7 +3244,7 @@
         text.setAttribute('y', y + 4);
         text.setAttribute('text-anchor', 'end');
         text.setAttribute('fill', '#64748b');
-        text.setAttribute('font-size', isMobile ? '10.5px' : '11px');
+        text.setAttribute('font-size', isMobile ? '12px' : '12.5px');
         text.textContent = '$' + (Math.round(val / 1000)) + 'k';
         svg.appendChild(text);
       }
@@ -3319,11 +3313,11 @@
         if (showLabel) {
           const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
           text.setAttribute('x', cx);
-          text.setAttribute('y', height - padB + 14);
+          text.setAttribute('y', height - padB + 15);
           text.setAttribute('text-anchor', 'middle');
-          text.setAttribute('fill', '#334155');
-          text.setAttribute('font-weight', is5yr ? '600' : '400');
-          text.setAttribute('font-size', is5yr ? '11px' : (isMobile ? '10px' : '11px'));
+          text.setAttribute('fill', '#1e293b');
+          text.setAttribute('font-weight', is5yr ? '700' : '500');
+          text.setAttribute('font-size', is5yr ? '13px' : (isMobile ? '11px' : '12px'));
           text.textContent = 'Age ' + d.age;
           svg.appendChild(text);
         }
@@ -3496,7 +3490,7 @@
         text.setAttribute('y', y + 4);
         text.setAttribute('text-anchor', 'end');
         text.setAttribute('fill', '#64748b');
-        text.setAttribute('font-size', isMobile ? '10.5px' : '11px');
+        text.setAttribute('font-size', isMobile ? '12px' : '12.5px');
         text.textContent = '$' + (Math.round(val / 1000)).toLocaleString() + 'k';
         svg.appendChild(text);
       }
@@ -3562,11 +3556,11 @@
         if (showLabel) {
           const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
           text.setAttribute('x', cx);
-          text.setAttribute('y', height - padB + 14);
+          text.setAttribute('y', height - padB + 15);
           text.setAttribute('text-anchor', 'middle');
-          text.setAttribute('fill', '#334155');
-          text.setAttribute('font-weight', is5yr ? '600' : '400');
-          text.setAttribute('font-size', is5yr ? '11px' : (isMobile ? '10px' : '11px'));
+          text.setAttribute('fill', '#1e293b');
+          text.setAttribute('font-weight', is5yr ? '700' : '500');
+          text.setAttribute('font-size', is5yr ? '13px' : (isMobile ? '11px' : '12px'));
           text.textContent = 'Age ' + d.age;
           svg.appendChild(text);
         }
@@ -3724,16 +3718,16 @@
 
         // Build Social Security note for Total Withdrawals
         const ssNote = d.annualSS > 0
-          ? `<div style="font-size:0.75rem; color:#15803d; font-weight:600; margin-top:3px;">+ SS: ${formatCurrency(d.annualSS)}</div>`
+          ? `<div style="font-size:0.86rem; color:#15803d; font-weight:600; margin-top:3px;">+ SS: ${formatCurrency(d.annualSS)}</div>`
           : '';
 
         // Build IRMAA note for Est Tax
         let irmaaNote = '';
         if (d.age >= 65) {
           if (d.irmaaSurcharge > 0) {
-            irmaaNote = `<div style="font-size:0.75rem; color:#0284c7; font-weight:600; margin-top:2px;">+ IRMAA: ${formatCurrency(d.irmaaSurcharge)} (Tier ${d.irmaaTier})</div>`;
+            irmaaNote = `<div style="font-size:0.86rem; color:#0284c7; font-weight:600; margin-top:2px;">+ IRMAA: ${formatCurrency(d.irmaaSurcharge)} (Tier ${d.irmaaTier})</div>`;
           } else {
-            irmaaNote = `<div style="font-size:0.73rem; color:#64748b; margin-top:2px;">IRMAA: $0</div>`;
+            irmaaNote = `<div style="font-size:0.82rem; color:#64748b; margin-top:2px;">IRMAA: $0</div>`;
           }
         }
 
@@ -3752,11 +3746,11 @@
           </td>
           <td style="color: #dc2626;">
             <div style="font-weight:700; color:#dc2626;">${formatCurrency(d.estTax)}</div>
-            <div style="font-size:0.76rem; color:#64748b; margin-top:2px; line-height:1.4;">Fed: ${formatCurrency(d.fedTax)} · ${d.stateCode}: ${formatCurrency(d.stateTax)}</div>
-            ${d.taxableSS > 0 ? `<div style="font-size:0.74rem; color:#15803d;">(incl. ${formatCurrency(d.taxableSS)} taxable SS)</div>` : ''}
-            ${d.convTax > 0 ? `<div style="font-size:0.74rem; color:#b45309;">(incl. ${formatCurrency(d.convTax)} conv tax)</div>` : ''}
-            ${d.ltcgTax > 0 ? `<div style="font-size:0.74rem; color:#7e22ce;">(incl. ${formatCurrency(d.ltcgTax)} LTCG)</div>` : (d.wBrokerage > 0 ? `<div style="font-size:0.74rem; color:#15803d;">(0% LTCG rate)</div>` : '')}
-            ${d.isEarlyPenalty ? `<div style="font-size:0.74rem; color:#b91c1c; font-weight:600;">(incl. ${formatCurrency(d.earlyPenalty)} pen)</div>` : ''}
+            <div style="font-size:0.86rem; color:#64748b; margin-top:2px; line-height:1.4;">Fed: ${formatCurrency(d.fedTax)} · ${d.stateCode}: ${formatCurrency(d.stateTax)}</div>
+            ${d.taxableSS > 0 ? `<div style="font-size:0.84rem; color:#15803d;">(incl. ${formatCurrency(d.taxableSS)} taxable SS)</div>` : ''}
+            ${d.convTax > 0 ? `<div style="font-size:0.84rem; color:#b45309;">(incl. ${formatCurrency(d.convTax)} conv tax)</div>` : ''}
+            ${d.ltcgTax > 0 ? `<div style="font-size:0.84rem; color:#7e22ce;">(incl. ${formatCurrency(d.ltcgTax)} LTCG)</div>` : (d.wBrokerage > 0 ? `<div style="font-size:0.84rem; color:#15803d;">(0% LTCG rate)</div>` : '')}
+            ${d.isEarlyPenalty ? `<div style="font-size:0.84rem; color:#b91c1c; font-weight:600;">(incl. ${formatCurrency(d.earlyPenalty)} pen)</div>` : ''}
             ${irmaaNote}
           </td>
           <td>
@@ -3810,6 +3804,33 @@
       link.click();
       document.body.removeChild(link);
     }
+
+    // Dismiss chart tooltips when tapping or touching anywhere else on mobile or desktop
+    function dismissAllTooltips(e) {
+      const barTip = document.getElementById('barTooltip');
+      const areaTip = document.getElementById('areaTooltip');
+      const barSvg = document.getElementById('barChartSvg');
+      const areaSvg = document.getElementById('areaChartSvg');
+
+      const target = e.target;
+      const isInsideBar = (barSvg && barSvg.contains(target)) || (barTip && barTip.contains(target));
+      const isInsideArea = (areaSvg && areaSvg.contains(target)) || (areaTip && areaTip.contains(target));
+
+      if (!isInsideBar && barTip) {
+        barTip.style.display = 'none';
+      }
+      if (!isInsideArea && areaTip) {
+        areaTip.style.display = 'none';
+      }
+    }
+
+    document.addEventListener('touchstart', (e) => {
+      dismissAllTooltips(e);
+    }, { passive: true });
+
+    document.addEventListener('click', (e) => {
+      dismissAllTooltips(e);
+    });
 
     window.addEventListener('resize', () => {
       if (window.innerWidth >= 1024) {
