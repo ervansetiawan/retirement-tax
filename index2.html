@@ -42,11 +42,22 @@
     }
 
     html {
+      font-size: 17.5px;
       -webkit-text-size-adjust: 100%;
       text-size-adjust: 100%;
       overflow-x: hidden;
       max-width: 100vw;
       width: 100%;
+    }
+    @media (min-width: 640px) {
+      html {
+        font-size: 18px;
+      }
+    }
+    @media (min-width: 1024px) {
+      html {
+        font-size: 18.5px;
+      }
     }
 
     body {
@@ -158,7 +169,7 @@
       flex-wrap: wrap;
     }
     .what-if-title {
-      font-size: 0.88rem;
+      font-size: 0.96rem;
       font-weight: 700;
       color: #1e3a8a;
       display: flex;
@@ -166,7 +177,7 @@
       gap: 0.4rem;
     }
     .what-if-subtitle {
-      font-size: 0.74rem;
+      font-size: 0.82rem;
       color: #64748b;
       font-weight: 500;
     }
@@ -177,12 +188,12 @@
       flex-shrink: 0;
     }
     .what-if-preview-badge {
-      font-size: 0.75rem;
+      font-size: 0.84rem;
       font-weight: 700;
       color: #2563eb;
       background: #eff6ff;
       border: 1px solid #dbeafe;
-      padding: 0.18rem 0.55rem;
+      padding: 0.20rem 0.60rem;
       border-radius: 9999px;
       white-space: nowrap;
     }
@@ -220,16 +231,16 @@
       margin-bottom: 0.25rem;
     }
     .what-if-label {
-      font-size: 0.80rem;
+      font-size: 0.88rem;
       font-weight: 600;
       color: #334155;
     }
     .what-if-val {
-      font-size: 0.82rem;
+      font-size: 0.90rem;
       font-weight: 700;
       color: #2563eb;
       background: #eff6ff;
-      padding: 0.12rem 0.45rem;
+      padding: 0.15rem 0.50rem;
       border-radius: 4px;
       border: 1px solid #dbeafe;
     }
@@ -271,7 +282,7 @@
     .what-if-range-labels {
       display: flex;
       justify-content: space-between;
-      font-size: 0.68rem;
+      font-size: 0.78rem;
       color: #94a3b8;
       margin-top: 2px;
     }
@@ -661,7 +672,7 @@
       gap: 0.5rem;
     }
     .slider-title {
-      font-size: 1.05rem;
+      font-size: 1.12rem;
       font-weight: 700;
       color: var(--text-main);
       display: flex;
@@ -669,7 +680,7 @@
       gap: 2px;
     }
     .slider-badge {
-      font-size: 0.86rem;
+      font-size: 0.92rem;
       color: var(--text-dim);
       font-weight: 500;
     }
@@ -685,14 +696,14 @@
     .slider-val-input-wrap .prefix {
       position: absolute;
       left: 0.65rem;
-      font-size: 1.05rem;
+      font-size: 1.10rem;
       color: var(--text-dim);
       pointer-events: none;
     }
     .slider-val-input-wrap .suffix {
       position: absolute;
       right: 0.65rem;
-      font-size: 1.05rem;
+      font-size: 1.10rem;
       color: var(--text-dim);
       pointer-events: none;
     }
@@ -703,7 +714,7 @@
       color: var(--text-main);
       padding: 0.45rem 0.55rem;
       border-radius: 6px;
-      font-size: 17px;
+      font-size: 18.5px;
       font-weight: 700;
       text-align: right;
       font-family: inherit;
@@ -711,7 +722,7 @@
     }
     @media (min-width: 640px) {
       .slider-val-input {
-        font-size: 1.05rem;
+        font-size: 1.12rem;
       }
     }
     .slider-val-input.has-prefix {
@@ -1008,7 +1019,7 @@
       box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
     }
     .kpi-label {
-      font-size: 0.95rem;
+      font-size: 1.02rem;
       font-weight: 700;
       color: #64748b;
       text-transform: uppercase;
@@ -1016,7 +1027,7 @@
       margin-bottom: 0.25rem;
     }
     .kpi-value {
-      font-size: clamp(1.35rem, 4.8vw, 1.75rem);
+      font-size: clamp(1.50rem, 5.2vw, 1.95rem);
       font-weight: 800;
       color: var(--text-main);
       line-height: 1.2;
@@ -1024,11 +1035,11 @@
     }
     @media (min-width: 640px) {
       .kpi-value {
-        font-size: 1.85rem;
+        font-size: 2.05rem;
       }
     }
     .kpi-sub {
-      font-size: 0.98rem;
+      font-size: 1.05rem;
       color: var(--text-muted);
       margin-top: 0.25rem;
       line-height: 1.4;
@@ -1064,7 +1075,7 @@
       gap: 0.25rem;
     }
     .balance-growth-title {
-      font-size: 0.82rem;
+      font-size: 0.92rem;
       font-weight: 700;
       color: #334155;
       display: inline-flex;
@@ -1072,11 +1083,11 @@
       gap: 0.3rem;
     }
     .balance-growth-peak {
-      font-size: 0.76rem;
+      font-size: 0.84rem;
       font-weight: 700;
       color: #1e40af;
       background: #dbeafe;
-      padding: 0.12rem 0.45rem;
+      padding: 0.15rem 0.50rem;
       border-radius: 9999px;
       white-space: nowrap;
     }
@@ -1085,7 +1096,7 @@
       align-items: center;
       gap: 0.75rem;
       margin-top: 0.2rem;
-      font-size: 0.74rem;
+      font-size: 0.82rem;
       font-weight: 600;
       color: #475569;
     }
@@ -1122,9 +1133,9 @@
       transform: translateX(-50%);
       background: rgba(15, 23, 42, 0.95);
       color: #ffffff;
-      padding: 0.3rem 0.55rem;
+      padding: 0.35rem 0.60rem;
       border-radius: 6px;
-      font-size: 0.74rem;
+      font-size: 0.84rem;
       line-height: 1.35;
       pointer-events: none;
       z-index: 20;
@@ -1137,7 +1148,7 @@
       justify-content: space-between;
       align-items: center;
       margin-top: 0.25rem;
-      font-size: 0.74rem;
+      font-size: 0.82rem;
       font-weight: 600;
       color: #64748b;
     }
@@ -2063,10 +2074,10 @@
         display: inline !important;
       }
       .tbl-yr-val {
-        font-size: 0.68rem !important;
+        font-size: 0.76rem !important;
       }
       .tbl-age-val {
-        font-size: 0.80rem !important;
+        font-size: 0.90rem !important;
         font-weight: 700;
         margin-top: 1px;
       }
@@ -2074,7 +2085,7 @@
         margin-top: 2px;
       }
       .tag-rmd {
-        font-size: 0.60rem !important;
+        font-size: 0.68rem !important;
         padding: 0.10rem 0.25rem !important;
         margin-left: 0;
         display: inline-block;
@@ -2083,14 +2094,14 @@
         gap: 0.25rem;
       }
       .tbl-inflow-lbl {
-        font-size: 0.66rem !important;
+        font-size: 0.74rem !important;
       }
       .tbl-inflow-val {
-        font-size: 0.80rem !important;
+        font-size: 0.90rem !important;
         white-space: nowrap;
       }
       .tbl-bal-val {
-        font-size: 0.80rem !important;
+        font-size: 0.90rem !important;
         white-space: nowrap;
       }
       .tbl-hbar-wrap {
@@ -2105,7 +2116,7 @@
       }
       .tbl-hbar-legend {
         gap: 0.20rem !important;
-        font-size: 0.60rem !important;
+        font-size: 0.68rem !important;
         margin-top: 2px !important;
         line-height: 1.1 !important;
       }
@@ -2121,20 +2132,20 @@
         padding-top: 3px;
       }
       .tbl-sub-note {
-        font-size: 0.64rem !important;
+        font-size: 0.72rem !important;
         margin-top: 2px;
-        line-height: 1.20 !important;
+        line-height: 1.25 !important;
       }
       .tbl-sub-note-sub {
-        font-size: 0.60rem !important;
+        font-size: 0.68rem !important;
         display: block;
       }
       .tbl-sub-note-detail {
-        font-size: 0.60rem !important;
+        font-size: 0.68rem !important;
         margin-top: 1px;
       }
       .tbl-empty-inflow, .tbl-depleted-val {
-        font-size: 0.65rem !important;
+        font-size: 0.74rem !important;
         margin-top: 2px;
       }
     }
@@ -2942,7 +2953,7 @@
                 <!-- Retirement Situation Analysis Section -->
                 <div class="retirement-situation-card" id="retirementSituationSection" style="margin-top: 0.85rem; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 0.75rem 0.85rem; box-shadow: 0 1px 3px rgba(0,0,0,0.03);">
                   <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.45rem; flex-wrap: wrap; gap: 0.3rem;">
-                    <div style="font-size: 0.82rem; font-weight: 700; color: #1e293b; display: flex; align-items: center; gap: 0.4rem;">
+                    <div style="font-size: 0.92rem; font-weight: 700; color: #1e293b; display: flex; align-items: center; gap: 0.4rem;">
                       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
                         <polyline points="14 2 14 8 20 8"></polyline>
@@ -2952,11 +2963,11 @@
                       </svg>
                       <span>Retirement Situation Analysis</span>
                     </div>
-                    <span id="situationStatusBadge" style="font-size: 0.72rem; font-weight: 700; padding: 0.15rem 0.50rem; border-radius: 9999px; background: #dcfce7; color: #15803d; border: 1px solid #86efac;">
+                    <span id="situationStatusBadge" style="font-size: 0.80rem; font-weight: 700; padding: 0.18rem 0.55rem; border-radius: 9999px; background: #dcfce7; color: #15803d; border: 1px solid #86efac;">
                       Analyzing...
                     </span>
                   </div>
-                  <div id="situationSummaryText" style="font-size: 0.78rem; color: #334155; line-height: 1.4;">
+                  <div id="situationSummaryText" style="font-size: 0.88rem; color: #334155; line-height: 1.45;">
                     Calculating simulation analysis...
                   </div>
                 </div>
@@ -3145,7 +3156,7 @@
                 <!-- Retirement Tax Situation Analysis Section -->
                 <div class="retirement-situation-card" id="taxSituationSection" style="margin-top: 0.85rem; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 0.75rem 0.85rem; box-shadow: 0 1px 3px rgba(0,0,0,0.03);">
                   <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.45rem; flex-wrap: wrap; gap: 0.3rem;">
-                    <div style="font-size: 0.82rem; font-weight: 700; color: #1e293b; display: flex; align-items: center; gap: 0.4rem;">
+                    <div style="font-size: 0.92rem; font-weight: 700; color: #1e293b; display: flex; align-items: center; gap: 0.4rem;">
                       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
                         <polyline points="14 2 14 8 20 8"></polyline>
@@ -3155,11 +3166,11 @@
                       </svg>
                       <span>Retirement Tax Situation Analysis</span>
                     </div>
-                    <span id="taxSituationStatusBadge" style="font-size: 0.72rem; font-weight: 700; padding: 0.15rem 0.50rem; border-radius: 9999px; background: #dcfce7; color: #15803d; border: 1px solid #86efac;">
+                    <span id="taxSituationStatusBadge" style="font-size: 0.80rem; font-weight: 700; padding: 0.18rem 0.55rem; border-radius: 9999px; background: #dcfce7; color: #15803d; border: 1px solid #86efac;">
                       Analyzing...
                     </span>
                   </div>
-                  <div id="taxSituationSummaryText" style="font-size: 0.78rem; color: #334155; line-height: 1.4;">
+                  <div id="taxSituationSummaryText" style="font-size: 0.88rem; color: #334155; line-height: 1.45;">
                     Calculating tax analysis...
                   </div>
                 </div>
@@ -5635,8 +5646,8 @@
 
       let html = '<div style="display: flex; flex-direction: column; gap: 0.4rem;">';
       items.forEach(item => {
-        html += `<div style="display: flex; align-items: flex-start; gap: 0.4rem; font-size: 0.77rem; line-height: 1.35;">`;
-        html += `<span style="font-size: 0.85rem; line-height: 1.2;">${item.icon}</span>`;
+        html += `<div style="display: flex; align-items: flex-start; gap: 0.45rem; font-size: 0.88rem; line-height: 1.40;">`;
+        html += `<span style="font-size: 0.95rem; line-height: 1.2;">${item.icon}</span>`;
         html += `<div><strong>${item.title}:</strong> ${item.text}</div>`;
         html += `</div>`;
       });
@@ -5858,8 +5869,8 @@
 
       let html = '<div style="display: flex; flex-direction: column; gap: 0.4rem;">';
       items.forEach(item => {
-        html += `<div style="display: flex; align-items: flex-start; gap: 0.4rem; font-size: 0.77rem; line-height: 1.35;">`;
-        html += `<span style="font-size: 0.85rem; line-height: 1.2;">${item.icon}</span>`;
+        html += `<div style="display: flex; align-items: flex-start; gap: 0.45rem; font-size: 0.88rem; line-height: 1.40;">`;
+        html += `<span style="font-size: 0.95rem; line-height: 1.2;">${item.icon}</span>`;
         html += `<div><strong>${item.title}:</strong> ${item.text}</div>`;
         html += `</div>`;
       });
@@ -7085,7 +7096,7 @@
         text.setAttribute('y', y + 4);
         text.setAttribute('text-anchor', 'end');
         text.setAttribute('fill', '#475569');
-        text.setAttribute('font-size', isMobile ? '11px' : '12px');
+        text.setAttribute('font-size', isMobile ? '12px' : '13px');
         text.setAttribute('font-weight', '600');
         if (val >= 1000000) {
           text.textContent = '$' + (val / 1000000).toFixed(1).replace('.0', '') + 'M';
@@ -7100,7 +7111,7 @@
       topAxisHeader.setAttribute('x', padL);
       topAxisHeader.setAttribute('y', padT - 8);
       topAxisHeader.setAttribute('fill', '#1d4ed8');
-      topAxisHeader.setAttribute('font-size', '11px');
+      topAxisHeader.setAttribute('font-size', '12px');
       topAxisHeader.setAttribute('font-weight', '700');
       topAxisHeader.setAttribute('letter-spacing', '0.04em');
       topAxisHeader.textContent = '▲ TOP AXIS: REMAINING BALANCE ($)';
@@ -7140,7 +7151,7 @@
         text.setAttribute('y', y + 4);
         text.setAttribute('text-anchor', 'end');
         text.setAttribute('fill', '#475569');
-        text.setAttribute('font-size', isMobile ? '11px' : '12px');
+        text.setAttribute('font-size', isMobile ? '12px' : '13px');
         text.setAttribute('font-weight', '600');
         text.textContent = '$' + Math.round(val / 1000) + 'k';
         svg.appendChild(text);
@@ -7151,7 +7162,7 @@
       botAxisHeader.setAttribute('x', padL);
       botAxisHeader.setAttribute('y', height - 6);
       botAxisHeader.setAttribute('fill', '#b91c1c');
-      botAxisHeader.setAttribute('font-size', '11px');
+      botAxisHeader.setAttribute('font-size', '12px');
       botAxisHeader.setAttribute('font-weight', '700');
       botAxisHeader.setAttribute('letter-spacing', '0.04em');
       botAxisHeader.textContent = '▼ BOTTOM AXIS: ANNUAL WITHDRAWALS & TAXES ($)';
@@ -7307,7 +7318,7 @@
           text.setAttribute('text-anchor', 'middle');
           text.setAttribute('fill', '#0f172a');
           text.setAttribute('font-weight', is10yr ? '700' : '600');
-          text.setAttribute('font-size', isMobile ? '11px' : '12px');
+          text.setAttribute('font-size', isMobile ? '12px' : '13px');
           text.textContent = (isMobile && is10yr && idx % 2 !== 0 && idx !== displayData.length - 1) ? '' : String(d.age);
           svg.appendChild(text);
         }
