@@ -1303,6 +1303,39 @@
       box-shadow: 0 1px 3px rgba(22, 101, 52, 0.30);
     }
 
+    /* "What can I afford?" Automatic Expense Solver Button */
+    .btn-what-afford {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.40rem;
+      background: linear-gradient(135deg, #059669, #047857);
+      color: #ffffff;
+      border: 1px solid #047857;
+      border-radius: 6px;
+      padding: 0.40rem 0.80rem;
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      box-shadow: 0 1px 3px rgba(4, 120, 87, 0.25);
+      user-select: none;
+    }
+    .btn-what-afford:hover {
+      background: linear-gradient(135deg, #047857, #065f46);
+      border-color: #065f46;
+      transform: translateY(-1px);
+      box-shadow: 0 2px 5px rgba(4, 120, 87, 0.35);
+    }
+    .btn-what-afford:active {
+      transform: translateY(0);
+    }
+    .btn-what-afford.active {
+      background: linear-gradient(135deg, #0f766e, #115e59);
+      border-color: #115e59;
+      box-shadow: 0 0 0 2px #5eead4, 0 2px 5px rgba(17, 94, 89, 0.35);
+    }
+
     /* Move State Comparison Section ("Should I move to ?") */
     .move-state-section {
       margin-top: 0.75rem;
@@ -2569,6 +2602,26 @@
       margin-top: 0.25rem;
       gap: 0.25rem 0.55rem;
     }
+    .kpi-final-bal-expense {
+      font-size: 0.80rem;
+      font-weight: 500;
+      color: #64748b;
+      margin-top: 0.20rem;
+      margin-bottom: 0.50rem;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      flex-wrap: wrap;
+    }
+    .kpi-final-bal-expense strong {
+      color: #0f172a;
+      font-weight: 700;
+    }
+    .kpi-final-bal-expense .expense-yr {
+      color: #94a3b8;
+      font-size: 0.75rem;
+      font-weight: 400;
+    }
 
     .btn-action {
       background: var(--primary);
@@ -2716,28 +2769,6 @@
             </div>
           </div>
 
-          <!-- 2. Yearly Expense Slider Card -->
-          <div class="slider-card-group">
-            <div class="slider-header-row">
-              <div class="slider-title">
-                <span>Yearly Living Expense</span>
-                <span class="slider-badge">Annual net cash needed</span>
-              </div>
-              <div class="slider-val-input-wrap">
-                <span class="prefix">$</span>
-                <input type="number" inputmode="decimal" id="annualExpense" value="100000" step="1000" class="slider-val-input has-prefix" oninput="syncFromNumber('annualExpense', 'annualExpenseSlider')" />
-              </div>
-            </div>
-            <div class="slider-track-wrap">
-              <input type="range" id="annualExpenseSlider" min="0" max="250000" value="100000" step="2500" oninput="syncFromSlider('annualExpenseSlider', 'annualExpense')" />
-              <div class="slider-range-labels">
-                <span>$0</span>
-                <span>$100k</span>
-                <span>$250k</span>
-              </div>
-            </div>
-          </div>
-
 
           <!-- 4. Starting Portfolio Balances (Grouped) -->
           <div class="balances-group-card">
@@ -2865,6 +2896,46 @@
                   </div>
                 </div>
               </div>
+            </div>
+          </div>
+
+          <!-- Yearly Living Expense Slider Card (Relocated after Starting Balances) -->
+          <div class="slider-card-group" id="annualExpenseCard">
+            <div class="slider-header-row">
+              <div class="slider-title">
+                <span style="display: flex; align-items: center; gap: 0.45rem;">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 3v18h18"></path>
+                    <path d="m19 9-5 5-4-4-3 3"></path>
+                  </svg>
+                  Yearly Living Expense
+                </span>
+                <span class="slider-badge">Annual net cash needed</span>
+              </div>
+              <div class="slider-val-input-wrap">
+                <span class="prefix">$</span>
+                <input type="number" inputmode="decimal" id="annualExpense" value="100000" step="1000" class="slider-val-input has-prefix" oninput="syncFromNumber('annualExpense', 'annualExpenseSlider')" />
+              </div>
+            </div>
+            <div class="slider-track-wrap">
+              <input type="range" id="annualExpenseSlider" min="0" max="250000" value="100000" step="2500" oninput="syncFromSlider('annualExpenseSlider', 'annualExpense')" />
+              <div class="slider-range-labels" id="annualExpenseRangeLabels">
+                <span>$0</span>
+                <span>$125k</span>
+                <span>$250k</span>
+              </div>
+            </div>
+            <div class="what-afford-section" style="margin-top: 0.65rem; border-top: 1px dashed #cbd5e1; padding-top: 0.55rem;">
+              <div style="display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; flex-wrap: wrap;">
+                <button type="button" class="btn-what-afford" id="btnWhatCanIAfford" onclick="calculateAffordableExpense()" title="Automatically calculate maximum living expense so portfolio lasts through end of simulation (Age 90)">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                  </svg>
+                  <span>What can I afford?</span>
+                </button>
+                <span style="font-size: 0.72rem; color: #047857; font-weight: 600;">Lasts through Age 90</span>
+              </div>
+              <div id="affordCalcResult" class="retire-result-box" style="display: none; margin-top: 0.45rem;"></div>
             </div>
           </div>
 
@@ -3300,6 +3371,13 @@
                 <div>
                   <div class="kpi-label">Final Balance (End of Simulation · Age 90)</div>
                   <div class="kpi-value" id="kpiFinalBalance">--</div>
+                  <div class="kpi-final-bal-expense" id="kpiFinalBalExpenseSub">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;">
+                      <path d="M3 3v18h18"></path>
+                      <path d="m19 9-5 5-4-4-3 3"></path>
+                    </svg>
+                    <span>Living Expense:</span> <strong>$8,333/mo</strong> <span class="expense-yr">($100,000/yr)</span>
+                  </div>
                   <div class="kpi-tax-hbar-wrap" id="kpiFinalBalHBarWrap">
                     <div class="kpi-tax-hbar" id="kpiFinalBalHBar"></div>
                     <div class="kpi-tax-hbar-legend" id="kpiFinalBalHBarLegend"></div>
@@ -3554,92 +3632,6 @@
                           </div>
                         </div>
                         <div id="moveEstateStateResult" class="move-state-result"></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- How Final Balance is Calculated Section -->
-                <div class="milestones-card-wrap" id="finalBalanceCalcSection" style="margin-top: 0.85rem;">
-                  <button type="button" class="btn-milestones-toggle" id="btnToggleFinalBalCalc" onclick="toggleFinalBalanceCalc()" aria-expanded="false">
-                    <span style="display: flex; align-items: center; gap: 0.45rem;">
-                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#4f46e5" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="12" cy="12" r="10"></circle>
-                        <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
-                        <line x1="12" y1="17" x2="12.01" y2="17"></line>
-                      </svg>
-                      <span>How We Calculate Final Balance</span>
-                    </span>
-                    <span id="finalBalCalcChevron" class="milestones-chevron">▼</span>
-                  </button>
-
-                  <div id="finalBalCalcBox" class="milestones-content" style="display: none;">
-                    <div style="font-size: 0.76rem; color: #64748b; margin-bottom: 0.20rem; line-height: 1.4;">
-                      Your <strong>Final Balance</strong> represents total remaining portfolio net worth at the conclusion of the simulation (Age 90), calculated through five sequential steps:
-                    </div>
-
-                    <!-- Step 1: Starting Accounts -->
-                    <div class="milestone-item" style="border-left: 3px solid #4f46e5;">
-                      <div class="milestone-header">
-                        <div class="milestone-age-tag">
-                          <span style="color:#4f46e5; font-weight:700;">1. Starting Balances &amp; Asset Classification</span>
-                        </div>
-                      </div>
-                      <div class="milestone-desc">
-                        Initial capital starts across 5 accounts categorized by tax treatment: <strong>Traditional 401(k) / IRA</strong> (pre-tax, taxable upon withdrawal), <strong>Taxable Brokerage</strong> (taxed on capital gains), <strong>Health Savings Account (HSA)</strong> (100% tax-free for healthcare), and <strong>Roth IRA</strong> (100% tax-free).
-                      </div>
-                    </div>
-
-                    <!-- Step 2: Accumulation Phase -->
-                    <div class="milestone-item" style="border-left: 3px solid #0284c7;">
-                      <div class="milestone-header">
-                        <div class="milestone-age-tag">
-                          <span style="color:#0284c7; font-weight:700;">2. Accumulation Phase (Current Age → Retirement Age)</span>
-                        </div>
-                      </div>
-                      <div class="milestone-desc">
-                        While working, living expenses are funded by active employment earnings ($0 portfolio withdrawals). All balances compound annually at your expected return (default 6.0%/yr):
-                        <div style="font-family: monospace; font-size: 0.74rem; background: #f8fafc; padding: 3px 6px; border-radius: 4px; margin-top: 3px; color: #334155;">Balance(t+1) = Balance(t) × (1 + Annual Return)</div>
-                      </div>
-                    </div>
-
-                    <!-- Step 3: Decumulation & Net Withdrawal Need -->
-                    <div class="milestone-item" style="border-left: 3px solid #f59e0b;">
-                      <div class="milestone-header">
-                        <div class="milestone-age-tag">
-                          <span style="color:#f59e0b; font-weight:700;">3. Decumulation Phase &amp; Inflation Indexing</span>
-                        </div>
-                      </div>
-                      <div class="milestone-desc">
-                        Beginning at Retirement Age, living expenses increase annually with inflation (default 2.5%/yr). Portfolio withdrawal requirements are reduced by net Social Security benefits once claimed:
-                        <div style="font-family: monospace; font-size: 0.74rem; background: #f8fafc; padding: 3px 6px; border-radius: 4px; margin-top: 3px; color: #334155;">Annual Withdrawal = Inflated Living Expense − Net Social Security</div>
-                      </div>
-                    </div>
-
-                    <!-- Step 4: Tax-Efficient Sequencing & RMDs -->
-                    <div class="milestone-item" style="border-left: 3px solid #10b981;">
-                      <div class="milestone-header">
-                        <div class="milestone-age-tag">
-                          <span style="color:#10b981; font-weight:700;">4. Drawdown Sequencing, RMDs &amp; Annual Taxes</span>
-                        </div>
-                      </div>
-                      <div class="milestone-desc">
-                        Withdrawals are sequenced by strategy (filling lower tax brackets with Pre-tax/Brokerage, preserving Roth). Statutory RMDs (starting Age 73 or 75 under SECURE 2.0) are enforced. Federal, state, and Medicare IRMAA taxes are deducted, and remaining balances compound each year:
-                        <div style="font-family: monospace; font-size: 0.74rem; background: #f8fafc; padding: 3px 6px; border-radius: 4px; margin-top: 3px; color: #334155;">Remaining Balance(t+1) = (Balance(t) − Withdrawals(t)) × (1 + Annual Return)</div>
-                      </div>
-                    </div>
-
-                    <!-- Step 5: Ending Balance at Age 90 -->
-                    <div class="milestone-item" style="border-left: 3px solid #8b5cf6;">
-                      <div class="milestone-header">
-                        <div class="milestone-age-tag">
-                          <span style="color:#8b5cf6; font-weight:700;">5. Final Balance at Age 90 (Taxable vs. Non-Taxable)</span>
-                        </div>
-                      </div>
-                      <div class="milestone-desc">
-                        At Age 90, ending balances across all accounts are summed:
-                        <div style="font-family: monospace; font-size: 0.74rem; background: #f8fafc; padding: 3px 6px; border-radius: 4px; margin-top: 3px; color: #334155;">Final Balance = Pre-Tax (401k/IRA) + Brokerage + Roth IRA + HSA</div>
-                        The horizontal bar breaks down the final total into <strong>Taxable</strong> (Pre-Tax &amp; Brokerage) vs. <strong>Non-Taxable</strong> (100% Tax-Free Roth &amp; HSA).
                       </div>
                     </div>
                   </div>
@@ -4143,6 +4135,12 @@
           if (btn) btn.classList.remove('active');
           isRothMaximized = false;
         }
+        if (sliderId === 'annualExpenseSlider') {
+          const btn = document.getElementById('btnWhatCanIAfford');
+          if (btn) btn.classList.remove('active');
+          const resBox = document.getElementById('affordCalcResult');
+          if (resBox && !isCalculatingAffordable) resBox.style.display = 'none';
+        }
         if (typeof onUserInputChange === 'function') {
           onUserInputChange(numberId, parseFloat(slider.value) || 0);
         }
@@ -4155,6 +4153,11 @@
       const slider = document.getElementById(sliderId);
       if (slider && number) {
         const val = parseFloat(number.value) || 0;
+        if (numberId === 'annualExpense' && val > parseFloat(slider.max)) {
+          const newMax = Math.ceil(val / 50000) * 50000;
+          slider.max = newMax;
+          if (typeof updateExpenseRangeLabels === 'function') updateExpenseRangeLabels(newMax);
+        }
         slider.value = Math.min(parseFloat(slider.max), Math.max(parseFloat(slider.min), val));
         if (numberId === 'currentAge') {
           handleCurrentAgeChange(val);
@@ -4168,6 +4171,12 @@
           const btn = document.getElementById('btnMaximizeRoth');
           if (btn) btn.classList.remove('active');
           isRothMaximized = false;
+        }
+        if (numberId === 'annualExpense') {
+          const btn = document.getElementById('btnWhatCanIAfford');
+          if (btn) btn.classList.remove('active');
+          const resBox = document.getElementById('affordCalcResult');
+          if (resBox && !isCalculatingAffordable) resBox.style.display = 'none';
         }
         if (typeof onUserInputChange === 'function') {
           onUserInputChange(numberId, val);
@@ -4910,7 +4919,14 @@
           const inp = document.getElementById('annualExpense');
           const sld = document.getElementById('annualExpenseSlider');
           if (inp) inp.value = exp;
-          if (sld) sld.value = exp;
+          if (sld) {
+            if (exp > parseFloat(sld.max)) {
+              const newMax = Math.ceil(exp / 50000) * 50000;
+              sld.max = newMax;
+              if (typeof updateExpenseRangeLabels === 'function') updateExpenseRangeLabels(newMax);
+            }
+            sld.value = exp;
+          }
         }
         if (data.ssMonthly !== undefined && !isNaN(parseFloat(data.ssMonthly))) {
           const ssm = parseFloat(data.ssMonthly);
@@ -4927,54 +4943,100 @@
           if (sld) sld.value = ssa;
         }
 
-        // 5. Portfolio Balances & Return Assumptions
-        const numFields = [
-          { key: 'bal401k', id: 'bal401k', sId: 'bal401kSlider' },
-          { key: 'balIRA', id: 'balIRA', sId: 'balIRASlider' },
-          { key: 'balRoth', id: 'balRoth', sId: 'balRothSlider' },
-          { key: 'balBrokerage', id: 'balBrokerage', sId: 'balBrokerageSlider' },
-          { key: 'balHsa', id: 'balHsa', sId: 'balHsaSlider' },
-          { key: 'annualRothConv', id: 'annualRothConv', sId: 'annualRothConvSlider' },
-          { key: 'rateReturn', id: 'rateReturn', sId: 'rateReturnSlider' },
-          { key: 'rateInflation', id: 'rateInflation', sId: 'rateInflationSlider' },
-          { key: 'costBasisRatio', id: 'costBasisRatio', sId: 'costBasisRatioSlider' }
-        ];
+        // 5. Portfolio Balances
+        if (data.bal401k !== undefined && !isNaN(parseFloat(data.bal401k))) {
+          const b = parseFloat(data.bal401k);
+          const inp = document.getElementById('bal401k');
+          const sld = document.getElementById('bal401kSlider');
+          if (inp) inp.value = b;
+          if (sld) sld.value = b;
+        }
+        if (data.balIRA !== undefined && !isNaN(parseFloat(data.balIRA))) {
+          const b = parseFloat(data.balIRA);
+          const inp = document.getElementById('balIRA');
+          const sld = document.getElementById('balIRASlider');
+          if (inp) inp.value = b;
+          if (sld) sld.value = b;
+        }
+        if (data.balRoth !== undefined && !isNaN(parseFloat(data.balRoth))) {
+          const b = parseFloat(data.balRoth);
+          const inp = document.getElementById('balRoth');
+          const sld = document.getElementById('balRothSlider');
+          if (inp) inp.value = b;
+          if (sld) sld.value = b;
+        }
+        if (data.balBrokerage !== undefined && !isNaN(parseFloat(data.balBrokerage))) {
+          const b = parseFloat(data.balBrokerage);
+          const inp = document.getElementById('balBrokerage');
+          const sld = document.getElementById('balBrokerageSlider');
+          if (inp) inp.value = b;
+          if (sld) sld.value = b;
+        }
+        if (data.balHsa !== undefined && !isNaN(parseFloat(data.balHsa))) {
+          const b = parseFloat(data.balHsa);
+          const inp = document.getElementById('balHsa');
+          const sld = document.getElementById('balHsaSlider');
+          if (inp) inp.value = b;
+          if (sld) sld.value = b;
+        }
 
-        numFields.forEach(f => {
-          if (data[f.key] !== undefined && !isNaN(parseFloat(data[f.key]))) {
-            const val = parseFloat(data[f.key]);
-            const inp = document.getElementById(f.id);
-            const sld = document.getElementById(f.sId);
-            if (inp) inp.value = val;
-            if (sld) sld.value = Math.min(parseFloat(sld.max || 999999999), Math.max(parseFloat(sld.min || 0), val));
+        // 6. Roth Conversion
+        if (data.annualRothConv !== undefined && !isNaN(parseFloat(data.annualRothConv))) {
+          const b = parseFloat(data.annualRothConv);
+          const inp = document.getElementById('annualRothConv');
+          const sld = document.getElementById('annualRothConvSlider');
+          if (inp) inp.value = b;
+          if (sld) sld.value = b;
+        }
+
+        // 7. Rates & Ratios
+        if (data.rateReturn !== undefined && !isNaN(parseFloat(data.rateReturn))) {
+          const r = parseFloat(data.rateReturn);
+          const inp = document.getElementById('rateReturn');
+          const sld = document.getElementById('rateReturnSlider');
+          if (inp) inp.value = r;
+          if (sld) sld.value = r;
+        }
+        if (data.rateInflation !== undefined && !isNaN(parseFloat(data.rateInflation))) {
+          const r = parseFloat(data.rateInflation);
+          const inp = document.getElementById('rateInflation');
+          const sld = document.getElementById('rateInflationSlider');
+          if (inp) inp.value = r;
+          if (sld) sld.value = r;
+        }
+        if (data.costBasisRatio !== undefined && !isNaN(parseFloat(data.costBasisRatio))) {
+          const r = parseFloat(data.costBasisRatio);
+          const inp = document.getElementById('costBasisRatio');
+          const sld = document.getElementById('costBasisRatioSlider');
+          if (inp) inp.value = r;
+          if (sld) sld.value = r;
+        }
+
+        // 8. Bracket Ceiling
+        if (data.targetBracketRate !== undefined) {
+          const cap = parseInt(data.targetBracketRate);
+          if ([10, 12, 22].includes(cap)) {
+            setBracketCeiling(cap);
           }
-        });
+        }
 
-        // 6. Checkboxes
+        // 9. Flags
         if (data.enableIrmaa !== undefined && document.getElementById('enableIrmaa')) {
-          document.getElementById('enableIrmaa').checked = !!data.enableIrmaa;
+          document.getElementById('enableIrmaa').checked = Boolean(data.enableIrmaa);
         }
         if (data.exemptRule55 !== undefined && document.getElementById('exemptRule55')) {
-          document.getElementById('exemptRule55').checked = !!data.exemptRule55;
-        }
-
-        // 7. Bracket Cap
-        if (data.targetBracketRate !== undefined) {
-          const rate = parseInt(data.targetBracketRate);
-          const sel = document.getElementById('pretaxBracketCap');
-          if (sel) sel.value = rate;
-          [10, 12, 22, 24].forEach(r => {
-            const btn = document.getElementById(`btnBrk${r}`);
-            if (btn) btn.classList.toggle('active', r === rate);
-          });
+          document.getElementById('exemptRule55').checked = Boolean(data.exemptRule55);
         }
 
         isLoadingSaved = false;
-        updateSaveStatusIndicator('Restored from this device', '#2563eb');
+        updateAgeBadges();
+        updateSSBadge();
+        updateStartingBalancesTotal();
+        updateSaveStatusIndicator('Restored your plan', '#2563eb');
         return true;
       } catch (e) {
-        isLoadingSaved = false;
         console.warn('localStorage load failed:', e);
+        isLoadingSaved = false;
         return false;
       }
     }
@@ -4991,9 +5053,8 @@
     /* ==========================================================================
        RESET INPUTS TO DEFAULTS
        ========================================================================== */
-    function resetInputs() {
+    function resetToDefaults() {
       isResetting = true;
-      clearSavedUserInputs();
 
       setFilingStatus('MFJ');
 
@@ -5005,7 +5066,12 @@
       updateAgeBadges();
 
       document.getElementById('annualExpense').value = 100000;
-      document.getElementById('annualExpenseSlider').value = 100000;
+      const expSlider = document.getElementById('annualExpenseSlider');
+      if (expSlider) {
+        expSlider.max = 250000;
+        expSlider.value = 100000;
+        if (typeof updateExpenseRangeLabels === 'function') updateExpenseRangeLabels(250000);
+      }
 
       if (document.getElementById('ssMonthly')) document.getElementById('ssMonthly').value = 2500;
       if (document.getElementById('ssMonthlySlider')) document.getElementById('ssMonthlySlider').value = 2500;
@@ -5052,10 +5118,14 @@
       if (typeof resetRothConversionBaseline === 'function') {
         resetRothConversionBaseline();
       }
+      if (typeof resetAffordableBaseline === 'function') {
+        resetAffordableBaseline();
+      }
       onStateChange();
       isResetting = false;
       clearSavedUserInputs();
     }
+    const resetInputs = resetToDefaults;
 
     const STRATEGY_DESCRIPTIONS = {
       smart: '<strong>Smart Bracket-Fill:</strong> Fills low 10%/12% ordinary brackets with pre-tax distributions and uses tax-free Roth withdrawals as a shield against 22%+ spikes and IRMAA cliffs.',
@@ -6118,6 +6188,14 @@
       }
 
       document.getElementById('kpiFinalBalance').textContent = formatCurrency(active.finalBalance);
+
+      const elFinalBalExp = document.getElementById('kpiFinalBalExpenseSub');
+      if (elFinalBalExp) {
+        const annualExp = (params && params.initialExpense !== undefined) ? params.initialExpense : (typeof parseNumVal === 'function' ? parseNumVal('annualExpense', 100000) : 100000);
+        const monthlyExp = Math.round(annualExp / 12);
+        elFinalBalExp.innerHTML = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><path d="M3 3v18h18"></path><path d="m19 9-5 5-4-4-3 3"></path></svg><span>Living Expense:</span> <strong>${formatCurrency(monthlyExp)}/mo</strong> <span class="expense-yr">(${formatCurrency(annualExp)}/yr)</span>`;
+      }
+
       const totalStart = params.bal401kInit + params.balIRAInit + params.balRothInit + params.balBrokerageInit + (params.balHsaInit || 0);
       const balBadge = document.getElementById('startingBalancesTotalBadge');
       if (balBadge) {
@@ -7419,6 +7497,7 @@
        rendering grouping bracket lines, icons, and interactive phase descriptions.
        ========================================================================== */
     let selectedPhaseGroupingIdx = 0;
+    let isPhaseDetailCardExpanded = false;
     let cachedScheduleForGrouping = null;
     let cachedParamsForGrouping = null;
     let cachedDepletedAgeForGrouping = null;
@@ -7508,14 +7587,15 @@
           nodeBg = '#ccfbf1';
           nodeBorder = '#5eead4';
           nodeColor = '#0d9488';
-          catBadge = 'Social Security Active';
+          catBadge = 'Social Security Active · Pre-RMD Window';
           catBg = '#ccfbf1';
           catColor = '#0d9488';
-          shortLabel = 'Soc Sec';
-          title = 'Social Security Integration & Tax Smoothing';
-          desc = `Guaranteed Social Security benefits start at Age ${params.ssStartAge || 67} (${formatCurrency(avgSS)}/yr). Portfolio withdrawal requirements drop substantially, significantly reducing portfolio longevity strain while taxes are coordinated under IRS § 86 provisional income rules.`;
-          chips.push(`🏛️ Social Security: <strong>${formatCurrency(avgSS)}/yr</strong>`);
+          shortLabel = 'SS + Pre-RMD';
+          title = 'Social Security Starts · Pre-RMD Tax Smoothing (Ages 67–74)';
+          desc = `Guaranteed Social Security benefits start at Age ${params.ssStartAge || 67} (${formatCurrency(avgSS)}/yr) and continue for life through Age 90+. During this ${yrs}-year pre-RMD window (Ages 67–74), Social Security drastically lowers portfolio withdrawal needs while keeping taxable income in low brackets before mandatory RMDs kick in at Age 75.`;
+          chips.push(`🏛️ Social Security: <strong>${formatCurrency(avgSS)}/yr (Active for life)</strong>`);
           chips.push(`💵 Portfolio W/D: <strong>${formatCurrency(avgW)}/yr</strong>`);
+          chips.push(`⚖️ Strategy: <strong>Pre-RMD Bracket Smoothing</strong>`);
           chips.push(`📊 Avg Taxes: <strong>${formatCurrency(avgTax)}/yr</strong>`);
           break;
 
@@ -7524,13 +7604,16 @@
           nodeBg = '#fef3c7';
           nodeBorder = '#fcd34d';
           nodeColor = '#d97706';
-          catBadge = 'Statutory RMD Phase';
+          catBadge = (avgSS > 0) ? 'Mandatory RMDs · Ongoing Social Security' : 'Statutory RMD Phase';
           catBg = '#fef3c7';
           catColor = '#d97706';
-          shortLabel = 'RMDs';
-          title = 'Mandatory Required Minimum Distributions (RMDs)';
-          desc = `Statutory SECURE 2.0 RMD age reached. Annual distributions from pre-tax accounts are legally mandated using the IRS Uniform Lifetime Table. Tax-free Roth accounts continue compounding and absorb any residual needs beyond RMD proceeds.`;
+          shortLabel = (avgSS > 0) ? 'RMDs + SS' : 'RMDs';
+          title = (avgSS > 0) ? 'Mandatory RMDs + Ongoing Social Security (Ages 75–90)' : 'Mandatory Required Minimum Distributions (RMDs)';
+          desc = `Statutory SECURE 2.0 RMD age reached. ${avgSS > 0 ? `Social Security continues uninterrupted (${formatCurrency(avgSS)}/yr for life), while ` : ''}annual distributions from pre-tax accounts are legally mandated using the IRS Uniform Lifetime Table. Together, Social Security and RMDs fund living costs with tax-free Roth absorbing any remaining needs.`;
           chips.push(`📜 Mandatory RMDs Active`);
+          if (avgSS > 0) {
+            chips.push(`🏛️ Social Security: <strong>${formatCurrency(avgSS)}/yr (Ongoing for Life)</strong>`);
+          }
           chips.push(`💵 Total Inflow: <strong>${formatCurrency(avgW + avgSS)}/yr</strong>`);
           chips.push(`💎 Roth IRA: <strong>Preserved Tax-Free</strong>`);
           break;
@@ -7591,8 +7674,40 @@
       };
     }
 
+    function toggleSocialSecurityStreamline() {
+      if (selectedPhaseGroupingIdx === 'SS') {
+        isPhaseDetailCardExpanded = !isPhaseDetailCardExpanded;
+      } else {
+        selectedPhaseGroupingIdx = 'SS';
+        isPhaseDetailCardExpanded = true;
+      }
+      if (cachedScheduleForGrouping && cachedParamsForGrouping) {
+        renderPhaseGroupingRoadmap(cachedScheduleForGrouping, cachedParamsForGrouping, cachedDepletedAgeForGrouping, true);
+      }
+    }
+
+    function togglePhaseGrouping(idx) {
+      if (selectedPhaseGroupingIdx === idx) {
+        isPhaseDetailCardExpanded = !isPhaseDetailCardExpanded;
+      } else {
+        selectedPhaseGroupingIdx = idx;
+        isPhaseDetailCardExpanded = true;
+      }
+      if (cachedScheduleForGrouping && cachedParamsForGrouping) {
+        renderPhaseGroupingRoadmap(cachedScheduleForGrouping, cachedParamsForGrouping, cachedDepletedAgeForGrouping, true);
+      }
+    }
+
     function selectPhaseGrouping(idx) {
       selectedPhaseGroupingIdx = idx;
+      isPhaseDetailCardExpanded = true;
+      if (cachedScheduleForGrouping && cachedParamsForGrouping) {
+        renderPhaseGroupingRoadmap(cachedScheduleForGrouping, cachedParamsForGrouping, cachedDepletedAgeForGrouping, true);
+      }
+    }
+
+    function collapsePhaseDetailCard() {
+      isPhaseDetailCardExpanded = false;
       if (cachedScheduleForGrouping && cachedParamsForGrouping) {
         renderPhaseGroupingRoadmap(cachedScheduleForGrouping, cachedParamsForGrouping, cachedDepletedAgeForGrouping, true);
       }
@@ -7601,13 +7716,24 @@
     function stepPhaseGrouping(delta) {
       if (!cachedPhasesForGrouping || cachedPhasesForGrouping.length === 0) return;
       const newIdx = Math.max(0, Math.min(cachedPhasesForGrouping.length - 1, selectedPhaseGroupingIdx + delta));
-      selectPhaseGrouping(newIdx);
+      selectedPhaseGroupingIdx = newIdx;
+      isPhaseDetailCardExpanded = true;
+      if (cachedScheduleForGrouping && cachedParamsForGrouping) {
+        renderPhaseGroupingRoadmap(cachedScheduleForGrouping, cachedParamsForGrouping, cachedDepletedAgeForGrouping, true);
+      }
     }
 
     function updatePhaseDetailCard(phase, idx, totalPhases, params) {
       const card = document.getElementById('chartPhaseDetailCard');
-      if (!card || !phase) return;
+      if (!card) return;
 
+      if (!isPhaseDetailCardExpanded || !phase) {
+        card.style.display = 'none';
+        card.innerHTML = '';
+        return;
+      }
+
+      card.style.display = 'block';
       const info = getPhaseDisplayInfo(phase, params);
       const yrs = phase.yearsCount;
       const ageSpan = (phase.startAge === phase.endAge)
@@ -7624,9 +7750,14 @@
                 <div style="font-size: 0.76rem; color: #64748b; font-weight: 600;">${ageSpan}</div>
               </div>
             </div>
-            <span style="font-size: 0.72rem; font-weight: 700; padding: 0.18rem 0.50rem; border-radius: 9999px; background: ${info.catBg}; color: ${info.catColor}; border: 1px solid ${info.nodeBorder}; white-space: nowrap;">
-              ${info.catBadge}
-            </span>
+            <div style="display: flex; align-items: center; gap: 0.35rem;">
+              <span style="font-size: 0.72rem; font-weight: 700; padding: 0.18rem 0.50rem; border-radius: 9999px; background: ${info.catBg}; color: ${info.catColor}; border: 1px solid ${info.nodeBorder}; white-space: nowrap;">
+                ${info.catBadge}
+              </span>
+              <button type="button" onclick="collapsePhaseDetailCard()" title="Collapse description" aria-label="Collapse description" style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px; cursor: pointer; color: #64748b; font-size: 0.82rem; padding: 0.18rem 0.40rem; display: inline-flex; align-items: center; justify-content: center; line-height: 1; transition: all 0.15s ease;" onmouseover="this.style.color='#0f172a'; this.style.background='#e2e8f0';" onmouseout="this.style.color='#64748b'; this.style.background='#f8fafc';">
+                ✕
+              </button>
+            </div>
           </div>
 
           <div style="font-size: 0.81rem; color: #334155; line-height: 1.45; margin-top: 0.35rem;">
@@ -7642,9 +7773,9 @@
             <button type="button" class="btn-phase-step" onclick="stepPhaseGrouping(-1)" ${idx === 0 ? 'disabled style="opacity:0.35; cursor:not-allowed;"' : 'style="cursor:pointer;"'}>
               ‹ Prev Phase
             </button>
-            <span style="font-size: 0.74rem; font-weight: 700; color: #64748b;">
-              Phase ${idx + 1} of ${totalPhases}
-            </span>
+            <button type="button" class="btn-phase-step" onclick="collapsePhaseDetailCard()" style="cursor:pointer; background:#ffffff; color:#64748b; border-color:#cbd5e1;">
+              ▲ Collapse Description
+            </button>
             <button type="button" class="btn-phase-step" onclick="stepPhaseGrouping(1)" ${idx === totalPhases - 1 ? 'disabled style="opacity:0.35; cursor:not-allowed;"' : 'style="cursor:pointer;"'}>
               Next Phase ›
             </button>
@@ -7666,7 +7797,11 @@
       cachedPhasesForGrouping = phases;
       if (!phases || phases.length === 0) return;
 
-      if (!keepSelection || selectedPhaseGroupingIdx >= phases.length) {
+      const hasSS = ((params.ssMonthly || 0) > 0 || schedule.some(r => (r.annualSS || 0) > 0));
+
+      if (!keepSelection) {
+        selectedPhaseGroupingIdx = 0;
+      } else if (selectedPhaseGroupingIdx >= phases.length) {
         selectedPhaseGroupingIdx = 0;
       }
 
@@ -7678,13 +7813,36 @@
       const numPoints = schedule.length;
       const step = plotW / Math.max(1, numPoints);
 
+      const wrapEl = document.getElementById('chartPhaseCanvasWrap');
+      if (wrapEl) wrapEl.style.height = `${H}px`;
+      svg.setAttribute('viewBox', `0 0 360 ${H}`);
+
       const svgRect = svg.getBoundingClientRect();
       const aspectCorrection = (svgRect && svgRect.width > 0 && svgRect.height > 0)
-        ? ((svgRect.width / 360) / (svgRect.height / 52))
+        ? ((svgRect.width / 360) / (svgRect.height / H))
         : 1.0;
       const corr = (aspectCorrection > 0.05) ? (1 / aspectCorrection) : 1.0;
 
       let svgHtml = '';
+
+      // Update header hint
+      const hint = document.getElementById('chartPhaseHint');
+      if (hint) {
+        if (isPhaseDetailCardExpanded) {
+          hint.innerHTML = '<span style="color:#2563eb; font-weight:600; cursor:pointer;" onclick="collapsePhaseDetailCard()">Tap icon to collapse description ▲</span>';
+        } else {
+          hint.innerHTML = '<span style="color:#64748b; font-weight:500;">Tap icon for details ▼</span>';
+        }
+      }
+
+      // Drawdown Strategy Lifecycle Phases (Single Row)
+      const bracketTopY = 4;
+      const bracketHorizY = 13;
+      const circleCenterY = 13;
+      const ageCenterY = 27;
+      const labelCenterY = 38;
+      const hitRectTopY = 0;
+      const hitRectHeight = 50;
 
       phases.forEach((p, idx) => {
         const startIndex = Math.max(0, p.startAge - schedule[0].age);
@@ -7693,57 +7851,81 @@
         const x2 = padL + (endIndex + 1) * step;
         const width = Math.max(2, x2 - x1);
         const cx = (x1 + x2) / 2;
-        const isActive = (idx === selectedPhaseGroupingIdx);
+        const isSelected = (selectedPhaseGroupingIdx === idx);
+        const isExpanded = (isSelected && isPhaseDetailCardExpanded);
         const info = getPhaseDisplayInfo(p, params);
 
-        // Grouping bracket line connecting to chart above:
-        // Left tick up: from y=4 to y=13 at x1+1
-        // Horizontal bar: from x1+1 to x2-1 at y=13
-        // Right tick up: from y=13 to y=4 at x2-1
-        const strokeCol = isActive ? info.nodeColor : info.nodeBorder;
-        const strokeW = isActive ? 2.0 : 1.4;
-        const bracketD = `M ${(x1 + 1).toFixed(1)},4 L ${(x1 + 1).toFixed(1)},13 L ${(x2 - 1).toFixed(1)},13 L ${(x2 - 1).toFixed(1)},4`;
+        // Grouping bracket line connecting to chart above
+        const strokeCol = isExpanded ? info.nodeColor : (isSelected ? info.nodeBorder : '#cbd5e1');
+        const strokeW = isExpanded ? 2.2 : (isSelected ? 1.8 : 1.4);
+        const bracketD = `M ${(x1 + 1).toFixed(1)},${bracketTopY} L ${(x1 + 1).toFixed(1)},${bracketHorizY} L ${(x2 - 1).toFixed(1)},${bracketHorizY} L ${(x2 - 1).toFixed(1)},${bracketTopY}`;
 
         svgHtml += `<path d="${bracketD}" fill="none" stroke="${strokeCol}" stroke-width="${strokeW}" stroke-linecap="round" stroke-linejoin="round" />`;
 
-        // Active glow pill behind bracket if active
-        if (isActive) {
-          svgHtml += `<rect x="${(x1 + 1).toFixed(1)}" y="11.5" width="${Math.max(4, width - 2).toFixed(1)}" height="3" rx="1.5" fill="${info.nodeColor}" opacity="0.25" />`;
+        // Active glow pill behind bracket if expanded
+        if (isExpanded) {
+          svgHtml += `<rect x="${(x1 + 1).toFixed(1)}" y="${(bracketHorizY - 1.5).toFixed(1)}" width="${Math.max(4, width - 2).toFixed(1)}" height="3" rx="1.5" fill="${info.nodeColor}" opacity="0.25" />`;
         }
 
         // Centered icon circle (scaled with aspect correction so it stays a sleek, perfect circle on all screens)
-        const r = isActive ? 7.8 : 6.8;
-        const circleStroke = isActive ? info.nodeColor : info.nodeBorder;
-        const circleStrokeW = isActive ? 1.8 : 1.2;
-        const circleFill = isActive ? info.nodeBg : '#ffffff';
-        const iconFontSize = isActive ? 8.2 : 7.2;
-        const iconY = isActive ? 2.8 : 2.5;
+        const r = isExpanded ? 7.8 : 6.8;
+        const circleStroke = isExpanded ? info.nodeColor : (isSelected ? info.nodeBorder : '#cbd5e1');
+        const circleStrokeW = isExpanded ? 2.0 : 1.4;
+        const circleFill = isExpanded ? info.nodeBg : '#ffffff';
+        const iconFontSize = isExpanded ? 8.2 : 7.2;
+        const iconY = isExpanded ? 2.8 : 2.5;
 
-        svgHtml += `<g transform="translate(${cx.toFixed(1)}, 13) scale(${corr.toFixed(3)}, 1)">`;
+        svgHtml += `<g transform="translate(${cx.toFixed(1)}, ${circleCenterY}) scale(${corr.toFixed(3)}, 1)">`;
         svgHtml += `<circle cx="0" cy="0" r="${r}" fill="${circleFill}" stroke="${circleStroke}" stroke-width="${circleStrokeW}" filter="drop-shadow(0 1px 2px rgba(0,0,0,0.08))" />`;
         svgHtml += `<text x="0" y="${iconY}" text-anchor="middle" font-size="${iconFontSize}" style="pointer-events: none; user-select: none;">${info.icon}</text>`;
+        if (isExpanded) {
+          svgHtml += `<path d="M -2.5,9.8 L 0,12.2 L 2.5,9.8" fill="none" stroke="${info.nodeColor}" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" />`;
+        }
         svgHtml += `</g>`;
 
         // Age span label underneath bracket
         const ageText = (p.startAge === p.endAge) ? `${p.startAge}` : `${p.startAge}–${p.endAge}`;
-        const ageFill = isActive ? info.nodeColor : '#334155';
-        const ageWeight = isActive ? '800' : '600';
-        svgHtml += `<g transform="translate(${cx.toFixed(1)}, 27) scale(${corr.toFixed(3)}, 1)">`;
+        const ageFill = isExpanded ? info.nodeColor : (isSelected ? '#0f172a' : '#475569');
+        const ageWeight = isExpanded ? '800' : '600';
+        svgHtml += `<g transform="translate(${cx.toFixed(1)}, ${ageCenterY}) scale(${corr.toFixed(3)}, 1)">`;
         svgHtml += `<text x="0" y="0" text-anchor="middle" font-size="7.8" font-weight="${ageWeight}" fill="${ageFill}" style="pointer-events: none; user-select: none;">${ageText}</text>`;
         svgHtml += `</g>`;
 
         // Phase short label underneath age
-        const shortLabelFill = isActive ? info.nodeColor : '#64748b';
-        const shortLabelWeight = isActive ? '700' : '500';
-        svgHtml += `<g transform="translate(${cx.toFixed(1)}, 38) scale(${corr.toFixed(3)}, 1)">`;
+        const shortLabelFill = isExpanded ? info.nodeColor : (isSelected ? '#475569' : '#64748b');
+        const shortLabelWeight = isExpanded ? '700' : '500';
+        svgHtml += `<g transform="translate(${cx.toFixed(1)}, ${labelCenterY}) scale(${corr.toFixed(3)}, 1)">`;
         svgHtml += `<text x="0" y="0" text-anchor="middle" font-size="6.8" font-weight="${shortLabelWeight}" fill="${shortLabelFill}" style="pointer-events: none; user-select: none;">${info.shortLabel}</text>`;
         svgHtml += `</g>`;
 
         // Transparent interactive hit rect
         const hitW = Math.max(24, width);
         const hitX = Math.max(0, cx - hitW / 2);
-        svgHtml += `<rect x="${hitX.toFixed(1)}" y="0" width="${hitW.toFixed(1)}" height="50" fill="transparent" cursor="pointer" class="phase-hit-rect" data-phase-idx="${idx}" />`;
+        svgHtml += `<rect x="${hitX.toFixed(1)}" y="${hitRectTopY}" width="${hitW.toFixed(1)}" height="${hitRectHeight}" fill="transparent" cursor="pointer" class="phase-hit-rect" data-phase-idx="${idx}" title="${isExpanded ? 'Tap icon to collapse description' : 'Tap icon to open description'}" />`;
       });
+
+      // Continuous Social Security active guideline connector (Age 67 to Age 90+)
+      if (hasSS) {
+        const ssStartAge = (params.ssStartAge !== undefined) ? params.ssStartAge : 67;
+        const startAgeSched = schedule[0].age;
+        const ssStartIndex = Math.max(0, ssStartAge - startAgeSched);
+        const ssEndIndex = numPoints - 1;
+        const ssX1 = padL + ssStartIndex * step;
+        const ssX2 = padL + (ssEndIndex + 1) * step;
+        const midX = (ssX1 + ssX2) / 2;
+
+        // Continuous guideline connecting SS across Phase 3 and Phase 4 through Age 90+
+        svgHtml += `<line x1="${(ssX1 + 2).toFixed(1)}" y1="47.5" x2="${(ssX2 - 6).toFixed(1)}" y2="47.5" stroke="#0d9488" stroke-width="1.3" stroke-dasharray="3,2" style="pointer-events:none;" />`;
+        svgHtml += `<g transform="translate(${(ssX2 - 4).toFixed(1)}, 47.5) scale(${corr.toFixed(3)}, 1)">`;
+        svgHtml += `<text x="0" y="2.2" text-anchor="middle" font-size="6.2" font-weight="800" fill="#0d9488" style="pointer-events:none; user-select:none;">▶</text>`;
+        svgHtml += `</g>`;
+
+        // Centered badge showing lifetime continuation
+        svgHtml += `<g transform="translate(${midX.toFixed(1)}, 47.5) scale(${corr.toFixed(3)}, 1)">`;
+        svgHtml += `<rect x="-42" y="-5.5" width="84" height="11" rx="3" fill="#f0fdfa" stroke="#5eead4" stroke-width="0.9" style="pointer-events:none;" />`;
+        svgHtml += `<text x="0" y="2.5" text-anchor="middle" font-size="6.6" font-weight="700" fill="#0f766e" style="pointer-events:none; user-select:none;">🏛️ SS Active for Life →</text>`;
+        svgHtml += `</g>`;
+      }
 
       svg.innerHTML = svgHtml;
 
@@ -7753,8 +7935,9 @@
         const p = phases[idx];
         const info = getPhaseDisplayInfo(p, params);
 
-        rect.addEventListener('click', () => {
-          selectPhaseGrouping(idx);
+        rect.addEventListener('click', (e) => {
+          e.stopPropagation();
+          togglePhaseGrouping(idx);
         });
 
         rect.addEventListener('mouseenter', () => {
@@ -7764,7 +7947,9 @@
           tooltip.style.display = 'block';
           tooltip.style.left = `${Math.min(r.width - 160, Math.max(10, rectW.left - r.left + rectW.width / 2 - 70))}px`;
           tooltip.style.top = `-28px`;
-          tooltip.innerHTML = `<strong>${info.icon} ${info.title}</strong> (Age ${p.startAge}–${p.endAge})`;
+          const isThisExpanded = (idx === selectedPhaseGroupingIdx && isPhaseDetailCardExpanded);
+          const toggleAction = isThisExpanded ? 'Tap to collapse description' : 'Tap to open description';
+          tooltip.innerHTML = `<strong>${info.icon} ${info.title}</strong> (Age ${p.startAge}–${p.endAge})<br><span style="font-size: 0.72rem; color: #94a3b8; font-weight: 500;">${toggleAction}</span>`;
         });
 
         rect.addEventListener('mouseleave', () => {
@@ -7773,7 +7958,9 @@
       });
 
       // Update detail card
-      updatePhaseDetailCard(phases[selectedPhaseGroupingIdx], selectedPhaseGroupingIdx, phases.length, params);
+      if (typeof selectedPhaseGroupingIdx === 'number' && selectedPhaseGroupingIdx >= 0 && selectedPhaseGroupingIdx < phases.length) {
+        updatePhaseDetailCard(phases[selectedPhaseGroupingIdx], selectedPhaseGroupingIdx, phases.length, params);
+      }
     }
 
     /* ==========================================================================
@@ -7952,6 +8139,173 @@
     }
 
     /* ==========================================================================
+       AFFORDABLE LIVING EXPENSE SOLVER ("What can I afford?")
+       Automatically calculates the maximum sustainable annual living expense
+       so that the portfolio lasts until the end of the simulation (Age 90).
+       ========================================================================== */
+    let originalAffordBaseline = null;
+    let isCalculatingAffordable = false;
+
+    function updateExpenseRangeLabels(maxVal) {
+      const labels = document.getElementById('annualExpenseRangeLabels');
+      if (!labels) return;
+      const midVal = Math.round(maxVal / 2);
+      const fmt = (v) => {
+        if (v >= 1000000) {
+          const m = v / 1000000;
+          return `$${Number.isInteger(m) ? m : m.toFixed(1)}M`;
+        }
+        return `$${Math.round(v / 1000)}k`;
+      };
+      labels.innerHTML = `<span>$0</span><span>${fmt(midVal)}</span><span>${fmt(maxVal)}</span>`;
+    }
+
+    function resetAffordableBaseline() {
+      const expInput = document.getElementById('annualExpense');
+      const expSlider = document.getElementById('annualExpenseSlider');
+      const resultBox = document.getElementById('affordCalcResult');
+      const btn = document.getElementById('btnWhatCanIAfford');
+
+      const revertVal = (originalAffordBaseline !== null) ? originalAffordBaseline : 100000;
+      if (expInput) expInput.value = revertVal;
+      if (expSlider) {
+        if (revertVal > parseFloat(expSlider.max)) {
+          expSlider.max = Math.ceil(revertVal / 50000) * 50000;
+          updateExpenseRangeLabels(parseFloat(expSlider.max));
+        }
+        expSlider.value = revertVal;
+      }
+
+      if (btn) btn.classList.remove('active');
+      if (resultBox) {
+        resultBox.style.display = 'none';
+        resultBox.innerHTML = '';
+      }
+
+      originalAffordBaseline = null;
+      calculatePlan();
+      saveUserInputs();
+    }
+
+    function calculateAffordableExpense() {
+      const expInput = document.getElementById('annualExpense');
+      const expSlider = document.getElementById('annualExpenseSlider');
+      const resultBox = document.getElementById('affordCalcResult');
+      const btn = document.getElementById('btnWhatCanIAfford');
+
+      if (!expInput || !resultBox) return;
+
+      if (originalAffordBaseline === null) {
+        originalAffordBaseline = parseFloat(expInput.value) || 100000;
+      }
+
+      const baseParams = getFormValues();
+      const activeStrat = activeStrategy || 'smart';
+      const totalAssets = (baseParams.bal401kInit || 0) + (baseParams.balIRAInit || 0) + 
+                          (baseParams.balRothInit || 0) + (baseParams.balBrokerageInit || 0) + 
+                          (baseParams.balHsaInit || 0);
+
+      // Check baseline solvency at $0 expense
+      let low = 0;
+      let high = Math.max(500000, Math.min(3000000, Math.round(totalAssets * 0.5) + (baseParams.ssMonthly * 12 * 2)));
+
+      const testLow = simulateRetirement(activeStrat, { ...baseParams, initialExpense: low });
+      if (testLow.depletedAge !== null) {
+        resultBox.style.display = 'block';
+        resultBox.className = 'retire-result-box warning';
+        resultBox.innerHTML = `<div><strong>⚠️ Unable to calculate affordable spending</strong></div>` +
+          `<div style="margin-top: 0.25rem; font-size: 0.78rem;">With current assets and parameters, the portfolio cannot sustain withdrawals through Age 90. Try adjusting retirement age or starting balances.</div>` +
+          `<div style="margin-top: 0.45rem;"><button type="button" class="btn-apply-age" style="background:#f1f5f9; color:#475569; border-color:#cbd5e1;" onclick="resetAffordableBaseline()">✕ Close</button></div>`;
+        return;
+      }
+
+      // Expand high bound if still solvent at high
+      while (high <= 5000000) {
+        const testHigh = simulateRetirement(activeStrat, { ...baseParams, initialExpense: high });
+        if (testHigh.depletedAge === null && testHigh.finalBalance >= 0) {
+          high *= 2;
+        } else {
+          break;
+        }
+      }
+
+      // Binary search for maximum initialExpense where depletedAge === null && finalBalance >= 0
+      for (let i = 0; i < 26; i++) {
+        const mid = Math.round((low + high) / 2);
+        const testMid = simulateRetirement(activeStrat, { ...baseParams, initialExpense: mid });
+        if (testMid.depletedAge === null && testMid.finalBalance >= 0) {
+          low = mid;
+        } else {
+          high = mid;
+        }
+      }
+
+      // Round down to nearest $500 for a clean, practical figure
+      let optimalExpense = Math.floor(low / 500) * 500;
+      if (optimalExpense < 0) optimalExpense = 0;
+
+      // Verify rounded value is solvent
+      let verifySim = simulateRetirement(activeStrat, { ...baseParams, initialExpense: optimalExpense });
+      if (verifySim.depletedAge !== null || verifySim.finalBalance < 0) {
+        optimalExpense = Math.floor(optimalExpense / 1000) * 1000;
+        verifySim = simulateRetirement(activeStrat, { ...baseParams, initialExpense: optimalExpense });
+      }
+
+      const finalBal = verifySim.finalBalance;
+      const monthlyAfford = Math.round(optimalExpense / 12);
+
+      isCalculatingAffordable = true;
+
+      // Update input
+      expInput.value = optimalExpense;
+
+      // Expand slider max if needed
+      if (expSlider) {
+        if (optimalExpense > parseFloat(expSlider.max)) {
+          const newMax = Math.ceil(optimalExpense / 50000) * 50000;
+          expSlider.max = newMax;
+          updateExpenseRangeLabels(newMax);
+        }
+        expSlider.value = optimalExpense;
+      }
+
+      if (btn) btn.classList.add('active');
+
+      // Populate result box
+      resultBox.style.display = 'block';
+      resultBox.className = 'retire-result-box';
+      const origFormatted = formatCurrency(originalAffordBaseline);
+      const optFormatted = formatCurrency(optimalExpense);
+      const moFormatted = formatCurrency(monthlyAfford);
+      const cushionFormatted = formatCurrency(finalBal);
+
+      resultBox.innerHTML = `
+        <div style="display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; flex-wrap: wrap;">
+          <div><strong style="color: #15803d; font-size: 0.88rem;">🎉 Maximum Sustainable Spending: ${optFormatted}/yr</strong></div>
+          <span style="font-size: 0.72rem; background: #dcfce7; color: #15803d; font-weight: 700; padding: 2px 7px; border-radius: 4px; border: 1px solid #86efac;">Lasts through Age 90</span>
+        </div>
+        <div style="margin-top: 0.35rem; font-size: 0.80rem; color: #166534;">
+          Equal to approximately <strong>${moFormatted}/month</strong> in spendable cash.
+        </div>
+        <div style="margin-top: 0.25rem; font-size: 0.76rem; color: #14532d; line-height: 1.4;">
+          With your assets compounding and planned distributions, this spending rate ensures your money lasts through the entire simulation to Age 90, with an estimated ending cushion of <strong>${cushionFormatted}</strong>.
+        </div>
+        <div style="margin-top: 0.55rem; display: flex; gap: 0.40rem; align-items: center; flex-wrap: wrap;">
+          <button type="button" class="btn-apply-age" style="background:#ffffff; color:#047857; border-color:#86efac; font-weight: 700;" onclick="document.getElementById('affordCalcResult').style.display='none'">
+            ✓ Keep ${optFormatted}/yr
+          </button>
+          <button type="button" class="btn-apply-age" style="background:#f1f5f9; color:#475569; border-color:#cbd5e1;" onclick="resetAffordableBaseline()">
+            ↺ Revert to ${origFormatted}/yr
+          </button>
+        </div>
+      `;
+
+      isCalculatingAffordable = false;
+      calculatePlan();
+      saveUserInputs();
+    }
+
+    /* ==========================================================================
        ROTH CONVERSION OPTIMIZATION ENGINE ("Maximize Me")
        Automatically calculates the best annual Roth conversion amount ($/year)
        to maximize after-tax net worth at Age 90 while minimizing lifetime taxes.
@@ -8040,12 +8394,16 @@
         let totalRmd = 0;
         res.schedule.forEach(r => { totalRmd += (r.mandatoryRmd || 0); });
 
+        const isSolvent = (res.depletedAge === null && finalBal >= 0);
+
         const item = {
           conv: c,
           finalBal: finalBal,
           afterTaxNetWorth: afterTaxNetWorth,
           lifetimeTax: lifetimeTax,
-          totalRmd: totalRmd
+          totalRmd: totalRmd,
+          depletedAge: res.depletedAge,
+          isSolvent: isSolvent
         };
 
         if (c === 0) baselineMetrics = item;
@@ -8054,13 +8412,40 @@
 
       if (!baselineMetrics || items.length === 0) return;
 
-      // Score candidates by Net Economic Benefit = (Tax Savings) + (After-Tax Net Worth Change)
-      let best = baselineMetrics;
-      best.taxSavings = 0;
-      best.wealthGain = 0;
-      best.netEconomicBenefit = 0;
+      // Solvency Rule: The maximize button MUST make sure that we have money until the end of the simulation (Age 90).
+      // Disqualify any candidate conversion amount that causes the portfolio to deplete early.
+      const isBaselineSolvent = baselineMetrics.isSolvent;
+      let eligibleItems = [];
 
-      items.forEach(item => {
+      if (isBaselineSolvent) {
+        // When baseline is solvent through Age 90, strictly only consider candidates that remain completely solvent through Age 90
+        eligibleItems = items.filter(it => it.isSolvent);
+      } else {
+        // If baseline itself is already depleted prior to Age 90:
+        // 1. Check if any conversion candidate cures depletion and reaches Age 90
+        const solventCandidates = items.filter(it => it.isSolvent);
+        if (solventCandidates.length > 0) {
+          eligibleItems = solventCandidates;
+        } else {
+          // 2. Otherwise only consider candidates that do not accelerate depletion
+          eligibleItems = items.filter(it => (it.depletedAge || 0) >= (baselineMetrics.depletedAge || 0));
+        }
+      }
+
+      if (eligibleItems.length === 0) {
+        eligibleItems = [baselineMetrics];
+      }
+
+      // Score eligible candidates by Net Economic Benefit = (Tax Savings) + (After-Tax Net Worth Change)
+      let best = baselineMetrics;
+      if (!eligibleItems.includes(best)) {
+        best = eligibleItems[0];
+      }
+      best.taxSavings = baselineMetrics.lifetimeTax - best.lifetimeTax;
+      best.wealthGain = best.afterTaxNetWorth - baselineMetrics.afterTaxNetWorth;
+      best.netEconomicBenefit = best.taxSavings + best.wealthGain;
+
+      eligibleItems.forEach(item => {
         const taxSavings = baselineMetrics.lifetimeTax - item.lifetimeTax;
         const wealthGain = item.afterTaxNetWorth - baselineMetrics.afterTaxNetWorth;
         const netBenefit = taxSavings + wealthGain;
@@ -8072,7 +8457,10 @@
         if (item.netEconomicBenefit > best.netEconomicBenefit + 500) {
           best = item;
         } else if (Math.abs(item.netEconomicBenefit - best.netEconomicBenefit) <= 500) {
-          if (item.taxSavings > best.taxSavings) {
+          // Tie-break: prioritize candidate leaving higher ending cushion / balance
+          if (item.finalBal > best.finalBal) {
+            best = item;
+          } else if (item.taxSavings > best.taxSavings) {
             best = item;
           }
         }
@@ -8109,26 +8497,46 @@
         } else if (wealthGain < -500) {
           diffHtml += `<div style="font-size: 0.74rem; color: #64748b;">Net Economic Gain: <strong style="color: #15803d;">+${formatCurrency(best.netEconomicBenefit)}</strong> (after tax &amp; compounding)</div>`;
         }
+        diffHtml += `<div style="color: #15803d; font-weight: 600; margin-top: 2px;">✓ Portfolio Longevity: <strong>Lasts through Age 90</strong> (Ending Cushion: ${formatCurrency(best.finalBal)})</div>`;
+
         resultBox.innerHTML = `
           <div style="display: flex; align-items: center; justify-content: space-between; gap: 0.4rem; margin-bottom: 0.25rem;">
-            <span style="font-weight: 700; color: #1e293b; font-size: 0.84rem;">⚡ Optimal: ${formatCurrency(optimalConv)}/yr</span>
+            <div style="display: flex; align-items: center; gap: 0.35rem; flex-wrap: wrap;">
+              <span style="font-weight: 700; color: #1e293b; font-size: 0.84rem;">⚡ Optimal: ${formatCurrency(optimalConv)}/yr</span>
+              <span style="font-size: 0.70rem; background: #dcfce7; color: #15803d; font-weight: 700; padding: 2px 6px; border-radius: 4px; border: 1px solid #86efac;">Solvent to Age 90</span>
+            </div>
             <button type="button" onclick="resetRothConversionBaseline()" style="white-space: nowrap; background: #ffffff; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 0.72rem; color: #475569; cursor: pointer; padding: 2px 6px; font-weight: 600;">Revert</button>
           </div>
           <div style="font-size: 0.78rem; line-height: 1.4;">
             ${diffHtml}
             <div style="margin-top: 0.20rem; font-size: 0.73rem; color: #475569;">
-              Converts pre-tax accounts systematically before mandatory RMDs at Age 73/75 to lock in tax-free compounding.
+              Converts pre-tax accounts systematically before mandatory RMDs at Age 73/75 to lock in tax-free compounding while guaranteeing full solvency through Age 90.
             </div>
           </div>
         `;
       } else {
+        let reasonHtml = '';
+        if (isBaselineSolvent) {
+          const hadSolventAlternatives = items.some(it => it.conv > 0 && it.isSolvent);
+          if (hadSolventAlternatives) {
+            reasonHtml = 'Your current plan already maximizes net worth while ensuring your money lasts through Age 90. Pre-tax funds are absorbed efficiently by living expenses and standard deductions without triggering punitive RMD brackets.';
+          } else {
+            reasonHtml = 'To guarantee your money lasts until the end of the simulation (Age 90), annual Roth conversion is kept at <strong>$0/yr</strong>. Converting pre-tax accounts right now would incur upfront taxes that deplete your portfolio prematurely.';
+          }
+        } else {
+          reasonHtml = `With current living expenses, your portfolio is projected to deplete at Age ${baselineMetrics.depletedAge}. Converting pre-tax funds right now would incur upfront taxes that worsen longevity. Use <strong>"What can I afford?"</strong> or adjust retirement age to secure solvency first.`;
+        }
+
         resultBox.innerHTML = `
           <div style="display: flex; align-items: center; justify-content: space-between; gap: 0.4rem; margin-bottom: 0.25rem;">
-            <span style="font-weight: 700; color: #1e293b; font-size: 0.84rem;">⚡ Optimal: $0/yr</span>
+            <div style="display: flex; align-items: center; gap: 0.35rem; flex-wrap: wrap;">
+              <span style="font-weight: 700; color: #1e293b; font-size: 0.84rem;">⚡ Optimal: $0/yr</span>
+              ${isBaselineSolvent ? '<span style="font-size: 0.70rem; background: #dcfce7; color: #15803d; font-weight: 700; padding: 2px 6px; border-radius: 4px; border: 1px solid #86efac;">Protected to Age 90</span>' : '<span style="font-size: 0.70rem; background: #fee2e2; color: #dc2626; font-weight: 700; padding: 2px 6px; border-radius: 4px;">Depletes Early</span>'}
+            </div>
             <button type="button" onclick="resetRothConversionBaseline()" style="white-space: nowrap; background: #ffffff; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 0.72rem; color: #475569; cursor: pointer; padding: 2px 6px; font-weight: 600;">Close</button>
           </div>
           <div style="font-size: 0.76rem; color: #475569; line-height: 1.4;">
-            Your current plan already maximizes net worth. Pre-tax funds are absorbed efficiently by living expenses and standard deductions without triggering punitive RMD brackets.
+            ${reasonHtml}
           </div>
         `;
       }
@@ -9186,17 +9594,18 @@
             break;
 
           case 'SS_ACTIVE':
-            icon = '🏛️';
+            icon = '⚖️';
             nodeBg = '#ccfbf1';
             nodeBorder = '#5eead4';
             nodeColor = '#0d9488';
-            catBadge = 'Social Security Active';
+            catBadge = 'Pre-RMD Tax Smoothing · Low Bracket Window';
             catBg = '#ccfbf1';
             catColor = '#0d9488';
-            title = 'Social Security Integration & Tax Smoothing';
-            desc = `Guaranteed Social Security benefits start at Age ${params.ssStartAge || 67} (${formatCurrency(avgSS)}/yr). Portfolio withdrawal requirements drop substantially, significantly reducing portfolio longevity strain while taxes are coordinated under IRS § 86 provisional income rules.`;
-            chips.push(`<span>🏛️ Social Security: <strong>${formatCurrency(avgSS)}/yr</strong></span>`);
+            title = 'Pre-RMD Tax Smoothing Window (Ages 67–74)';
+            desc = `Social Security is active (${formatCurrency(avgSS)}/yr, guaranteed for life), dramatically reducing required portfolio withdrawals. This ${yrs}-year pre-RMD window allows strategic tax smoothing—filling the lowest 10%–12% ordinary brackets before mandatory RMDs begin at Age 75.`;
+            chips.push(`<span>🏛️ Social Security: <strong>${formatCurrency(avgSS)}/yr (Active for life)</strong></span>`);
             chips.push(`<span>💵 Portfolio W/D: <strong>${formatCurrency(avgW)}/yr</strong></span>`);
+            chips.push(`<span>⚖️ Strategy: <strong>Pre-RMD Bracket Smoothing</strong></span>`);
             chips.push(`<span>📊 Avg Taxes: <strong>${formatCurrency(avgTax)}/yr</strong></span>`);
             break;
 
@@ -9209,8 +9618,11 @@
             catBg = '#fef3c7';
             catColor = '#d97706';
             title = 'Mandatory Required Minimum Distributions (RMDs)';
-            desc = `Statutory SECURE 2.0 RMD age reached. Annual distributions from pre-tax accounts are legally mandated using the IRS Uniform Lifetime Table. Tax-free Roth accounts continue compounding and absorb any residual needs beyond RMD proceeds.`;
+            desc = `Statutory SECURE 2.0 RMD age reached. Social Security continues uninterrupted (${formatCurrency(avgSS)}/yr), while annual distributions from pre-tax accounts are legally mandated using the IRS Uniform Lifetime Table. Together, Social Security and RMDs fund living costs with tax-free Roth absorbing any remaining needs.`;
             chips.push(`<span>📜 Mandatory RMDs Active</span>`);
+            if (avgSS > 0) {
+              chips.push(`<span>🏛️ Social Security: <strong>${formatCurrency(avgSS)}/yr (Ongoing for Life)</strong></span>`);
+            }
             chips.push(`<span>💵 Total Inflow: <strong>${formatCurrency(avgW + avgSS)}/yr</strong></span>`);
             chips.push(`<span>💎 Roth IRA: <strong>Preserved Tax-Free</strong></span>`);
             break;
