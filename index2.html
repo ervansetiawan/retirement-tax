@@ -5534,11 +5534,24 @@
           }
         }
 
+        // -----------------------------------------------------------------
+        // REINVEST SURPLUS CASH FLOW (Unspent RMDs / Inflows)
+        // If mandatory inflows (RMDs, SS, non-brokerage withdrawals) exceed
+        // total living expenses, taxes, and IRMAA, the excess is reinvested
+        // into the taxable brokerage account (with 100% cost basis).
+        // -----------------------------------------------------------------
+        const netNonBrokInflow = wPretax + wRoth + wHsa + annualSS;
+        const netObligationAfterTaxes = targetExpense + estTax + irmaaSurcharge;
+        let surplusCash = 0;
+        if (netNonBrokInflow > netObligationAfterTaxes) {
+          surplusCash = netNonBrokInflow - netObligationAfterTaxes;
+        }
+
         // Update account balances: pre-tax decreased by spending + conversion, Roth credited with conversion
         bal401k = Math.max(0, rem401k - conv401k);
         balIRA = Math.max(0, remIRA - convIRA);
         balRoth = Math.max(0, balRoth - wRoth) + actualConv;
-        balBrokerage = Math.max(0, balBrokerage - wBrokerage);
+        balBrokerage = Math.max(0, balBrokerage - wBrokerage) + surplusCash;
         balHsa = Math.max(0, balHsa - wHsa);
 
         bal401k *= (1 + returnRateDec);
@@ -5600,6 +5613,7 @@
           totalGrossW: totalGrossW,
           estTax: estTax,
           netSpendable: totalGrossW + annualSS - estTax - irmaaSurcharge,
+          surplusReinvested: surplusCash,
           balBrokerage: balBrokerage,
           bal401k: bal401k,
           balIRA: balIRA,
@@ -5628,6 +5642,7 @@
       const totalLifetimeOtherTax = schedule.reduce((acc, r) => acc + (r.otherTax || 0), 0);
       const totalLifetimeFedTax = schedule.reduce((acc, r) => acc + (r.fedTax || 0), 0);
       const totalLifetimeStateTax = schedule.reduce((acc, r) => acc + (r.stateTax || 0), 0);
+      const totalLifetimeReinvested = schedule.reduce((acc, r) => acc + (r.surplusReinvested || 0), 0);
 
       return {
         schedule,
@@ -5652,6 +5667,7 @@
         totalLifetimeFedSsTax,
         totalLifetimeStateSsTax,
         totalLifetimeOtherTax,
+        totalLifetimeReinvested,
         depletedAge,
         finalBalance: schedule[schedule.length - 1]?.totalEndingBal || 0
       };
@@ -6109,6 +6125,138 @@
         html += `</div>`;
       });
       html += '</div>';
+
+      // -----------------------------------------------------------------
+      // INHERITANCE & BENEFICIARY TAX ANALYSIS (FOR USER AND KIDS)
+      // -----------------------------------------------------------------
+      if (finalBal > 0) {
+        let finalBrok = 0;
+        let finalPretax = 0;
+        let finalRoth = 0;
+        let finalHsa = 0;
+        if (active.schedule && active.schedule.length > 0) {
+          const last = active.schedule[active.schedule.length - 1];
+          finalBrok = last.balBrokerage || 0;
+          finalPretax = last.balPretax !== undefined ? last.balPretax : ((last.bal401k || 0) + (last.balIRA || 0));
+          finalRoth = last.balRoth || 0;
+          finalHsa = last.balHsa || 0;
+        }
+
+        const status = params.status || 'MFJ';
+        const stateCode = params.stateCode || 'MN';
+        const basisRatioDec = (params.costBasisRatio !== undefined ? params.costBasisRatio : 60) / 100;
+        const unrealizedBrokGain = Math.max(0, finalBrok * (1 - basisRatioDec));
+
+        // 1. User / Estate Tax Liability:
+        const fedExemption = status === 'MFJ' ? 27220000 : 13610000;
+        const fedEstateTax = Math.max(0, (finalBal - fedExemption) * 0.40);
+
+        // State Estate Tax Dictionary (12 states + DC have estate taxes)
+        const stateEstateRules = {
+          'OR': { threshold: 1000000, rate: 0.10, name: 'Oregon' },
+          'WA': { threshold: 2193000, rate: 0.14, name: 'Washington' },
+          'MA': { threshold: 2000000, rate: 0.10, name: 'Massachusetts' },
+          'MN': { threshold: 3000000, rate: 0.13, name: 'Minnesota' },
+          'IL': { threshold: 4000000, rate: 0.10, name: 'Illinois' },
+          'DC': { threshold: 4710800, rate: 0.12, name: 'District of Columbia' },
+          'MD': { threshold: 5000000, rate: 0.10, name: 'Maryland' },
+          'VT': { threshold: 5000000, rate: 0.16, name: 'Vermont' },
+          'HI': { threshold: 5490000, rate: 0.14, name: 'Hawaii' },
+          'ME': { threshold: 6800000, rate: 0.10, name: 'Maine' },
+          'NY': { threshold: 6940000, rate: 0.10, name: 'New York' },
+          'RI': { threshold: 1774583, rate: 0.10, name: 'Rhode Island' },
+          'CT': { threshold: 13610000, rate: 0.12, name: 'Connecticut' }
+        };
+
+        let stateEstateTax = 0;
+        let stateRule = stateEstateRules[stateCode];
+        let stateTaxDesc = `State Estate Tax (${stateCode}): $0 (No state estate tax)`;
+        if (stateRule) {
+          if (finalBal > stateRule.threshold) {
+            stateEstateTax = (finalBal - stateRule.threshold) * stateRule.rate;
+            stateTaxDesc = `State Estate Tax (${stateCode}): ${formatCurrency(stateEstateTax)} <span style="color: #64748b; font-size: 0.75rem;">(Exceeds ${formatCurrency(stateRule.threshold)} limit)</span>`;
+          } else {
+            stateTaxDesc = `State Estate Tax (${stateCode}): $0 <span style="color: #64748b; font-size: 0.75rem;">(&lt; ${formatCurrency(stateRule.threshold)} limit)</span>`;
+          }
+        }
+
+        // Step-up in basis forgiveness (IRC § 1014): capital gains tax permanently eliminated on death
+        const capitalGainsForgiven = unrealizedBrokGain * (0.15 + (stateCode === 'MN' ? 0.0985 : 0.05));
+
+        // 2. Kids (Heirs / Non-Spouse Beneficiaries) Tax Liability:
+        const kidsPretaxTax = finalPretax > 10 ? (finalPretax * 0.30) : 0;
+        const kidsHsaTax = finalHsa > 10 ? (finalHsa * 0.30) : 0;
+        const kidsTotalTax = kidsPretaxTax + kidsHsaTax;
+        const totalEstateTax = fedEstateTax + stateEstateTax;
+        const totalAllTaxes = totalEstateTax + kidsTotalTax;
+        const netLegacy = Math.max(0, finalBal - totalAllTaxes);
+        const netLegacyPct = finalBal > 0 ? Math.round((netLegacy / finalBal) * 100) : 100;
+        const kidsTaxFreeInheritance = finalRoth + finalBrok;
+        const taxFreePct = finalBal > 0 ? Math.round((kidsTaxFreeInheritance / finalBal) * 100) : 0;
+
+        html += `
+          <div class="inheritance-analysis-box" id="inheritanceSituationBox" style="margin-top: 0.65rem; padding: 0.75rem 0.85rem; background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 8px;">
+            <div style="font-weight: 700; color: #1e293b; font-size: 0.90rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.35rem; margin-bottom: 0.55rem;">
+              <span style="display: flex; align-items: center; gap: 0.4rem;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2.3"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                Inheritance &amp; Beneficiary Tax Analysis
+              </span>
+              <span style="font-size: 0.75rem; padding: 3px 8px; border-radius: 9999px; font-weight: 700; ${kidsTotalTax <= 0 ? 'background: #dcfce7; color: #15803d; border: 1px solid #86efac;' : 'background: #fef3c7; color: #b45309; border: 1px solid #fcd34d;'}">
+                ${kidsTotalTax <= 0 ? '100% Tax-Free to Kids' : `${taxFreePct}% Tax-Free Inheritance`}
+              </span>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 0.65rem; font-size: 0.83rem; line-height: 1.42;">
+              <!-- Column 1: For You (The Retiree / Estate) -->
+              <div style="background: #ffffff; padding: 0.65rem 0.75rem; border-radius: 6px; border: 1px solid #e2e8f0; display: flex; flex-direction: column; gap: 0.25rem;">
+                <div style="font-weight: 700; color: #1e293b; margin-bottom: 0.20rem; display: flex; align-items: center; gap: 0.35rem; font-size: 0.85rem;">
+                  <span>👤 For You (The Estate)</span>
+                </div>
+                <div>• <strong>Federal Estate Tax:</strong> ${fedEstateTax > 0 ? formatCurrency(fedEstateTax) : '$0'} <span style="color: #64748b; font-size: 0.75rem;">(&lt; ${formatCurrency(fedExemption)} limit)</span></div>
+                <div>• <strong>${stateTaxDesc}</strong></div>
+                <div>• <strong>Capital Gains Forgiven:</strong> <span style="color: #16a34a; font-weight: 600;">+${formatCurrency(capitalGainsForgiven)}</span> <span style="color: #64748b; font-size: 0.75rem;">(IRC § 1014 basis step-up)</span></div>
+                <div style="margin-top: 0.15rem; font-size: 0.76rem; color: #64748b; line-height: 1.35;">
+                  At death, all unrealized capital gains in taxable brokerage are reset to fair market value, permanently eliminating capital gains tax for your heirs.
+                </div>
+              </div>
+
+              <!-- Column 2: For Your Kids (Beneficiaries) -->
+              <div style="background: #ffffff; padding: 0.65rem 0.75rem; border-radius: 6px; border: 1px solid #e2e8f0; display: flex; flex-direction: column; gap: 0.25rem;">
+                <div style="font-weight: 700; color: #1e293b; margin-bottom: 0.20rem; display: flex; align-items: center; gap: 0.35rem; font-size: 0.85rem;">
+                  <span>👶 For Your Kids (Beneficiaries)</span>
+                </div>
+                <div>• <strong>Pre-Tax 401(k)/IRA:</strong> ${finalPretax > 10 ? `${formatCurrency(finalPretax)} balance → <span style="color: #dc2626; font-weight: 700;">~${formatCurrency(kidsPretaxTax)} tax</span> <span style="color: #64748b; font-size: 0.75rem;">(SECURE 10-Yr @ ~30%)</span>` : '<span style="color: #16a34a; font-weight: 600;">$0 balance ($0 tax)</span>'}</div>
+                <div>• <strong>Roth IRA:</strong> ${finalRoth > 10 ? `${formatCurrency(finalRoth)} balance → <span style="color: #16a34a; font-weight: 600;">$0 tax</span> <span style="color: #64748b; font-size: 0.75rem;">(100% Tax-Free IRC § 408A)</span>` : '<span style="color: #64748b;">$0 balance</span>'}</div>
+                <div>• <strong>Taxable Brokerage:</strong> ${finalBrok > 10 ? `${formatCurrency(finalBrok)} balance → <span style="color: #16a34a; font-weight: 600;">$0 tax</span> <span style="color: #64748b; font-size: 0.75rem;">(Stepped-up basis)</span>` : '<span style="color: #64748b;">$0 balance</span>'}</div>
+                ${finalHsa > 10 ? `<div>• <strong>HSA Balance:</strong> ${formatCurrency(finalHsa)} balance → <span style="color: #ea580c; font-weight: 600;">~${formatCurrency(kidsHsaTax)} tax</span> <span style="color: #64748b; font-size: 0.75rem;">(Non-spouse heir taxable)</span></div>` : ''}
+                <div style="margin-top: 0.25rem; border-top: 1px dashed #cbd5e1; padding-top: 0.25rem;">• <strong>Total Estimated Tax on Kids:</strong> <strong style="${kidsTotalTax > 10 ? 'color: #dc2626;' : 'color: #16a34a;'}">${formatCurrency(kidsTotalTax)}</strong></div>
+              </div>
+            </div>
+
+            <!-- Net Legacy Transfer Summary Bar -->
+            <div style="margin-top: 0.60rem; padding: 0.45rem 0.65rem; background: #ffffff; border-radius: 6px; border: 1px solid #e2e8f0; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.4rem; font-size: 0.82rem;">
+              <div>
+                <span style="color: #64748b;">Gross Legacy:</span> <strong>${formatCurrency(finalBal)}</strong>
+                <span style="color: #94a3b8; margin: 0 0.35rem;">−</span>
+                <span style="color: #64748b;">Total Taxes:</span> <strong style="color: ${totalAllTaxes > 0 ? '#dc2626' : '#16a34a'};">${formatCurrency(totalAllTaxes)}</strong>
+              </div>
+              <div style="display: flex; align-items: center; gap: 0.35rem;">
+                <span style="color: #475569; font-weight: 600;">Net Wealth to Kids:</span>
+                <strong style="color: #16a34a; font-size: 0.90rem;">${formatCurrency(netLegacy)}</strong>
+                <span style="color: #64748b; font-size: 0.75rem;">(${netLegacyPct}% of estate)</span>
+              </div>
+            </div>
+
+            <div style="margin-top: 0.50rem; font-size: 0.78rem; color: #475569; line-height: 1.38;">
+              ${finalPretax > 10 
+                ? `💡 <strong>Estate Planning Tip:</strong> Under the SECURE Act, your kids must drain inherited pre-tax accounts within 10 years during their highest earning years (taxed up to 30%–40%). Converting pre-tax to Roth during your retirement transfers wealth at your lower brackets instead of theirs.`
+                : (finalHsa > 10 
+                    ? `💡 <strong>Estate Planning Tip:</strong> You leave $0 pre-tax 401(k)/IRA liability to your kids! Note that inherited HSAs are taxable to non-spouse heirs in the year of death; prioritizing HSA withdrawals for healthcare during life keeps your children's inheritance fully tax-free.`
+                    : `🌟 <strong>Optimal Estate Transfer:</strong> You leave $0 tax liability to your children. 100% of their inheritance is tax-free Roth or stepped-up brokerage assets with zero income tax!`)}
+            </div>
+          </div>
+        `;
+      }
 
       container.innerHTML = html;
     }
@@ -8525,18 +8673,21 @@
         // Breakdown destinations:
         // - Living Cost: d.targetExpense
         // - Taxes: d.estTax (Fed + State + Conv Tax + LTCG)
-        // - Other Expenses: Medicare IRMAA + Early Penalty (if any), or excess/reserve
+        // - Reinvested to Brokerage: d.surplusReinvested (unspent RMDs / SS cash)
+        // - Other Expenses: Medicare IRMAA + Early Penalty (if any)
         const livingCost = Math.min(totalInflow, d.targetExpense || 0);
         const taxCost = d.estTax || 0;
+        const reinvestCost = Math.max(0, d.surplusReinvested || 0);
         const otherCost = Math.max(0, (d.irmaaSurcharge || 0) + (d.earlyPenalty || 0));
 
         // Effective total accounted outflow
-        const totalOutflow = Math.max(totalInflow, livingCost + taxCost + otherCost);
+        const totalOutflow = Math.max(totalInflow, livingCost + taxCost + reinvestCost + otherCost);
 
         if (totalOutflow > 0) {
           const pLiving = Math.min(100, Math.max(0, (livingCost / totalOutflow) * 100));
           const pTax = Math.min(100, Math.max(0, (taxCost / totalOutflow) * 100));
-          const pOther = Math.max(0, 100 - pLiving - pTax);
+          const pReinvest = Math.min(100, Math.max(0, (reinvestCost / totalOutflow) * 100));
+          const pOther = Math.max(0, 100 - pLiving - pTax - pReinvest);
 
           const segs = [];
           const legend = [];
@@ -8551,6 +8702,12 @@
           if (pTax > 0) {
             segs.push(`<div class="tbl-hbar-seg" style="width:${pTax.toFixed(1)}%; background:#dc2626;" title="Taxes: ${formatCurrency(taxCost)} (${Math.round(pTax)}%)"></div>`);
             legend.push(`<span class="tbl-hbar-legend-item"><span class="tbl-hbar-dot" style="background:#dc2626;"></span>Taxes ${Math.round(pTax)}%</span>`);
+          }
+
+          // Reinvested: Emerald (#10b981)
+          if (pReinvest > 0.5) {
+            segs.push(`<div class="tbl-hbar-seg" style="width:${pReinvest.toFixed(1)}%; background:#10b981;" title="Reinvested to Brokerage: ${formatCurrency(reinvestCost)} (${Math.round(pReinvest)}%)"></div>`);
+            legend.push(`<span class="tbl-hbar-legend-item"><span class="tbl-hbar-dot" style="background:#10b981;"></span>Reinvest ${Math.round(pReinvest)}%</span>`);
           }
 
           // Other Expenses (IRMAA / Penalties / Healthcare): Amber (#d97706)
