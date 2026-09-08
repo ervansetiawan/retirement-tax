@@ -3145,6 +3145,304 @@
       box-shadow: 0 3px 8px rgba(37, 99, 235, 0.15);
     }
 
+    /* Results Top Plan Actions Bar */
+    .results-plan-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+    .btn-share-plan {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.55rem 1.05rem;
+      background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+      border: 1px solid #1d4ed8;
+      border-radius: 8px;
+      color: #ffffff;
+      font-size: 0.84rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.18s ease;
+      box-shadow: 0 1px 3px rgba(37, 99, 235, 0.25);
+      white-space: nowrap;
+    }
+    .btn-share-plan:hover {
+      background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 10px rgba(37, 99, 235, 0.35);
+    }
+    .btn-share-plan:active {
+      transform: translateY(0);
+    }
+
+    /* Shared Plan Loaded Banner */
+    .shared-plan-banner {
+      background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+      border: 1px solid #93c5fd;
+      border-left: 4px solid #2563eb;
+      border-radius: 10px;
+      padding: 0.75rem 1rem;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      font-size: 0.86rem;
+      color: #1e3a8a;
+      box-shadow: 0 2px 6px rgba(37, 99, 235, 0.08);
+      animation: bannerSlide 0.3s ease-out;
+    }
+    @keyframes bannerSlide {
+      from { opacity: 0; transform: translateY(-8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Share Plan Modal */
+    .share-modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.65);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      overflow-y: auto;
+    }
+    .share-modal-dialog {
+      background: #ffffff;
+      border-radius: 16px;
+      width: 100%;
+      max-width: 540px;
+      box-shadow: 0 20px 45px rgba(15, 23, 42, 0.22);
+      border: 1px solid #e2e8f0;
+      overflow: hidden;
+      animation: modalPop 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    @keyframes modalPop {
+      from { opacity: 0; transform: scale(0.95) translateY(8px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+    .share-modal-header {
+      padding: 1.15rem 1.25rem 0.95rem;
+      border-bottom: 1px solid #f1f5f9;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+    .share-modal-header-title {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .share-modal-icon-badge {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .share-modal-close-btn {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #64748b;
+      font-size: 1.05rem;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .share-modal-close-btn:hover {
+      background: #fee2e2;
+      border-color: #fca5a5;
+      color: #dc2626;
+    }
+    .share-modal-body {
+      padding: 1.15rem 1.25rem 1.35rem;
+    }
+    .share-plan-snapshot-card {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 0.95rem 1.05rem;
+      margin-bottom: 1.15rem;
+    }
+    .share-snapshot-badge {
+      display: inline-block;
+      font-size: 0.76rem;
+      font-weight: 750;
+      background: #eff6ff;
+      color: #1d4ed8;
+      border: 1px solid #bfdbfe;
+      padding: 2px 8px;
+      border-radius: 6px;
+      margin-bottom: 0.55rem;
+    }
+    .share-snapshot-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.65rem 1rem;
+    }
+    .share-snapshot-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.15rem;
+    }
+    .share-snapshot-label {
+      font-size: 0.72rem;
+      color: #64748b;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      font-weight: 600;
+    }
+    .share-snapshot-val {
+      font-size: 0.92rem;
+      font-weight: 750;
+      color: #0f172a;
+    }
+    .share-section {
+      margin-bottom: 1rem;
+    }
+    .share-section-label {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: #334155;
+      margin-bottom: 0.4rem;
+    }
+    .share-link-input-group {
+      display: flex;
+      gap: 0.45rem;
+      align-items: stretch;
+    }
+    .share-link-input {
+      flex: 1;
+      font-size: 0.82rem;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      padding: 0.55rem 0.75rem;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 8px;
+      background: #f8fafc;
+      color: #0f172a;
+      outline: none;
+      transition: border-color 0.15s ease;
+    }
+    .share-link-input:focus {
+      border-color: #2563eb;
+      background: #ffffff;
+    }
+    .btn-copy-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.55rem 0.95rem;
+      background: #2563eb;
+      color: #ffffff;
+      border: 1px solid #1d4ed8;
+      border-radius: 8px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.15s ease;
+    }
+    .btn-copy-link:hover {
+      background: #1d4ed8;
+      transform: translateY(-1px);
+    }
+    .share-helper-text {
+      font-size: 0.74rem;
+      color: #64748b;
+      margin: 0.35rem 0 0 0;
+      line-height: 1.35;
+    }
+    .share-actions-row {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid #f1f5f9;
+    }
+    .share-action-btn {
+      flex: 1 1 calc(33.333% - 0.5rem);
+      min-width: 120px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      padding: 0.6rem 0.75rem;
+      background: #f8fafc;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      color: #334155;
+      font-size: 0.80rem;
+      font-weight: 650;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .share-action-btn:hover {
+      background: #eff6ff;
+      border-color: #93c5fd;
+      color: #1d4ed8;
+      transform: translateY(-1px);
+    }
+
+    /* Toast Notification */
+    .share-toast {
+      position: fixed;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #0f172a;
+      color: #ffffff;
+      padding: 0.75rem 1.25rem;
+      border-radius: 9999px;
+      font-size: 0.85rem;
+      font-weight: 650;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+      z-index: 10000;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      pointer-events: none;
+      animation: toastPop 0.22s ease-out;
+    }
+    @keyframes toastPop {
+      from { opacity: 0; transform: translate(-50%, 10px); }
+      to { opacity: 1; transform: translate(-50%, 0); }
+    }
+
+    @media (max-width: 640px) {
+      .share-modal-dialog {
+        margin: 0 0.5rem;
+      }
+      .share-snapshot-grid {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+      }
+      .share-actions-row {
+        flex-direction: column;
+      }
+      .share-action-btn {
+        width: 100%;
+        flex: 1 1 100%;
+      }
+    }
+
   </style>
 </head>
 <body class="wizard-mode">
@@ -4050,6 +4348,18 @@
 
 
 <main id="panelResults" class="panel-view">
+        <!-- Shared Plan Notification Banner (when opened from shareable link) -->
+        <div id="sharedPlanLoadedBanner" class="shared-plan-banner" style="display: none;">
+          <div style="display: flex; align-items: center; gap: 0.65rem;">
+            <span style="font-size: 1.25rem;">📥</span>
+            <div>
+              <strong style="color: #1e3a8a;">Shared Retirement Plan Loaded</strong>
+              <span style="display: block; font-size: 0.78rem; color: #2563eb;">All starting balances, retirement goals, and assumptions have been restored.</span>
+            </div>
+          </div>
+          <button type="button" onclick="document.getElementById('sharedPlanLoadedBanner').style.display='none'" style="background: none; border: none; font-size: 1.1rem; color: #64748b; cursor: pointer; padding: 4px;" aria-label="Dismiss banner">✕</button>
+        </div>
+
         <!-- Sticky Plan Summary Banner in Results Mode -->
         <div id="resultsTopPlanBar" class="results-plan-bar">
           <div class="results-plan-summary">
@@ -4064,10 +4374,22 @@
               <span class="plan-stat-item" id="planRothStat"><strong>Roth:</strong> Auto-Optimized</span>
             </div>
           </div>
-          <button type="button" class="btn-edit-answers" onclick="editWizardAnswers(1)">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
-            <span>✏️ Edit Answers / Change Goal</span>
-          </button>
+          <div class="results-plan-actions">
+            <button type="button" class="btn-share-plan" id="btnSharePlan" onclick="openShareModal()" title="Share this retirement plan">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="18" cy="5" r="3"></circle>
+                <circle cx="6" cy="12" r="3"></circle>
+                <circle cx="18" cy="19" r="3"></circle>
+                <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+              </svg>
+              <span>Share Plan</span>
+            </button>
+            <button type="button" class="btn-edit-answers" onclick="editWizardAnswers(1)">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+              <span>✏️ Edit Answers</span>
+            </button>
+          </div>
         </div>
 
         <!-- What-If Scenario Quick Slider Bar (At Top of All Tabs) -->
@@ -4651,6 +4973,106 @@
         </div>
       </main>
     </div>
+  </div>
+
+  <!-- Share Plan Modal Dialog -->
+  <div id="sharePlanModal" class="share-modal-overlay" style="display: none;" onclick="handleShareModalBackdropClick(event)">
+    <div class="share-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="shareModalTitle">
+      <div class="share-modal-header">
+        <div class="share-modal-header-title">
+          <div class="share-modal-icon-badge">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="18" cy="5" r="3"></circle>
+              <circle cx="6" cy="12" r="3"></circle>
+              <circle cx="18" cy="19" r="3"></circle>
+              <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+              <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+            </svg>
+          </div>
+          <div>
+            <h3 id="shareModalTitle" style="margin: 0; font-size: 1.12rem; font-weight: 800; color: #0f172a;">Share Retirement Plan</h3>
+            <p style="margin: 2px 0 0 0; font-size: 0.78rem; color: #64748b;">Share your results, assumptions, and withdrawal strategy with anyone</p>
+          </div>
+        </div>
+        <button type="button" class="share-modal-close-btn" onclick="closeShareModal()" aria-label="Close modal">✕</button>
+      </div>
+
+      <div class="share-modal-body">
+        <!-- Highlight Plan Snapshot Card -->
+        <div class="share-plan-snapshot-card">
+          <div class="share-snapshot-badge" id="shareSnapshotGoalBadge">🎯 Goal: When can I retire?</div>
+          <div class="share-snapshot-grid">
+            <div class="share-snapshot-item">
+              <span class="share-snapshot-label">Retirement Timeline</span>
+              <span class="share-snapshot-val" id="shareSnapshotAges">Age 50 → Retire 51</span>
+            </div>
+            <div class="share-snapshot-item">
+              <span class="share-snapshot-label">Starting Assets</span>
+              <span class="share-snapshot-val" id="shareSnapshotAssets">$2,500,000</span>
+            </div>
+            <div class="share-snapshot-item">
+              <span class="share-snapshot-label">Living Expenses</span>
+              <span class="share-snapshot-val" id="shareSnapshotExpense">$100,000/yr</span>
+            </div>
+            <div class="share-snapshot-item">
+              <span class="share-snapshot-label">Ending Balance (Age 90)</span>
+              <span class="share-snapshot-val" id="shareSnapshotBalance" style="color: #16a34a;">$2,735,912</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Action 1: Shareable Link -->
+        <div class="share-section">
+          <label class="share-section-label" for="shareLinkInput">🔗 Shareable Plan Link</label>
+          <div class="share-link-input-group">
+            <input type="text" id="shareLinkInput" class="share-link-input" readonly onclick="this.select()" />
+            <button type="button" class="btn-copy-link" id="btnCopyShareLink" onclick="copyShareLink()">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+              <span id="btnCopyShareLinkText">Copy Link</span>
+            </button>
+          </div>
+          <p class="share-helper-text">Opening this link restores your exact inputs, balances, and assumptions directly into Results mode.</p>
+        </div>
+
+        <!-- Action 2: Multi-Option Sharing Buttons -->
+        <div class="share-actions-row">
+          <button type="button" class="share-action-btn" id="btnNativeShare" onclick="shareViaWebShare()">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path>
+              <polyline points="16 6 12 2 8 6"></polyline>
+              <line x1="12" y1="2" x2="12" y2="15"></line>
+            </svg>
+            <span>Share via App...</span>
+          </button>
+          <button type="button" class="share-action-btn" id="btnCopySummary" onclick="copyPlanTextSummary()">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+              <line x1="16" y1="13" x2="8" y2="13"></line>
+              <line x1="16" y1="17" x2="8" y2="17"></line>
+              <polyline points="10 9 9 9 8 9"></polyline>
+            </svg>
+            <span>Copy Text Summary</span>
+          </button>
+          <button type="button" class="share-action-btn" id="btnPrintPdf" onclick="window.print()">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 6 2 18 2 18 9"></polyline>
+              <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+              <rect x="6" y="14" width="12" height="8"></rect>
+            </svg>
+            <span>Print / Save PDF</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Lightweight Toast Notification -->
+  <div id="shareToast" class="share-toast" style="display: none;">
+    <span id="shareToastText">✓ Link copied to clipboard!</span>
   </div>
 
   <script>
@@ -5910,6 +6332,449 @@
         updateSaveStatusIndicator('Reset to defaults', '#64748b');
       } catch (e) {
         console.warn('localStorage clear failed:', e);
+      }
+    }
+
+    /* ==========================================================================
+       SHARE RETIREMENT PLAN ENGINE
+       Encodes, shares, copies, and restores full retirement plans via URL hash,
+       native Web Share API, clipboard, text summaries, and PDF export.
+       ========================================================================== */
+    function encodePlanData(obj) {
+      try {
+        const jsonStr = JSON.stringify(obj);
+        return btoa(encodeURIComponent(jsonStr));
+      } catch (e) {
+        return encodeURIComponent(JSON.stringify(obj));
+      }
+    }
+
+    function decodePlanData(str) {
+      if (!str) return null;
+      try {
+        const jsonStr = decodeURIComponent(atob(str));
+        return JSON.parse(jsonStr);
+      } catch (e) {
+        try {
+          return JSON.parse(decodeURIComponent(str));
+        } catch (e2) {
+          return null;
+        }
+      }
+    }
+
+    function generateShareablePlanUrl() {
+      const p = getFormValues();
+      const shareObj = {
+        v: 1,
+        status: p.status,
+        state: p.stateCode,
+        curAge: p.currentAge,
+        retAge: p.retirementAge,
+        exp: p.initialExpense,
+        ssMo: p.ssMonthly,
+        ssAge: p.ssStartAge,
+        b401k: p.bal401kInit,
+        bIRA: p.balIRAInit,
+        bRoth: p.balRothInit,
+        bBrok: p.balBrokerageInit,
+        bHsa: p.balHsaInit,
+        rothConv: p.annualRothConv,
+        roi: p.rateReturn,
+        infl: p.rateInflation,
+        basis: p.costBasisRatio,
+        cap: p.targetBracketRate,
+        irmaa: p.enableIrmaa ? 1 : 0,
+        r55: p.exemptRule55 ? 1 : 0,
+        goal: activeGoalMode || 'when_retire',
+        target: (activeLegacyTarget !== undefined && activeLegacyTarget !== null) ? activeLegacyTarget : (activeRetirementTarget || 0)
+      };
+
+      const b64 = encodePlanData(shareObj);
+      const url = new URL(window.location.href);
+      url.search = '';
+      url.hash = 'plan=' + b64;
+      return url.toString();
+    }
+
+    function openShareModal() {
+      const modal = document.getElementById('sharePlanModal');
+      if (!modal) return;
+
+      const p = getFormValues();
+      const totalAssets = (p.bal401kInit || 0) + (p.balIRAInit || 0) + (p.balRothInit || 0) + (p.balBrokerageInit || 0) + (p.balHsaInit || 0);
+
+      // Populate Highlight Plan Snapshot Card
+      const goalBadge = document.getElementById('shareSnapshotGoalBadge');
+      if (goalBadge) {
+        if (activeGoalMode === 'when_retire') {
+          goalBadge.textContent = '⏱️ Goal: When can I retire?';
+        } else if (activeGoalMode === 'what_afford') {
+          goalBadge.textContent = '💵 Goal: What can I afford?';
+        } else {
+          goalBadge.textContent = '✍️ Goal: Custom Plan';
+        }
+      }
+
+      const agesEl = document.getElementById('shareSnapshotAges');
+      if (agesEl) {
+        agesEl.textContent = `Age ${p.currentAge} → Retire ${p.retirementAge}`;
+      }
+
+      const assetsEl = document.getElementById('shareSnapshotAssets');
+      if (assetsEl) {
+        assetsEl.textContent = formatCurrency(totalAssets);
+      }
+
+      const expEl = document.getElementById('shareSnapshotExpense');
+      if (expEl) {
+        expEl.textContent = `${formatCurrency(p.initialExpense)}/yr`;
+      }
+
+      const balEl = document.getElementById('shareSnapshotBalance');
+      if (balEl && typeof currentSchedule !== 'undefined' && currentSchedule && currentSchedule.length > 0) {
+        const lastRow = currentSchedule[currentSchedule.length - 1];
+        const finBal = lastRow ? (lastRow.totalEndingBal || 0) : 0;
+        balEl.textContent = formatCurrency(finBal);
+        if (currentDepletedAge !== null) {
+          balEl.textContent = `$0 (Depleted Age ${currentDepletedAge})`;
+          balEl.style.color = '#dc2626';
+        } else {
+          balEl.style.color = '#16a34a';
+        }
+      }
+
+      // Populate Share Link Input
+      const linkInput = document.getElementById('shareLinkInput');
+      if (linkInput) {
+        linkInput.value = generateShareablePlanUrl();
+      }
+
+      // Configure Native Share button visibility based on navigator.share availability
+      const btnNative = document.getElementById('btnNativeShare');
+      if (btnNative) {
+        if (navigator.share) {
+          btnNative.style.display = 'inline-flex';
+        } else {
+          btnNative.style.display = 'none';
+        }
+      }
+
+      // Reset Copy Link button state
+      const copyBtnText = document.getElementById('btnCopyShareLinkText');
+      if (copyBtnText) copyBtnText.textContent = 'Copy Link';
+
+      modal.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeShareModal() {
+      const modal = document.getElementById('sharePlanModal');
+      if (modal) modal.style.display = 'none';
+      document.body.style.overflow = '';
+    }
+
+    function handleShareModalBackdropClick(event) {
+      if (event.target && event.target.id === 'sharePlanModal') {
+        closeShareModal();
+      }
+    }
+
+    let shareToastTimer = null;
+    function showShareToast(msg = '✓ Copied to clipboard!') {
+      const toast = document.getElementById('shareToast');
+      const textEl = document.getElementById('shareToastText');
+      if (!toast || !textEl) return;
+      textEl.textContent = msg;
+      toast.style.display = 'flex';
+      clearTimeout(shareToastTimer);
+      shareToastTimer = setTimeout(() => {
+        toast.style.display = 'none';
+      }, 3000);
+    }
+
+    function copyShareLink() {
+      const linkInput = document.getElementById('shareLinkInput');
+      if (!linkInput) return;
+      const url = linkInput.value || generateShareablePlanUrl();
+
+      const copyBtnText = document.getElementById('btnCopyShareLinkText');
+      if (copyBtnText) {
+        copyBtnText.textContent = '✓ Copied!';
+        setTimeout(() => { copyBtnText.textContent = 'Copy Link'; }, 2500);
+      }
+      showShareToast('✓ Shareable link copied to clipboard!');
+
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(url).catch(() => {
+          try {
+            linkInput.select();
+            document.execCommand('copy');
+          } catch (e) {}
+        });
+      } else {
+        try {
+          linkInput.select();
+          document.execCommand('copy');
+        } catch (e) {}
+      }
+    }
+
+    async function shareViaWebShare() {
+      const url = generateShareablePlanUrl();
+      const p = getFormValues();
+      const title = 'FIRE TaxCalc - Retirement Plan';
+      const text = `Retirement plan for Age ${p.currentAge} → Retire ${p.retirementAge} with ${formatCurrency(p.initialExpense)}/yr expenses. Check out my withdrawal strategy:`;
+
+      if (navigator.share) {
+        try {
+          await navigator.share({
+            title: title,
+            text: text,
+            url: url
+          });
+          showShareToast('✓ Plan shared successfully!');
+        } catch (e) {
+          if (e.name !== 'AbortError') {
+            copyShareLink();
+          }
+        }
+      } else {
+        copyShareLink();
+      }
+    }
+
+    function copyPlanTextSummary() {
+      const p = getFormValues();
+      const totalAssets = (p.bal401kInit || 0) + (p.balIRAInit || 0) + (p.balRothInit || 0) + (p.balBrokerageInit || 0) + (p.balHsaInit || 0);
+      const url = generateShareablePlanUrl();
+
+      let endingBalText = '$0';
+      let solvencyText = 'Solvent through Age 90';
+      if (typeof currentSchedule !== 'undefined' && currentSchedule && currentSchedule.length > 0) {
+        const lastRow = currentSchedule[currentSchedule.length - 1];
+        endingBalText = formatCurrency(lastRow ? lastRow.totalEndingBal : 0);
+      }
+      if (currentDepletedAge !== null) {
+        solvencyText = `Depleted at Age ${currentDepletedAge}`;
+      }
+
+      let goalName = 'When can I retire?';
+      if (activeGoalMode === 'what_afford') goalName = 'What can I afford?';
+      else if (activeGoalMode === 'custom') goalName = 'Custom Plan';
+
+      const summary = `📊 Retirement Plan Summary (FIRE TaxCalc)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🎯 Goal: ${goalName}
+⏱️ Timeline: Current Age ${p.currentAge} → Target Retirement Age ${p.retirementAge}
+💰 Starting Portfolio: ${formatCurrency(totalAssets)}
+   • 401(k): ${formatCurrency(p.bal401kInit || 0)}
+   • Trad IRA: ${formatCurrency(p.balIRAInit || 0)}
+   • Roth IRA: ${formatCurrency(p.balRothInit || 0)}
+   • Taxable Brokerage: ${formatCurrency(p.balBrokerageInit || 0)}
+   • HSA: ${formatCurrency(p.balHsaInit || 0)}
+🛒 Annual Living Expenses: ${formatCurrency(p.initialExpense)}/yr (${formatCurrency(Math.round(p.initialExpense / 12))}/mo)
+🏛️ Social Security: ${formatCurrency(p.ssMonthly * 12)}/yr starting at Age ${p.ssStartAge}
+📈 Return & Inflation: ${p.rateReturn.toFixed(1)}% ROI / ${p.rateInflation.toFixed(1)}% Inflation
+🛡️ Longevity & Solvency: ${solvencyText}
+🏆 Projected Balance at Age 90: ${endingBalText}
+
+🔗 Interactive Plan Link:
+${url}`;
+
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(summary).then(() => {
+          showShareToast('✓ Plan text summary copied to clipboard!');
+        }).catch(() => {
+          showShareToast('✓ Copied to clipboard!');
+        });
+      } else {
+        showShareToast('✓ Copied to clipboard!');
+      }
+    }
+
+    function showSharedPlanLoadedBanner() {
+      const banner = document.getElementById('sharedPlanLoadedBanner');
+      if (banner) {
+        banner.style.display = 'flex';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    }
+
+    function loadPlanFromUrlHash() {
+      try {
+        let hash = window.location.hash;
+        let b64 = null;
+        if (hash && hash.includes('plan=')) {
+          const idx = hash.indexOf('plan=');
+          b64 = hash.substring(idx + 5).split('&')[0];
+        } else {
+          const urlParams = new URLSearchParams(window.location.search);
+          b64 = urlParams.get('plan');
+        }
+        if (!b64) return false;
+
+        const data = decodePlanData(b64);
+        if (!data || typeof data !== 'object') return false;
+
+        isLoadingSaved = true;
+
+        // 1. Filing Status
+        if (data.status && ['MFJ', 'Single', 'HoH', 'MFS'].includes(data.status)) {
+          const sel = document.getElementById('filingStatus');
+          if (sel) sel.value = data.status;
+          ['MFJ', 'Single', 'HoH', 'MFS'].forEach(st => {
+            const btn = document.getElementById(`btnStatus${st}`);
+            if (btn) btn.classList.toggle('active', st === data.status);
+          });
+        }
+
+        // 2. State
+        if (data.state && document.getElementById('stateSelect')) {
+          if (typeof STATE_TAX_DATA !== 'undefined' && STATE_TAX_DATA[data.state]) {
+            document.getElementById('stateSelect').value = data.state;
+          }
+        }
+
+        // 3. Ages
+        if (data.curAge !== undefined) {
+          const cur = parseInt(data.curAge);
+          if (!isNaN(cur)) {
+            const curInput = document.getElementById('currentAge');
+            const curSlider = document.getElementById('currentAgeSlider');
+            if (curInput) curInput.value = cur;
+            if (curSlider) curSlider.value = cur;
+          }
+        }
+        if (data.retAge !== undefined) {
+          const ret = parseInt(data.retAge);
+          if (!isNaN(ret)) {
+            const retInput = document.getElementById('retirementAge');
+            const retSlider = document.getElementById('retirementAgeSlider');
+            if (retInput) retInput.value = ret;
+            if (retSlider) retSlider.value = ret;
+          }
+        }
+
+        // 4. Expenses
+        if (data.exp !== undefined) {
+          const exp = parseFloat(data.exp);
+          if (!isNaN(exp)) {
+            const expInput = document.getElementById('annualExpense');
+            const expSlider = document.getElementById('annualExpenseSlider');
+            if (expInput) expInput.value = exp;
+            if (expSlider) expSlider.value = exp;
+          }
+        }
+
+        // 5. Social Security
+        if (data.ssMo !== undefined) {
+          const ssm = parseFloat(data.ssMo);
+          if (!isNaN(ssm)) {
+            const inp = document.getElementById('ssMonthly');
+            const sld = document.getElementById('ssMonthlySlider');
+            if (inp) inp.value = ssm;
+            if (sld) sld.value = ssm;
+          }
+        }
+        if (data.ssAge !== undefined) {
+          const ssa = parseInt(data.ssAge);
+          if (!isNaN(ssa)) {
+            const inp = document.getElementById('ssStartAge');
+            const sld = document.getElementById('ssStartAgeSlider');
+            if (inp) inp.value = ssa;
+            if (sld) sld.value = ssa;
+          }
+        }
+
+        // 6. Starting Balances
+        const setBal = (inpId, sliId, val) => {
+          if (val === undefined || isNaN(parseFloat(val))) return;
+          const num = parseFloat(val);
+          const inp = document.getElementById(inpId);
+          const sli = document.getElementById(sliId);
+          if (inp) inp.value = num;
+          if (sli) sli.value = num;
+        };
+        setBal('bal401k', 'bal401kSlider', data.b401k);
+        setBal('balIRA', 'balIRASlider', data.bIRA);
+        setBal('balRoth', 'balRothSlider', data.bRoth);
+        setBal('balBrokerage', 'balBrokerageSlider', data.bBrok);
+        setBal('balHsa', 'balHsaSlider', data.bHsa);
+
+        // 7. Roth conversion
+        if (data.rothConv !== undefined) {
+          setBal('annualRothConv', 'annualRothConvSlider', data.rothConv);
+        }
+
+        // 8. Rates & Assumptions
+        if (data.roi !== undefined && !isNaN(parseFloat(data.roi))) {
+          const r = parseFloat(data.roi);
+          const retEl = document.getElementById('rateReturn');
+          const retSli = document.getElementById('rateReturnSlider');
+          if (retEl) retEl.value = r;
+          if (retSli) retSli.value = r;
+        }
+        if (data.infl !== undefined && !isNaN(parseFloat(data.infl))) {
+          const i = parseFloat(data.infl);
+          const infEl = document.getElementById('rateInflation');
+          const infSli = document.getElementById('rateInflationSlider');
+          if (infEl) infEl.value = i;
+          if (infSli) infSli.value = i;
+        }
+        if (data.basis !== undefined && !isNaN(parseFloat(data.basis))) {
+          const cb = parseFloat(data.basis);
+          const cbEl = document.getElementById('costBasisRatio');
+          const cbSli = document.getElementById('costBasisRatioSlider');
+          if (cbEl) cbEl.value = cb;
+          if (cbSli) cbSli.value = cb;
+        }
+        if (data.cap !== undefined) {
+          const cap = parseInt(data.cap);
+          if ([10, 12, 22].includes(cap) && typeof setBracketCeiling === 'function') {
+            setBracketCeiling(cap);
+          }
+        }
+        if (data.irmaa !== undefined && document.getElementById('enableIrmaa')) {
+          document.getElementById('enableIrmaa').checked = Boolean(data.irmaa);
+        }
+        if (data.r55 !== undefined && document.getElementById('exemptRule55')) {
+          document.getElementById('exemptRule55').checked = Boolean(data.r55);
+        }
+
+        // 9. Goal Mode & Targets
+        if (data.goal && ['when_retire', 'what_afford', 'custom'].includes(data.goal)) {
+          activeGoalMode = data.goal;
+        }
+        if (data.target !== undefined && !isNaN(parseFloat(data.target))) {
+          activeLegacyTarget = parseFloat(data.target);
+          activeRetirementTarget = parseFloat(data.target);
+        }
+
+        isLoadingSaved = false;
+
+        updateAgeBadges();
+        updateSSBadge();
+        updateStartingBalancesTotal();
+
+        // Switch goal mode visually
+        if (typeof switchGoalMode === 'function') {
+          switchGoalMode(activeGoalMode || 'when_retire');
+        }
+
+        // Complete wizard and display results immediately
+        if (typeof completeWizardAndShowResults === 'function') {
+          completeWizardAndShowResults();
+        }
+
+        // Show banner at top of results
+        showSharedPlanLoadedBanner();
+        updateSaveStatusIndicator('Loaded from shared link', '#2563eb');
+        return true;
+      } catch (err) {
+        isLoadingSaved = false;
+        console.warn('loadPlanFromUrlHash failed:', err);
+        return false;
       }
     }
 
@@ -10948,11 +11813,19 @@
     });
 
     window.addEventListener('DOMContentLoaded', () => {
-      if (window.innerWidth < 1024) {
-        document.getElementById('panelResults')?.classList.add('hidden-mobile');
-      }
       initMobileCarousel();
-      loadSavedUserInputs();
+      const hasSharedPlan = (typeof loadPlanFromUrlHash === 'function') ? loadPlanFromUrlHash() : false;
+      if (!hasSharedPlan) {
+        if (window.innerWidth < 1024) {
+          document.getElementById('panelResults')?.classList.add('hidden-mobile');
+        }
+        loadSavedUserInputs();
+      } else {
+        if (window.innerWidth < 1024) {
+          document.getElementById('panelResults')?.classList.remove('hidden-mobile');
+          document.getElementById('panelInputs')?.classList.add('hidden-mobile');
+        }
+      }
       updateAgeBadges();
       updateSSBadge();
       updateStartingBalancesTotal();
@@ -10962,6 +11835,12 @@
       }
       onStateChange();
       pageInitialized = true;
+    });
+
+    window.addEventListener('hashchange', () => {
+      if (typeof loadPlanFromUrlHash === 'function') {
+        loadPlanFromUrlHash();
+      }
     });
   
     /* ==========================================================================
