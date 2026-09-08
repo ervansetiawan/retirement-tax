@@ -3083,28 +3083,68 @@
       margin-top: auto;
     }
 
-    /* "Why We Ask This" Explanatory Callout Box */
+    /* "Why We Ask This" Collapsible Explanatory Callout Box */
     .why-we-ask-box {
       background: #f8fafc;
       border: 1px solid #e2e8f0;
       border-left: 4px solid #2563eb;
       border-radius: 10px;
-      padding: 1.1rem 1.25rem;
-      margin-top: 1.5rem;
+      padding: 0.70rem 1.0rem;
+      margin-top: 1.25rem;
+      transition: all 0.2s ease;
+    }
+    .why-we-ask-box:hover {
+      border-color: #cbd5e1;
+      border-left-color: #1d4ed8;
+    }
+    .why-we-ask-box.expanded {
+      padding: 1.0rem 1.25rem;
+      background: #f8fafc;
     }
     .why-we-ask-header {
       display: flex;
       align-items: center;
-      gap: 0.45rem;
+      justify-content: space-between;
+      width: 100%;
+      background: none;
+      border: none;
+      padding: 0;
       font-size: 0.88rem;
       font-weight: 750;
       color: #1e293b;
+      cursor: pointer;
+      text-align: left;
+      user-select: none;
+      transition: color 0.15s ease;
+      font-family: inherit;
+    }
+    .why-we-ask-header:hover {
+      color: #2563eb;
+    }
+    .why-we-ask-header:hover .why-we-ask-chevron {
+      color: #2563eb;
+    }
+    .why-we-ask-box.expanded .why-we-ask-header {
       margin-bottom: 0.65rem;
     }
+    .why-we-ask-chevron {
+      font-size: 0.76rem;
+      color: #64748b;
+      transition: transform 0.2s ease, color 0.15s ease;
+      flex-shrink: 0;
+      margin-left: 0.5rem;
+    }
+    .why-we-ask-chevron.rotated {
+      transform: rotate(180deg);
+      color: #2563eb;
+    }
     .why-we-ask-list {
-      display: flex;
+      display: none;
       flex-direction: column;
       gap: 0.55rem;
+    }
+    .why-we-ask-box.expanded .why-we-ask-list {
+      display: flex;
     }
     .why-we-ask-item {
       display: flex;
@@ -3726,12 +3766,15 @@
             </div>
 
             <!-- Why We Ask This: Goal First -->
-            <div class="why-we-ask-box">
-              <div class="why-we-ask-header">
-                <span class="why-icon">💡</span>
-                <span>Why we ask your goal first</span>
-              </div>
-              <div class="why-we-ask-list">
+            <div class="why-we-ask-box" id="whyWeAskBoxGoal">
+              <button type="button" class="why-we-ask-header" id="btnWhyWeAskGoal" onclick="toggleWhyWeAsk(this)" aria-expanded="false" aria-controls="whyWeAskListGoal">
+                <div style="display: flex; align-items: center; gap: 0.45rem;">
+                  <span class="why-icon">💡</span>
+                  <span>Why we ask your goal first</span>
+                </div>
+                <span class="why-we-ask-chevron">▼</span>
+              </button>
+              <div class="why-we-ask-list" id="whyWeAskListGoal" style="display: none;">
                 <div class="why-we-ask-item">
                   <span class="why-we-ask-bullet">🎯</span>
                   <div><strong>Goal-Driven Modeling:</strong> Retirement isn't one-size-fits-all. Some want to know their earliest freedom date (<em>When can I retire?</em>), while others have a set date and want to maximize lifestyle (<em>What can I afford?</em>).</div>
@@ -3826,12 +3869,15 @@
             </div>
 
             <!-- Why We Ask This: Age & Horizon -->
-            <div class="why-we-ask-box">
-              <div class="why-we-ask-header">
-                <span class="why-icon">💡</span>
-                <span>Why we ask about your age</span>
-              </div>
-              <div class="why-we-ask-list">
+            <div class="why-we-ask-box" id="whyWeAskBoxAge">
+              <button type="button" class="why-we-ask-header" id="btnWhyWeAskAge" onclick="toggleWhyWeAsk(this)" aria-expanded="false" aria-controls="whyWeAskListAge">
+                <div style="display: flex; align-items: center; gap: 0.45rem;">
+                  <span class="why-icon">💡</span>
+                  <span>Why we ask about your age</span>
+                </div>
+                <span class="why-we-ask-chevron">▼</span>
+              </button>
+              <div class="why-we-ask-list" id="whyWeAskListAge" style="display: none;">
                 <div class="why-we-ask-item">
                   <span class="why-we-ask-bullet">📈</span>
                   <div><strong>Compounding Window:</strong> The years between your current age and retirement is your accumulation window, allowing your existing investments to compound before withdrawals start.</div>
@@ -4055,12 +4101,15 @@
             </div>
 
             <!-- Why We Ask This: Starting Balances -->
-            <div class="why-we-ask-box">
-              <div class="why-we-ask-header">
-                <span class="why-icon">💡</span>
-                <span>Why we ask about your account balances</span>
-              </div>
-              <div class="why-we-ask-list">
+            <div class="why-we-ask-box" id="whyWeAskBoxBalances">
+              <button type="button" class="why-we-ask-header" id="btnWhyWeAskBalances" onclick="toggleWhyWeAsk(this)" aria-expanded="false" aria-controls="whyWeAskListBalances">
+                <div style="display: flex; align-items: center; gap: 0.45rem;">
+                  <span class="why-icon">💡</span>
+                  <span>Why we ask about your account balances</span>
+                </div>
+                <span class="why-we-ask-chevron">▼</span>
+              </button>
+              <div class="why-we-ask-list" id="whyWeAskListBalances" style="display: none;">
                 <div class="why-we-ask-item">
                   <span class="why-we-ask-bullet">⚖️</span>
                   <div><strong>Tax Diversification:</strong> A dollar in a pre-tax 401(k) is taxed as ordinary income upon withdrawal, while Roth withdrawals are 100% tax-free, and taxable brokerage gains receive preferential long-term capital gains rates (0%/15%/20%).</div>
@@ -4154,12 +4203,15 @@
             </div>
 
             <!-- Why We Ask This: Expenses -->
-            <div class="why-we-ask-box">
-              <div class="why-we-ask-header">
-                <span class="why-icon">💡</span>
-                <span>Why we ask about living expenses</span>
-              </div>
-              <div class="why-we-ask-list">
+            <div class="why-we-ask-box" id="whyWeAskBoxExpenses">
+              <button type="button" class="why-we-ask-header" id="btnWhyWeAskExpenses" onclick="toggleWhyWeAsk(this)" aria-expanded="false" aria-controls="whyWeAskListExpenses">
+                <div style="display: flex; align-items: center; gap: 0.45rem;">
+                  <span class="why-icon">💡</span>
+                  <span>Why we ask about living expenses</span>
+                </div>
+                <span class="why-we-ask-chevron">▼</span>
+              </button>
+              <div class="why-we-ask-list" id="whyWeAskListExpenses" style="display: none;">
                 <div class="why-we-ask-item">
                   <span class="why-we-ask-bullet">💵</span>
                   <div><strong>Net Cash Needed in Hand:</strong> Your living expense is what you take home after taxes. Because withdrawals trigger tax liabilities, the portfolio must distribute enough to cover both living expenses and federal/state taxes.</div>
@@ -4516,12 +4568,15 @@
             </div>
 
             <!-- Why We Ask This: Social Security & Taxes -->
-            <div class="why-we-ask-box">
-              <div class="why-we-ask-header">
-                <span class="why-icon">💡</span>
-                <span>Why we ask about Social Security &amp; location</span>
-              </div>
-              <div class="why-we-ask-list">
+            <div class="why-we-ask-box" id="whyWeAskBoxSS">
+              <button type="button" class="why-we-ask-header" id="btnWhyWeAskSS" onclick="toggleWhyWeAsk(this)" aria-expanded="false" aria-controls="whyWeAskListSS">
+                <div style="display: flex; align-items: center; gap: 0.45rem;">
+                  <span class="why-icon">💡</span>
+                  <span>Why we ask about Social Security &amp; location</span>
+                </div>
+                <span class="why-we-ask-chevron">▼</span>
+              </button>
+              <div class="why-we-ask-list" id="whyWeAskListSS" style="display: none;">
                 <div class="why-we-ask-item">
                   <span class="why-we-ask-bullet">🏛️</span>
                   <div><strong>Guaranteed Income Floor:</strong> Social Security provides inflation-indexed income for life, directly lowering the withdrawal burden on your investment portfolio.</div>
@@ -8062,6 +8117,28 @@ ${url}`;
         }
       }
 
+      // Automatically solve and synchronize maximum sustainable spending when in Goal 2 ("What can I afford?")
+      if (activeGoalMode === 'what_afford' && typeof solveOptimalAffordableSpending === 'function' && !isCalculatingAffordable) {
+        const targetBal = (activeLegacyTarget !== undefined) ? activeLegacyTarget : (activeRetirementTarget || 0);
+        const solvedAfford = solveOptimalAffordableSpending(params, targetBal);
+        if (solvedAfford && solvedAfford.reachable && solvedAfford.optimalExpense > 0) {
+          params.initialExpense = solvedAfford.optimalExpense;
+          const expInput = document.getElementById('annualExpense');
+          const expSlider = document.getElementById('annualExpenseSlider');
+          if (expInput && parseFloat(expInput.value) !== solvedAfford.optimalExpense) {
+            expInput.value = solvedAfford.optimalExpense;
+          }
+          if (expSlider) {
+            if (solvedAfford.optimalExpense > parseFloat(expSlider.max)) {
+              const newMax = Math.ceil(solvedAfford.optimalExpense / 50000) * 50000;
+              expSlider.max = newMax;
+              if (typeof updateExpenseRangeLabels === 'function') updateExpenseRangeLabels(newMax);
+            }
+            expSlider.value = solvedAfford.optimalExpense;
+          }
+        }
+      }
+
       // Automatically include optimal annual Roth conversion across all calculations
       if (isAutoRothConversion && typeof solveOptimalRothConversion === 'function') {
         const optimalConv = solveOptimalRothConversion(params);
@@ -8093,6 +8170,9 @@ ${url}`;
       renderTimelineVisualization(activeResult.schedule, params, activeResult.depletedAge);
       if (activeGoalMode === 'when_retire' && typeof updateRetirementSolverBanner === 'function' && typeof activeRetirementTarget !== 'undefined' && activeRetirementTarget !== null) {
         updateRetirementSolverBanner(activeLegacyTarget !== undefined ? activeLegacyTarget : activeRetirementTarget);
+      }
+      if (activeGoalMode === 'what_afford' && typeof updateAffordableSolverBanner === 'function' && typeof activeRetirementTarget !== 'undefined' && activeRetirementTarget !== null) {
+        updateAffordableSolverBanner(activeLegacyTarget !== undefined ? activeLegacyTarget : activeRetirementTarget);
       }
       if (typeof updateWhatIfUIFromInputs === 'function') {
         updateWhatIfUIFromInputs();
@@ -10641,6 +10721,112 @@ ${url}`;
       calculateOptimalRetirement(activeLegacyTarget || 0);
     }
 
+    function solveOptimalAffordableSpending(params, targetBalance = 0) {
+      if (!params) return null;
+      const activeStrat = activeStrategy || 'smart';
+      const totalAssets = (params.bal401kInit || 0) + (params.balIRAInit || 0) + 
+                          (params.balRothInit || 0) + (params.balBrokerageInit || 0) + 
+                          (params.balHsaInit || 0);
+
+      let rothConv = params.annualRothConv || 0;
+      if (isAutoRothConversion && typeof solveOptimalRothConversion === 'function') {
+        rothConv = solveOptimalRothConversion(params);
+      }
+
+      // Check baseline solvency at $0 expense
+      let low = 0;
+      const maxCap = Math.max(15000000, Math.round(totalAssets * 2.5));
+      let high = Math.max(500000, Math.min(maxCap, Math.round(totalAssets * 0.5) + ((params.ssMonthly || 0) * 12 * 2)));
+
+      const testLow = simulateRetirement(activeStrat, { ...params, annualRothConv: rothConv, initialExpense: 0 });
+      if (testLow.depletedAge !== null || testLow.finalBalance < targetBalance) {
+        return { reachable: false, optimalExpense: 0, finalBalance: testLow.finalBalance, depletedAge: testLow.depletedAge };
+      }
+
+      // Expand high bound if still solvent and >= targetBalance
+      while (high < maxCap) {
+        const testHigh = simulateRetirement(activeStrat, { ...params, annualRothConv: rothConv, initialExpense: high });
+        if (testHigh.depletedAge === null && testHigh.finalBalance >= targetBalance) {
+          high = Math.min(maxCap, high * 2);
+          if (high >= maxCap) break;
+        } else {
+          break;
+        }
+      }
+
+      // Binary search for maximum initialExpense where depletedAge === null && finalBalance >= targetBalance
+      for (let i = 0; i < 28; i++) {
+        const mid = Math.round((low + high) / 2);
+        const testMid = simulateRetirement(activeStrat, { ...params, annualRothConv: rothConv, initialExpense: mid });
+        if (testMid.depletedAge === null && testMid.finalBalance >= targetBalance) {
+          low = mid;
+        } else {
+          high = mid;
+        }
+      }
+
+      // Round down to nearest $500 for a clean, practical figure
+      let optimalExpense = Math.floor(low / 500) * 500;
+      if (optimalExpense < 0) optimalExpense = 0;
+
+      // Verify rounded value is solvent and meets target
+      let verifySim = simulateRetirement(activeStrat, { ...params, annualRothConv: rothConv, initialExpense: optimalExpense });
+      if (verifySim.depletedAge !== null || verifySim.finalBalance < targetBalance) {
+        optimalExpense = Math.floor(optimalExpense / 1000) * 1000;
+        verifySim = simulateRetirement(activeStrat, { ...params, annualRothConv: rothConv, initialExpense: optimalExpense });
+      }
+
+      return {
+        reachable: true,
+        optimalExpense: optimalExpense,
+        finalBalance: verifySim.finalBalance,
+        depletedAge: verifySim.depletedAge
+      };
+    }
+
+    function updateAffordableSolverBanner(targetBalance) {
+      if (targetBalance === null || targetBalance === undefined) return;
+      const resultBox = document.getElementById('affordCalcResult');
+      if (!resultBox) return;
+
+      const baseParams = getFormValues();
+      const totalAssets = (baseParams.bal401kInit || 0) + (baseParams.balIRAInit || 0) + 
+                          (baseParams.balRothInit || 0) + (baseParams.balBrokerageInit || 0) + 
+                          (baseParams.balHsaInit || 0);
+
+      const targetLabels = {
+        0: 'Solvent through Age 90',
+        1000000: 'Preserving $1M at 90',
+        10000000: 'Preserving $10M at 90'
+      };
+      const targetLabel = targetLabels[targetBalance] || `Target ${formatCurrency(targetBalance)}`;
+
+      const solved = solveOptimalAffordableSpending(baseParams, targetBalance);
+      resultBox.style.display = 'block';
+
+      if (solved && solved.reachable && solved.optimalExpense > 0) {
+        const optimalExpense = solved.optimalExpense;
+        const monthlyAfford = Math.round(optimalExpense / 12);
+        const finalBal = solved.finalBalance;
+
+        resultBox.className = 'retire-result-box';
+        let html = `<div><strong style="color: #15803d; font-size: 0.88rem;">🎯 Maximum Sustainable Spending: ${formatCurrency(optimalExpense)}/yr (${targetLabel})</strong></div>`;
+        html += `<div style="margin-top: 0.25rem;">Monthly spendable budget: <strong style="color:#15803d;">${formatCurrency(monthlyAfford)}/mo</strong></div>`;
+        html += `<div style="margin-top: 0.25rem; font-size: 0.78rem; line-height: 1.35; opacity: 0.95;">With your starting assets of ${formatCurrency(totalAssets)}, your portfolio safely sustains ${formatCurrency(optimalExpense)}/yr (with annual inflation) through Age 90, leaving a projected final balance of <strong>${formatCurrency(finalBal)}</strong>.</div>`;
+        html += `<div style="margin-top: 0.45rem; display: flex; gap: 0.4rem; align-items: center; flex-wrap: wrap;">`;
+        html += `<span style="display:inline-flex; align-items:center; gap:4px; font-size: 0.76rem; background: #dcfce7; color: #15803d; font-weight: 700; padding: 2px 7px; border-radius: 4px; border: 1px solid #86efac;">✓ Applied to Plan</span>`;
+        html += `<button type="button" class="btn-apply-age" style="background:#f1f5f9; color:#475569; border-color:#cbd5e1;" onclick="resetAffordableBaseline()">✕ Reset</button>`;
+        html += `</div>`;
+        resultBox.innerHTML = html;
+      } else {
+        resultBox.className = 'retire-result-box warning';
+        let html = `<div><strong>⚠️ Legacy Target Unreachable: ${targetLabel}</strong></div>`;
+        html += `<div style="margin-top: 0.25rem; font-size: 0.78rem;">Even with $0 living expenses, current assets cannot reach ${formatCurrency(targetBalance)} at Age 90. Try delaying retirement age, increasing starting balances, or choosing a lower legacy goal.</div>`;
+        html += `<div style="margin-top: 0.45rem;"><button type="button" class="btn-apply-age" style="background:#f1f5f9; color:#475569; border-color:#cbd5e1;" onclick="resetAffordableBaseline()">✕ Close</button></div>`;
+        resultBox.innerHTML = html;
+      }
+    }
+
     /* ==========================================================================
        AFFORDABLE LIVING EXPENSE SOLVER ("What can I afford?")
        ========================================================================== */
@@ -12499,6 +12685,38 @@ ${url}`;
     let currentWizardStep = 1;
     let isWizardComplete = false;
 
+    function toggleWhyWeAsk(trigger) {
+      let box = null;
+      let btn = null;
+      if (typeof trigger === 'string') {
+        const el = document.getElementById(trigger);
+        if (el) {
+          box = el.classList.contains('why-we-ask-box') ? el : el.closest('.why-we-ask-box');
+          btn = box ? box.querySelector('.why-we-ask-header') : null;
+        }
+      } else if (trigger instanceof HTMLElement) {
+        box = trigger.classList.contains('why-we-ask-box') ? trigger : trigger.closest('.why-we-ask-box');
+        btn = box ? box.querySelector('.why-we-ask-header') : trigger;
+      }
+      if (!box) return;
+
+      const list = box.querySelector('.why-we-ask-list');
+      const chev = box.querySelector('.why-we-ask-chevron');
+      const isExpanded = box.classList.contains('expanded');
+
+      if (isExpanded) {
+        box.classList.remove('expanded');
+        if (list) list.style.display = 'none';
+        if (chev) chev.classList.remove('rotated');
+        if (btn) btn.setAttribute('aria-expanded', 'false');
+      } else {
+        box.classList.add('expanded');
+        if (list) list.style.display = 'flex';
+        if (chev) chev.classList.add('rotated');
+        if (btn) btn.setAttribute('aria-expanded', 'true');
+      }
+    }
+
     function goToWizardStep(stepNum) {
       if (stepNum < 1 || stepNum > 5) return;
       currentWizardStep = stepNum;
@@ -12545,7 +12763,25 @@ ${url}`;
       } else if (stepNum === 4) {
         const affordNotice = document.getElementById('affordSolveNotice');
         if (activeGoalMode === 'what_afford') {
-          if (affordNotice) affordNotice.style.display = 'block';
+          if (typeof calculateAffordableExpense === 'function') {
+            calculateAffordableExpense(activeLegacyTarget || 0);
+          }
+          if (affordNotice) {
+            affordNotice.style.display = 'block';
+            const curExp = parseFloat(document.getElementById('annualExpense')?.value) || 0;
+            const curBal = (parseFloat(document.getElementById('bal401k')?.value) || 0) +
+                           (parseFloat(document.getElementById('balIRA')?.value) || 0) +
+                           (parseFloat(document.getElementById('balRoth')?.value) || 0) +
+                           (parseFloat(document.getElementById('balBrokerage')?.value) || 0) +
+                           (parseFloat(document.getElementById('balHsa')?.value) || 0);
+            affordNotice.innerHTML = `<div style="display: flex; align-items: flex-start; gap: 0.55rem;">` +
+              `<span style="font-size: 1.25rem; line-height: 1;">💵</span>` +
+              `<div>` +
+                `<div style="font-weight: 750; color: #166534; font-size: 0.92rem; margin-bottom: 0.25rem;">Affordable Spending Maximized: ${formatCurrency(curExp)}/yr (${formatCurrency(Math.round(curExp/12))}/mo)</div>` +
+                `<div style="font-size: 0.82rem; color: #15803d; line-height: 1.45;">Based on your <strong>${formatCurrency(curBal)}</strong> starting portfolio, our math engine calculated that you can safely spend up to <strong>${formatCurrency(curExp)}/year</strong> with annual inflation through Age 90.</div>` +
+              `</div>` +
+            `</div>`;
+          }
         } else {
           if (affordNotice) affordNotice.style.display = 'none';
         }
@@ -12581,7 +12817,13 @@ ${url}`;
 
     function completeWizardAndShowResults() {
       isWizardComplete = true;
-      calculatePlan();
+      if (activeGoalMode === 'when_retire') {
+        calculateOptimalRetirement(activeLegacyTarget || 0);
+      } else if (activeGoalMode === 'what_afford') {
+        calculateAffordableExpense(activeLegacyTarget || 0);
+      } else {
+        calculatePlan();
+      }
 
       // Switch to results-mode
       document.body.classList.remove('wizard-mode');
