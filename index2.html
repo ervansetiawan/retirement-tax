@@ -2571,9 +2571,9 @@
               </div>
             </div>
             <div class="slider-track-wrap">
-              <input type="range" id="annualExpenseSlider" min="20000" max="250000" value="100000" step="2500" oninput="syncFromSlider('annualExpenseSlider', 'annualExpense')" />
+              <input type="range" id="annualExpenseSlider" min="0" max="250000" value="100000" step="2500" oninput="syncFromSlider('annualExpenseSlider', 'annualExpense')" />
               <div class="slider-range-labels">
-                <span>$20k</span>
+                <span>$0</span>
                 <span>$100k</span>
                 <span>$250k</span>
               </div>
@@ -5198,8 +5198,8 @@
             // Standard Age 60+ (or exempt) Smart Bracket-Filling
             wPretax = mandatoryRmd;
 
-            if (wPretax < stdDed && pretaxTotal > wPretax) {
-              const addl = Math.min(pretaxTotal - wPretax, stdDed - wPretax);
+            if (portfolioExpenseNeed > 0 && wPretax < stdDed && pretaxTotal > wPretax) {
+              const addl = Math.min(pretaxTotal - wPretax, Math.min(stdDed - wPretax, portfolioExpenseNeed - wPretax));
               wPretax += addl;
             }
 
@@ -5574,29 +5574,43 @@
     }
 
     function getFormValues() {
-      const currentAge = parseInt(document.getElementById('currentAge').value) || 50;
-      let retirementAge = parseInt(document.getElementById('retirementAge')?.value) || currentAge;
+      const parseNumVal = (id, fallback) => {
+        const el = document.getElementById(id);
+        if (!el) return fallback;
+        const val = parseFloat(el.value);
+        return !isNaN(val) ? val : fallback;
+      };
+
+      const parseIntVal = (id, fallback) => {
+        const el = document.getElementById(id);
+        if (!el) return fallback;
+        const val = parseInt(el.value);
+        return !isNaN(val) ? val : fallback;
+      };
+
+      const currentAge = parseIntVal('currentAge', 50);
+      let retirementAge = parseIntVal('retirementAge', currentAge);
       if (retirementAge < currentAge) retirementAge = currentAge;
 
       return {
         currentAge: currentAge,
         retirementAge: retirementAge,
         startAge: currentAge,
-        status: document.getElementById('filingStatus').value,
+        status: document.getElementById('filingStatus')?.value || 'MFJ',
         stateCode: document.getElementById('stateSelect')?.value || 'MN',
-        initialExpense: parseFloat(document.getElementById('annualExpense').value) || 100000,
-        ssMonthly: parseFloat(document.getElementById('ssMonthly')?.value) || 0,
-        ssStartAge: parseInt(document.getElementById('ssStartAge')?.value) || 67,
-        bal401kInit: parseFloat(document.getElementById('bal401k').value) || 0,
-        balIRAInit: parseFloat(document.getElementById('balIRA').value) || 0,
-        balRothInit: parseFloat(document.getElementById('balRoth').value) || 0,
-        balBrokerageInit: parseFloat(document.getElementById('balBrokerage').value) || 0,
-        balHsaInit: parseFloat(document.getElementById('balHsa')?.value) || 0,
-        annualRothConv: parseFloat(document.getElementById('annualRothConv')?.value) || 0,
-        rateReturn: parseFloat(document.getElementById('rateReturn').value) || 6.0,
-        rateInflation: parseFloat(document.getElementById('rateInflation').value) || 2.5,
-        costBasisRatio: parseFloat(document.getElementById('costBasisRatio').value) || 60,
-        targetBracketRate: (parseFloat(document.getElementById('pretaxBracketCap').value) || 12) / 100,
+        initialExpense: parseNumVal('annualExpense', 100000),
+        ssMonthly: parseNumVal('ssMonthly', 0),
+        ssStartAge: parseIntVal('ssStartAge', 67),
+        bal401kInit: parseNumVal('bal401k', 0),
+        balIRAInit: parseNumVal('balIRA', 0),
+        balRothInit: parseNumVal('balRoth', 0),
+        balBrokerageInit: parseNumVal('balBrokerage', 0),
+        balHsaInit: parseNumVal('balHsa', 0),
+        annualRothConv: parseNumVal('annualRothConv', 0),
+        rateReturn: parseNumVal('rateReturn', 6.0),
+        rateInflation: parseNumVal('rateInflation', 2.5),
+        costBasisRatio: parseNumVal('costBasisRatio', 60),
+        targetBracketRate: (parseNumVal('pretaxBracketCap', 12)) / 100,
         endAge: 90,
         enableIrmaa: document.getElementById('enableIrmaa') ? document.getElementById('enableIrmaa').checked : true,
         exemptRule55: document.getElementById('exemptRule55') ? document.getElementById('exemptRule55').checked : false
