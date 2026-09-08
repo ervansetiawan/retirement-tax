@@ -1109,6 +1109,50 @@
       font-weight: 700;
     }
 
+    /* Roadmap Phase Grouping Track under Taxes Chart */
+    .chart-phase-roadmap-wrap {
+      margin-top: 0.65rem;
+      padding-top: 0.55rem;
+      border-top: 1px dashed #cbd5e1;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    .chart-phase-canvas-wrap {
+      position: relative;
+      width: 100%;
+      height: 52px;
+      user-select: none;
+      touch-action: pan-y;
+    }
+    .chart-phase-detail-card {
+      margin-top: 0.45rem;
+      box-sizing: border-box;
+      width: 100%;
+    }
+    .btn-phase-step {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.22rem 0.55rem;
+      font-size: 0.74rem;
+      font-weight: 700;
+      color: #1e293b;
+      background: #f1f5f9;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      transition: all 0.15s ease;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .btn-phase-step:hover:not(:disabled) {
+      background: #e2e8f0;
+      color: #0f172a;
+      border-color: #94a3b8;
+    }
+    .btn-phase-step:active:not(:disabled) {
+      transform: scale(0.96);
+    }
+
     /* Retirement Target Section ("When can I Retire?") */
     .retire-target-section {
       margin-top: 0.75rem;
@@ -2443,32 +2487,87 @@
       flex-shrink: 0;
     }
     .taxes-top-metrics-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.65rem;
+      width: 100%;
+      margin-top: 0.75rem;
+      margin-bottom: 0.35rem;
+    }
+    @media (min-width: 600px) {
+      .taxes-top-metrics-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 0.75rem;
+        align-items: stretch;
+      }
+    }
+    .tax-metric-card {
+      padding: 0.65rem 0.80rem;
+      border-radius: 8px;
+      min-width: 0;
+      box-sizing: border-box;
       display: flex;
       flex-direction: column;
-      gap: 1.15rem;
-      width: 100%;
+      justify-content: space-between;
     }
-    .taxes-top-metrics-grid .tax-paid-col {
-      min-width: 0;
+    .tax-paid-card {
+      background: #fff5f5;
+      border: 1px solid #fecaca;
+      border-left: 3.5px solid #dc2626;
+      box-shadow: 0 1px 2px rgba(220, 38, 38, 0.05);
     }
-    .taxes-top-metrics-grid .tax-unrealized-col {
-      padding-top: 0.85rem;
-      border-top: 1px solid #e2e8f0;
-      min-width: 0;
+    .tax-unrealized-card {
+      background: #faf5ff;
+      border: 1px solid #e9d5ff;
+      border-left: 3.5px solid #7c3aed;
+      box-shadow: 0 1px 2px rgba(124, 58, 237, 0.05);
     }
-    @media (min-width: 768px) {
-      .taxes-top-metrics-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 1.5rem;
-        align-items: start;
-      }
-      .taxes-top-metrics-grid .tax-unrealized-col {
-        padding-top: 0;
-        padding-left: 1.5rem;
-        border-top: none;
-        border-left: 1px solid #e2e8f0;
-      }
+    .tax-metric-label {
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.035em;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      line-height: 1.2;
+    }
+    .tax-paid-label {
+      color: #991b1b;
+    }
+    .tax-unrealized-label {
+      color: #581c87;
+    }
+    .tax-metric-value {
+      font-size: 1.15rem;
+      font-weight: 800;
+      line-height: 1.25;
+      margin-top: 0.20rem;
+      margin-bottom: 0.15rem;
+    }
+    .tax-paid-value {
+      color: #dc2626;
+    }
+    .tax-unrealized-value {
+      color: #7c3aed;
+    }
+    .tax-metric-sub {
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: #475569;
+      line-height: 1.35;
+    }
+    .tax-metric-hbar-wrap {
+      margin-top: 0.40rem;
+    }
+    .tax-metric-card .kpi-tax-hbar {
+      height: 6px;
+      border-radius: 3px;
+    }
+    .tax-metric-card .kpi-tax-hbar-legend {
+      font-size: 0.75rem;
+      margin-top: 0.25rem;
+      gap: 0.25rem 0.55rem;
     }
 
     .btn-action {
@@ -3207,6 +3306,44 @@
                   </div>
                 </div>
 
+                <!-- Right below Final Balance: Paid Taxes & Estimated Tax on Unrealized Gain -->
+                <div class="taxes-top-metrics-grid" id="taxesTopMetricsGrid">
+                  <!-- Block: Paid Taxes -->
+                  <div class="tax-paid-col tax-metric-card tax-paid-card">
+                    <div class="tax-metric-label tax-paid-label">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="12" y1="8" x2="12" y2="12"></line>
+                        <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                      </svg>
+                      Paid Taxes
+                    </div>
+                    <div class="tax-metric-value tax-paid-value" id="kpiTaxes">--</div>
+                    <div class="tax-metric-sub" id="kpiTaxRate">--</div>
+                    <div class="kpi-tax-hbar-wrap tax-metric-hbar-wrap" id="kpiTaxHBarWrap">
+                      <div class="kpi-tax-hbar" id="kpiTaxHBar"></div>
+                      <div class="kpi-tax-hbar-legend" id="kpiTaxHBarLegend"></div>
+                    </div>
+                  </div>
+
+                  <!-- Block: Estimated Taxes on Unrealized Gain -->
+                  <div class="tax-unrealized-col tax-metric-card tax-unrealized-card">
+                    <div class="tax-metric-label tax-unrealized-label">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#7c3aed" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+                        <polyline points="17 6 23 6 23 12"></polyline>
+                      </svg>
+                      Est. Tax on Unrealized Gain
+                    </div>
+                    <div class="tax-metric-value tax-unrealized-value" id="kpiUnrealizedTax">$0</div>
+                    <div class="tax-metric-sub" id="kpiUnrealizedTaxSub">--</div>
+                    <div class="kpi-tax-hbar-wrap tax-metric-hbar-wrap" id="kpiUnrealizedTaxHBarWrap">
+                      <div class="kpi-tax-hbar" id="kpiUnrealizedTaxHBar"></div>
+                      <div class="kpi-tax-hbar-legend" id="kpiUnrealizedTaxHBarLegend"></div>
+                    </div>
+                  </div>
+                </div>
+
                 <!-- Balance Growth Area Line Chart (Taxable & Non-Taxable Breakdown) -->
                 <div class="balance-growth-card" id="balanceGrowthSection">
                   <div class="balance-growth-header">
@@ -3234,6 +3371,87 @@
                   </div>
                 </div>
 
+                <!-- Annual Withdrawals by Source Stacked Bar Chart -->
+                <div class="balance-growth-card" id="withdrawalsOverTimeSection" style="margin-top: 0.85rem;">
+                  <div class="balance-growth-header">
+                    <div class="balance-growth-title-row">
+                      <span class="balance-growth-title">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0284c7" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+                          <rect x="2" y="6" width="20" height="12" rx="2"></rect>
+                          <circle cx="12" cy="12" r="2"></circle>
+                          <path d="M6 12h.01M18 12h.01"></path>
+                        </svg>
+                        Annual Withdrawals by Source (Age <span id="wotStartAge">50</span> → 90)
+                      </span>
+                      <span class="balance-growth-peak" id="wotPeakBadge" style="background:#e0f2fe; color:#0369a1;">Peak: $0/yr</span>
+                    </div>
+                    <div class="balance-growth-legend" id="wotGrowthLegend" style="flex-wrap: wrap; gap: 0.35rem 0.65rem;">
+                      <span class="bg-legend-item"><span class="bg-legend-dot" style="background: #2563eb;"></span>401(k)</span>
+                      <span class="bg-legend-item"><span class="bg-legend-dot" style="background: #0284c7;"></span>Trad IRA</span>
+                      <span class="bg-legend-item"><span class="bg-legend-dot" style="background: #f59e0b;"></span>Mandatory RMD</span>
+                      <span class="bg-legend-item"><span class="bg-legend-dot" style="background: #a855f7;"></span>Brokerage</span>
+                      <span class="bg-legend-item"><span class="bg-legend-dot" style="background: #0d9488;"></span>HSA</span>
+                      <span class="bg-legend-item"><span class="bg-legend-dot" style="background: #10b981;"></span>Roth IRA</span>
+                    </div>
+                  </div>
+                  <div class="balance-growth-canvas-wrap" id="wotCanvasWrap">
+                    <svg id="wotGrowthSvg" class="balance-growth-svg" viewBox="0 0 360 85" preserveAspectRatio="none"></svg>
+                    <div id="wotGrowthTooltip" class="balance-growth-tooltip" style="display: none;"></div>
+                  </div>
+                  <div class="balance-growth-footer">
+                    <span id="wotAxisStart">Age 50: $0/yr</span>
+                    <span id="wotAxisRetire" class="bg-retire-badge" style="display: none;">Retire: Age 60</span>
+                    <span id="wotAxisTotal">Lifetime: $0</span>
+                  </div>
+                </div>
+
+                <!-- Taxes Paid Over Time Stacked Bar Chart -->
+                <div class="balance-growth-card" id="taxesOverTimeSection" style="margin-top: 0.85rem;">
+                  <div class="balance-growth-header">
+                    <div class="balance-growth-title-row">
+                      <span class="balance-growth-title">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2.5"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline><polyline points="16 7 22 7 22 13"></polyline></svg>
+                        Taxes Paid Over Time (Age <span id="totStartAge">50</span> → 90)
+                      </span>
+                      <span class="balance-growth-peak" id="totPeakBadge" style="background:#fee2e2; color:#991b1b;">Peak: $0/yr</span>
+                    </div>
+                    <div class="balance-growth-legend" id="totGrowthLegend" style="flex-wrap: wrap; gap: 0.35rem 0.65rem;">
+                      <span class="bg-legend-item"><span class="bg-legend-dot" style="background: #2563eb;"></span>Ordinary Incomes</span>
+                      <span class="bg-legend-item"><span class="bg-legend-dot" style="background: #10b981;"></span>Social Security</span>
+                      <span class="bg-legend-item"><span class="bg-legend-dot" style="background: #8b5cf6;"></span>Capital Gains</span>
+                      <span class="bg-legend-item"><span class="bg-legend-dot" style="background: #f59e0b;"></span>Mandatory RMD</span>
+                    </div>
+                  </div>
+                  <div class="balance-growth-canvas-wrap" id="totCanvasWrap">
+                    <svg id="totGrowthSvg" class="balance-growth-svg" viewBox="0 0 360 85" preserveAspectRatio="none"></svg>
+                    <div id="totGrowthTooltip" class="balance-growth-tooltip" style="display: none;"></div>
+                  </div>
+                  <div class="balance-growth-footer">
+                    <span id="totAxisStart">Age 50: $0/yr</span>
+                    <span id="totAxisRetire" class="bg-retire-badge" style="display: none;">Retire: Age 60</span>
+                    <span id="totAxisTotal">Lifetime: $0</span>
+                  </div>
+
+                  <!-- Strategy Lifecycle Phases Aligned with Chart Years -->
+                  <div class="chart-phase-roadmap-wrap" id="chartPhaseRoadmapWrap">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.35rem; flex-wrap: wrap; gap: 0.25rem;">
+                      <span style="font-size: 0.80rem; font-weight: 700; color: #334155; text-transform: uppercase; letter-spacing: 0.03em; display: inline-flex; align-items: center; gap: 0.35rem;">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2.3"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                        Roadmap Lifecycle Phases (Aligned with Years)
+                      </span>
+                      <span id="chartPhaseHint" style="font-size: 0.73rem; color: #64748b; font-weight: 500;">Tap icon / bracket for details</span>
+                    </div>
+
+                    <div class="chart-phase-canvas-wrap" id="chartPhaseCanvasWrap">
+                      <svg id="chartPhaseSvg" class="balance-growth-svg" viewBox="0 0 360 52" preserveAspectRatio="none" style="width: 100%; height: 100%; overflow: visible;"></svg>
+                      <div id="chartPhaseTooltip" class="balance-growth-tooltip" style="display: none;"></div>
+                    </div>
+
+                    <!-- Interactive Phase Description Detail Card -->
+                    <div id="chartPhaseDetailCard" class="chart-phase-detail-card"></div>
+                  </div>
+                </div>
+
                 <!-- Retirement Situation Analysis Section -->
                 <div class="retirement-situation-card" id="retirementSituationSection" style="margin-top: 0.85rem; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 0.75rem 0.85rem; box-shadow: 0 1px 3px rgba(0,0,0,0.03);">
                   <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.45rem; flex-wrap: wrap; gap: 0.3rem;">
@@ -3253,6 +3471,91 @@
                   </div>
                   <div id="situationSummaryText" style="font-size: 0.88rem; color: #334155; line-height: 1.45;">
                     Calculating simulation analysis...
+                  </div>
+                </div>
+
+                <!-- Retirement Tax Situation Analysis Section (Collapsible, Default Collapsed) -->
+                <div class="milestones-card-wrap" id="taxSituationSection" style="margin-top: 0.85rem;">
+                  <button type="button" class="btn-milestones-toggle" id="btnToggleTaxSituation" onclick="toggleTaxSituation()" aria-expanded="false">
+                    <span style="display: flex; align-items: center; gap: 0.45rem;">
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                        <polyline points="14 2 14 8 20 8"></polyline>
+                        <line x1="16" y1="13" x2="8" y2="13"></line>
+                        <line x1="16" y1="17" x2="8" y2="17"></line>
+                        <polyline points="10 9 9 9 8 9"></polyline>
+                      </svg>
+                      <span>Retirement Tax Situation Analysis</span>
+                    </span>
+                    <div style="display: flex; align-items: center; gap: 0.50rem;">
+                      <span id="taxSituationStatusBadge" style="font-size: 0.75rem; font-weight: 700; padding: 0.15rem 0.50rem; border-radius: 9999px; background: #dcfce7; color: #15803d; border: 1px solid #86efac;">
+                        Analyzing...
+                      </span>
+                      <span id="taxSituationChevron" class="milestones-chevron">▼</span>
+                    </div>
+                  </button>
+                  <div id="taxSituationBox" class="milestones-content" style="display: none;">
+                    <div id="taxSituationSummaryText" style="font-size: 0.88rem; color: #334155; line-height: 1.45;">
+                      Calculating tax analysis...
+                    </div>
+
+                    <!-- Relocated: Should I move to another state? Comparison -->
+                    <div class="move-state-section" id="sectionMoveState" style="margin-top: 0.75rem; border-top: 1px solid #e2e8f0; padding-top: 0.75rem;">
+                      <button type="button" class="btn-move-state" id="btnShouldIMove" onclick="toggleMoveStateComparison()">
+                        <span>✈️ Should I move to another state?</span>
+                      </button>
+                      <div id="moveStateBox" class="move-state-box" style="display: none;">
+                        <div class="move-state-header">
+                          <label for="moveStateSelect" class="move-state-label">Compare moving to:</label>
+                          <div style="position: relative;">
+                            <select id="moveStateSelect" class="move-state-dropdown" onchange="calculateMoveStateSavings()">
+                              <!-- State options populated dynamically -->
+                            </select>
+                            <div class="dropdown-chevron">▼</div>
+                          </div>
+                        </div>
+                        <div id="moveStateResult" class="move-state-result"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Inheritance & Beneficiary Tax Analysis Section (Collapsible, Default Collapsed) -->
+                <div class="milestones-card-wrap" id="inheritanceSituationSection" style="margin-top: 0.85rem;">
+                  <button type="button" class="btn-milestones-toggle" id="btnToggleInheritance" onclick="toggleInheritanceSituation()" aria-expanded="false">
+                    <span style="display: flex; align-items: center; gap: 0.45rem;">
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                        <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                      </svg>
+                      <span>Inheritance &amp; Beneficiary Tax Analysis</span>
+                    </span>
+                    <div style="display: flex; align-items: center; gap: 0.50rem;">
+                      <span id="inheritanceStatusBadge" style="font-size: 0.75rem; font-weight: 700; padding: 0.15rem 0.50rem; border-radius: 9999px; background: #dcfce7; color: #15803d; border: 1px solid #86efac;">
+                        Tax Analysis
+                      </span>
+                      <span id="inheritanceChevron" class="milestones-chevron">▼</span>
+                    </div>
+                  </button>
+                  <div id="inheritanceBox" class="milestones-content" style="display: none;">
+                    <div id="inheritanceSituationBox">
+                      <!-- Populated dynamically by updateRetirementSituation -->
+                    </div>
+                    <!-- Relocation State Estate Tax Comparison Box -->
+                    <div class="move-state-section" id="sectionInheritanceMoveState" style="display: none; margin-top: 0.65rem; border-top: 1px solid #e2e8f0; padding-top: 0.65rem;">
+                      <div id="moveEstateStateBox" class="move-state-box" style="display: block; margin-top: 0;">
+                        <div class="move-state-header">
+                          <label for="moveEstateStateSelect" class="move-state-label">Compare state estate tax by moving to:</label>
+                          <div style="position: relative;">
+                            <select id="moveEstateStateSelect" class="move-state-dropdown" onchange="calculateInheritanceMoveStateSavings()">
+                              <!-- State options populated dynamically -->
+                            </select>
+                            <div class="dropdown-chevron">▼</div>
+                          </div>
+                        </div>
+                        <div id="moveEstateStateResult" class="move-state-result"></div>
+                      </div>
+                    </div>
                   </div>
                 </div>
 
@@ -3372,133 +3675,12 @@
             <div class="carousel-slide" id="slideLifetimeTaxes">
               <div class="kpi-card" id="kpiCardLifetimeTaxes">
                 <div>
-                  <div class="taxes-top-metrics-grid">
-                    <!-- Top Block: Paid Taxes -->
-                    <div class="tax-paid-col">
-                      <div class="kpi-label">Paid Taxes</div>
-                      <div class="kpi-value" id="kpiTaxes">--</div>
-                      <div class="kpi-sub" id="kpiTaxRate">--</div>
-                      <div class="kpi-tax-hbar-wrap" id="kpiTaxHBarWrap" style="margin-top: 0.50rem;">
-                        <div class="kpi-tax-hbar" id="kpiTaxHBar"></div>
-                        <div class="kpi-tax-hbar-legend" id="kpiTaxHBarLegend"></div>
-                      </div>
-                    </div>
-
-                    <!-- Bottom Block: Estimated Taxes on Unrealized Gain (Below Paid Taxes on Mobile, 2-col on Desktop) -->
-                    <div class="tax-unrealized-col">
-                      <div class="kpi-label">Est. Tax on Unrealized Gain</div>
-                      <div class="kpi-value" id="kpiUnrealizedTax" style="color: #7c3aed;">$0</div>
-                      <div class="kpi-sub" id="kpiUnrealizedTaxSub">--</div>
-                      <div class="kpi-tax-hbar-wrap" id="kpiUnrealizedTaxHBarWrap" style="margin-top: 0.50rem;">
-                        <div class="kpi-tax-hbar" id="kpiUnrealizedTaxHBar"></div>
-                        <div class="kpi-tax-hbar-legend" id="kpiUnrealizedTaxHBarLegend"></div>
-                      </div>
-                    </div>
-                  </div>
+                  <div class="kpi-label" style="font-size: 0.95rem; font-weight: 700; color: #475569; text-transform: uppercase; letter-spacing: 0.04em;">Statutory Age Milestones</div>
+                  <div style="font-size: 0.88rem; color: #64748b; margin-top: 0.20rem; margin-bottom: 0.40rem;">Critical statutory age milestones governing retirement contributions, early penalties, Medicare IRMAA, and mandatory RMDs.</div>
                 </div>
 
-                <!-- Annual Withdrawals by Source Stacked Bar Chart -->
-                <div class="balance-growth-card" id="withdrawalsOverTimeSection">
-                  <div class="balance-growth-header">
-                    <div class="balance-growth-title-row">
-                      <span class="balance-growth-title">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0284c7" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
-                          <rect x="2" y="6" width="20" height="12" rx="2"></rect>
-                          <circle cx="12" cy="12" r="2"></circle>
-                          <path d="M6 12h.01M18 12h.01"></path>
-                        </svg>
-                        Annual Withdrawals by Source (Age <span id="wotStartAge">50</span> → 90)
-                      </span>
-                      <span class="balance-growth-peak" id="wotPeakBadge" style="background:#e0f2fe; color:#0369a1;">Peak: $0/yr</span>
-                    </div>
-                    <div class="balance-growth-legend" id="wotGrowthLegend" style="flex-wrap: wrap; gap: 0.35rem 0.65rem;">
-                      <span class="bg-legend-item"><span class="bg-legend-dot" style="background: #2563eb;"></span>401(k)</span>
-                      <span class="bg-legend-item"><span class="bg-legend-dot" style="background: #0284c7;"></span>Trad IRA</span>
-                      <span class="bg-legend-item"><span class="bg-legend-dot" style="background: #f59e0b;"></span>Mandatory RMD</span>
-                      <span class="bg-legend-item"><span class="bg-legend-dot" style="background: #a855f7;"></span>Brokerage</span>
-                      <span class="bg-legend-item"><span class="bg-legend-dot" style="background: #0d9488;"></span>HSA</span>
-                      <span class="bg-legend-item"><span class="bg-legend-dot" style="background: #10b981;"></span>Roth IRA</span>
-                    </div>
-                  </div>
-                  <div class="balance-growth-canvas-wrap" id="wotCanvasWrap">
-                    <svg id="wotGrowthSvg" class="balance-growth-svg" viewBox="0 0 360 85" preserveAspectRatio="none"></svg>
-                    <div id="wotGrowthTooltip" class="balance-growth-tooltip" style="display: none;"></div>
-                  </div>
-                  <div class="balance-growth-footer">
-                    <span id="wotAxisStart">Age 50: $0/yr</span>
-                    <span id="wotAxisRetire" class="bg-retire-badge" style="display: none;">Retire: Age 60</span>
-                    <span id="wotAxisTotal">Lifetime: $0</span>
-                  </div>
-                </div>
-
-                <!-- Taxes Over Time Area Line Chart (RMD, Cap Gains, Social Security, Ordinary Incomes Breakdown) -->
-                <div class="balance-growth-card" id="taxesOverTimeSection">
-                  <div class="balance-growth-header">
-                    <div class="balance-growth-title-row">
-                      <span class="balance-growth-title">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2.5"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline><polyline points="16 7 22 7 22 13"></polyline></svg>
-                        Taxes Paid Over Time (Age <span id="totStartAge">50</span> → 90)
-                      </span>
-                      <span class="balance-growth-peak" id="totPeakBadge" style="background:#fee2e2; color:#991b1b;">Peak: $0/yr</span>
-                    </div>
-                    <div class="balance-growth-legend" id="totGrowthLegend" style="flex-wrap: wrap; gap: 0.35rem 0.65rem;">
-                      <span class="bg-legend-item"><span class="bg-legend-dot" style="background: #f59e0b;"></span>RMD</span>
-                      <span class="bg-legend-item"><span class="bg-legend-dot" style="background: #8b5cf6;"></span>Capital Gains</span>
-                      <span class="bg-legend-item"><span class="bg-legend-dot" style="background: #10b981;"></span>Social Security</span>
-                      <span class="bg-legend-item"><span class="bg-legend-dot" style="background: #2563eb;"></span>Ordinary Incomes</span>
-                    </div>
-                  </div>
-                  <div class="balance-growth-canvas-wrap" id="totCanvasWrap">
-                    <svg id="totGrowthSvg" class="balance-growth-svg" viewBox="0 0 360 85" preserveAspectRatio="none"></svg>
-                    <div id="totGrowthTooltip" class="balance-growth-tooltip" style="display: none;"></div>
-                  </div>
-                  <div class="balance-growth-footer">
-                    <span id="totAxisStart">Age 50: $0/yr</span>
-                    <span id="totAxisRetire" class="bg-retire-badge" style="display: none;">Retire: Age 60</span>
-                    <span id="totAxisTotal">Lifetime: $0</span>
-                  </div>
-                </div>
-
-                <!-- Retirement Tax Situation Analysis Section -->
-                <div class="retirement-situation-card" id="taxSituationSection" style="margin-top: 0.85rem; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 0.75rem 0.85rem; box-shadow: 0 1px 3px rgba(0,0,0,0.03);">
-                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.45rem; flex-wrap: wrap; gap: 0.3rem;">
-                    <div style="font-size: 0.92rem; font-weight: 700; color: #1e293b; display: flex; align-items: center; gap: 0.4rem;">
-                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                        <polyline points="14 2 14 8 20 8"></polyline>
-                        <line x1="16" y1="13" x2="8" y2="13"></line>
-                        <line x1="16" y1="17" x2="8" y2="17"></line>
-                        <polyline points="10 9 9 9 8 9"></polyline>
-                      </svg>
-                      <span>Retirement Tax Situation Analysis</span>
-                    </div>
-                    <span id="taxSituationStatusBadge" style="font-size: 0.80rem; font-weight: 700; padding: 0.18rem 0.55rem; border-radius: 9999px; background: #dcfce7; color: #15803d; border: 1px solid #86efac;">
-                      Analyzing...
-                    </span>
-                  </div>
-                  <div id="taxSituationSummaryText" style="font-size: 0.88rem; color: #334155; line-height: 1.45;">
-                    Calculating tax analysis...
-                  </div>
-                </div>
-
-                <div class="move-state-section" id="sectionMoveState">
-                  <button type="button" class="btn-move-state" id="btnShouldIMove" onclick="toggleMoveStateComparison()">
-                    <span>✈️ Should I move to another state?</span>
-                  </button>
-                  <div id="moveStateBox" class="move-state-box" style="display: none;">
-                    <div class="move-state-header">
-                      <label for="moveStateSelect" class="move-state-label">Compare moving to:</label>
-                      <div style="position: relative;">
-                        <select id="moveStateSelect" class="move-state-dropdown" onchange="calculateMoveStateSavings()">
-                          <!-- State options populated dynamically -->
-                        </select>
-                        <div class="dropdown-chevron">▼</div>
-                      </div>
-                    </div>
-                    <div id="moveStateResult" class="move-state-result"></div>
-                  </div>
-                  <!-- Important Age Milestones & Tax Implications Section -->
-                  <div class="milestones-card-wrap" id="milestonesSection">
+                <!-- Important Age Milestones & Tax Implications Section -->
+                <div class="milestones-card-wrap" id="milestonesSection" style="margin-top: 0.85rem;">
                     <button type="button" class="btn-milestones-toggle" id="btnToggleMilestones" onclick="toggleAgeMilestones()" aria-expanded="false">
                       <span style="display: flex; align-items: center; gap: 0.45rem;">
                         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
@@ -3657,7 +3839,6 @@
                 </div>
               </div>
             </div>
-
           </div>
 
           <!-- Slide 3: Detailed Table -->
@@ -3914,6 +4095,25 @@
       WV: { name: 'West Virginia', type: 'flat', rate: 0.0512, desc: '2.36% – 5.12%' }
     };
 
+    /* ==========================================================================
+       STATE ESTATE TAX RULES (12 States + DC have estate taxes; 38 states have $0)
+       ========================================================================== */
+    const STATE_ESTATE_RULES = {
+      'OR': { threshold: 1000000, rate: 0.10, name: 'Oregon' },
+      'WA': { threshold: 2193000, rate: 0.14, name: 'Washington' },
+      'MA': { threshold: 2000000, rate: 0.10, name: 'Massachusetts' },
+      'MN': { threshold: 3000000, rate: 0.13, name: 'Minnesota' },
+      'IL': { threshold: 4000000, rate: 0.10, name: 'Illinois' },
+      'DC': { threshold: 4710800, rate: 0.12, name: 'District of Columbia' },
+      'MD': { threshold: 5000000, rate: 0.10, name: 'Maryland' },
+      'VT': { threshold: 5000000, rate: 0.16, name: 'Vermont' },
+      'HI': { threshold: 5490000, rate: 0.14, name: 'Hawaii' },
+      'ME': { threshold: 6800000, rate: 0.10, name: 'Maine' },
+      'NY': { threshold: 6940000, rate: 0.10, name: 'New York' },
+      'RI': { threshold: 1774583, rate: 0.10, name: 'Rhode Island' },
+      'CT': { threshold: 13610000, rate: 0.12, name: 'Connecticut' }
+    };
+
     let activeStrategy = 'smart';
     let currentSchedule = [];
     let currentPlanParams = null;
@@ -4048,6 +4248,28 @@
       }
 
       updateMilestoneBadges();
+    }
+
+    function toggleTaxSituation() {
+      const box = document.getElementById('taxSituationBox');
+      const chev = document.getElementById('taxSituationChevron');
+      const btn = document.getElementById('btnToggleTaxSituation');
+      if (!box) return;
+      const isHidden = (box.style.display === 'none');
+      box.style.display = isHidden ? 'block' : 'none';
+      if (chev) chev.classList.toggle('rotated', isHidden);
+      if (btn) btn.setAttribute('aria-expanded', isHidden ? 'true' : 'false');
+    }
+
+    function toggleInheritanceSituation() {
+      const box = document.getElementById('inheritanceBox');
+      const chev = document.getElementById('inheritanceChevron');
+      const btn = document.getElementById('btnToggleInheritance');
+      if (!box) return;
+      const isHidden = (box.style.display === 'none');
+      box.style.display = isHidden ? 'block' : 'none';
+      if (chev) chev.classList.toggle('rotated', isHidden);
+      if (btn) btn.setAttribute('aria-expanded', isHidden ? 'true' : 'false');
     }
 
     function toggleFinalBalanceCalc() {
@@ -6126,139 +6348,146 @@
       });
       html += '</div>';
 
+      container.innerHTML = html;
+
       // -----------------------------------------------------------------
       // INHERITANCE & BENEFICIARY TAX ANALYSIS (FOR USER AND KIDS)
       // -----------------------------------------------------------------
-      if (finalBal > 0) {
-        let finalBrok = 0;
-        let finalPretax = 0;
-        let finalRoth = 0;
-        let finalHsa = 0;
-        if (active.schedule && active.schedule.length > 0) {
-          const last = active.schedule[active.schedule.length - 1];
-          finalBrok = last.balBrokerage || 0;
-          finalPretax = last.balPretax !== undefined ? last.balPretax : ((last.bal401k || 0) + (last.balIRA || 0));
-          finalRoth = last.balRoth || 0;
-          finalHsa = last.balHsa || 0;
-        }
-
-        const status = params.status || 'MFJ';
-        const stateCode = params.stateCode || 'MN';
-        const basisRatioDec = (params.costBasisRatio !== undefined ? params.costBasisRatio : 60) / 100;
-        const unrealizedBrokGain = Math.max(0, finalBrok * (1 - basisRatioDec));
-
-        // 1. User / Estate Tax Liability:
-        const fedExemption = status === 'MFJ' ? 27220000 : 13610000;
-        const fedEstateTax = Math.max(0, (finalBal - fedExemption) * 0.40);
-
-        // State Estate Tax Dictionary (12 states + DC have estate taxes)
-        const stateEstateRules = {
-          'OR': { threshold: 1000000, rate: 0.10, name: 'Oregon' },
-          'WA': { threshold: 2193000, rate: 0.14, name: 'Washington' },
-          'MA': { threshold: 2000000, rate: 0.10, name: 'Massachusetts' },
-          'MN': { threshold: 3000000, rate: 0.13, name: 'Minnesota' },
-          'IL': { threshold: 4000000, rate: 0.10, name: 'Illinois' },
-          'DC': { threshold: 4710800, rate: 0.12, name: 'District of Columbia' },
-          'MD': { threshold: 5000000, rate: 0.10, name: 'Maryland' },
-          'VT': { threshold: 5000000, rate: 0.16, name: 'Vermont' },
-          'HI': { threshold: 5490000, rate: 0.14, name: 'Hawaii' },
-          'ME': { threshold: 6800000, rate: 0.10, name: 'Maine' },
-          'NY': { threshold: 6940000, rate: 0.10, name: 'New York' },
-          'RI': { threshold: 1774583, rate: 0.10, name: 'Rhode Island' },
-          'CT': { threshold: 13610000, rate: 0.12, name: 'Connecticut' }
-        };
-
-        let stateEstateTax = 0;
-        let stateRule = stateEstateRules[stateCode];
-        let stateTaxDesc = `State Estate Tax (${stateCode}): $0 (No state estate tax)`;
-        if (stateRule) {
-          if (finalBal > stateRule.threshold) {
-            stateEstateTax = (finalBal - stateRule.threshold) * stateRule.rate;
-            stateTaxDesc = `State Estate Tax (${stateCode}): ${formatCurrency(stateEstateTax)} <span style="color: #64748b; font-size: 0.75rem;">(Exceeds ${formatCurrency(stateRule.threshold)} limit)</span>`;
-          } else {
-            stateTaxDesc = `State Estate Tax (${stateCode}): $0 <span style="color: #64748b; font-size: 0.75rem;">(&lt; ${formatCurrency(stateRule.threshold)} limit)</span>`;
+      const inherBox = document.getElementById('inheritanceSituationBox');
+      const inherBadge = document.getElementById('inheritanceStatusBadge');
+      if (inherBox) {
+        if (finalBal > 0) {
+          let finalBrok = 0;
+          let finalPretax = 0;
+          let finalRoth = 0;
+          let finalHsa = 0;
+          if (active.schedule && active.schedule.length > 0) {
+            const last = active.schedule[active.schedule.length - 1];
+            finalBrok = last.balBrokerage || 0;
+            finalPretax = last.balPretax !== undefined ? last.balPretax : ((last.bal401k || 0) + (last.balIRA || 0));
+            finalRoth = last.balRoth || 0;
+            finalHsa = last.balHsa || 0;
           }
+
+          const status = params.status || 'MFJ';
+          const stateCode = params.stateCode || 'MN';
+          const basisRatioDec = (params.costBasisRatio !== undefined ? params.costBasisRatio : 60) / 100;
+          const unrealizedBrokGain = Math.max(0, finalBrok * (1 - basisRatioDec));
+
+          // 1. User / Estate Tax Liability:
+          const fedExemption = status === 'MFJ' ? 27220000 : 13610000;
+          const fedEstateTax = Math.max(0, (finalBal - fedExemption) * 0.40);
+
+          // State Estate Tax Dictionary (12 states + DC have estate taxes)
+          const stateEstateRules = STATE_ESTATE_RULES;
+
+          let stateEstateTax = 0;
+          let stateRule = stateEstateRules[stateCode];
+          let stateTaxDesc = `State Estate Tax (${stateCode}): $0 (No state estate tax)`;
+          if (stateRule) {
+            if (finalBal > stateRule.threshold) {
+              stateEstateTax = (finalBal - stateRule.threshold) * stateRule.rate;
+              stateTaxDesc = `State Estate Tax (${stateCode}): ${formatCurrency(stateEstateTax)} <span style="color: #64748b; font-size: 0.75rem;">(Exceeds ${formatCurrency(stateRule.threshold)} limit)</span>`;
+            } else {
+              stateTaxDesc = `State Estate Tax (${stateCode}): $0 <span style="color: #64748b; font-size: 0.75rem;">(&lt; ${formatCurrency(stateRule.threshold)} limit)</span>`;
+            }
+          }
+
+          // Step-up in basis forgiveness (IRC § 1014): capital gains tax permanently eliminated on death
+          const capitalGainsForgiven = unrealizedBrokGain * (0.15 + (stateCode === 'MN' ? 0.0985 : 0.05));
+
+          // 2. Kids (Heirs / Non-Spouse Beneficiaries) Tax Liability:
+          const kidsPretaxTax = finalPretax > 10 ? (finalPretax * 0.30) : 0;
+          const kidsHsaTax = finalHsa > 10 ? (finalHsa * 0.30) : 0;
+          const kidsTotalTax = kidsPretaxTax + kidsHsaTax;
+          const totalEstateTax = fedEstateTax + stateEstateTax;
+          const totalAllTaxes = totalEstateTax + kidsTotalTax;
+          const netLegacy = Math.max(0, finalBal - totalAllTaxes);
+          const netLegacyPct = finalBal > 0 ? Math.round((netLegacy / finalBal) * 100) : 100;
+          const kidsTaxFreeInheritance = finalRoth + finalBrok;
+          const taxFreePct = finalBal > 0 ? Math.round((kidsTaxFreeInheritance / finalBal) * 100) : 0;
+
+          if (inherBadge) {
+            inherBadge.textContent = kidsTotalTax <= 0 ? '100% Tax-Free to Kids' : `${taxFreePct}% Tax-Free Inheritance`;
+            inherBadge.style.background = kidsTotalTax <= 0 ? '#dcfce7' : '#fef3c7';
+            inherBadge.style.color = kidsTotalTax <= 0 ? '#15803d' : '#b45309';
+            inherBadge.style.border = kidsTotalTax <= 0 ? '1px solid #86efac' : '1px solid #fcd34d';
+          }
+
+          inherBox.innerHTML = `
+            <div class="inheritance-analysis-box" style="padding: 0.20rem 0;">
+              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 0.65rem; font-size: 0.83rem; line-height: 1.42;">
+                <!-- Column 1: For You (The Retiree / Estate) -->
+                <div style="background: #ffffff; padding: 0.65rem 0.75rem; border-radius: 6px; border: 1px solid #e2e8f0; display: flex; flex-direction: column; gap: 0.25rem;">
+                  <div style="font-weight: 700; color: #1e293b; margin-bottom: 0.20rem; display: flex; align-items: center; gap: 0.35rem; font-size: 0.85rem;">
+                    <span>👤 For You (The Estate)</span>
+                  </div>
+                  <div>• <strong>Federal Estate Tax:</strong> ${fedEstateTax > 0 ? formatCurrency(fedEstateTax) : '$0'} <span style="color: #64748b; font-size: 0.75rem;">(&lt; ${formatCurrency(fedExemption)} limit)</span></div>
+                  <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.35rem;">
+                    <div>• <strong>${stateTaxDesc}</strong></div>
+                    <button type="button" class="btn-move-state" id="btnInheritanceMoveState" onclick="toggleInheritanceMoveState()" style="width: auto; padding: 0.22rem 0.55rem; font-size: 0.75rem; border-radius: 6px; margin: 0; box-shadow: 0 1px 3px rgba(2,132,199,0.25);">
+                      <span>✈️ Should I move to another state?</span>
+                    </button>
+                  </div>
+                  <div>• <strong>Capital Gains Forgiven:</strong> <span style="color: #16a34a; font-weight: 600;">+${formatCurrency(capitalGainsForgiven)}</span> <span style="color: #64748b; font-size: 0.75rem;">(IRC § 1014 basis step-up)</span></div>
+                  <div style="margin-top: 0.15rem; font-size: 0.76rem; color: #64748b; line-height: 1.35;">
+                    At death, all unrealized capital gains in taxable brokerage are reset to fair market value, permanently eliminating capital gains tax for your heirs.
+                  </div>
+                </div>
+
+                <!-- Column 2: For Your Kids (Beneficiaries) -->
+                <div style="background: #ffffff; padding: 0.65rem 0.75rem; border-radius: 6px; border: 1px solid #e2e8f0; display: flex; flex-direction: column; gap: 0.25rem;">
+                  <div style="font-weight: 700; color: #1e293b; margin-bottom: 0.20rem; display: flex; align-items: center; gap: 0.35rem; font-size: 0.85rem;">
+                    <span>👶 For Your Kids (Beneficiaries)</span>
+                  </div>
+                  <div>• <strong>Pre-Tax 401(k)/IRA:</strong> ${finalPretax > 10 ? `${formatCurrency(finalPretax)} balance → <span style="color: #dc2626; font-weight: 700;">~${formatCurrency(kidsPretaxTax)} tax</span> <span style="color: #64748b; font-size: 0.75rem;">(SECURE 10-Yr @ ~30%)</span>` : '<span style="color: #16a34a; font-weight: 600;">$0 balance ($0 tax)</span>'}</div>
+                  <div>• <strong>Roth IRA:</strong> ${finalRoth > 10 ? `${formatCurrency(finalRoth)} balance → <span style="color: #16a34a; font-weight: 600;">$0 tax</span> <span style="color: #64748b; font-size: 0.75rem;">(100% Tax-Free IRC § 408A)</span>` : '<span style="color: #64748b;">$0 balance</span>'}</div>
+                  <div>• <strong>Taxable Brokerage:</strong> ${finalBrok > 10 ? `${formatCurrency(finalBrok)} balance → <span style="color: #16a34a; font-weight: 600;">$0 tax</span> <span style="color: #64748b; font-size: 0.75rem;">(Stepped-up basis)</span>` : '<span style="color: #64748b;">$0 balance</span>'}</div>
+                  ${finalHsa > 10 ? `<div>• <strong>HSA Balance:</strong> ${formatCurrency(finalHsa)} balance → <span style="color: #ea580c; font-weight: 600;">~${formatCurrency(kidsHsaTax)} tax</span> <span style="color: #64748b; font-size: 0.75rem;">(Non-spouse heir taxable)</span></div>` : ''}
+                  <div style="margin-top: 0.25rem; border-top: 1px dashed #cbd5e1; padding-top: 0.25rem;">• <strong>Total Estimated Tax on Kids:</strong> <strong style="${kidsTotalTax > 10 ? 'color: #dc2626;' : 'color: #16a34a;'}">${formatCurrency(kidsTotalTax)}</strong></div>
+                </div>
+              </div>
+
+              <!-- Net Legacy Transfer Summary Bar -->
+              <div style="margin-top: 0.60rem; padding: 0.45rem 0.65rem; background: #ffffff; border-radius: 6px; border: 1px solid #e2e8f0; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.4rem; font-size: 0.82rem;">
+                <div>
+                  <span style="color: #64748b;">Gross Legacy:</span> <strong>${formatCurrency(finalBal)}</strong>
+                  <span style="color: #94a3b8; margin: 0 0.35rem;">−</span>
+                  <span style="color: #64748b;">Total Taxes:</span> <strong style="color: ${totalAllTaxes > 0 ? '#dc2626' : '#16a34a'};">${formatCurrency(totalAllTaxes)}</strong>
+                </div>
+                <div style="display: flex; align-items: center; gap: 0.35rem;">
+                  <span style="color: #475569; font-weight: 600;">Net Wealth to Kids:</span>
+                  <strong style="color: #16a34a; font-size: 0.90rem;">${formatCurrency(netLegacy)}</strong>
+                  <span style="color: #64748b; font-size: 0.75rem;">(${netLegacyPct}% of estate)</span>
+                </div>
+              </div>
+
+              <div style="margin-top: 0.50rem; font-size: 0.78rem; color: #475569; line-height: 1.38;">
+                ${finalPretax > 10 
+                  ? `💡 <strong>Estate Planning Tip:</strong> Under the SECURE Act, your kids must drain inherited pre-tax accounts within 10 years during their highest earning years (taxed up to 30%–40%). Converting pre-tax to Roth during your retirement transfers wealth at your lower brackets instead of theirs.`
+                  : (finalHsa > 10 
+                      ? `💡 <strong>Estate Planning Tip:</strong> You leave $0 pre-tax 401(k)/IRA liability to your kids! Note that inherited HSAs are taxable to non-spouse heirs in the year of death; prioritizing HSA withdrawals for healthcare during life keeps your children's inheritance fully tax-free.`
+                      : `🌟 <strong>Optimal Estate Transfer:</strong> You leave $0 tax liability to your children. 100% of their inheritance is tax-free Roth or stepped-up brokerage assets with zero income tax!`)}
+              </div>
+            </div>
+          `;
+
+          const estateMoveSec = document.getElementById('sectionInheritanceMoveState');
+          if (estateMoveSec && estateMoveSec.style.display !== 'none') {
+            if (typeof calculateInheritanceMoveStateSavings === 'function') {
+              calculateInheritanceMoveStateSavings();
+            }
+          }
+        } else {
+          if (inherBadge) {
+            inherBadge.textContent = '$0 Legacy';
+            inherBadge.style.background = '#f1f5f9';
+            inherBadge.style.color = '#64748b';
+            inherBadge.style.border = '1px solid #cbd5e1';
+          }
+          inherBox.innerHTML = '<div style="color: #64748b; font-size: 0.85rem; padding: 0.5rem 0;">Portfolio depleted prior to Age 90; $0 legacy remaining to transfer.</div>';
         }
-
-        // Step-up in basis forgiveness (IRC § 1014): capital gains tax permanently eliminated on death
-        const capitalGainsForgiven = unrealizedBrokGain * (0.15 + (stateCode === 'MN' ? 0.0985 : 0.05));
-
-        // 2. Kids (Heirs / Non-Spouse Beneficiaries) Tax Liability:
-        const kidsPretaxTax = finalPretax > 10 ? (finalPretax * 0.30) : 0;
-        const kidsHsaTax = finalHsa > 10 ? (finalHsa * 0.30) : 0;
-        const kidsTotalTax = kidsPretaxTax + kidsHsaTax;
-        const totalEstateTax = fedEstateTax + stateEstateTax;
-        const totalAllTaxes = totalEstateTax + kidsTotalTax;
-        const netLegacy = Math.max(0, finalBal - totalAllTaxes);
-        const netLegacyPct = finalBal > 0 ? Math.round((netLegacy / finalBal) * 100) : 100;
-        const kidsTaxFreeInheritance = finalRoth + finalBrok;
-        const taxFreePct = finalBal > 0 ? Math.round((kidsTaxFreeInheritance / finalBal) * 100) : 0;
-
-        html += `
-          <div class="inheritance-analysis-box" id="inheritanceSituationBox" style="margin-top: 0.65rem; padding: 0.75rem 0.85rem; background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 8px;">
-            <div style="font-weight: 700; color: #1e293b; font-size: 0.90rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.35rem; margin-bottom: 0.55rem;">
-              <span style="display: flex; align-items: center; gap: 0.4rem;">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2.3"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
-                Inheritance &amp; Beneficiary Tax Analysis
-              </span>
-              <span style="font-size: 0.75rem; padding: 3px 8px; border-radius: 9999px; font-weight: 700; ${kidsTotalTax <= 0 ? 'background: #dcfce7; color: #15803d; border: 1px solid #86efac;' : 'background: #fef3c7; color: #b45309; border: 1px solid #fcd34d;'}">
-                ${kidsTotalTax <= 0 ? '100% Tax-Free to Kids' : `${taxFreePct}% Tax-Free Inheritance`}
-              </span>
-            </div>
-            
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 0.65rem; font-size: 0.83rem; line-height: 1.42;">
-              <!-- Column 1: For You (The Retiree / Estate) -->
-              <div style="background: #ffffff; padding: 0.65rem 0.75rem; border-radius: 6px; border: 1px solid #e2e8f0; display: flex; flex-direction: column; gap: 0.25rem;">
-                <div style="font-weight: 700; color: #1e293b; margin-bottom: 0.20rem; display: flex; align-items: center; gap: 0.35rem; font-size: 0.85rem;">
-                  <span>👤 For You (The Estate)</span>
-                </div>
-                <div>• <strong>Federal Estate Tax:</strong> ${fedEstateTax > 0 ? formatCurrency(fedEstateTax) : '$0'} <span style="color: #64748b; font-size: 0.75rem;">(&lt; ${formatCurrency(fedExemption)} limit)</span></div>
-                <div>• <strong>${stateTaxDesc}</strong></div>
-                <div>• <strong>Capital Gains Forgiven:</strong> <span style="color: #16a34a; font-weight: 600;">+${formatCurrency(capitalGainsForgiven)}</span> <span style="color: #64748b; font-size: 0.75rem;">(IRC § 1014 basis step-up)</span></div>
-                <div style="margin-top: 0.15rem; font-size: 0.76rem; color: #64748b; line-height: 1.35;">
-                  At death, all unrealized capital gains in taxable brokerage are reset to fair market value, permanently eliminating capital gains tax for your heirs.
-                </div>
-              </div>
-
-              <!-- Column 2: For Your Kids (Beneficiaries) -->
-              <div style="background: #ffffff; padding: 0.65rem 0.75rem; border-radius: 6px; border: 1px solid #e2e8f0; display: flex; flex-direction: column; gap: 0.25rem;">
-                <div style="font-weight: 700; color: #1e293b; margin-bottom: 0.20rem; display: flex; align-items: center; gap: 0.35rem; font-size: 0.85rem;">
-                  <span>👶 For Your Kids (Beneficiaries)</span>
-                </div>
-                <div>• <strong>Pre-Tax 401(k)/IRA:</strong> ${finalPretax > 10 ? `${formatCurrency(finalPretax)} balance → <span style="color: #dc2626; font-weight: 700;">~${formatCurrency(kidsPretaxTax)} tax</span> <span style="color: #64748b; font-size: 0.75rem;">(SECURE 10-Yr @ ~30%)</span>` : '<span style="color: #16a34a; font-weight: 600;">$0 balance ($0 tax)</span>'}</div>
-                <div>• <strong>Roth IRA:</strong> ${finalRoth > 10 ? `${formatCurrency(finalRoth)} balance → <span style="color: #16a34a; font-weight: 600;">$0 tax</span> <span style="color: #64748b; font-size: 0.75rem;">(100% Tax-Free IRC § 408A)</span>` : '<span style="color: #64748b;">$0 balance</span>'}</div>
-                <div>• <strong>Taxable Brokerage:</strong> ${finalBrok > 10 ? `${formatCurrency(finalBrok)} balance → <span style="color: #16a34a; font-weight: 600;">$0 tax</span> <span style="color: #64748b; font-size: 0.75rem;">(Stepped-up basis)</span>` : '<span style="color: #64748b;">$0 balance</span>'}</div>
-                ${finalHsa > 10 ? `<div>• <strong>HSA Balance:</strong> ${formatCurrency(finalHsa)} balance → <span style="color: #ea580c; font-weight: 600;">~${formatCurrency(kidsHsaTax)} tax</span> <span style="color: #64748b; font-size: 0.75rem;">(Non-spouse heir taxable)</span></div>` : ''}
-                <div style="margin-top: 0.25rem; border-top: 1px dashed #cbd5e1; padding-top: 0.25rem;">• <strong>Total Estimated Tax on Kids:</strong> <strong style="${kidsTotalTax > 10 ? 'color: #dc2626;' : 'color: #16a34a;'}">${formatCurrency(kidsTotalTax)}</strong></div>
-              </div>
-            </div>
-
-            <!-- Net Legacy Transfer Summary Bar -->
-            <div style="margin-top: 0.60rem; padding: 0.45rem 0.65rem; background: #ffffff; border-radius: 6px; border: 1px solid #e2e8f0; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.4rem; font-size: 0.82rem;">
-              <div>
-                <span style="color: #64748b;">Gross Legacy:</span> <strong>${formatCurrency(finalBal)}</strong>
-                <span style="color: #94a3b8; margin: 0 0.35rem;">−</span>
-                <span style="color: #64748b;">Total Taxes:</span> <strong style="color: ${totalAllTaxes > 0 ? '#dc2626' : '#16a34a'};">${formatCurrency(totalAllTaxes)}</strong>
-              </div>
-              <div style="display: flex; align-items: center; gap: 0.35rem;">
-                <span style="color: #475569; font-weight: 600;">Net Wealth to Kids:</span>
-                <strong style="color: #16a34a; font-size: 0.90rem;">${formatCurrency(netLegacy)}</strong>
-                <span style="color: #64748b; font-size: 0.75rem;">(${netLegacyPct}% of estate)</span>
-              </div>
-            </div>
-
-            <div style="margin-top: 0.50rem; font-size: 0.78rem; color: #475569; line-height: 1.38;">
-              ${finalPretax > 10 
-                ? `💡 <strong>Estate Planning Tip:</strong> Under the SECURE Act, your kids must drain inherited pre-tax accounts within 10 years during their highest earning years (taxed up to 30%–40%). Converting pre-tax to Roth during your retirement transfers wealth at your lower brackets instead of theirs.`
-                : (finalHsa > 10 
-                    ? `💡 <strong>Estate Planning Tip:</strong> You leave $0 pre-tax 401(k)/IRA liability to your kids! Note that inherited HSAs are taxable to non-spouse heirs in the year of death; prioritizing HSA withdrawals for healthcare during life keeps your children's inheritance fully tax-free.`
-                    : `🌟 <strong>Optimal Estate Transfer:</strong> You leave $0 tax liability to your children. 100% of their inheritance is tax-free Roth or stepped-up brokerage assets with zero income tax!`)}
-            </div>
-          </div>
-        `;
       }
-
-      container.innerHTML = html;
     }
 
     /* ==========================================================================
@@ -6596,169 +6825,90 @@
       const zeroY = padT + plotH;
       const numPoints = dataPoints.length;
 
-      const getX = (i) => padL + (i / (numPoints - 1)) * plotW;
-      const getY = (bal) => padT + (1 - (bal / maxBal)) * plotH;
+      const step = plotW / Math.max(1, numPoints);
+      const barW = Math.max(2.5, Math.min(8.5, step * 0.72));
 
-      const coords = dataPoints.map((p, i) => {
-        const x = getX(i);
-        const yTaxable = getY(p.taxable);
-        const yTaxDeferred = getY(p.taxable + p.taxDeferred);
-        const yTotal = getY(p.total);
-        return {
-          x: x,
-          yTaxable: yTaxable,
-          yTaxDeferred: yTaxDeferred,
-          yTotal: yTotal,
-          point: p
-        };
+      // Build stacked bar SVG rects (Taxable, Tax-Deferred, Tax-Free)
+      let barsSvg = '';
+      dataPoints.forEach((p, i) => {
+        const x = padL + (i + 0.5) * step - barW / 2;
+        let curY = zeroY;
+
+        // 1. Taxable (Purple: #9333ea) - Bottom
+        const hTax = (p.taxable / maxBal) * plotH;
+        if (hTax > 0.4) {
+          barsSvg += `<rect x="${x.toFixed(1)}" y="${(curY - hTax).toFixed(1)}" width="${barW.toFixed(1)}" height="${hTax.toFixed(1)}" fill="#9333ea" />`;
+          curY -= hTax;
+        }
+
+        // 2. Tax-Deferred (Royal Blue: #2563eb) - Middle
+        const hDef = (p.taxDeferred / maxBal) * plotH;
+        if (hDef > 0.4) {
+          barsSvg += `<rect x="${x.toFixed(1)}" y="${(curY - hDef).toFixed(1)}" width="${barW.toFixed(1)}" height="${hDef.toFixed(1)}" fill="#2563eb" />`;
+          curY -= hDef;
+        }
+
+        // 3. Tax-Free (Roth & HSA) (Emerald Green: #10b981) - Top
+        const hFree = (p.taxFree / maxBal) * plotH;
+        if (hFree > 0.4) {
+          barsSvg += `<rect x="${x.toFixed(1)}" y="${(curY - hFree).toFixed(1)}" width="${barW.toFixed(1)}" height="${hFree.toFixed(1)}" fill="#10b981" />`;
+          curY -= hFree;
+        }
       });
-
-      // 1. Path for Taxable Area (from baseline zeroY up to yTaxable)
-      let taxAreaD = `M ${coords[0].x.toFixed(1)} ${zeroY.toFixed(1)} L ${coords[0].x.toFixed(1)} ${coords[0].yTaxable.toFixed(1)}`;
-      for (let i = 1; i < coords.length; i++) {
-        taxAreaD += ` L ${coords[i].x.toFixed(1)} ${coords[i].yTaxable.toFixed(1)}`;
-      }
-      taxAreaD += ` L ${coords[coords.length - 1].x.toFixed(1)} ${zeroY.toFixed(1)} Z`;
-
-      // 2. Path for Tax-Deferred Area (stacked from yTaxable up to yTaxDeferred)
-      let taxDefAreaD = `M ${coords[0].x.toFixed(1)} ${coords[0].yTaxable.toFixed(1)} L ${coords[0].x.toFixed(1)} ${coords[0].yTaxDeferred.toFixed(1)}`;
-      for (let i = 1; i < coords.length; i++) {
-        taxDefAreaD += ` L ${coords[i].x.toFixed(1)} ${coords[i].yTaxDeferred.toFixed(1)}`;
-      }
-      taxDefAreaD += ` L ${coords[coords.length - 1].x.toFixed(1)} ${coords[coords.length - 1].yTaxable.toFixed(1)}`;
-      for (let i = coords.length - 2; i >= 0; i--) {
-        taxDefAreaD += ` L ${coords[i].x.toFixed(1)} ${coords[i].yTaxable.toFixed(1)}`;
-      }
-      taxDefAreaD += ` Z`;
-
-      // 3. Path for Tax-Free (Roth & HSA) Area (stacked from yTaxDeferred up to yTotal)
-      let taxFreeAreaD = `M ${coords[0].x.toFixed(1)} ${coords[0].yTaxDeferred.toFixed(1)} L ${coords[0].x.toFixed(1)} ${coords[0].yTotal.toFixed(1)}`;
-      for (let i = 1; i < coords.length; i++) {
-        taxFreeAreaD += ` L ${coords[i].x.toFixed(1)} ${coords[i].yTotal.toFixed(1)}`;
-      }
-      taxFreeAreaD += ` L ${coords[coords.length - 1].x.toFixed(1)} ${coords[coords.length - 1].yTaxDeferred.toFixed(1)}`;
-      for (let i = coords.length - 2; i >= 0; i--) {
-        taxFreeAreaD += ` L ${coords[i].x.toFixed(1)} ${coords[i].yTaxDeferred.toFixed(1)}`;
-      }
-      taxFreeAreaD += ` Z`;
-
-      // 4. Stroke lines for boundaries
-      let taxLineD = `M ${coords[0].x.toFixed(1)} ${coords[0].yTaxable.toFixed(1)}`;
-      for (let i = 1; i < coords.length; i++) {
-        taxLineD += ` L ${coords[i].x.toFixed(1)} ${coords[i].yTaxable.toFixed(1)}`;
-      }
-
-      let taxDefLineD = `M ${coords[0].x.toFixed(1)} ${coords[0].yTaxDeferred.toFixed(1)}`;
-      for (let i = 1; i < coords.length; i++) {
-        taxDefLineD += ` L ${coords[i].x.toFixed(1)} ${coords[i].yTaxDeferred.toFixed(1)}`;
-      }
-
-      let totalLineD = `M ${coords[0].x.toFixed(1)} ${coords[0].yTotal.toFixed(1)}`;
-      for (let i = 1; i < coords.length; i++) {
-        totalLineD += ` L ${coords[i].x.toFixed(1)} ${coords[i].yTotal.toFixed(1)}`;
-      }
 
       // Retirement milestone vertical line
       let retireLineSvg = '';
       if (retirementAge > currentAge) {
         const retIdx = dataPoints.findIndex(p => p.age === retirementAge);
         if (retIdx >= 0) {
-          const rx = coords[retIdx].x.toFixed(1);
+          const rx = (padL + (retIdx + 0.5) * step).toFixed(1);
           retireLineSvg = `<line x1="${rx}" y1="${padT}" x2="${rx}" y2="${zeroY.toFixed(1)}" stroke="#d97706" stroke-width="1.5" stroke-dasharray="3,3" />`;
         }
       }
 
-      const startCoord = coords[0];
-      const endCoord = coords[coords.length - 1];
       const peakIdx = dataPoints.indexOf(peakPoint);
-      const peakCoord = coords[peakIdx >= 0 ? peakIdx : 0];
+      const peakX = (padL + (peakIdx + 0.5) * step).toFixed(1);
+      const peakH = (peakPoint.total / maxBal) * plotH;
+      const peakY = (zeroY - peakH).toFixed(1);
+      const peakMarkerSvg = peakPoint && peakPoint.total > 0 ? `<circle cx="${peakX}" cy="${peakY}" r="3.8" fill="#1e40af" stroke="#ffffff" stroke-width="1.8" />` : '';
 
       svg.innerHTML = `
-        <defs>
-          <linearGradient id="bgTaxableGrad" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="#9333ea" stop-opacity="0.45" />
-            <stop offset="100%" stop-color="#9333ea" stop-opacity="0.10" />
-          </linearGradient>
-          <linearGradient id="bgTaxDefGrad" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="#2563eb" stop-opacity="0.48" />
-            <stop offset="100%" stop-color="#2563eb" stop-opacity="0.10" />
-          </linearGradient>
-          <linearGradient id="bgTaxFreeGrad" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="#10b981" stop-opacity="0.55" />
-            <stop offset="100%" stop-color="#10b981" stop-opacity="0.14" />
-          </linearGradient>
-        </defs>
         <!-- Horizontal baseline ($0) -->
         <line x1="${padL}" y1="${zeroY.toFixed(1)}" x2="${(padL + plotW).toFixed(1)}" y2="${zeroY.toFixed(1)}" stroke="#e2e8f0" stroke-width="1" />
         <!-- Retirement vertical milestone line -->
         ${retireLineSvg}
-        <!-- Layer 1: Taxable Area (Purple) -->
-        <path d="${taxAreaD}" fill="url(#bgTaxableGrad)" />
-        <!-- Layer 2: Tax-Deferred Area (Blue) -->
-        <path d="${taxDefAreaD}" fill="url(#bgTaxDefGrad)" />
-        <!-- Layer 3: Tax-Free Roth & HSA Area (Emerald) -->
-        <path d="${taxFreeAreaD}" fill="url(#bgTaxFreeGrad)" />
-        <!-- Boundary Lines -->
-        <path d="${taxLineD}" fill="none" stroke="#9333ea" stroke-width="1.6" stroke-linejoin="round" />
-        <path d="${taxDefLineD}" fill="none" stroke="#2563eb" stroke-width="1.6" stroke-linejoin="round" />
-        <path d="${totalLineD}" fill="none" stroke="#059669" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
-        <!-- Milestone circles on Total line -->
-        <circle cx="${startCoord.x.toFixed(1)}" cy="${startCoord.yTotal.toFixed(1)}" r="3" fill="#3b82f6" stroke="#ffffff" stroke-width="1.5" />
-        <circle cx="${peakCoord.x.toFixed(1)}" cy="${peakCoord.yTotal.toFixed(1)}" r="4.5" fill="#1e40af" stroke="#ffffff" stroke-width="2" />
-        <circle cx="${endCoord.x.toFixed(1)}" cy="${endCoord.yTotal.toFixed(1)}" r="3.8" fill="${endCoord.point.total > 0 ? '#10b981' : '#dc2626'}" stroke="#ffffff" stroke-width="1.8" />
+        <!-- Stacked Bar Rects -->
+        ${barsSvg}
+        <!-- Peak marker circle -->
+        ${peakMarkerSvg}
         <!-- Interactive crosshair scrubber elements -->
         <line id="bgScrubLine" x1="0" y1="${padT}" x2="0" y2="${zeroY.toFixed(1)}" stroke="#0f172a" stroke-width="1" stroke-dasharray="2,2" style="display:none;" />
-        <circle id="bgScrubDotTotal" cx="0" cy="0" r="4.5" fill="#059669" stroke="#ffffff" stroke-width="2" style="display:none;" />
-        <circle id="bgScrubDotTaxDef" cx="0" cy="0" r="3.5" fill="#2563eb" stroke="#ffffff" stroke-width="1.5" style="display:none;" />
-        <circle id="bgScrubDotTax" cx="0" cy="0" r="3.5" fill="#9333ea" stroke="#ffffff" stroke-width="1.5" style="display:none;" />
+        <circle id="bgScrubDotTotal" cx="0" cy="0" r="4.2" fill="#059669" stroke="#ffffff" stroke-width="2" style="display:none;" />
       `;
 
       // Interactive hover / touch scrubber
       const scrubLine = svg.querySelector('#bgScrubLine');
       const scrubDotTotal = svg.querySelector('#bgScrubDotTotal');
-      const scrubDotTaxDef = svg.querySelector('#bgScrubDotTaxDef');
-      const scrubDotTax = svg.querySelector('#bgScrubDotTax');
 
       function updateScrub(clientX) {
-        if (!wrap || !scrubLine || !scrubDotTotal || !tooltip) return;
+        if (!wrap || !scrubLine || !tooltip) return;
         const rect = wrap.getBoundingClientRect();
         if (rect.width <= 0) return;
         const normX = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
-        const targetX = padL + normX * plotW;
+        const index = Math.min(dataPoints.length - 1, Math.max(0, Math.floor(normX * dataPoints.length)));
+        const p = dataPoints[index];
+        const barCenterX = padL + (index + 0.5) * step;
 
-        let closestCoord = coords[0];
-        let minDist = Infinity;
-        coords.forEach(c => {
-          const d = Math.abs(c.x - targetX);
-          if (d < minDist) {
-            minDist = d;
-            closestCoord = c;
-          }
-        });
-
-        const p = closestCoord.point;
-        scrubLine.setAttribute('x1', closestCoord.x.toFixed(1));
-        scrubLine.setAttribute('x2', closestCoord.x.toFixed(1));
+        scrubLine.setAttribute('x1', barCenterX.toFixed(1));
+        scrubLine.setAttribute('x2', barCenterX.toFixed(1));
         scrubLine.style.display = 'block';
 
-        scrubDotTotal.setAttribute('cx', closestCoord.x.toFixed(1));
-        scrubDotTotal.setAttribute('cy', closestCoord.yTotal.toFixed(1));
-        scrubDotTotal.style.display = 'block';
-
-        if (scrubDotTaxDef && p.taxDeferred > 0) {
-          scrubDotTaxDef.setAttribute('cx', closestCoord.x.toFixed(1));
-          scrubDotTaxDef.setAttribute('cy', closestCoord.yTaxDeferred.toFixed(1));
-          scrubDotTaxDef.style.display = 'block';
-        } else if (scrubDotTaxDef) {
-          scrubDotTaxDef.style.display = 'none';
-        }
-
-        if (scrubDotTax && p.taxable > 0) {
-          scrubDotTax.setAttribute('cx', closestCoord.x.toFixed(1));
-          scrubDotTax.setAttribute('cy', closestCoord.yTaxable.toFixed(1));
-          scrubDotTax.style.display = 'block';
-        } else if (scrubDotTax) {
-          scrubDotTax.style.display = 'none';
+        const totalH = (p.total / maxBal) * plotH;
+        const topY = zeroY - totalH;
+        if (scrubDotTotal) {
+          scrubDotTotal.setAttribute('cx', barCenterX.toFixed(1));
+          scrubDotTotal.setAttribute('cy', topY.toFixed(1));
+          scrubDotTotal.style.display = 'block';
         }
 
         const phaseText = p.isStart
@@ -6781,15 +6931,13 @@
         `;
         tooltip.style.display = 'block';
 
-        const pct = (closestCoord.x / W) * 100;
+        const pct = (barCenterX / W) * 100;
         tooltip.style.left = `${pct.toFixed(1)}%`;
       }
 
       function hideScrub() {
         if (scrubLine) scrubLine.style.display = 'none';
         if (scrubDotTotal) scrubDotTotal.style.display = 'none';
-        if (scrubDotTaxDef) scrubDotTaxDef.style.display = 'none';
-        if (scrubDotTax) scrubDotTax.style.display = 'none';
         if (tooltip) tooltip.style.display = 'none';
       }
 
@@ -7153,103 +7301,69 @@
       const zeroY = padT + plotH;
       const numPoints = dataPoints.length;
 
-      const getX = (i) => padL + (i / Math.max(1, numPoints - 1)) * plotW;
-      const getY = (val) => padT + (1 - Math.min(1, Math.max(0, val / maxTax))) * plotH;
+      const step = plotW / Math.max(1, numPoints);
+      const barW = Math.max(2.5, Math.min(8.5, step * 0.72));
 
-      // Calculate stacked Y boundaries for each coordinate:
-      // Base: zeroY
-      // Stack 1: Ordinary Incomes [zeroY -> yOrd]
-      // Stack 2: Social Security [yOrd -> ySS]
-      // Stack 3: Capital Gains [ySS -> yCap]
-      // Stack 4: RMD [yCap -> yTotal]
-      const coords = dataPoints.map((p, i) => {
-        const x = getX(i);
-        const cumOrd = p.ord;
-        const cumSS = cumOrd + p.ss;
-        const cumCap = cumSS + p.capGain;
-        const cumTotal = p.total;
+      // Build stacked bar SVG rects (Ordinary Incomes, Social Security, Capital Gains, RMD)
+      let barsSvg = '';
+      dataPoints.forEach((p, i) => {
+        const x = padL + (i + 0.5) * step - barW / 2;
+        let curY = zeroY;
 
-        return {
-          x: x,
-          yZero: zeroY,
-          yOrd: getY(cumOrd),
-          ySS: getY(cumSS),
-          yCap: getY(cumCap),
-          yTotal: getY(cumTotal),
-          point: p
-        };
+        // 1. Ordinary Incomes (#2563eb) - Bottom
+        const hOrd = (p.ord / maxTax) * plotH;
+        if (hOrd > 0.4) {
+          barsSvg += `<rect x="${x.toFixed(1)}" y="${(curY - hOrd).toFixed(1)}" width="${barW.toFixed(1)}" height="${hOrd.toFixed(1)}" fill="#2563eb" />`;
+          curY -= hOrd;
+        }
+
+        // 2. Social Security (#10b981)
+        const hSS = (p.ss / maxTax) * plotH;
+        if (hSS > 0.4) {
+          barsSvg += `<rect x="${x.toFixed(1)}" y="${(curY - hSS).toFixed(1)}" width="${barW.toFixed(1)}" height="${hSS.toFixed(1)}" fill="#10b981" />`;
+          curY -= hSS;
+        }
+
+        // 3. Capital Gains (#8b5cf6)
+        const hCap = (p.capGain / maxTax) * plotH;
+        if (hCap > 0.4) {
+          barsSvg += `<rect x="${x.toFixed(1)}" y="${(curY - hCap).toFixed(1)}" width="${barW.toFixed(1)}" height="${hCap.toFixed(1)}" fill="#8b5cf6" />`;
+          curY -= hCap;
+        }
+
+        // 4. Mandatory RMD (#f59e0b) - Top
+        const hRmd = (p.rmd / maxTax) * plotH;
+        if (hRmd > 0.4) {
+          barsSvg += `<rect x="${x.toFixed(1)}" y="${(curY - hRmd).toFixed(1)}" width="${barW.toFixed(1)}" height="${hRmd.toFixed(1)}" fill="#f59e0b" />`;
+          curY -= hRmd;
+        }
       });
-
-      function buildStackedAreaPath(topKey, botKey) {
-        let d = `M ${coords[0].x.toFixed(1)} ${coords[0][botKey].toFixed(1)}`;
-        for (let i = 0; i < coords.length; i++) {
-          d += ` L ${coords[i].x.toFixed(1)} ${coords[i][topKey].toFixed(1)}`;
-        }
-        for (let i = coords.length - 1; i >= 0; i--) {
-          d += ` L ${coords[i].x.toFixed(1)} ${coords[i][botKey].toFixed(1)}`;
-        }
-        d += ` Z`;
-        return d;
-      }
-
-      const ordAreaD = buildStackedAreaPath('yOrd', 'yZero');
-      const ssAreaD = buildStackedAreaPath('ySS', 'yOrd');
-      const capAreaD = buildStackedAreaPath('yCap', 'ySS');
-      const rmdAreaD = buildStackedAreaPath('yTotal', 'yCap');
-
-      let totalLineD = `M ${coords[0].x.toFixed(1)} ${coords[0].yTotal.toFixed(1)}`;
-      for (let i = 1; i < coords.length; i++) {
-        totalLineD += ` L ${coords[i].x.toFixed(1)} ${coords[i].yTotal.toFixed(1)}`;
-      }
 
       // Retirement milestone vertical line
       let retireLineSvg = '';
       if (retirementAge > currentAge) {
         const retIdx = dataPoints.findIndex(p => p.age === retirementAge);
         if (retIdx >= 0) {
-          const rx = coords[retIdx].x.toFixed(1);
+          const rx = (padL + (retIdx + 0.5) * step).toFixed(1);
           retireLineSvg = `<line x1="${rx}" y1="${padT}" x2="${rx}" y2="${zeroY.toFixed(1)}" stroke="#d97706" stroke-width="1.5" stroke-dasharray="3,3" />`;
         }
       }
 
       const peakIdx = dataPoints.indexOf(peakPoint);
-      const peakCoord = coords[peakIdx >= 0 ? peakIdx : 0];
+      const peakX = (padL + (peakIdx + 0.5) * step).toFixed(1);
+      const peakH = (peakPoint.total / maxTax) * plotH;
+      const peakY = (zeroY - peakH).toFixed(1);
+      const peakMarkerSvg = peakPoint && peakPoint.total > 0 ? `<circle cx="${peakX}" cy="${peakY}" r="3.8" fill="#b91c1c" stroke="#ffffff" stroke-width="1.8" />` : '';
 
       svg.innerHTML = `
-        <defs>
-          <linearGradient id="totOrdGrad" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="#2563eb" stop-opacity="0.65" />
-            <stop offset="100%" stop-color="#2563eb" stop-opacity="0.20" />
-          </linearGradient>
-          <linearGradient id="totSSGrad" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="#10b981" stop-opacity="0.65" />
-            <stop offset="100%" stop-color="#10b981" stop-opacity="0.20" />
-          </linearGradient>
-          <linearGradient id="totCapGrad" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="#8b5cf6" stop-opacity="0.65" />
-            <stop offset="100%" stop-color="#8b5cf6" stop-opacity="0.20" />
-          </linearGradient>
-          <linearGradient id="totRmdGrad" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="#f59e0b" stop-opacity="0.75" />
-            <stop offset="100%" stop-color="#f59e0b" stop-opacity="0.25" />
-          </linearGradient>
-        </defs>
         <!-- Horizontal baseline ($0) -->
         <line x1="${padL}" y1="${zeroY.toFixed(1)}" x2="${(padL + plotW).toFixed(1)}" y2="${zeroY.toFixed(1)}" stroke="#e2e8f0" stroke-width="1" />
         <!-- Retirement vertical milestone line -->
         ${retireLineSvg}
-        <!-- Layer 1: Ordinary Incomes Area (Blue) -->
-        <path d="${ordAreaD}" fill="url(#totOrdGrad)" />
-        <!-- Layer 2: Social Security Area (Green) -->
-        <path d="${ssAreaD}" fill="url(#totSSGrad)" />
-        <!-- Layer 3: Capital Gains Area (Purple) -->
-        <path d="${capAreaD}" fill="url(#totCapGrad)" />
-        <!-- Layer 4: RMD Area (Amber) -->
-        <path d="${rmdAreaD}" fill="url(#totRmdGrad)" />
-        <!-- Boundary curve for Total Annual Tax -->
-        <path d="${totalLineD}" fill="none" stroke="#dc2626" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
-        <!-- Peak marker circle on Total line -->
-        ${peakPoint && peakPoint.total > 0 ? `<circle cx="${peakCoord.x.toFixed(1)}" cy="${peakCoord.yTotal.toFixed(1)}" r="4.2" fill="#b91c1c" stroke="#ffffff" stroke-width="1.8" />` : ''}
+        <!-- Stacked Bar Rects -->
+        ${barsSvg}
+        <!-- Peak marker circle -->
+        ${peakMarkerSvg}
         <!-- Interactive crosshair scrubber elements -->
         <line id="totScrubLine" x1="0" y1="${padT}" x2="0" y2="${zeroY.toFixed(1)}" stroke="#0f172a" stroke-width="1" stroke-dasharray="2,2" style="display:none;" />
         <circle id="totScrubDotTotal" cx="0" cy="0" r="4.2" fill="#dc2626" stroke="#ffffff" stroke-width="2" style="display:none;" />
@@ -7260,37 +7374,32 @@
       const scrubDotTotal = svg.querySelector('#totScrubDotTotal');
 
       function updateScrub(clientX) {
-        if (!wrap || !scrubLine || !scrubDotTotal || !tooltip) return;
+        if (!wrap || !scrubLine || !tooltip) return;
         const rect = wrap.getBoundingClientRect();
         if (rect.width <= 0) return;
         const normX = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
-        const targetX = padL + normX * plotW;
+        const index = Math.min(dataPoints.length - 1, Math.max(0, Math.floor(normX * dataPoints.length)));
+        const p = dataPoints[index];
+        const barCenterX = padL + (index + 0.5) * step;
 
-        let closestCoord = coords[0];
-        let minDist = Infinity;
-        coords.forEach(c => {
-          const d = Math.abs(c.x - targetX);
-          if (d < minDist) {
-            minDist = d;
-            closestCoord = c;
-          }
-        });
-
-        const p = closestCoord.point;
-        scrubLine.setAttribute('x1', closestCoord.x.toFixed(1));
-        scrubLine.setAttribute('x2', closestCoord.x.toFixed(1));
+        scrubLine.setAttribute('x1', barCenterX.toFixed(1));
+        scrubLine.setAttribute('x2', barCenterX.toFixed(1));
         scrubLine.style.display = 'block';
 
-        scrubDotTotal.setAttribute('cx', closestCoord.x.toFixed(1));
-        scrubDotTotal.setAttribute('cy', closestCoord.yTotal.toFixed(1));
-        scrubDotTotal.style.display = 'block';
+        const totalH = (p.total / maxTax) * plotH;
+        const topY = zeroY - totalH;
+        if (scrubDotTotal) {
+          scrubDotTotal.setAttribute('cx', barCenterX.toFixed(1));
+          scrubDotTotal.setAttribute('cy', topY.toFixed(1));
+          scrubDotTotal.style.display = 'block';
+        }
 
         // Format breakdown items
         const parts = [];
-        if (p.rmd > 0) parts.push(`<span style="color:#fbbf24;">● RMD:</span> ${formatCurrency(p.rmd)}`);
-        if (p.capGain > 0) parts.push(`<span style="color:#c084fc;">● Cap Gains:</span> ${formatCurrency(p.capGain)}`);
-        if (p.ss > 0) parts.push(`<span style="color:#34d399;">● Soc Sec:</span> ${formatCurrency(p.ss)}`);
         if (p.ord > 0) parts.push(`<span style="color:#60a5fa;">● Ordinary:</span> ${formatCurrency(p.ord)}`);
+        if (p.ss > 0) parts.push(`<span style="color:#34d399;">● Soc Sec:</span> ${formatCurrency(p.ss)}`);
+        if (p.capGain > 0) parts.push(`<span style="color:#c084fc;">● Cap Gains:</span> ${formatCurrency(p.capGain)}`);
+        if (p.rmd > 0) parts.push(`<span style="color:#fbbf24;">● RMD:</span> ${formatCurrency(p.rmd)}`);
 
         const breakdownHtml = parts.length > 0
           ? `<div style="margin-top:2px; font-size:0.70rem; color:#cbd5e1;">${parts.join(' · ')}</div>`
@@ -7302,7 +7411,7 @@
         `;
         tooltip.style.display = 'block';
 
-        const pct = (closestCoord.x / W) * 100;
+        const pct = (barCenterX / W) * 100;
         tooltip.style.left = `${pct.toFixed(1)}%`;
       }
 
@@ -7324,6 +7433,373 @@
       wrap.ontouchend = () => {
         setTimeout(hideScrub, 1800);
       };
+
+      if (typeof renderPhaseGroupingRoadmap === 'function') {
+        renderPhaseGroupingRoadmap(schedule, params, currentDepletedAge, true);
+      }
+    }
+
+    /* ==========================================================================
+       ROADMAP LIFECYCLE PHASE GROUPING TRACK (Under Taxes Paid Over Time Chart)
+       Aligns lifecycle strategy phases directly with the chart years X-axis,
+       rendering grouping bracket lines, icons, and interactive phase descriptions.
+       ========================================================================== */
+    let selectedPhaseGroupingIdx = 0;
+    let cachedScheduleForGrouping = null;
+    let cachedParamsForGrouping = null;
+    let cachedDepletedAgeForGrouping = null;
+    let cachedPhasesForGrouping = [];
+
+    function getPhaseDisplayInfo(phase, params) {
+      const yrs = phase.yearsCount;
+      const avgW = Math.round(phase.totalGrossW / yrs);
+      const avgTax = Math.round(phase.totalTax / yrs);
+      const avgSS = Math.round(phase.totalSS / yrs);
+      const avgConv = Math.round(phase.totalRothConv / yrs);
+      const avgExpense = Math.round((phase.totalTargetExpense || 0) / yrs);
+      const shortfall = Math.max(0, avgExpense - avgSS);
+      const retRate = (params.rateReturn !== undefined) ? params.rateReturn : (params.returnRate || 6.0);
+
+      let isDepletedPhase = false;
+      let icon = '📌';
+      let nodeBg = '#eff6ff';
+      let nodeBorder = '#93c5fd';
+      let nodeColor = '#1d4ed8';
+      let catBadge = 'Strategy Phase';
+      let catBg = '#eff6ff';
+      let catColor = '#1d4ed8';
+      let shortLabel = 'Phase';
+      let title = '';
+      let desc = '';
+      let chips = [];
+
+      switch (phase.type) {
+        case 'WORKING':
+          icon = '💼';
+          nodeBg = '#eff6ff';
+          nodeBorder = '#bfdbfe';
+          nodeColor = '#2563eb';
+          catBadge = 'Accumulation & Growth';
+          catBg = '#eff6ff';
+          catColor = '#1d4ed8';
+          shortLabel = 'Working';
+          title = 'Working & Wealth Accumulation';
+          desc = `Active employment wages fund baseline living expenses ($0 portfolio withdrawals). Pre-tax 401(k), IRA, Brokerage, Roth, and HSA accounts compound uninterrupted at ${retRate}% annual return.`;
+          chips.push(`💼 Inflow: <strong>Active Wages</strong>`);
+          chips.push(`📈 Growth: <strong>${retRate}% Compounding</strong>`);
+          chips.push(`🛡️ Taxes: <strong>$0 Retirement Tax</strong>`);
+          break;
+
+        case 'BROKERAGE_BRIDGE': {
+          icon = '🛡️';
+          nodeBg = '#f3e8ff';
+          nodeBorder = '#d8b4fe';
+          nodeColor = '#7e22ce';
+          catBadge = 'Early Penalty Avoidance';
+          catBg = '#f3e8ff';
+          catColor = '#7e22ce';
+          shortLabel = 'Bridge';
+          title = 'Early Retirement & Brokerage Bridge';
+          desc = `Retirement begins before Age 59½. Living expenses are primarily funded by drawing from taxable brokerage to safely avoid the 10% early distribution penalty on pre-tax 401(k)/IRAs while capital gains fit into low or 0% federal brackets.`;
+          chips.push(`💵 Avg W/D: <strong>${formatCurrency(avgW)}/yr</strong>`);
+          chips.push(`🏛️ Primary: <strong>Taxable Brokerage</strong>`);
+          chips.push(`📊 Tax Rate: <strong>0% Fed LTCG</strong>`);
+          if (avgConv > 0) {
+            chips.push(`🔄 Conversions: <strong>${formatCurrency(avgConv)}/yr to Roth</strong>`);
+          }
+          break;
+        }
+
+        case 'PRETAX_DRAW':
+          icon = '🔓';
+          nodeBg = '#e0f2fe';
+          nodeBorder = '#7dd3fc';
+          nodeColor = '#0284c7';
+          catBadge = 'Penalty-Free · Bracket Fill';
+          catBg = '#e0f2fe';
+          catColor = '#0284c7';
+          shortLabel = 'Pre-Tax';
+          title = 'Pre-Tax 401(k) & IRA Distributions';
+          desc = `Age 59½ reached: Penalty-free access to traditional 401(k) and IRA distributions is officially unlocked. Drawdowns fill the standard deduction and low 10% / 12% ordinary income brackets before Social Security and mandatory RMDs commence.`;
+          chips.push(`💵 Avg W/D: <strong>${formatCurrency(avgW)}/yr</strong>`);
+          chips.push(`🏛️ Primary: <strong>Traditional 401(k)/IRA</strong>`);
+          chips.push(`📊 Tax: <strong>Low Ordinary Brackets (10%–12%)</strong>`);
+          if (avgConv > 0) {
+            chips.push(`🔄 Roth Conv: <strong>${formatCurrency(avgConv)}/yr</strong>`);
+          }
+          break;
+
+        case 'SS_ACTIVE':
+          icon = '🏛️';
+          nodeBg = '#ccfbf1';
+          nodeBorder = '#5eead4';
+          nodeColor = '#0d9488';
+          catBadge = 'Social Security Active';
+          catBg = '#ccfbf1';
+          catColor = '#0d9488';
+          shortLabel = 'Soc Sec';
+          title = 'Social Security Integration & Tax Smoothing';
+          desc = `Guaranteed Social Security benefits start at Age ${params.ssStartAge || 67} (${formatCurrency(avgSS)}/yr). Portfolio withdrawal requirements drop substantially, significantly reducing portfolio longevity strain while taxes are coordinated under IRS § 86 provisional income rules.`;
+          chips.push(`🏛️ Social Security: <strong>${formatCurrency(avgSS)}/yr</strong>`);
+          chips.push(`💵 Portfolio W/D: <strong>${formatCurrency(avgW)}/yr</strong>`);
+          chips.push(`📊 Avg Taxes: <strong>${formatCurrency(avgTax)}/yr</strong>`);
+          break;
+
+        case 'RMD':
+          icon = '📜';
+          nodeBg = '#fef3c7';
+          nodeBorder = '#fcd34d';
+          nodeColor = '#d97706';
+          catBadge = 'Statutory RMD Phase';
+          catBg = '#fef3c7';
+          catColor = '#d97706';
+          shortLabel = 'RMDs';
+          title = 'Mandatory Required Minimum Distributions (RMDs)';
+          desc = `Statutory SECURE 2.0 RMD age reached. Annual distributions from pre-tax accounts are legally mandated using the IRS Uniform Lifetime Table. Tax-free Roth accounts continue compounding and absorb any residual needs beyond RMD proceeds.`;
+          chips.push(`📜 Mandatory RMDs Active`);
+          chips.push(`💵 Total Inflow: <strong>${formatCurrency(avgW + avgSS)}/yr</strong>`);
+          chips.push(`💎 Roth IRA: <strong>Preserved Tax-Free</strong>`);
+          break;
+
+        case 'ROTH_FREE':
+          icon = '💎';
+          nodeBg = '#dcfce7';
+          nodeBorder = '#86efac';
+          nodeColor = '#15803d';
+          catBadge = '100% Tax-Free Roth & HSA';
+          catBg = '#dcfce7';
+          catColor = '#15803d';
+          shortLabel = 'Tax-Free';
+          title = '100% Tax-Free Roth & HSA Drawdown Phase';
+          desc = `Pre-tax and brokerage accounts have been fully drawn down or converted. All remaining retirement living costs are funded 100% tax-free from Roth IRA and HSA distributions with $0 federal and $0 state taxes through Age 90.`;
+          chips.push(`💵 Avg W/D: <strong>${formatCurrency(avgW)}/yr</strong>`);
+          chips.push(`💎 Source: <strong>100% Roth & HSA</strong>`);
+          chips.push(`🎉 Taxes: <strong>$0 Lifetime Taxes</strong>`);
+          break;
+
+        case 'DEPLETED':
+          icon = '🚨';
+          isDepletedPhase = true;
+          nodeBg = '#fef2f2';
+          nodeBorder = '#ef4444';
+          nodeColor = '#dc2626';
+          catBadge = '🚨 Money Runs Out';
+          catBg = '#fee2e2';
+          catColor = '#b91c1c';
+          shortLabel = 'Depleted';
+          title = `🚨 Money Runs Out: Portfolio Depleted at Age ${phase.startAge}`;
+          desc = `All investment accounts (Brokerage, 401(k)/IRA, Roth, and HSA) are completely exhausted at Age ${phase.startAge} (${phase.startYear}). Portfolio distributions drop to $0/yr for the remaining ${yrs} year${yrs === 1 ? '' : 's'} through Age 90.` +
+                 (avgSS > 0
+                   ? ` Guaranteed Social Security provides ${formatCurrency(avgSS)}/yr, leaving an annual unfunded spending deficit of ${formatCurrency(shortfall)}/yr against the target ${formatCurrency(avgExpense)}/yr lifestyle.`
+                   : ` With no Social Security active, your target lifestyle of ${formatCurrency(avgExpense)}/yr is 100% unfunded.`);
+          chips.push(`⚠️ Balance: <strong>$0 Remaining</strong>`);
+          chips.push(`📉 Deficit: <strong>${formatCurrency(shortfall)}/yr Shortfall</strong>`);
+          if (avgSS > 0) {
+            chips.push(`🏛️ Income: <strong>${formatCurrency(avgSS)}/yr Social Security</strong>`);
+          }
+          chips.push(`💡 Action: <strong>Delay Retirement or Trim Spending</strong>`);
+          break;
+      }
+
+      return {
+        isDepletedPhase,
+        icon,
+        nodeBg,
+        nodeBorder,
+        nodeColor,
+        catBadge,
+        catBg,
+        catColor,
+        shortLabel,
+        title,
+        desc,
+        chips
+      };
+    }
+
+    function selectPhaseGrouping(idx) {
+      selectedPhaseGroupingIdx = idx;
+      if (cachedScheduleForGrouping && cachedParamsForGrouping) {
+        renderPhaseGroupingRoadmap(cachedScheduleForGrouping, cachedParamsForGrouping, cachedDepletedAgeForGrouping, true);
+      }
+    }
+
+    function stepPhaseGrouping(delta) {
+      if (!cachedPhasesForGrouping || cachedPhasesForGrouping.length === 0) return;
+      const newIdx = Math.max(0, Math.min(cachedPhasesForGrouping.length - 1, selectedPhaseGroupingIdx + delta));
+      selectPhaseGrouping(newIdx);
+    }
+
+    function updatePhaseDetailCard(phase, idx, totalPhases, params) {
+      const card = document.getElementById('chartPhaseDetailCard');
+      if (!card || !phase) return;
+
+      const info = getPhaseDisplayInfo(phase, params);
+      const yrs = phase.yearsCount;
+      const ageSpan = (phase.startAge === phase.endAge)
+        ? `Age ${phase.startAge} (${phase.startYear}) · 1 Year`
+        : `Age ${phase.startAge}–${phase.endAge} (${phase.startYear}–${phase.endYear}) · ${yrs} Years`;
+
+      card.innerHTML = `
+        <div style="background: #ffffff; border: 1.5px solid ${info.nodeBorder}; border-radius: 8px; padding: 0.60rem 0.75rem; box-shadow: 0 2px 6px rgba(0,0,0,0.04); transition: all 0.2s ease;">
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.35rem; margin-bottom: 0.30rem;">
+            <div style="display: flex; align-items: center; gap: 0.45rem;">
+              <span style="font-size: 1.0rem; line-height: 1; display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; background: ${info.nodeBg}; border-radius: 6px; border: 1px solid ${info.nodeBorder}; flex-shrink: 0;">${info.icon}</span>
+              <div>
+                <div style="font-weight: 700; color: #0f172a; font-size: 0.88rem; line-height: 1.25;">${info.title}</div>
+                <div style="font-size: 0.76rem; color: #64748b; font-weight: 600;">${ageSpan}</div>
+              </div>
+            </div>
+            <span style="font-size: 0.72rem; font-weight: 700; padding: 0.18rem 0.50rem; border-radius: 9999px; background: ${info.catBg}; color: ${info.catColor}; border: 1px solid ${info.nodeBorder}; white-space: nowrap;">
+              ${info.catBadge}
+            </span>
+          </div>
+
+          <div style="font-size: 0.81rem; color: #334155; line-height: 1.45; margin-top: 0.35rem;">
+            ${info.desc}
+          </div>
+
+          <div style="margin-top: 0.45rem; display: flex; flex-wrap: wrap; gap: 0.30rem;">
+            ${info.chips.map(c => `<span class="timeline-metric-chip" style="font-size: 0.76rem; padding: 0.18rem 0.45rem; border-radius: 5px; background: #f8fafc; border: 1px solid #e2e8f0; color: #334155;">${c}</span>`).join('')}
+          </div>
+
+          <!-- Mobile Touch Navigation Bar -->
+          <div style="margin-top: 0.55rem; padding-top: 0.40rem; border-top: 1px dashed #e2e8f0; display: flex; justify-content: space-between; align-items: center;">
+            <button type="button" class="btn-phase-step" onclick="stepPhaseGrouping(-1)" ${idx === 0 ? 'disabled style="opacity:0.35; cursor:not-allowed;"' : 'style="cursor:pointer;"'}>
+              ‹ Prev Phase
+            </button>
+            <span style="font-size: 0.74rem; font-weight: 700; color: #64748b;">
+              Phase ${idx + 1} of ${totalPhases}
+            </span>
+            <button type="button" class="btn-phase-step" onclick="stepPhaseGrouping(1)" ${idx === totalPhases - 1 ? 'disabled style="opacity:0.35; cursor:not-allowed;"' : 'style="cursor:pointer;"'}>
+              Next Phase ›
+            </button>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderPhaseGroupingRoadmap(schedule, params, depletedAge, keepSelection = false) {
+      const svg = document.getElementById('chartPhaseSvg');
+      const tooltip = document.getElementById('chartPhaseTooltip');
+      if (!svg || !schedule || schedule.length === 0 || !params) return;
+
+      cachedScheduleForGrouping = schedule;
+      cachedParamsForGrouping = params;
+      cachedDepletedAgeForGrouping = depletedAge;
+
+      const phases = generateTimelinePhases(schedule, params, depletedAge);
+      cachedPhasesForGrouping = phases;
+      if (!phases || phases.length === 0) return;
+
+      if (!keepSelection || selectedPhaseGroupingIdx >= phases.length) {
+        selectedPhaseGroupingIdx = 0;
+      }
+
+      const W = 360;
+      const H = 52;
+      const padL = 10;
+      const padR = 10;
+      const plotW = W - padL - padR;
+      const numPoints = schedule.length;
+      const step = plotW / Math.max(1, numPoints);
+
+      const svgRect = svg.getBoundingClientRect();
+      const aspectCorrection = (svgRect && svgRect.width > 0 && svgRect.height > 0)
+        ? ((svgRect.width / 360) / (svgRect.height / 52))
+        : 1.0;
+      const corr = (aspectCorrection > 0.05) ? (1 / aspectCorrection) : 1.0;
+
+      let svgHtml = '';
+
+      phases.forEach((p, idx) => {
+        const startIndex = Math.max(0, p.startAge - schedule[0].age);
+        const endIndex = Math.min(numPoints - 1, p.endAge - schedule[0].age);
+        const x1 = padL + startIndex * step;
+        const x2 = padL + (endIndex + 1) * step;
+        const width = Math.max(2, x2 - x1);
+        const cx = (x1 + x2) / 2;
+        const isActive = (idx === selectedPhaseGroupingIdx);
+        const info = getPhaseDisplayInfo(p, params);
+
+        // Grouping bracket line connecting to chart above:
+        // Left tick up: from y=4 to y=13 at x1+1
+        // Horizontal bar: from x1+1 to x2-1 at y=13
+        // Right tick up: from y=13 to y=4 at x2-1
+        const strokeCol = isActive ? info.nodeColor : info.nodeBorder;
+        const strokeW = isActive ? 2.0 : 1.4;
+        const bracketD = `M ${(x1 + 1).toFixed(1)},4 L ${(x1 + 1).toFixed(1)},13 L ${(x2 - 1).toFixed(1)},13 L ${(x2 - 1).toFixed(1)},4`;
+
+        svgHtml += `<path d="${bracketD}" fill="none" stroke="${strokeCol}" stroke-width="${strokeW}" stroke-linecap="round" stroke-linejoin="round" />`;
+
+        // Active glow pill behind bracket if active
+        if (isActive) {
+          svgHtml += `<rect x="${(x1 + 1).toFixed(1)}" y="11.5" width="${Math.max(4, width - 2).toFixed(1)}" height="3" rx="1.5" fill="${info.nodeColor}" opacity="0.25" />`;
+        }
+
+        // Centered icon circle (scaled with aspect correction so it stays a sleek, perfect circle on all screens)
+        const r = isActive ? 7.8 : 6.8;
+        const circleStroke = isActive ? info.nodeColor : info.nodeBorder;
+        const circleStrokeW = isActive ? 1.8 : 1.2;
+        const circleFill = isActive ? info.nodeBg : '#ffffff';
+        const iconFontSize = isActive ? 8.2 : 7.2;
+        const iconY = isActive ? 2.8 : 2.5;
+
+        svgHtml += `<g transform="translate(${cx.toFixed(1)}, 13) scale(${corr.toFixed(3)}, 1)">`;
+        svgHtml += `<circle cx="0" cy="0" r="${r}" fill="${circleFill}" stroke="${circleStroke}" stroke-width="${circleStrokeW}" filter="drop-shadow(0 1px 2px rgba(0,0,0,0.08))" />`;
+        svgHtml += `<text x="0" y="${iconY}" text-anchor="middle" font-size="${iconFontSize}" style="pointer-events: none; user-select: none;">${info.icon}</text>`;
+        svgHtml += `</g>`;
+
+        // Age span label underneath bracket
+        const ageText = (p.startAge === p.endAge) ? `${p.startAge}` : `${p.startAge}–${p.endAge}`;
+        const ageFill = isActive ? info.nodeColor : '#334155';
+        const ageWeight = isActive ? '800' : '600';
+        svgHtml += `<g transform="translate(${cx.toFixed(1)}, 27) scale(${corr.toFixed(3)}, 1)">`;
+        svgHtml += `<text x="0" y="0" text-anchor="middle" font-size="7.8" font-weight="${ageWeight}" fill="${ageFill}" style="pointer-events: none; user-select: none;">${ageText}</text>`;
+        svgHtml += `</g>`;
+
+        // Phase short label underneath age
+        const shortLabelFill = isActive ? info.nodeColor : '#64748b';
+        const shortLabelWeight = isActive ? '700' : '500';
+        svgHtml += `<g transform="translate(${cx.toFixed(1)}, 38) scale(${corr.toFixed(3)}, 1)">`;
+        svgHtml += `<text x="0" y="0" text-anchor="middle" font-size="6.8" font-weight="${shortLabelWeight}" fill="${shortLabelFill}" style="pointer-events: none; user-select: none;">${info.shortLabel}</text>`;
+        svgHtml += `</g>`;
+
+        // Transparent interactive hit rect
+        const hitW = Math.max(24, width);
+        const hitX = Math.max(0, cx - hitW / 2);
+        svgHtml += `<rect x="${hitX.toFixed(1)}" y="0" width="${hitW.toFixed(1)}" height="50" fill="transparent" cursor="pointer" class="phase-hit-rect" data-phase-idx="${idx}" />`;
+      });
+
+      svg.innerHTML = svgHtml;
+
+      // Attach events to hit rects
+      svg.querySelectorAll('.phase-hit-rect').forEach(rect => {
+        const idx = parseInt(rect.getAttribute('data-phase-idx'), 10);
+        const p = phases[idx];
+        const info = getPhaseDisplayInfo(p, params);
+
+        rect.addEventListener('click', () => {
+          selectPhaseGrouping(idx);
+        });
+
+        rect.addEventListener('mouseenter', () => {
+          if (!tooltip) return;
+          const r = svg.getBoundingClientRect();
+          const rectW = rect.getBoundingClientRect();
+          tooltip.style.display = 'block';
+          tooltip.style.left = `${Math.min(r.width - 160, Math.max(10, rectW.left - r.left + rectW.width / 2 - 70))}px`;
+          tooltip.style.top = `-28px`;
+          tooltip.innerHTML = `<strong>${info.icon} ${info.title}</strong> (Age ${p.startAge}–${p.endAge})`;
+        });
+
+        rect.addEventListener('mouseleave', () => {
+          if (tooltip) tooltip.style.display = 'none';
+        });
+      });
+
+      // Update detail card
+      updatePhaseDetailCard(phases[selectedPhaseGroupingIdx], selectedPhaseGroupingIdx, phases.length, params);
     }
 
     /* ==========================================================================
@@ -7859,7 +8335,193 @@
         stateSelect.value = stateCode;
       }
       onStateChange();
-      calculateMoveStateSavings();
+      if (typeof calculateMoveStateSavings === 'function') calculateMoveStateSavings();
+      if (typeof calculateInheritanceMoveStateSavings === 'function') calculateInheritanceMoveStateSavings();
+    }
+
+    function initEstateMoveStateDropdown() {
+      const select = document.getElementById('moveEstateStateSelect');
+      if (!select || select.options.length > 0) return;
+
+      const currentStateCode = document.getElementById('stateSelect')?.value || 'MN';
+
+      // 1. Zero Estate Tax States (Popular Relocation Destinations)
+      const zeroEstateStates = ['FL', 'TX', 'NV', 'TN', 'AZ', 'NC', 'SC', 'GA', 'CO', 'WY', 'NH', 'AK'];
+      const zeroGroup = document.createElement('optgroup');
+      zeroGroup.label = '0% Estate Tax States (38 States Have $0 Estate Tax)';
+      zeroEstateStates.forEach(code => {
+        const s = STATE_TAX_DATA[code];
+        if (s) {
+          const opt = document.createElement('option');
+          opt.value = code;
+          opt.textContent = `${s.name} (${code}) · $0 State Estate Tax`;
+          zeroGroup.appendChild(opt);
+        }
+      });
+      select.appendChild(zeroGroup);
+
+      // 2. States with Estate Taxes (12 States + DC)
+      const estateTaxGroup = document.createElement('optgroup');
+      estateTaxGroup.label = 'States with State Estate Taxes (12 States + DC)';
+      const estateCodes = Object.keys(STATE_ESTATE_RULES).sort((a, b) => {
+        return (STATE_TAX_DATA[a]?.name || a).localeCompare(STATE_TAX_DATA[b]?.name || b);
+      });
+      estateCodes.forEach(code => {
+        const s = STATE_TAX_DATA[code];
+        const rule = STATE_ESTATE_RULES[code];
+        const opt = document.createElement('option');
+        opt.value = code;
+        opt.textContent = `${rule.name} (${code}) · Exemption ${formatCurrency(rule.threshold)} (${Math.round(rule.rate * 100)}%)`;
+        estateTaxGroup.appendChild(opt);
+      });
+      select.appendChild(estateTaxGroup);
+
+      // 3. All Other 0% Estate Tax States
+      const otherGroup = document.createElement('optgroup');
+      otherGroup.label = 'All Other States ($0 State Estate Tax)';
+      const allCodes = Object.keys(STATE_TAX_DATA).sort((a, b) => {
+        return STATE_TAX_DATA[a].name.localeCompare(STATE_TAX_DATA[b].name);
+      });
+      allCodes.forEach(code => {
+        if (!zeroEstateStates.includes(code) && !estateCodes.includes(code)) {
+          const s = STATE_TAX_DATA[code];
+          const opt = document.createElement('option');
+          opt.value = code;
+          opt.textContent = `${s.name} (${code}) · $0 State Estate Tax`;
+          otherGroup.appendChild(opt);
+        }
+      });
+      select.appendChild(otherGroup);
+
+      // Default selection: If currently in FL, select TX; otherwise default to FL
+      select.value = (currentStateCode === 'FL') ? 'TX' : 'FL';
+    }
+
+    function toggleInheritanceMoveState() {
+      const section = document.getElementById('sectionInheritanceMoveState');
+      if (!section) return;
+      initEstateMoveStateDropdown();
+      const isHidden = (section.style.display === 'none' || !section.style.display);
+      section.style.display = isHidden ? 'block' : 'none';
+      if (isHidden) {
+        calculateInheritanceMoveStateSavings();
+      }
+    }
+
+    function calculateInheritanceMoveStateSavings() {
+      initEstateMoveStateDropdown();
+      const params = getFormValues();
+      const currentStateCode = params.stateCode || 'MN';
+      const select = document.getElementById('moveEstateStateSelect');
+      const targetStateCode = select ? select.value : (currentStateCode === 'FL' ? 'TX' : 'FL');
+      const resultEl = document.getElementById('moveEstateStateResult');
+      if (!resultEl) return;
+
+      const currentState = STATE_TAX_DATA[currentStateCode] || { name: currentStateCode, desc: '' };
+      const targetState = STATE_TAX_DATA[targetStateCode] || { name: targetStateCode, desc: '' };
+
+      const activeStrat = activeStrategy || 'smart';
+
+      // 1. Run simulation for current state
+      const currentRes = simulateRetirement(activeStrat, params);
+      const currentBal = currentRes.finalBalance || 0;
+      const currentRule = STATE_ESTATE_RULES[currentStateCode];
+      let currentEstateTax = 0;
+      if (currentRule && currentBal > currentRule.threshold) {
+        currentEstateTax = (currentBal - currentRule.threshold) * currentRule.rate;
+      }
+
+      // 2. Run simulation for target state
+      const targetParams = { ...params, stateCode: targetStateCode };
+      const targetRes = simulateRetirement(activeStrat, targetParams);
+      const targetBal = targetRes.finalBalance || 0;
+      const targetRule = STATE_ESTATE_RULES[targetStateCode];
+      let targetEstateTax = 0;
+      if (targetRule && targetBal > targetRule.threshold) {
+        targetEstateTax = (targetBal - targetRule.threshold) * targetRule.rate;
+      }
+
+      // Estate tax difference (positive = savings by moving to target)
+      const estateTaxDiff = currentEstateTax - targetEstateTax;
+
+      // Lifetime income tax difference
+      const currentLifetimeTaxes = currentRes.totalLifetimeTaxes;
+      const targetLifetimeTaxes = targetRes.totalLifetimeTaxes;
+      const incomeTaxSavings = currentLifetimeTaxes - targetLifetimeTaxes;
+
+      // Total legacy difference (wealth to heirs)
+      const totalCombinedSavings = estateTaxDiff + incomeTaxSavings;
+      const netLegacyDiff = (targetBal - targetEstateTax) - (currentBal - currentEstateTax);
+
+      if (currentStateCode === targetStateCode) {
+        resultEl.style.background = '#eff6ff';
+        resultEl.style.borderColor = '#bfdbfe';
+        resultEl.style.color = '#1e40af';
+        resultEl.innerHTML = `
+          <div><strong>📍 Current Home State: ${currentState.name}</strong></div>
+          <div style="margin-top: 0.25rem; font-size: 0.78rem; line-height: 1.45;">
+            You currently reside in <strong>${currentState.name}</strong> with <strong>${formatCurrency(currentEstateTax)}</strong> in projected state estate taxes${currentRule ? ` (Exemption: ${formatCurrency(currentRule.threshold)})` : ' ($0 state estate tax)'}.
+            Choose a different state above to compare relocation estate tax impacts!
+          </div>
+        `;
+        return;
+      }
+
+      if (estateTaxDiff > 0) {
+        resultEl.style.background = '#f0fdf4';
+        resultEl.style.borderColor = '#86efac';
+        resultEl.style.color = '#166534';
+        resultEl.innerHTML = `
+          <div><strong>🌴 Moving to ${targetState.name} saves ${formatCurrency(estateTaxDiff)} in State Estate Tax!</strong></div>
+          <div style="margin-top: 0.30rem; font-size: 0.78rem; line-height: 1.45;">
+            • <strong>${currentState.name} Estate Tax:</strong> ${formatCurrency(currentEstateTax)} <span style="color:#64748b;">(${currentRule ? `exceeds ${formatCurrency(currentRule.threshold)} limit` : '$0'})</span><br/>
+            • <strong>${targetState.name} Estate Tax:</strong> ${formatCurrency(targetEstateTax)} <span style="color:#64748b;">(${targetRule ? `limit ${formatCurrency(targetRule.threshold)}` : '$0 state estate tax'})</span><br/>
+            • <strong>Lifetime Income Tax Difference:</strong> ${incomeTaxSavings >= 0 ? `+${formatCurrency(incomeTaxSavings)} savings` : `${formatCurrency(incomeTaxSavings)} (${formatCurrency(Math.abs(incomeTaxSavings))} higher)`}<br/>
+            • <strong>Combined Wealth Transferred to Kids:</strong> <strong style="color: #15803d;">+${formatCurrency(Math.max(0, netLegacyDiff > 0 ? netLegacyDiff : totalCombinedSavings))} more net legacy!</strong>
+          </div>
+          <div style="margin-top: 0.45rem;">
+            <button type="button" class="btn-apply-state" onclick="applyMovedState('${targetStateCode}')">
+              Set ${targetState.name} as My State
+            </button>
+          </div>
+        `;
+      } else if (estateTaxDiff < 0) {
+        resultEl.style.background = '#fffbeb';
+        resultEl.style.borderColor = '#fde68a';
+        resultEl.style.color = '#92400e';
+        resultEl.innerHTML = `
+          <div><strong>⚠️ Moving to ${targetState.name} adds +${formatCurrency(Math.abs(estateTaxDiff))} in State Estate Tax</strong></div>
+          <div style="margin-top: 0.30rem; font-size: 0.78rem; line-height: 1.45;">
+            • <strong>${currentState.name} Estate Tax:</strong> ${formatCurrency(currentEstateTax)} <span style="color:#64748b;">(${currentRule ? `limit ${formatCurrency(currentRule.threshold)}` : '$0 state estate tax'})</span><br/>
+            • <strong>${targetState.name} Estate Tax:</strong> ${formatCurrency(targetEstateTax)} <span style="color:#b91c1c;">(lower exemption of ${targetRule ? formatCurrency(targetRule.threshold) : '$0'} @ ${targetRule ? Math.round(targetRule.rate * 100) : 0}%)</span><br/>
+            • <strong>Lifetime Income Tax Difference:</strong> ${incomeTaxSavings >= 0 ? `+${formatCurrency(incomeTaxSavings)} income tax savings` : `${formatCurrency(incomeTaxSavings)} higher income tax`}<br/>
+            • <strong>Net Legacy to Kids Impact:</strong> ${netLegacyDiff < 0 ? `-${formatCurrency(Math.abs(netLegacyDiff))} lower net legacy` : `+${formatCurrency(netLegacyDiff)} net legacy`}
+          </div>
+          <div style="margin-top: 0.45rem;">
+            <button type="button" class="btn-apply-state" style="background:#d97706;" onclick="applyMovedState('${targetStateCode}')">
+              Set ${targetState.name} as My State anyway
+            </button>
+          </div>
+        `;
+      } else {
+        const isZeroBoth = (currentEstateTax === 0 && targetEstateTax === 0);
+        resultEl.style.background = '#f8fafc';
+        resultEl.style.borderColor = '#cbd5e1';
+        resultEl.style.color = '#475569';
+        resultEl.innerHTML = `
+          <div><strong>Equal Estate Tax: $0 in both ${currentState.name} and ${targetState.name}</strong></div>
+          <div style="margin-top: 0.30rem; font-size: 0.78rem; line-height: 1.45;">
+            ${isZeroBoth ? `Both <strong>${currentState.name}</strong> and <strong>${targetState.name}</strong> have <strong>$0 state estate tax</strong> (38 states impose no estate tax).<br/>` : `Both states levy an equal estate tax of <strong>${formatCurrency(currentEstateTax)}</strong>.<br/>`}
+            • <strong>Lifetime Income Tax Savings:</strong> ${incomeTaxSavings > 0 ? `<span style="color:#16a34a; font-weight:700;">+${formatCurrency(incomeTaxSavings)}</span> saved in ${targetState.name}` : (incomeTaxSavings < 0 ? `<span style="color:#b91c1c;">+${formatCurrency(Math.abs(incomeTaxSavings))}</span> higher tax in ${targetState.name}` : '$0 difference')}<br/>
+            • <strong>Net Legacy to Kids:</strong> ${netLegacyDiff > 0 ? `+${formatCurrency(netLegacyDiff)} higher in ${targetState.name}` : (netLegacyDiff < 0 ? `-${formatCurrency(Math.abs(netLegacyDiff))} lower in ${targetState.name}` : 'Identical')}
+          </div>
+          <div style="margin-top: 0.45rem;">
+            <button type="button" class="btn-apply-state" onclick="applyMovedState('${targetStateCode}')">
+              Set ${targetState.name} as My State
+            </button>
+          </div>
+        `;
+      }
     }
 
     function renderBarChart(schedule) {
