@@ -660,21 +660,34 @@
       position: relative;
       display: flex;
       align-items: center;
-      width: 135px;
+      width: 145px;
       flex-shrink: 0;
+    }
+    @media (min-width: 640px) {
+      .slider-val-input-wrap {
+        width: 152px;
+      }
+    }
+    .slider-val-input-wrap[style*="width: 80px"],
+    .slider-val-input-wrap[style*="width: 75px"],
+    .slider-val-input-wrap[style*="width: 85px"],
+    .slider-val-input-wrap[style*="width: 95px"] {
+      width: 96px !important;
     }
     .slider-val-input-wrap .prefix {
       position: absolute;
-      left: 0.65rem;
-      font-size: 1.10rem;
-      color: var(--text-dim);
+      left: 0.55rem;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #64748b;
       pointer-events: none;
     }
     .slider-val-input-wrap .suffix {
       position: absolute;
-      right: 0.65rem;
-      font-size: 1.10rem;
-      color: var(--text-dim);
+      right: 0.55rem;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #64748b;
       pointer-events: none;
     }
     .slider-val-input {
@@ -682,24 +695,33 @@
       background: #ffffff;
       border: 1px solid #cbd5e1;
       color: var(--text-main);
-      padding: 0.45rem 0.55rem;
+      padding: 0.38rem 0.50rem;
       border-radius: 6px;
-      font-size: 18.5px;
-      font-weight: 700;
+      font-size: 0.95rem;
+      font-weight: 600;
       text-align: right;
       font-family: inherit;
       box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.03);
+      -moz-appearance: textfield;
+      appearance: textfield;
+    }
+    .slider-val-input::-webkit-inner-spin-button,
+    .slider-val-input::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
     }
     @media (min-width: 640px) {
       .slider-val-input {
-        font-size: 1.12rem;
+        font-size: 0.95rem;
       }
     }
     .slider-val-input.has-prefix {
-      padding-left: 1.65rem;
+      padding-left: 1.30rem;
+      padding-right: 0.45rem;
     }
     .slider-val-input.has-suffix {
-      padding-right: 1.75rem;
+      padding-left: 0.45rem;
+      padding-right: 1.45rem;
     }
     .slider-val-input:focus {
       outline: none;
@@ -1135,9 +1157,94 @@
     .chart-phase-canvas-wrap {
       position: relative;
       width: 100%;
-      height: 52px;
+      height: 82px;
       user-select: none;
       touch-action: pan-y;
+    }
+    .chart-phase-milestones-bar {
+      display: flex;
+      align-items: center;
+      gap: 0.40rem;
+      overflow-x: auto;
+      padding: 0.35rem 0.15rem 0.25rem 0.15rem;
+      margin-top: 0.40rem;
+      scrollbar-width: thin;
+      -webkit-overflow-scrolling: touch;
+    }
+    .milestone-badge-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.22rem 0.55rem;
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 9999px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.15s ease;
+      user-select: none;
+      font-size: 0.76rem;
+      color: #334155;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+    }
+    .milestone-badge-btn:hover {
+      background: #f8fafc;
+      border-color: #cbd5e1;
+    }
+    .milestone-badge-btn.active {
+      background: #f0fdf4;
+      border-color: #10b981;
+      box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.25);
+    }
+    .milestone-round-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      font-weight: 800;
+      font-size: 0.76rem;
+      border: 1.5px solid;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+    .milestone-btn-text {
+      font-size: 0.74rem;
+      font-weight: 500;
+      color: #475569;
+    }
+    .milestone-btn-text strong {
+      font-weight: 700;
+      color: #1e293b;
+    }
+
+    /* Desktop View Enhancements for Roadmap Icons and Buttons */
+    @media (min-width: 768px) {
+      .chart-phase-milestones-bar {
+        gap: 0.55rem;
+        padding: 0.45rem 0.20rem 0.35rem 0.20rem;
+        margin-top: 0.55rem;
+        flex-wrap: wrap;
+      }
+      .milestone-badge-btn {
+        gap: 0.45rem;
+        padding: 0.35rem 0.75rem;
+        font-size: 0.86rem;
+      }
+      .milestone-round-icon {
+        width: 28px;
+        height: 28px;
+        font-size: 0.90rem;
+        border-width: 2px;
+      }
+      .milestone-btn-text {
+        font-size: 0.84rem;
+      }
+      .milestone-user-badge {
+        font-size: 0.74rem;
+        padding: 0.12rem 0.45rem;
+      }
     }
     .chart-phase-detail-card {
       margin-top: 0.45rem;
@@ -3093,30 +3200,68 @@
     .results-plan-summary {
       display: flex;
       flex-direction: column;
-      gap: 0.35rem;
+      gap: 0.45rem;
     }
     .results-plan-summary-title {
       display: flex;
       align-items: center;
-      gap: 0.55rem;
+      gap: 0.65rem;
       flex-wrap: wrap;
     }
     .plan-goal-pill {
-      font-size: 0.76rem;
+      font-size: 0.74rem;
       font-weight: 750;
       background: #eff6ff;
       color: #1d4ed8;
       border: 1px solid #bfdbfe;
       padding: 2px 8px;
       border-radius: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+    .plan-answer-headline {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: #0f172a;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      flex-wrap: wrap;
+    }
+    .plan-answer-highlight {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 2px 9px;
+      background: #dcfce7;
+      color: #15803d;
+      border: 1px solid #86efac;
+      border-radius: 6px;
+      font-weight: 850;
+      font-size: 1.15rem;
+    }
+    .plan-answer-highlight.warning {
+      background: #fef2f2;
+      color: #dc2626;
+      border-color: #fca5a5;
     }
     .results-plan-metrics-row {
       display: flex;
       align-items: center;
-      gap: 1.15rem;
+      gap: 0.65rem 1rem;
       flex-wrap: wrap;
       font-size: 0.82rem;
       color: #475569;
+    }
+    .plan-stat-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      padding: 3px 9px;
+      border-radius: 6px;
+      font-size: 0.80rem;
     }
     .plan-stat-item strong {
       color: #1e293b;
@@ -3841,6 +3986,72 @@
                   </div>
                 </div>
               </div>
+
+              <!-- ================================================================
+                   COLLAPSIBLE ADVANCED ASSUMPTIONS (ROI & CAPITAL GAIN)
+                   Default view: collapsed
+                   ================================================================ -->
+              <div class="starting-balances-adv-wrap" style="border-top: 1px solid #e2e8f0; margin-top: 1rem; padding-top: 0.65rem;">
+                <button type="button" class="collapsible-trigger" id="btnStartingBalancesAdv" onclick="toggleStartingBalancesAdv()" style="margin-top: 0; padding: 0.45rem 0.25rem; font-weight: 700; color: #334155; border: none; display: flex; align-items: center; justify-content: space-between; width: 100%; background: none; cursor: pointer; border-radius: 6px; transition: background 0.15s;" onmouseover="this.style.background='#f8fafc'" onmouseout="this.style.background='none'">
+                  <span style="display: flex; align-items: center; gap: 0.50rem; font-size: 0.92rem; font-weight: 750; color: #1e293b;">
+                    <span style="font-size: 1.05rem;">⚙️</span>
+                    <span>Advanced Assumptions (ROI &amp; Capital Gain)</span>
+                  </span>
+                  <span id="startingBalancesAdvChevron" style="font-size: 0.85rem; color: #64748b; transition: transform 0.2s; font-weight: 700;">▼</span>
+                </button>
+
+                <div class="collapsible-content" id="startingBalancesAdvContent" style="display: none; padding-top: 0.75rem;">
+                  <!-- Expected Annual Return (ROI) - Default 7% -->
+                  <div class="balance-sub-item" style="border-top: none; padding-top: 0.25rem;">
+                    <div class="slider-header-row">
+                      <div class="slider-title">
+                        <span style="color: #059669; font-size: 0.95rem; font-weight: 700;">Expected Return (ROI)</span>
+                        <span class="slider-badge" id="startingRoiBadge" style="background: #ecfdf5; color: #047857; border: 1px solid #a7f3d0;">7.0% Nominal Growth</span>
+                      </div>
+                      <div class="slider-val-input-wrap" style="width: 96px;">
+                        <input type="number" inputmode="decimal" id="startingRoi" value="7.0" step="0.1" class="slider-val-input has-suffix" oninput="syncStartingRoiFromNumber(this.value)" />
+                        <span class="suffix">%</span>
+                      </div>
+                    </div>
+                    <div class="slider-track-wrap">
+                      <input type="range" id="startingRoiSlider" min="2.0" max="12.0" value="7.0" step="0.1" oninput="syncStartingRoiFromSlider(this.value)" />
+                      <div class="slider-range-labels">
+                        <span>2.0%</span>
+                        <span>7.0% (Default)</span>
+                        <span>12.0%</span>
+                      </div>
+                    </div>
+                    <p style="font-size: 0.76rem; color: #64748b; margin-top: 4px; line-height: 1.4;">
+                      Projected nominal annual compound growth rate across your investment portfolio before inflation.
+                    </p>
+                  </div>
+
+                  <!-- Capital Gain % (Taxable Brokerage) - Default 40% -->
+                  <div class="balance-sub-item" style="margin-top: 0.75rem; padding-top: 0.75rem; border-top: 1px dashed #e2e8f0;">
+                    <div class="slider-header-row">
+                      <div class="slider-title">
+                        <span style="color: #9333ea; font-size: 0.95rem; font-weight: 700;">Taxable Brokerage Capital Gain</span>
+                        <span class="slider-badge" id="startingCapGainBadge" style="background:#f3e8ff; color:#7e22ce; border:1px solid #d8b4fe;">40% Gain · 60% Basis</span>
+                      </div>
+                      <div class="slider-val-input-wrap" style="width: 96px;">
+                        <input type="number" inputmode="numeric" id="startingCapGain" value="40" min="0" max="100" step="5" class="slider-val-input has-suffix" oninput="syncStartingCapGainFromNumber(this.value)" />
+                        <span class="suffix">%</span>
+                      </div>
+                    </div>
+                    <div class="slider-track-wrap">
+                      <input type="range" id="startingCapGainSlider" min="0" max="100" value="40" step="5" oninput="syncStartingCapGainFromSlider(this.value)" />
+                      <div class="slider-range-labels">
+                        <span>0% (All Basis)</span>
+                        <span>40% (Default)</span>
+                        <span>100% (All Gains)</span>
+                      </div>
+                    </div>
+                    <p style="font-size: 0.76rem; color: #64748b; margin-top: 4px; line-height: 1.4;">
+                      Percentage of your taxable brokerage account that is unrealized capital gains (subject to preferential capital gains tax). The remaining <strong><span id="startingCostBasisLabel">60%</span></strong> is non-taxable cost basis principal.
+                    </p>
+                  </div>
+                </div>
+              </div>
             </div>
 
             <!-- Why We Ask This: Starting Balances -->
@@ -4170,19 +4381,19 @@
               <div class="slider-card-group">
                 <div class="slider-header-row">
                   <div class="slider-title">
-                    <span>Investment Return</span>
+                    <span>Investment Return (ROI)</span>
                     <span class="slider-badge">Nominal growth</span>
                   </div>
                   <div class="slider-val-input-wrap" style="width: 80px;">
-                    <input type="number" inputmode="decimal" id="rateReturn" value="6.0" step="0.1" class="slider-val-input has-suffix" oninput="syncFromNumber('rateReturn', 'rateReturnSlider')" />
+                    <input type="number" inputmode="decimal" id="rateReturn" value="7.0" step="0.1" class="slider-val-input has-suffix" oninput="syncFromNumber('rateReturn', 'rateReturnSlider')" />
                     <span class="suffix">%</span>
                   </div>
                 </div>
                 <div class="slider-track-wrap">
-                  <input type="range" id="rateReturnSlider" min="2.0" max="12.0" value="6.0" step="0.1" oninput="syncFromSlider('rateReturnSlider', 'rateReturn')" />
+                  <input type="range" id="rateReturnSlider" min="2.0" max="12.0" value="7.0" step="0.1" oninput="syncFromSlider('rateReturnSlider', 'rateReturn')" />
                   <div class="slider-range-labels">
                     <span>2.0%</span>
-                    <span>6.0%</span>
+                    <span>7.0%</span>
                     <span>12.0%</span>
                   </div>
                 </div>
@@ -4215,7 +4426,7 @@
                 <div class="slider-header-row">
                   <div class="slider-title">
                     <span>Brokerage Cost Basis</span>
-                    <span class="slider-badge">% of balance that is principal</span>
+                    <span class="slider-badge" id="costBasisBadge">60% Principal · 40% Gain</span>
                   </div>
                   <div class="slider-val-input-wrap" style="width: 80px;">
                     <input type="number" inputmode="numeric" id="costBasisRatio" value="60" min="0" max="100" class="slider-val-input has-suffix" oninput="syncFromNumber('costBasisRatio', 'costBasisRatioSlider')" />
@@ -4225,9 +4436,9 @@
                 <div class="slider-track-wrap">
                   <input type="range" id="costBasisRatioSlider" min="0" max="100" value="60" step="5" oninput="syncFromSlider('costBasisRatioSlider', 'costBasisRatio')" />
                   <div class="slider-range-labels">
-                    <span>0% (all gains)</span>
-                    <span>60%</span>
-                    <span>100% (no gains)</span>
+                    <span>0% (All Gains)</span>
+                    <span>60% (Default)</span>
+                    <span>100% (No Gains)</span>
                   </div>
                 </div>
               </div>
@@ -4365,11 +4576,11 @@
           <div class="results-plan-summary">
             <div class="results-plan-summary-title">
               <span class="plan-goal-pill" id="planGoalPill">⏱️ Goal: When can I retire?</span>
-              <span id="planSummaryHeadline" style="font-weight: 750; color: #0f172a; font-size: 0.95rem;">Retirement Plan Overview</span>
+              <div id="planSummaryHeadline" class="plan-answer-headline">Retirement Plan Overview</div>
             </div>
             <div class="results-plan-metrics-row">
-              <span class="plan-stat-item" id="planAgeStat"><strong>Age:</strong> 50 → Retire 51</span>
-              <span class="plan-stat-item" id="planBalStat"><strong>Assets:</strong> $2,500,000</span>
+              <span class="plan-stat-item" id="planAgeStat"><strong>Solvency:</strong> 100% Through Age 90</span>
+              <span class="plan-stat-item" id="planBalStat"><strong>Projected Balance (Age 90):</strong> $2,500,000</span>
               <span class="plan-stat-item" id="planExpStat"><strong>Expenses:</strong> $100,000/yr</span>
               <span class="plan-stat-item" id="planRothStat"><strong>Roth:</strong> Auto-Optimized</span>
             </div>
@@ -4405,7 +4616,7 @@
               <span class="what-if-subtitle">Adjust assumptions to test scenarios in real time across all tabs</span>
             </div>
             <div class="what-if-header-right">
-              <span class="what-if-preview-badge" id="whatIfPreviewBadge">6.0% ROI · Age 50 · Auto $25k/yr</span>
+              <span class="what-if-preview-badge" id="whatIfPreviewBadge">7.0% ROI · Age 50 · Auto $25k/yr</span>
               <span id="whatIfChevron" class="milestones-chevron">▼</span>
             </div>
           </button>
@@ -4416,12 +4627,12 @@
               <div class="what-if-item">
                 <div class="what-if-item-header">
                   <span class="what-if-label">Investment ROI</span>
-                  <span class="what-if-val" id="whatIfReturnVal">6.0%</span>
+                  <span class="what-if-val" id="whatIfReturnVal">7.0%</span>
                 </div>
-                <input type="range" class="what-if-slider" id="whatIfReturnSlider" min="2.0" max="12.0" step="0.1" value="6.0" oninput="syncWhatIfReturn(this.value)" aria-label="What-if Investment ROI" />
+                <input type="range" class="what-if-slider" id="whatIfReturnSlider" min="2.0" max="12.0" step="0.1" value="7.0" oninput="syncWhatIfReturn(this.value)" aria-label="What-if Investment ROI" />
                 <div class="what-if-range-labels">
                   <span>2.0%</span>
-                  <span>6.0%</span>
+                  <span>7.0%</span>
                   <span>12.0%</span>
                 </div>
               </div>
@@ -4469,10 +4680,9 @@
             <div class="carousel-step-title" id="carouselCardTitle">Net Worth Analysis</div>
             <div class="carousel-dots-row" id="carouselDotsRow">
               <button type="button" class="carousel-dot active" onclick="goToMobileCard(0)" aria-label="Card 1: Net Worth Analysis"></button>
-              <button type="button" class="carousel-dot" onclick="goToMobileCard(1)" aria-label="Card 2: Withdrawal and Taxes"></button>
-              <button type="button" class="carousel-dot" onclick="goToMobileCard(2)" aria-label="Card 3: Year-by-Year Schedule"></button>
+              <button type="button" class="carousel-dot" onclick="goToMobileCard(1)" aria-label="Card 2: Year-by-Year Schedule"></button>
             </div>
-            <div class="carousel-counter" id="carouselCardCounter">1 of 3: Net Worth Analysis</div>
+            <div class="carousel-counter" id="carouselCardCounter">1 of 2: Net Worth Analysis</div>
           </div>
           <button type="button" class="carousel-nav-arrow" id="btnCarouselNext" onclick="stepMobileCard(1)" aria-label="Next card">
             Next ›
@@ -4643,17 +4853,61 @@
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.35rem; flex-wrap: wrap; gap: 0.25rem;">
                       <span style="font-size: 0.80rem; font-weight: 700; color: #334155; text-transform: uppercase; letter-spacing: 0.03em; display: inline-flex; align-items: center; gap: 0.35rem;">
                         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2.3"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-                        Roadmap Lifecycle Phases (Aligned with Years)
+                        Roadmap Lifecycle Phases &amp; Age Milestones
                       </span>
-                      <span id="chartPhaseHint" style="font-size: 0.73rem; color: #64748b; font-weight: 500;">Tap icon / bracket for details</span>
+                      <span id="chartPhaseHint" style="font-size: 0.73rem; color: #64748b; font-weight: 500;">Tap icon / milestone for details</span>
                     </div>
 
                     <div class="chart-phase-canvas-wrap" id="chartPhaseCanvasWrap">
-                      <svg id="chartPhaseSvg" class="balance-growth-svg" viewBox="0 0 360 52" preserveAspectRatio="none" style="width: 100%; height: 100%; overflow: visible;"></svg>
+                      <svg id="chartPhaseSvg" class="balance-growth-svg" viewBox="0 0 360 82" preserveAspectRatio="none" style="width: 100%; height: 100%; overflow: visible;"></svg>
                       <div id="chartPhaseTooltip" class="balance-growth-tooltip" style="display: none;"></div>
                     </div>
 
-                    <!-- Interactive Phase Description Detail Card -->
+                    <!-- Interactive Age Milestones Round Icons Bar (A, B, C, D, E, F, G, H) -->
+                    <div class="chart-phase-milestones-bar" id="chartPhaseMilestonesBar" aria-label="Statutory Age Milestones">
+                      <button type="button" class="milestone-badge-btn" id="msItem50" data-milestone-letter="A" onclick="toggleMilestoneDetail('A')">
+                        <span class="milestone-round-icon" style="background:#dbeafe; color:#1e40af; border-color:#93c5fd;">A</span>
+                        <span class="milestone-btn-text"><strong>Age 50</strong> Catch-Up</span>
+                        <span class="milestone-user-badge" id="msBadge50" style="display: none;"></span>
+                      </button>
+                      <button type="button" class="milestone-badge-btn" id="msItem55" data-milestone-letter="B" onclick="toggleMilestoneDetail('B')">
+                        <span class="milestone-round-icon" style="background:#e0f2fe; color:#0369a1; border-color:#7dd3fc;">B</span>
+                        <span class="milestone-btn-text"><strong>Age 55</strong> Rule of 55</span>
+                        <span class="milestone-user-badge" id="msBadge55" style="display: none;"></span>
+                      </button>
+                      <button type="button" class="milestone-badge-btn" id="msItem59" data-milestone-letter="C" onclick="toggleMilestoneDetail('C')">
+                        <span class="milestone-round-icon" style="background:#dcfce7; color:#15803d; border-color:#86efac;">C</span>
+                        <span class="milestone-btn-text"><strong>Age 59½</strong> Penalty Relief</span>
+                        <span class="milestone-user-badge" id="msBadge59" style="display: none;"></span>
+                      </button>
+                      <button type="button" class="milestone-badge-btn" id="msItem62" data-milestone-letter="D" onclick="toggleMilestoneDetail('D')">
+                        <span class="milestone-round-icon" style="background:#fef3c7; color:#b45309; border-color:#fcd34d;">D</span>
+                        <span class="milestone-btn-text"><strong>Age 62</strong> Early SS</span>
+                        <span class="milestone-user-badge" id="msBadge62" style="display: none;"></span>
+                      </button>
+                      <button type="button" class="milestone-badge-btn" id="msItem65" data-milestone-letter="E" onclick="toggleMilestoneDetail('E')">
+                        <span class="milestone-round-icon" style="background:#fee2e2; color:#991b1b; border-color:#fca5a5;">E</span>
+                        <span class="milestone-btn-text"><strong>Age 65</strong> Medicare</span>
+                        <span class="milestone-user-badge" id="msBadge65" style="display: none;"></span>
+                      </button>
+                      <button type="button" class="milestone-badge-btn" id="msItem67" data-milestone-letter="F" onclick="toggleMilestoneDetail('F')">
+                        <span class="milestone-round-icon" style="background:#e0e7ff; color:#3730a3; border-color:#a5b4fc;">F</span>
+                        <span class="milestone-btn-text"><strong>Age 67</strong> FRA</span>
+                        <span class="milestone-user-badge" id="msBadge67" style="display: none;"></span>
+                      </button>
+                      <button type="button" class="milestone-badge-btn" id="msItem70" data-milestone-letter="G" onclick="toggleMilestoneDetail('G')">
+                        <span class="milestone-round-icon" style="background:#ede9fe; color:#5b21b6; border-color:#c4b5fd;">G</span>
+                        <span class="milestone-btn-text"><strong>Age 70</strong> Max SS</span>
+                        <span class="milestone-user-badge" id="msBadge70" style="display: none;"></span>
+                      </button>
+                      <button type="button" class="milestone-badge-btn" id="msItemRmd" data-milestone-letter="H" onclick="toggleMilestoneDetail('H')">
+                        <span class="milestone-round-icon" style="background:#fef3c7; color:#92400e; border-color:#fde68a;">H</span>
+                        <span class="milestone-btn-text"><strong>Age 73/75</strong> RMD</span>
+                        <span class="milestone-user-badge" id="msBadgeRmd" style="display: none;"></span>
+                      </button>
+                    </div>
+
+                    <!-- Interactive Phase / Milestone Description Detail Card -->
                     <div id="chartPhaseDetailCard" class="chart-phase-detail-card"></div>
                   </div>
                 </div>
@@ -4766,176 +5020,10 @@
                 </div>
               </div>
 
-            <div class="carousel-slide" id="slideLifetimeTaxes">
-              <div class="kpi-card" id="kpiCardLifetimeTaxes">
-                <div>
-                  <div class="kpi-label" style="font-size: 0.95rem; font-weight: 700; color: #475569; text-transform: uppercase; letter-spacing: 0.04em;">Statutory Age Milestones</div>
-                  <div style="font-size: 0.88rem; color: #64748b; margin-top: 0.20rem; margin-bottom: 0.40rem;">Critical statutory age milestones governing retirement contributions, early penalties, Medicare IRMAA, and mandatory RMDs.</div>
-                </div>
-
-                <!-- Important Age Milestones & Tax Implications Section -->
-                <div class="milestones-card-wrap" id="milestonesSection" style="margin-top: 0.85rem;">
-                    <button type="button" class="btn-milestones-toggle" id="btnToggleMilestones" onclick="toggleAgeMilestones()" aria-expanded="false">
-                      <span style="display: flex; align-items: center; gap: 0.45rem;">
-                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
-                          <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                          <line x1="16" y1="2" x2="16" y2="6"></line>
-                          <line x1="8" y1="2" x2="8" y2="6"></line>
-                          <line x1="3" y1="10" x2="21" y2="10"></line>
-                        </svg>
-                        <span>Important Age Milestones & Tax Implications</span>
-                      </span>
-                      <span id="milestoneToggleChevron" class="milestones-chevron">▼</span>
-                    </button>
-
-                    <div id="milestonesBox" class="milestones-content" style="display: none;">
-                      <div style="font-size: 0.74rem; color: #64748b; margin-bottom: 0.10rem; line-height: 1.35;">
-                        Key statutory milestones governing retirement penalties, Social Security haircuts, Medicare IRMAA lookback, and mandatory RMDs:
-                      </div>
-
-                      <!-- Age 50 -->
-                      <div class="milestone-item" id="msItem50">
-                        <div class="milestone-header">
-                          <div class="milestone-age-tag">
-                            <span style="color:#2563eb;">Age 50</span>
-                            <span class="milestone-pill" style="background:#dbeafe; color:#1e40af;">Catch-Up Contributions</span>
-                          </div>
-                          <span class="milestone-user-badge" id="msBadge50" style="display: none;"></span>
-                        </div>
-                        <div class="milestone-desc">
-                          Catch-up limits unlock: extra $1,000/yr for IRAs and $7,500+/yr for 401(k)/403(b) plans (higher for ages 60–63 under SECURE 2.0).
-                        </div>
-                        <div class="milestone-tax-impact">
-                          <strong>Tax Implication:</strong> Pre-tax contributions directly lower your current top marginal income tax bracket during peak earning years.
-                        </div>
-                      </div>
-
-                      <!-- Age 55 -->
-                      <div class="milestone-item" id="msItem55">
-                        <div class="milestone-header">
-                          <div class="milestone-age-tag">
-                            <span style="color:#0284c7;">Age 55</span>
-                            <span class="milestone-pill" style="background:#e0f2fe; color:#0369a1;">IRS "Rule of 55"</span>
-                          </div>
-                          <span class="milestone-user-badge" id="msBadge55" style="display: none;"></span>
-                        </div>
-                        <div class="milestone-desc">
-                          If you separate from your employer during or after the calendar year you reach Age 55, you can take penalty-free distributions from that employer's 401(k)/403(b).
-                        </div>
-                        <div class="milestone-tax-impact">
-                          <strong>Tax Implication:</strong> Distributions are taxed as ordinary income at normal brackets, but exempt from the 10% early withdrawal penalty (IRC § 72(t)(2)(A)(v)). Does <em>not</em> apply to IRAs.
-                        </div>
-                      </div>
-
-                      <!-- Age 59½ -->
-                      <div class="milestone-item" id="msItem59">
-                        <div class="milestone-header">
-                          <div class="milestone-age-tag">
-                            <span style="color:#16a34a;">Age 59½</span>
-                            <span class="milestone-pill" style="background:#dcfce7; color:#15803d;">10% Penalty Relief</span>
-                          </div>
-                          <span class="milestone-user-badge" id="msBadge59" style="display: none;"></span>
-                        </div>
-                        <div class="milestone-desc">
-                          Universal penalty relief threshold: the IRS 10% early withdrawal penalty fully ends across all Traditional IRAs, 401(k)s, 403(b)s, and Roth earnings.
-                        </div>
-                        <div class="milestone-tax-impact">
-                          <strong>Tax Implication:</strong> Pre-tax withdrawals taxed as regular ordinary income with zero penalties. Roth distributions are 100% tax-free (assuming the 5-year holding rule is met).
-                        </div>
-                      </div>
-
-                      <!-- Age 62 -->
-                      <div class="milestone-item" id="msItem62">
-                        <div class="milestone-header">
-                          <div class="milestone-age-tag">
-                            <span style="color:#d97706;">Age 62</span>
-                            <span class="milestone-pill" style="background:#fef3c7; color:#b45309;">Earliest Social Security</span>
-                          </div>
-                          <span class="milestone-user-badge" id="msBadge62" style="display: none;"></span>
-                        </div>
-                        <div class="milestone-desc">
-                          Earliest age to claim Social Security retirement benefits, with a permanent benefit reduction of up to 30% compared to Full Retirement Age (FRA).
-                        </div>
-                        <div class="milestone-tax-impact">
-                          <strong>Tax Implication:</strong> Triggers IRS § 86 "Tax Torpedo" sooner (up to 85% of Social Security becomes taxable if provisional income exceeds $32k MFJ / $25k Single). Also subject to annual earnings test withholding if working.
-                        </div>
-                      </div>
-
-                      <!-- Age 65 -->
-                      <div class="milestone-item" id="msItem65">
-                        <div class="milestone-header">
-                          <div class="milestone-age-tag">
-                            <span style="color:#dc2626;">Age 65</span>
-                            <span class="milestone-pill" style="background:#fee2e2; color:#991b1b;">Medicare & IRMAA Lookback</span>
-                          </div>
-                          <span class="milestone-user-badge" id="msBadge65" style="display: none;"></span>
-                        </div>
-                        <div class="milestone-desc">
-                          Initial Enrollment Period for Medicare Part A & Part B. High earners face IRMAA premium surcharges if MAGI exceeds statutory tiers ($206k MFJ / $103k Single).
-                        </div>
-                        <div class="milestone-tax-impact">
-                          <strong>2-Year Lookback Rule:</strong> Your Age 65 Medicare premiums are based on your tax return from <strong>Age 63</strong>! Large capital gains or Roth conversions at Ages 63–64 can trigger steep surcharges. Unlocks senior state tax deductions in many states.
-                        </div>
-                      </div>
-
-                      <!-- Age 67 -->
-                      <div class="milestone-item" id="msItem67">
-                        <div class="milestone-header">
-                          <div class="milestone-age-tag">
-                            <span style="color:#4f46e5;">Age 67</span>
-                            <span class="milestone-pill" style="background:#e0e7ff; color:#3730a3;">Full Retirement Age (FRA)</span>
-                          </div>
-                          <span class="milestone-user-badge" id="msBadge67" style="display: none;"></span>
-                        </div>
-                        <div class="milestone-desc">
-                          Full Retirement Age for anyone born 1960 or later, unlocking 100% of your earned Primary Insurance Amount (PIA).
-                        </div>
-                        <div class="milestone-tax-impact">
-                          <strong>Tax Implication:</strong> The Social Security Retirement Earnings Test permanently ends, allowing you to earn unlimited wages without any benefit clawbacks or withholding.
-                        </div>
-                      </div>
-
-                      <!-- Age 70 -->
-                      <div class="milestone-item" id="msItem70">
-                        <div class="milestone-header">
-                          <div class="milestone-age-tag">
-                            <span style="color:#7c3aed;">Age 70</span>
-                            <span class="milestone-pill" style="background:#ede9fe; color:#5b21b6;">Max Social Security (+24% to +32%)</span>
-                          </div>
-                          <span class="milestone-user-badge" id="msBadge70" style="display: none;"></span>
-                        </div>
-                        <div class="milestone-desc">
-                          Delayed retirement credits reach maximum potential (+8%/yr compounding between FRA and 70 = 124%–132% of standard FRA benefit).
-                        </div>
-                        <div class="milestone-tax-impact">
-                          <strong>Tax Implication:</strong> Maximizes guaranteed inflation-adjusted income floor. Social Security is at least 15% federally tax-free, making delayed benefits more tax-efficient than pre-tax 401(k) withdrawals. Claiming should never be delayed past Age 70.
-                        </div>
-                      </div>
-
-                      <!-- Age 73 / 75 -->
-                      <div class="milestone-item" id="msItemRmd">
-                        <div class="milestone-header">
-                          <div class="milestone-age-tag">
-                            <span style="color:#b45309;">Age 73 & 75</span>
-                            <span class="milestone-pill" style="background:#fef3c7; color:#92400e;">Mandatory RMDs (SECURE 2.0)</span>
-                          </div>
-                          <span class="milestone-user-badge" id="msBadgeRmd" style="display: none;"></span>
-                        </div>
-                        <div class="milestone-desc">
-                          Forced annual Required Minimum Distributions from Traditional 401(k)s and IRAs based on IRS life expectancy tables (Age 73 if born 1951–1959; Age 75 if born 1960+).
-                        </div>
-                        <div class="milestone-tax-impact">
-                          <strong>Tax Implication:</strong> 100% ordinary income taxation with mandatory distributions that cannot be reinvested into tax-sheltered accounts. Missed RMDs trigger a 25% excise tax penalty. Strategic Roth conversions prior to RMD age permanently mitigate this forced tax.
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
 
-          <!-- Slide 3: Detailed Table -->
+          <!-- Slide 2: Detailed Table -->
           <div class="carousel-slide" id="slideTable">
             <div class="table-card" id="sectionTable">
               <div class="table-actions">
@@ -5369,6 +5457,34 @@
           const resBox = document.getElementById('affordCalcResult');
           if (resBox && !isCalculatingAffordable) resBox.style.display = 'none';
         }
+        if (numberId === 'rateReturn') {
+          const numVal = parseFloat(slider.value) || 7.0;
+          const numFixed = numVal.toFixed(1);
+          const sRoi = document.getElementById('startingRoi');
+          const sRoiSld = document.getElementById('startingRoiSlider');
+          const sRoiBadge = document.getElementById('startingRoiBadge');
+          if (sRoi && sRoi.value !== numFixed) sRoi.value = numFixed;
+          if (sRoiSld && parseFloat(sRoiSld.value) !== numVal) sRoiSld.value = numVal;
+          if (sRoiBadge) sRoiBadge.textContent = numFixed + '% Nominal Growth';
+          const wSld = document.getElementById('whatIfReturnSlider');
+          const wVal = document.getElementById('whatIfReturnVal');
+          if (wSld && parseFloat(wSld.value) !== numVal) wSld.value = numVal;
+          if (wVal) wVal.textContent = numFixed + '%';
+        }
+        if (numberId === 'costBasisRatio') {
+          const cbVal = parseFloat(slider.value) || 60;
+          const capGain = Math.max(0, Math.min(100, Math.round(100 - cbVal)));
+          const sCg = document.getElementById('startingCapGain');
+          const sCgSld = document.getElementById('startingCapGainSlider');
+          const sCgBadge = document.getElementById('startingCapGainBadge');
+          const sCbLbl = document.getElementById('startingCostBasisLabel');
+          if (sCg && parseFloat(sCg.value) !== capGain) sCg.value = capGain;
+          if (sCgSld && parseFloat(sCgSld.value) !== capGain) sCgSld.value = capGain;
+          if (sCgBadge) sCgBadge.textContent = `${capGain}% Gain · ${cbVal}% Basis`;
+          if (sCbLbl) sCbLbl.textContent = `${cbVal}%`;
+          const cbBadge = document.getElementById('costBasisBadge');
+          if (cbBadge) cbBadge.textContent = `${cbVal}% Principal · ${capGain}% Gain`;
+        }
         if (typeof onUserInputChange === 'function') {
           onUserInputChange(numberId, parseFloat(slider.value) || 0);
         }
@@ -5405,6 +5521,34 @@
           if (btn) btn.classList.remove('active');
           const resBox = document.getElementById('affordCalcResult');
           if (resBox && !isCalculatingAffordable) resBox.style.display = 'none';
+        }
+        if (numberId === 'rateReturn') {
+          const numVal = parseFloat(number.value) || 7.0;
+          const numFixed = numVal.toFixed(1);
+          const sRoi = document.getElementById('startingRoi');
+          const sRoiSld = document.getElementById('startingRoiSlider');
+          const sRoiBadge = document.getElementById('startingRoiBadge');
+          if (sRoi && sRoi.value !== numFixed) sRoi.value = numFixed;
+          if (sRoiSld && parseFloat(sRoiSld.value) !== numVal) sRoiSld.value = numVal;
+          if (sRoiBadge) sRoiBadge.textContent = numFixed + '% Nominal Growth';
+          const wSld = document.getElementById('whatIfReturnSlider');
+          const wVal = document.getElementById('whatIfReturnVal');
+          if (wSld && parseFloat(wSld.value) !== numVal) wSld.value = numVal;
+          if (wVal) wVal.textContent = numFixed + '%';
+        }
+        if (numberId === 'costBasisRatio') {
+          const cbVal = parseFloat(number.value) || 60;
+          const capGain = Math.max(0, Math.min(100, Math.round(100 - cbVal)));
+          const sCg = document.getElementById('startingCapGain');
+          const sCgSld = document.getElementById('startingCapGainSlider');
+          const sCgBadge = document.getElementById('startingCapGainBadge');
+          const sCbLbl = document.getElementById('startingCostBasisLabel');
+          if (sCg && parseFloat(sCg.value) !== capGain) sCg.value = capGain;
+          if (sCgSld && parseFloat(sCgSld.value) !== capGain) sCgSld.value = capGain;
+          if (sCgBadge) sCgBadge.textContent = `${capGain}% Gain · ${cbVal}% Basis`;
+          if (sCbLbl) sCbLbl.textContent = `${cbVal}%`;
+          const cbBadge = document.getElementById('costBasisBadge');
+          if (cbBadge) cbBadge.textContent = `${cbVal}% Principal · ${capGain}% Gain`;
         }
         if (typeof onUserInputChange === 'function') {
           onUserInputChange(numberId, val);
@@ -5495,37 +5639,22 @@
     }
 
     function toggleAgeMilestones() {
-      const box = document.getElementById('milestonesBox');
-      const chev = document.getElementById('milestoneToggleChevron');
-      const btn = document.getElementById('btnToggleMilestones');
-      if (!box) return;
-      const isHidden = (box.style.display === 'none');
-      box.style.display = isHidden ? 'block' : 'none';
-      if (chev) chev.classList.toggle('rotated', isHidden);
-      if (btn) btn.setAttribute('aria-expanded', isHidden ? 'true' : 'false');
+      // Kept for backwards compatibility: opens milestone in roadmap
+      openAgeMilestonesModalOrSection('A');
     }
 
-    function openAgeMilestonesModalOrSection() {
-      // If on mobile, switch to Inputs tab
+    function openAgeMilestonesModalOrSection(letter = 'A') {
+      // If on mobile, switch to Results tab
       if (window.innerWidth < 1024) {
-        switchMobileTab('inputs');
+        switchMobileTab('results');
       }
-      // Ensure milestones box is expanded
-      const box = document.getElementById('milestonesBox');
-      const chev = document.getElementById('milestoneToggleChevron');
-      const btn = document.getElementById('btnToggleMilestones');
-      if (box) box.style.display = 'block';
-      if (chev) chev.classList.add('rotated');
-      if (btn) btn.setAttribute('aria-expanded', 'true');
+      toggleMilestoneDetail(letter);
 
-      // Scroll into view smoothly and flash highlight
-      const target = document.getElementById('milestonesSection');
+      // Scroll into view smoothly
+      const target = document.getElementById('chartPhaseRoadmapWrap');
       if (target) {
         setTimeout(() => {
           target.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          target.classList.remove('milestone-highlight');
-          void target.offsetWidth;
-          target.classList.add('milestone-highlight');
         }, 100);
       }
     }
@@ -5540,6 +5669,15 @@
       const retAge = parseInt(retInput?.value) || curAge;
       const ssAge = parseInt(ssInput?.value) || 67;
       const rmdAge = (curAge <= 64) ? 75 : 73;
+
+      // Update dynamic age for milestone H
+      if (typeof ROADMAP_MILESTONES !== 'undefined') {
+        const mH = ROADMAP_MILESTONES.find(m => m.letter === 'H');
+        if (mH) {
+          mH.age = rmdAge;
+          mH.ageText = `${rmdAge}`;
+        }
+      }
 
       const milestoneList = [
         { id: 'msItem50', badgeId: 'msBadge50', age: 50 },
@@ -5562,29 +5700,39 @@
 
         if (curAge === item.age || (item.age === 59 && curAge >= 59 && curAge < 60)) {
           el.classList.add('active-user-age');
-          tags.push(`<span class="milestone-user-badge" style="background:#dbeafe; color:#1e40af; border:1px solid #93c5fd;">📍 You: Age ${curAge}</span>`);
+          tags.push(`<span class="milestone-user-badge" style="background:#dbeafe; color:#1e40af; border:1px solid #93c5fd;">📍 You</span>`);
         }
         if (retAge === item.age || (item.age === 59 && retAge >= 59 && retAge < 60)) {
           el.classList.add('active-retire-age');
-          tags.push(`<span class="milestone-user-badge" style="background:#dcfce7; color:#15803d; border:1px solid #86efac;">🎯 Retire: Age ${retAge}</span>`);
+          tags.push(`<span class="milestone-user-badge" style="background:#dcfce7; color:#15803d; border:1px solid #86efac;">🎯 Retire</span>`);
         }
         if (ssAge === item.age) {
           el.classList.add('active-ss-age');
-          tags.push(`<span class="milestone-user-badge" style="background:#f3e8ff; color:#7e22ce; border:1px solid #d8b4fe;">💵 SS Claim: Age ${ssAge}</span>`);
+          tags.push(`<span class="milestone-user-badge" style="background:#f3e8ff; color:#7e22ce; border:1px solid #d8b4fe;">💵 SS</span>`);
         }
         if (item.id === 'msItemRmd') {
           el.classList.add('active-rmd-age');
-          tags.push(`<span class="milestone-user-badge" style="background:#fef3c7; color:#92400e; border:1px solid #fde68a;">⚠️ Your RMD: Age ${rmdAge}</span>`);
+          tags.push(`<span class="milestone-user-badge" style="background:#fef3c7; color:#92400e; border:1px solid #fde68a;">⚠️ RMD</span>`);
         }
 
         if (tags.length > 0) {
           badge.style.display = 'inline-flex';
-          badge.style.gap = '0.25rem';
+          badge.style.gap = '0.20rem';
           badge.innerHTML = tags.join('');
         } else {
           badge.style.display = 'none';
         }
       });
+
+      // Update detail card if currently displaying milestone
+      if (typeof isPhaseDetailCardExpanded !== 'undefined' && isPhaseDetailCardExpanded &&
+          typeof activeRoadmapSelectionType !== 'undefined' && activeRoadmapSelectionType === 'milestone' &&
+          typeof selectedMilestoneLetter !== 'undefined' && selectedMilestoneLetter) {
+        const activeM = ROADMAP_MILESTONES.find(m => m.letter === selectedMilestoneLetter);
+        if (activeM && typeof updateMilestoneDetailCard === 'function') {
+          updateMilestoneDetailCard(activeM);
+        }
+      }
     }
 
     function handleCurrentAgeChange(val) {
@@ -5670,7 +5818,7 @@
        between the top What-If toolbar and sidebar inputs.
        ========================================================================== */
     function syncWhatIfReturn(val) {
-      const numVal = parseFloat(val) || 6.0;
+      const numVal = parseFloat(val) || 7.0;
       const rateInput = document.getElementById('rateReturn');
       const rateSlider = document.getElementById('rateReturnSlider');
       const whatIfSlider = document.getElementById('whatIfReturnSlider');
@@ -5680,6 +5828,13 @@
       if (rateSlider) rateSlider.value = numVal;
       if (whatIfSlider) whatIfSlider.value = numVal;
       if (whatIfVal) whatIfVal.textContent = numVal.toFixed(1) + '%';
+
+      const sRoi = document.getElementById('startingRoi');
+      const sRoiSld = document.getElementById('startingRoiSlider');
+      const sRoiBadge = document.getElementById('startingRoiBadge');
+      if (sRoi) sRoi.value = numVal.toFixed(1);
+      if (sRoiSld) sRoiSld.value = numVal;
+      if (sRoiBadge) sRoiBadge.textContent = numVal.toFixed(1) + '% Nominal Growth';
 
       calculatePlan();
     }
@@ -5767,9 +5922,30 @@
       const whatIfReturnSlider = document.getElementById('whatIfReturnSlider');
       const whatIfReturnVal = document.getElementById('whatIfReturnVal');
       if (rateInput && whatIfReturnSlider) {
-        const rate = parseFloat(rateInput.value) || 6.0;
+        const rate = parseFloat(rateInput.value) || 7.0;
         whatIfReturnSlider.value = rate;
         if (whatIfReturnVal) whatIfReturnVal.textContent = rate.toFixed(1) + '%';
+        const sRoi = document.getElementById('startingRoi');
+        const sRoiSld = document.getElementById('startingRoiSlider');
+        const sRoiBadge = document.getElementById('startingRoiBadge');
+        if (sRoi && sRoi.value !== rate.toFixed(1)) sRoi.value = rate.toFixed(1);
+        if (sRoiSld && parseFloat(sRoiSld.value) !== rate) sRoiSld.value = rate;
+        if (sRoiBadge) sRoiBadge.textContent = rate.toFixed(1) + '% Nominal Growth';
+      }
+
+      // Sync Cost Basis & Capital Gain
+      const cbInput = document.getElementById('costBasisRatio');
+      if (cbInput) {
+        const cb = parseFloat(cbInput.value) || 60;
+        const capGain = Math.max(0, Math.min(100, Math.round(100 - cb)));
+        const sCg = document.getElementById('startingCapGain');
+        const sCgSld = document.getElementById('startingCapGainSlider');
+        const sCgBadge = document.getElementById('startingCapGainBadge');
+        const sCbLbl = document.getElementById('startingCostBasisLabel');
+        if (sCg && parseFloat(sCg.value) !== capGain) sCg.value = capGain;
+        if (sCgSld && parseFloat(sCgSld.value) !== capGain) sCgSld.value = capGain;
+        if (sCgBadge) sCgBadge.textContent = `${capGain}% Gain · ${cb}% Basis`;
+        if (sCbLbl) sCbLbl.textContent = `${cb}%`;
       }
 
       // Sync Retirement Age
@@ -5804,7 +5980,7 @@
       // Sync Preview Badge
       const whatIfPreview = document.getElementById('whatIfPreviewBadge');
       if (whatIfPreview && rateInput && retAgeInput && convInput) {
-        const rate = parseFloat(rateInput.value) || 6.0;
+        const rate = parseFloat(rateInput.value) || 7.0;
         const curAge = parseInt(curAgeInput ? curAgeInput.value : 50) || 50;
         const retAge = parseInt(retAgeInput.value) || curAge;
         const conv = parseFloat(convInput.value) || 0;
@@ -5842,9 +6018,8 @@
        2: Year-by-Year Schedule
        ========================================================================== */
     const MOBILE_CARDS = [
-      { id: 'slideFinalBalance', title: 'Net Worth Analysis', label: '1 of 3: Net Worth Analysis' },
-      { id: 'slideLifetimeTaxes', title: 'Withdrawal and Taxes', label: '2 of 3: Withdrawal and Taxes' },
-      { id: 'slideTable', title: 'Year-by-Year Schedule', label: '3 of 3: Schedule Table' }
+      { id: 'slideFinalBalance', title: 'Net Worth Analysis', label: '1 of 2: Net Worth Analysis' },
+      { id: 'slideTable', title: 'Year-by-Year Schedule', label: '2 of 2: Schedule Table' }
     ];
     let currentMobileCardIndex = 0;
     let isCarouselScrolling = false;
@@ -6130,7 +6305,7 @@
           balBrokerage: parseNum('balBrokerage', 1000000),
           balHsa: parseNum('balHsa', 100000),
           annualRothConv: parseNum('annualRothConv', 0),
-          rateReturn: parseNum('rateReturn', 6.0),
+          rateReturn: parseNum('rateReturn', 7.0),
           rateInflation: parseNum('rateInflation', 2.5),
           costBasisRatio: parseNum('costBasisRatio', 60),
           targetBracketRate: parseIntNum('pretaxBracketCap', 12),
@@ -6281,6 +6456,13 @@
           const sld = document.getElementById('rateReturnSlider');
           if (inp) inp.value = r;
           if (sld) sld.value = r;
+
+          const sRoi = document.getElementById('startingRoi');
+          const sRoiSld = document.getElementById('startingRoiSlider');
+          const sRoiBadge = document.getElementById('startingRoiBadge');
+          if (sRoi) sRoi.value = r.toFixed(1);
+          if (sRoiSld) sRoiSld.value = r;
+          if (sRoiBadge) sRoiBadge.textContent = r.toFixed(1) + '% Nominal Growth';
         }
         if (data.rateInflation !== undefined && !isNaN(parseFloat(data.rateInflation))) {
           const r = parseFloat(data.rateInflation);
@@ -6295,6 +6477,18 @@
           const sld = document.getElementById('costBasisRatioSlider');
           if (inp) inp.value = r;
           if (sld) sld.value = r;
+
+          const capGain = Math.max(0, Math.min(100, Math.round(100 - r)));
+          const sCg = document.getElementById('startingCapGain');
+          const sCgSld = document.getElementById('startingCapGainSlider');
+          const sCgBadge = document.getElementById('startingCapGainBadge');
+          const sCbLbl = document.getElementById('startingCostBasisLabel');
+          if (sCg) sCg.value = capGain;
+          if (sCgSld) sCgSld.value = capGain;
+          if (sCgBadge) sCgBadge.textContent = `${capGain}% Gain · ${r}% Basis`;
+          if (sCbLbl) sCbLbl.textContent = `${r}%`;
+          const cbBadge = document.getElementById('costBasisBadge');
+          if (cbBadge) cbBadge.textContent = `${r}% Principal · ${capGain}% Gain`;
         }
 
         // 8. Bracket Ceiling
@@ -6714,6 +6908,12 @@ ${url}`;
           const retSli = document.getElementById('rateReturnSlider');
           if (retEl) retEl.value = r;
           if (retSli) retSli.value = r;
+          const sRoi = document.getElementById('startingRoi');
+          const sRoiSld = document.getElementById('startingRoiSlider');
+          const sRoiBadge = document.getElementById('startingRoiBadge');
+          if (sRoi) sRoi.value = r.toFixed(1);
+          if (sRoiSld) sRoiSld.value = r;
+          if (sRoiBadge) sRoiBadge.textContent = r.toFixed(1) + '% Nominal Growth';
         }
         if (data.infl !== undefined && !isNaN(parseFloat(data.infl))) {
           const i = parseFloat(data.infl);
@@ -6728,6 +6928,17 @@ ${url}`;
           const cbSli = document.getElementById('costBasisRatioSlider');
           if (cbEl) cbEl.value = cb;
           if (cbSli) cbSli.value = cb;
+          const capGain = Math.max(0, Math.min(100, Math.round(100 - cb)));
+          const sCg = document.getElementById('startingCapGain');
+          const sCgSld = document.getElementById('startingCapGainSlider');
+          const sCgBadge = document.getElementById('startingCapGainBadge');
+          const sCbLbl = document.getElementById('startingCostBasisLabel');
+          if (sCg) sCg.value = capGain;
+          if (sCgSld) sCgSld.value = capGain;
+          if (sCgBadge) sCgBadge.textContent = `${capGain}% Gain · ${cb}% Basis`;
+          if (sCbLbl) sCbLbl.textContent = `${cb}%`;
+          const cbBadge = document.getElementById('costBasisBadge');
+          if (cbBadge) cbBadge.textContent = `${cb}% Principal · ${capGain}% Gain`;
         }
         if (data.cap !== undefined) {
           const cap = parseInt(data.cap);
@@ -6825,8 +7036,17 @@ ${url}`;
       if (document.getElementById('annualRothConv')) document.getElementById('annualRothConv').value = 0;
       if (document.getElementById('annualRothConvSlider')) document.getElementById('annualRothConvSlider').value = 0;
 
-      document.getElementById('rateReturn').value = 6.0;
-      document.getElementById('rateReturnSlider').value = 6.0;
+      document.getElementById('rateReturn').value = 7.0;
+      document.getElementById('rateReturnSlider').value = 7.0;
+
+      if (document.getElementById('startingRoi')) document.getElementById('startingRoi').value = 7.0;
+      if (document.getElementById('startingRoiSlider')) document.getElementById('startingRoiSlider').value = 7.0;
+      if (document.getElementById('startingRoiBadge')) document.getElementById('startingRoiBadge').textContent = '7.0% Nominal Growth';
+
+      if (document.getElementById('startingCapGain')) document.getElementById('startingCapGain').value = 40;
+      if (document.getElementById('startingCapGainSlider')) document.getElementById('startingCapGainSlider').value = 40;
+      if (document.getElementById('startingCapGainBadge')) document.getElementById('startingCapGainBadge').textContent = '40% Gain · 60% Basis';
+      if (document.getElementById('startingCostBasisLabel')) document.getElementById('startingCostBasisLabel').textContent = '60%';
 
       document.getElementById('rateInflation').value = 2.5;
       document.getElementById('rateInflationSlider').value = 2.5;
@@ -6871,6 +7091,98 @@ ${url}`;
       content.classList.toggle('open');
       chevron.textContent = content.classList.contains('open') ? '▲' : '▼';
     }
+
+    /* ==========================================================================
+       STARTING BALANCES ADVANCED ASSUMPTIONS (ROI & CAPITAL GAIN)
+       ========================================================================== */
+    function toggleStartingBalancesAdv() {
+      const content = document.getElementById('startingBalancesAdvContent');
+      const chevron = document.getElementById('startingBalancesAdvChevron');
+      if (!content) return;
+      const isOpen = content.style.display === 'block' || content.classList.contains('open');
+      if (isOpen) {
+        content.style.display = 'none';
+        content.classList.remove('open');
+        if (chevron) {
+          chevron.textContent = '▼';
+        }
+      } else {
+        content.style.display = 'block';
+        content.classList.add('open');
+        if (chevron) {
+          chevron.textContent = '▲';
+        }
+      }
+    }
+
+    function syncStartingRoi(val) {
+      const numVal = parseFloat(val) || 7.0;
+      const numFixed = numVal.toFixed(1);
+
+      const inp = document.getElementById('startingRoi');
+      const sld = document.getElementById('startingRoiSlider');
+      const badge = document.getElementById('startingRoiBadge');
+      if (inp && inp.value !== numFixed) inp.value = numFixed;
+      if (sld && parseFloat(sld.value) !== numVal) sld.value = numVal;
+      if (badge) badge.textContent = numFixed + '% Nominal Growth';
+
+      // Sync with main rateReturn
+      const rateInput = document.getElementById('rateReturn');
+      const rateSlider = document.getElementById('rateReturnSlider');
+      if (rateInput && rateInput.value !== numFixed) rateInput.value = numFixed;
+      if (rateSlider && parseFloat(rateSlider.value) !== numVal) rateSlider.value = numVal;
+
+      // Sync with What-If slider
+      const whatIfSlider = document.getElementById('whatIfReturnSlider');
+      const whatIfVal = document.getElementById('whatIfReturnVal');
+      if (whatIfSlider && parseFloat(whatIfSlider.value) !== numVal) whatIfSlider.value = numVal;
+      if (whatIfVal) whatIfVal.textContent = numFixed + '%';
+
+      if (typeof onUserInputChange === 'function') {
+        onUserInputChange('rateReturn', numVal);
+      }
+      calculatePlan();
+      if (typeof updateResultsTopPlanBar === 'function') {
+        updateResultsTopPlanBar();
+      }
+    }
+    function syncStartingRoiFromNumber(val) { syncStartingRoi(val); }
+    function syncStartingRoiFromSlider(val) { syncStartingRoi(val); }
+
+    function syncStartingCapGain(val) {
+      let capGain = parseFloat(val);
+      if (isNaN(capGain)) capGain = 40;
+      capGain = Math.max(0, Math.min(100, Math.round(capGain)));
+      const costBasis = 100 - capGain;
+
+      const inp = document.getElementById('startingCapGain');
+      const sld = document.getElementById('startingCapGainSlider');
+      const badge = document.getElementById('startingCapGainBadge');
+      const basisLabel = document.getElementById('startingCostBasisLabel');
+
+      if (inp && parseFloat(inp.value) !== capGain) inp.value = capGain;
+      if (sld && parseFloat(sld.value) !== capGain) sld.value = capGain;
+      if (badge) badge.textContent = `${capGain}% Gain · ${costBasis}% Basis`;
+      if (basisLabel) basisLabel.textContent = `${costBasis}%`;
+
+      // Sync with costBasisRatio
+      const cbInp = document.getElementById('costBasisRatio');
+      const cbSld = document.getElementById('costBasisRatioSlider');
+      const cbBadge = document.getElementById('costBasisBadge');
+      if (cbInp && parseFloat(cbInp.value) !== costBasis) cbInp.value = costBasis;
+      if (cbSld && parseFloat(cbSld.value) !== costBasis) cbSld.value = costBasis;
+      if (cbBadge) cbBadge.textContent = `${costBasis}% Principal · ${capGain}% Gain`;
+
+      if (typeof onUserInputChange === 'function') {
+        onUserInputChange('costBasisRatio', costBasis);
+      }
+      calculatePlan();
+      if (typeof updateResultsTopPlanBar === 'function') {
+        updateResultsTopPlanBar();
+      }
+    }
+    function syncStartingCapGainFromNumber(val) { syncStartingCapGain(val); }
+    function syncStartingCapGainFromSlider(val) { syncStartingCapGain(val); }
 
     /* ==========================================================================
        IRS § 86 SOCIAL SECURITY TAXATION ENGINE
@@ -7715,7 +8027,7 @@ ${url}`;
         balBrokerageInit: parseNumVal('balBrokerage', 0),
         balHsaInit: parseNumVal('balHsa', 0),
         annualRothConv: parseNumVal('annualRothConv', 0),
-        rateReturn: parseNumVal('rateReturn', 6.0),
+        rateReturn: parseNumVal('rateReturn', 7.0),
         rateInflation: parseNumVal('rateInflation', 2.5),
         costBasisRatio: parseNumVal('costBasisRatio', 60),
         targetBracketRate: (parseNumVal('pretaxBracketCap', 12)) / 100,
@@ -7784,6 +8096,9 @@ ${url}`;
       }
       if (typeof updateWhatIfUIFromInputs === 'function') {
         updateWhatIfUIFromInputs();
+      }
+      if (typeof updateResultsTopPlanBar === 'function') {
+        updateResultsTopPlanBar();
       }
       if (pageInitialized && !isResetting && typeof saveUserInputs === 'function') {
         saveUserInputs();
@@ -9280,16 +9595,141 @@ ${url}`;
     }
 
     /* ==========================================================================
-       ROADMAP LIFECYCLE PHASE GROUPING TRACK (Under Taxes Paid Over Time Chart)
-       Aligns lifecycle strategy phases directly with the chart years X-axis,
-       rendering grouping bracket lines, icons, and interactive phase descriptions.
+       ROADMAP LIFECYCLE PHASE GROUPING & STATUTORY AGE MILESTONES
+       Aligns lifecycle strategy phases and round age milestone icons A, B, C, D...
+       directly with the chart years X-axis, opening full interactive descriptions.
        ========================================================================== */
     let selectedPhaseGroupingIdx = 0;
     let isPhaseDetailCardExpanded = false;
+    let activeRoadmapSelectionType = 'phase'; // 'phase' | 'milestone'
+    let selectedMilestoneLetter = null;
     let cachedScheduleForGrouping = null;
     let cachedParamsForGrouping = null;
     let cachedDepletedAgeForGrouping = null;
     let cachedPhasesForGrouping = [];
+
+    const ROADMAP_MILESTONES = [
+      {
+        letter: 'A',
+        id: 'msItem50',
+        badgeId: 'msBadge50',
+        age: 50,
+        ageText: '50',
+        title: 'Age 50 · Catch-Up Contributions Unlock',
+        shortLabel: 'Catch-Up',
+        tag: 'Catch-Up Limits',
+        color: '#2563eb',
+        bg: '#dbeafe',
+        borderColor: '#93c5fd',
+        desc: 'Catch-up limits unlock: extra $1,000/yr for IRAs and $7,500+/yr for 401(k)/403(b) plans (higher for ages 60–63 under SECURE 2.0).',
+        taxImpact: 'Pre-tax contributions directly lower your current top marginal income tax bracket during peak earning years.'
+      },
+      {
+        letter: 'B',
+        id: 'msItem55',
+        badgeId: 'msBadge55',
+        age: 55,
+        ageText: '55',
+        title: 'Age 55 · IRS "Rule of 55" Penalty Exemption',
+        shortLabel: 'Rule of 55',
+        tag: 'Rule of 55',
+        color: '#0284c7',
+        bg: '#e0f2fe',
+        borderColor: '#7dd3fc',
+        desc: "If you separate from your employer during or after the calendar year you reach Age 55, you can take penalty-free distributions from that employer's 401(k)/403(b).",
+        taxImpact: 'Distributions are taxed as ordinary income at normal brackets, but exempt from the 10% early withdrawal penalty (IRC § 72(t)(2)(A)(v)). Does not apply to IRAs.'
+      },
+      {
+        letter: 'C',
+        id: 'msItem59',
+        badgeId: 'msBadge59',
+        age: 59.5,
+        ageText: '59½',
+        title: 'Age 59½ · 10% Penalty Relief Threshold',
+        shortLabel: 'Penalty Relief',
+        tag: '10% Penalty Relief',
+        color: '#16a34a',
+        bg: '#dcfce7',
+        borderColor: '#86efac',
+        desc: 'Universal penalty relief threshold: the IRS 10% early withdrawal penalty fully ends across all Traditional IRAs, 401(k)s, 403(b)s, and Roth earnings.',
+        taxImpact: 'Pre-tax withdrawals taxed as regular ordinary income with zero penalties. Roth distributions are 100% tax-free (assuming the 5-year holding rule is met).'
+      },
+      {
+        letter: 'D',
+        id: 'msItem62',
+        badgeId: 'msBadge62',
+        age: 62,
+        ageText: '62',
+        title: 'Age 62 · Earliest Social Security Claiming Age',
+        shortLabel: 'Early SS',
+        tag: 'Earliest Social Security',
+        color: '#d97706',
+        bg: '#fef3c7',
+        borderColor: '#fcd34d',
+        desc: 'Earliest age to claim Social Security retirement benefits, with a permanent benefit reduction of up to 30% compared to Full Retirement Age (FRA).',
+        taxImpact: 'Triggers IRS § 86 "Tax Torpedo" sooner (up to 85% of Social Security becomes taxable if provisional income exceeds $32k MFJ / $25k Single). Also subject to annual earnings test withholding if working.'
+      },
+      {
+        letter: 'E',
+        id: 'msItem65',
+        badgeId: 'msBadge65',
+        age: 65,
+        ageText: '65',
+        title: 'Age 65 · Medicare Enrollment & IRMAA Lookback',
+        shortLabel: 'Medicare',
+        tag: 'Medicare & IRMAA',
+        color: '#dc2626',
+        bg: '#fee2e2',
+        borderColor: '#fca5a5',
+        desc: 'Initial Enrollment Period for Medicare Part A & Part B. High earners face IRMAA premium surcharges if MAGI exceeds statutory tiers ($206k MFJ / $103k Single).',
+        taxImpact: '2-Year Lookback Rule: Your Age 65 Medicare premiums are based on your tax return from Age 63! Large capital gains or Roth conversions at Ages 63–64 can trigger steep surcharges. Unlocks senior state tax deductions in many states.'
+      },
+      {
+        letter: 'F',
+        id: 'msItem67',
+        badgeId: 'msBadge67',
+        age: 67,
+        ageText: '67',
+        title: 'Age 67 · Full Retirement Age (FRA)',
+        shortLabel: 'FRA',
+        tag: 'Full Retirement Age (FRA)',
+        color: '#4f46e5',
+        bg: '#e0e7ff',
+        borderColor: '#a5b4fc',
+        desc: 'Full Retirement Age for anyone born 1960 or later, unlocking 100% of your earned Primary Insurance Amount (PIA).',
+        taxImpact: 'The Social Security Retirement Earnings Test permanently ends, allowing you to earn unlimited wages without any benefit clawbacks or withholding.'
+      },
+      {
+        letter: 'G',
+        id: 'msItem70',
+        badgeId: 'msBadge70',
+        age: 70,
+        ageText: '70',
+        title: 'Age 70 · Maximum Delayed Social Security Credits',
+        shortLabel: 'Max SS',
+        tag: 'Max Social Security (+24% to +32%)',
+        color: '#7c3aed',
+        bg: '#ede9fe',
+        borderColor: '#c4b5fd',
+        desc: 'Delayed retirement credits reach maximum potential (+8%/yr compounding between FRA and 70 = 124%–132% of standard FRA benefit).',
+        taxImpact: 'Maximizes guaranteed inflation-adjusted income floor. Social Security is at least 15% federally tax-free, making delayed benefits more tax-efficient than pre-tax 401(k) withdrawals. Claiming should never be delayed past Age 70.'
+      },
+      {
+        letter: 'H',
+        id: 'msItemRmd',
+        badgeId: 'msBadgeRmd',
+        age: 73,
+        ageText: '73/75',
+        title: 'Age 73 & 75 · Mandatory RMDs (SECURE 2.0)',
+        shortLabel: 'Mandatory RMDs',
+        tag: 'Mandatory RMDs (SECURE 2.0)',
+        color: '#b45309',
+        bg: '#fef3c7',
+        borderColor: '#fde68a',
+        desc: 'Forced annual Required Minimum Distributions from Traditional 401(k)s and IRAs based on IRS life expectancy tables (Age 73 if born 1951–1959; Age 75 if born 1960+).',
+        taxImpact: '100% ordinary income taxation with mandatory distributions that cannot be reinvested into tax-sheltered accounts. Missed RMDs trigger a 25% excise tax penalty. Strategic Roth conversions prior to RMD age permanently mitigate this forced tax.'
+      }
+    ];
 
     function getPhaseDisplayInfo(phase, params) {
       const yrs = phase.yearsCount;
@@ -9475,10 +9915,12 @@ ${url}`;
     }
 
     function togglePhaseGrouping(idx) {
-      if (selectedPhaseGroupingIdx === idx) {
+      if (activeRoadmapSelectionType === 'phase' && selectedPhaseGroupingIdx === idx) {
         isPhaseDetailCardExpanded = !isPhaseDetailCardExpanded;
       } else {
+        activeRoadmapSelectionType = 'phase';
         selectedPhaseGroupingIdx = idx;
+        selectedMilestoneLetter = null;
         isPhaseDetailCardExpanded = true;
       }
       if (cachedScheduleForGrouping && cachedParamsForGrouping) {
@@ -9487,8 +9929,24 @@ ${url}`;
     }
 
     function selectPhaseGrouping(idx) {
+      activeRoadmapSelectionType = 'phase';
       selectedPhaseGroupingIdx = idx;
+      selectedMilestoneLetter = null;
       isPhaseDetailCardExpanded = true;
+      if (cachedScheduleForGrouping && cachedParamsForGrouping) {
+        renderPhaseGroupingRoadmap(cachedScheduleForGrouping, cachedParamsForGrouping, cachedDepletedAgeForGrouping, true);
+      }
+    }
+
+    function toggleMilestoneDetail(letter) {
+      if (activeRoadmapSelectionType === 'milestone' && selectedMilestoneLetter === letter) {
+        isPhaseDetailCardExpanded = !isPhaseDetailCardExpanded;
+      } else {
+        activeRoadmapSelectionType = 'milestone';
+        selectedMilestoneLetter = letter;
+        selectedPhaseGroupingIdx = -1;
+        isPhaseDetailCardExpanded = true;
+      }
       if (cachedScheduleForGrouping && cachedParamsForGrouping) {
         renderPhaseGroupingRoadmap(cachedScheduleForGrouping, cachedParamsForGrouping, cachedDepletedAgeForGrouping, true);
       }
@@ -9496,6 +9954,8 @@ ${url}`;
 
     function collapsePhaseDetailCard() {
       isPhaseDetailCardExpanded = false;
+      activeRoadmapSelectionType = null;
+      selectedMilestoneLetter = null;
       if (cachedScheduleForGrouping && cachedParamsForGrouping) {
         renderPhaseGroupingRoadmap(cachedScheduleForGrouping, cachedParamsForGrouping, cachedDepletedAgeForGrouping, true);
       }
@@ -9503,12 +9963,110 @@ ${url}`;
 
     function stepPhaseGrouping(delta) {
       if (!cachedPhasesForGrouping || cachedPhasesForGrouping.length === 0) return;
-      const newIdx = Math.max(0, Math.min(cachedPhasesForGrouping.length - 1, selectedPhaseGroupingIdx + delta));
+      const cur = (typeof selectedPhaseGroupingIdx === 'number' && selectedPhaseGroupingIdx >= 0) ? selectedPhaseGroupingIdx : 0;
+      const newIdx = Math.max(0, Math.min(cachedPhasesForGrouping.length - 1, cur + delta));
+      activeRoadmapSelectionType = 'phase';
       selectedPhaseGroupingIdx = newIdx;
+      selectedMilestoneLetter = null;
       isPhaseDetailCardExpanded = true;
       if (cachedScheduleForGrouping && cachedParamsForGrouping) {
         renderPhaseGroupingRoadmap(cachedScheduleForGrouping, cachedParamsForGrouping, cachedDepletedAgeForGrouping, true);
       }
+    }
+
+    function stepMilestone(delta) {
+      const curIdx = ROADMAP_MILESTONES.findIndex(m => m.letter === selectedMilestoneLetter);
+      const newIdx = Math.max(0, Math.min(ROADMAP_MILESTONES.length - 1, (curIdx >= 0 ? curIdx : 0) + delta));
+      const target = ROADMAP_MILESTONES[newIdx];
+      if (target) {
+        toggleMilestoneDetail(target.letter);
+      }
+    }
+
+    function updateMilestoneDetailCard(m) {
+      const card = document.getElementById('chartPhaseDetailCard');
+      if (!card || !m) return;
+
+      if (!isPhaseDetailCardExpanded) {
+        card.style.display = 'none';
+        card.innerHTML = '';
+        return;
+      }
+
+      card.style.display = 'block';
+      const curInput = document.getElementById('currentAge');
+      const retInput = document.getElementById('retirementAge');
+      const ssInput = document.getElementById('ssStartAge');
+      const curAge = parseInt(curInput?.value) || 50;
+      const retAge = parseInt(retInput?.value) || curAge;
+      const ssAge = parseInt(ssInput?.value) || 67;
+      const rmdAge = (curAge <= 64) ? 75 : 73;
+
+      const idx = ROADMAP_MILESTONES.findIndex(x => x.letter === m.letter);
+      const total = ROADMAP_MILESTONES.length;
+
+      const userTags = [];
+      if (curAge === m.age || (m.letter === 'C' && curAge >= 59 && curAge < 60)) {
+        userTags.push(`<span style="font-size:0.73rem; font-weight:700; padding:0.16rem 0.45rem; border-radius:4px; background:#dbeafe; color:#1e40af; border:1px solid #93c5fd;">📍 You: Age ${curAge}</span>`);
+      }
+      if (retAge === m.age || (m.letter === 'C' && retAge >= 59 && retAge < 60)) {
+        userTags.push(`<span style="font-size:0.73rem; font-weight:700; padding:0.16rem 0.45rem; border-radius:4px; background:#dcfce7; color:#15803d; border:1px solid #86efac;">🎯 Retire: Age ${retAge}</span>`);
+      }
+      if (ssAge === m.age) {
+        userTags.push(`<span style="font-size:0.73rem; font-weight:700; padding:0.16rem 0.45rem; border-radius:4px; background:#f3e8ff; color:#7e22ce; border:1px solid #d8b4fe;">💵 SS Claim: Age ${ssAge}</span>`);
+      }
+      if (m.letter === 'H') {
+        userTags.push(`<span style="font-size:0.73rem; font-weight:700; padding:0.16rem 0.45rem; border-radius:4px; background:#fef3c7; color:#92400e; border:1px solid #fde68a;">⚠️ Your RMD: Age ${rmdAge}</span>`);
+      }
+
+      card.innerHTML = `
+        <div style="background: #ffffff; border: 1.5px solid ${m.borderColor}; border-radius: 8px; padding: 0.60rem 0.75rem; box-shadow: 0 2px 6px rgba(0,0,0,0.04); transition: all 0.2s ease;">
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.35rem; margin-bottom: 0.30rem;">
+            <div style="display: flex; align-items: center; gap: 0.45rem;">
+              <span style="font-size: 0.88rem; font-weight: 800; display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; background: ${m.bg}; color: ${m.color}; border: 1.5px solid ${m.borderColor}; border-radius: 50%; flex-shrink: 0; box-shadow: 0 1px 3px rgba(0,0,0,0.08);">${m.letter}</span>
+              <div>
+                <div style="font-weight: 700; color: #0f172a; font-size: 0.88rem; line-height: 1.25;">${m.title}</div>
+                <div style="font-size: 0.76rem; color: #64748b; font-weight: 600;">Statutory Age Milestone · Age ${m.ageText}</div>
+              </div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 0.35rem;">
+              <span style="font-size: 0.72rem; font-weight: 700; padding: 0.18rem 0.50rem; border-radius: 9999px; background: ${m.bg}; color: ${m.color}; border: 1px solid ${m.borderColor}; white-space: nowrap;">
+                ${m.tag}
+              </span>
+              <button type="button" onclick="collapsePhaseDetailCard()" title="Collapse description" aria-label="Collapse description" style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px; cursor: pointer; color: #64748b; font-size: 0.82rem; padding: 0.18rem 0.40rem; display: inline-flex; align-items: center; justify-content: center; line-height: 1; transition: all 0.15s ease;" onmouseover="this.style.color='#0f172a'; this.style.background='#e2e8f0';" onmouseout="this.style.color='#64748b'; this.style.background='#f8fafc';">
+                ✕
+              </button>
+            </div>
+          </div>
+
+          <div style="font-size: 0.81rem; color: #334155; line-height: 1.45; margin-top: 0.35rem;">
+            ${m.desc}
+          </div>
+
+          <div style="margin-top: 0.45rem; background: #f8fafc; border-left: 3px solid ${m.color}; padding: 0.40rem 0.60rem; border-radius: 0 6px 6px 0; font-size: 0.78rem; color: #1e293b; line-height: 1.40;">
+            <strong style="color: ${m.color}; font-weight: 700;">Tax Implication:</strong> ${m.taxImpact}
+          </div>
+
+          ${userTags.length > 0 ? `
+            <div style="margin-top: 0.45rem; display: flex; flex-wrap: wrap; gap: 0.30rem;">
+              ${userTags.join('')}
+            </div>
+          ` : ''}
+
+          <!-- Milestone Navigation Bar -->
+          <div style="margin-top: 0.55rem; padding-top: 0.40rem; border-top: 1px dashed #e2e8f0; display: flex; justify-content: space-between; align-items: center;">
+            <button type="button" class="btn-phase-step" onclick="stepMilestone(-1)" ${idx === 0 ? 'disabled style="opacity:0.35; cursor:not-allowed;"' : 'style="cursor:pointer;"'}>
+              ‹ Prev Milestone
+            </button>
+            <button type="button" class="btn-phase-step" onclick="collapsePhaseDetailCard()" style="cursor:pointer; background:#ffffff; color:#64748b; border-color:#cbd5e1;">
+              ▲ Collapse Description
+            </button>
+            <button type="button" class="btn-phase-step" onclick="stepMilestone(1)" ${idx === total - 1 ? 'disabled style="opacity:0.35; cursor:not-allowed;"' : 'style="cursor:pointer;"'}>
+              Next Milestone ›
+            </button>
+          </div>
+        </div>
+      `;
     }
 
     function updatePhaseDetailCard(phase, idx, totalPhases, params) {
@@ -9575,6 +10133,7 @@ ${url}`;
     function renderPhaseGroupingRoadmap(schedule, params, depletedAge, keepSelection = false) {
       const svg = document.getElementById('chartPhaseSvg');
       const tooltip = document.getElementById('chartPhaseTooltip');
+      if (tooltip) tooltip.style.display = 'none';
       if (!svg || !schedule || schedule.length === 0 || !params) return;
 
       cachedScheduleForGrouping = schedule;
@@ -9593,8 +10152,9 @@ ${url}`;
         selectedPhaseGroupingIdx = 0;
       }
 
+      const isDesktop = (window.innerWidth >= 768);
       const W = 360;
-      const H = 52;
+      const H = isDesktop ? 122 : 84;
       const padL = 10;
       const padR = 10;
       const plotW = W - padL - padR;
@@ -9619,18 +10179,20 @@ ${url}`;
         if (isPhaseDetailCardExpanded) {
           hint.innerHTML = '<span style="color:#2563eb; font-weight:600; cursor:pointer;" onclick="collapsePhaseDetailCard()">Tap icon to collapse description ▲</span>';
         } else {
-          hint.innerHTML = '<span style="color:#64748b; font-weight:500;">Tap icon for details ▼</span>';
+          hint.innerHTML = '<span style="color:#64748b; font-weight:500;">Tap icon / milestone for details ▼</span>';
         }
       }
 
-      // Drawdown Strategy Lifecycle Phases (Single Row)
-      const bracketTopY = 4;
-      const bracketHorizY = 13;
-      const circleCenterY = 13;
-      const ageCenterY = 27;
-      const labelCenterY = 38;
+      // -------------------------------------------------------------------------
+      // ROW 1: Drawdown Strategy Lifecycle Phases
+      // -------------------------------------------------------------------------
+      const bracketTopY = isDesktop ? 4 : 3;
+      const bracketHorizY = isDesktop ? 16 : 12;
+      const circleCenterY = isDesktop ? 16 : 12;
+      const ageCenterY = isDesktop ? 37 : 25;
+      const labelCenterY = isDesktop ? 51 : 36;
       const hitRectTopY = 0;
-      const hitRectHeight = 50;
+      const hitRectHeight = isDesktop ? 62 : 44;
 
       phases.forEach((p, idx) => {
         const startIndex = Math.max(0, p.startAge - schedule[0].age);
@@ -9639,35 +10201,39 @@ ${url}`;
         const x2 = padL + (endIndex + 1) * step;
         const width = Math.max(2, x2 - x1);
         const cx = (x1 + x2) / 2;
-        const isSelected = (selectedPhaseGroupingIdx === idx);
+        const isSelected = (activeRoadmapSelectionType === 'phase' && selectedPhaseGroupingIdx === idx);
         const isExpanded = (isSelected && isPhaseDetailCardExpanded);
         const info = getPhaseDisplayInfo(p, params);
 
         // Grouping bracket line connecting to chart above
         const strokeCol = isExpanded ? info.nodeColor : (isSelected ? info.nodeBorder : '#cbd5e1');
-        const strokeW = isExpanded ? 2.2 : (isSelected ? 1.8 : 1.4);
+        const strokeW = isExpanded ? (isDesktop ? 2.4 : 2.0) : (isSelected ? 1.6 : 1.2);
         const bracketD = `M ${(x1 + 1).toFixed(1)},${bracketTopY} L ${(x1 + 1).toFixed(1)},${bracketHorizY} L ${(x2 - 1).toFixed(1)},${bracketHorizY} L ${(x2 - 1).toFixed(1)},${bracketTopY}`;
 
         svgHtml += `<path d="${bracketD}" fill="none" stroke="${strokeCol}" stroke-width="${strokeW}" stroke-linecap="round" stroke-linejoin="round" />`;
 
         // Active glow pill behind bracket if expanded
         if (isExpanded) {
-          svgHtml += `<rect x="${(x1 + 1).toFixed(1)}" y="${(bracketHorizY - 1.5).toFixed(1)}" width="${Math.max(4, width - 2).toFixed(1)}" height="3" rx="1.5" fill="${info.nodeColor}" opacity="0.25" />`;
+          svgHtml += `<rect x="${(x1 + 1).toFixed(1)}" y="${(bracketHorizY - 1.5).toFixed(1)}" width="${Math.max(4, width - 2).toFixed(1)}" height="${isDesktop ? 3.5 : 3}" rx="1.5" fill="${info.nodeColor}" opacity="0.25" />`;
         }
 
         // Centered icon circle (scaled with aspect correction so it stays a sleek, perfect circle on all screens)
-        const r = isExpanded ? 7.8 : 6.8;
+        const r = isDesktop ? (isExpanded ? 13.0 : 11.0) : (isExpanded ? 7.8 : 6.8);
         const circleStroke = isExpanded ? info.nodeColor : (isSelected ? info.nodeBorder : '#cbd5e1');
-        const circleStrokeW = isExpanded ? 2.0 : 1.4;
+        const circleStrokeW = isDesktop ? (isExpanded ? 2.2 : 1.6) : (isExpanded ? 1.8 : 1.3);
         const circleFill = isExpanded ? info.nodeBg : '#ffffff';
-        const iconFontSize = isExpanded ? 8.2 : 7.2;
-        const iconY = isExpanded ? 2.8 : 2.5;
+        const iconFontSize = isDesktop ? (isExpanded ? 13.5 : 11.5) : (isExpanded ? 8.6 : 7.6);
+        const iconY = isDesktop ? (isExpanded ? 4.5 : 3.8) : (isExpanded ? 2.9 : 2.5);
 
         svgHtml += `<g transform="translate(${cx.toFixed(1)}, ${circleCenterY}) scale(${corr.toFixed(3)}, 1)">`;
-        svgHtml += `<circle cx="0" cy="0" r="${r}" fill="${circleFill}" stroke="${circleStroke}" stroke-width="${circleStrokeW}" filter="drop-shadow(0 1px 2px rgba(0,0,0,0.08))" />`;
+        svgHtml += `<circle cx="0" cy="0" r="${r}" fill="${circleFill}" stroke="${circleStroke}" stroke-width="${circleStrokeW}" filter="drop-shadow(0 1px 3px rgba(0,0,0,0.10))" />`;
         svgHtml += `<text x="0" y="${iconY}" text-anchor="middle" font-size="${iconFontSize}" style="pointer-events: none; user-select: none;">${info.icon}</text>`;
         if (isExpanded) {
-          svgHtml += `<path d="M -2.5,9.8 L 0,12.2 L 2.5,9.8" fill="none" stroke="${info.nodeColor}" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" />`;
+          if (isDesktop) {
+            svgHtml += `<path d="M -3,14 L 0,17 L 3,14" fill="none" stroke="${info.nodeColor}" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />`;
+          } else {
+            svgHtml += `<path d="M -2,9 L 0,11 L 2,9" fill="none" stroke="${info.nodeColor}" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" />`;
+          }
         }
         svgHtml += `</g>`;
 
@@ -9675,21 +10241,23 @@ ${url}`;
         const ageText = (p.startAge === p.endAge) ? `${p.startAge}` : `${p.startAge}–${p.endAge}`;
         const ageFill = isExpanded ? info.nodeColor : (isSelected ? '#0f172a' : '#475569');
         const ageWeight = isExpanded ? '800' : '600';
+        const ageFontSize = isDesktop ? (isExpanded ? '10.0' : '9.0') : '7.0';
         svgHtml += `<g transform="translate(${cx.toFixed(1)}, ${ageCenterY}) scale(${corr.toFixed(3)}, 1)">`;
-        svgHtml += `<text x="0" y="0" text-anchor="middle" font-size="7.8" font-weight="${ageWeight}" fill="${ageFill}" style="pointer-events: none; user-select: none;">${ageText}</text>`;
+        svgHtml += `<text x="0" y="0" text-anchor="middle" font-size="${ageFontSize}" font-weight="${ageWeight}" fill="${ageFill}" style="pointer-events: none; user-select: none;">${ageText}</text>`;
         svgHtml += `</g>`;
 
         // Phase short label underneath age
         const shortLabelFill = isExpanded ? info.nodeColor : (isSelected ? '#475569' : '#64748b');
         const shortLabelWeight = isExpanded ? '700' : '500';
+        const shortLabelFontSize = isDesktop ? (isExpanded ? '8.8' : '8.0') : '6.2';
         svgHtml += `<g transform="translate(${cx.toFixed(1)}, ${labelCenterY}) scale(${corr.toFixed(3)}, 1)">`;
-        svgHtml += `<text x="0" y="0" text-anchor="middle" font-size="6.8" font-weight="${shortLabelWeight}" fill="${shortLabelFill}" style="pointer-events: none; user-select: none;">${info.shortLabel}</text>`;
+        svgHtml += `<text x="0" y="0" text-anchor="middle" font-size="${shortLabelFontSize}" font-weight="${shortLabelWeight}" fill="${shortLabelFill}" style="pointer-events: none; user-select: none;">${info.shortLabel}</text>`;
         svgHtml += `</g>`;
 
-        // Transparent interactive hit rect
-        const hitW = Math.max(24, width);
+        // Transparent interactive hit rect (no title tooltip text)
+        const hitW = Math.max(isDesktop ? 28 : 22, width);
         const hitX = Math.max(0, cx - hitW / 2);
-        svgHtml += `<rect x="${hitX.toFixed(1)}" y="${hitRectTopY}" width="${hitW.toFixed(1)}" height="${hitRectHeight}" fill="transparent" cursor="pointer" class="phase-hit-rect" data-phase-idx="${idx}" title="${isExpanded ? 'Tap icon to collapse description' : 'Tap icon to open description'}" />`;
+        svgHtml += `<rect x="${hitX.toFixed(1)}" y="${hitRectTopY}" width="${hitW.toFixed(1)}" height="${hitRectHeight}" fill="transparent" cursor="pointer" class="phase-hit-rect" data-phase-idx="${idx}" />`;
       });
 
       // Continuous Social Security active guideline connector (Age 67 to Age 90+)
@@ -9702,53 +10270,135 @@ ${url}`;
         const ssX2 = padL + (ssEndIndex + 1) * step;
         const midX = (ssX1 + ssX2) / 2;
 
+        const ssLineY = isDesktop ? 58 : 42.5;
+
         // Continuous guideline connecting SS across Phase 3 and Phase 4 through Age 90+
-        svgHtml += `<line x1="${(ssX1 + 2).toFixed(1)}" y1="47.5" x2="${(ssX2 - 6).toFixed(1)}" y2="47.5" stroke="#0d9488" stroke-width="1.3" stroke-dasharray="3,2" style="pointer-events:none;" />`;
-        svgHtml += `<g transform="translate(${(ssX2 - 4).toFixed(1)}, 47.5) scale(${corr.toFixed(3)}, 1)">`;
-        svgHtml += `<text x="0" y="2.2" text-anchor="middle" font-size="6.2" font-weight="800" fill="#0d9488" style="pointer-events:none; user-select:none;">▶</text>`;
+        svgHtml += `<line x1="${(ssX1 + 2).toFixed(1)}" y1="${ssLineY}" x2="${(ssX2 - 6).toFixed(1)}" y2="${ssLineY}" stroke="#0d9488" stroke-width="${isDesktop ? 1.3 : 1.1}" stroke-dasharray="3,2" style="pointer-events:none;" />`;
+        svgHtml += `<g transform="translate(${(ssX2 - 4).toFixed(1)}, ${ssLineY}) scale(${corr.toFixed(3)}, 1)">`;
+        svgHtml += `<text x="0" y="2.0" text-anchor="middle" font-size="${isDesktop ? 7.0 : 5.5}" font-weight="800" fill="#0d9488" style="pointer-events:none; user-select:none;">▶</text>`;
         svgHtml += `</g>`;
 
         // Centered badge showing lifetime continuation
-        svgHtml += `<g transform="translate(${midX.toFixed(1)}, 47.5) scale(${corr.toFixed(3)}, 1)">`;
-        svgHtml += `<rect x="-42" y="-5.5" width="84" height="11" rx="3" fill="#f0fdfa" stroke="#5eead4" stroke-width="0.9" style="pointer-events:none;" />`;
-        svgHtml += `<text x="0" y="2.5" text-anchor="middle" font-size="6.6" font-weight="700" fill="#0f766e" style="pointer-events:none; user-select:none;">🏛️ SS Active for Life →</text>`;
+        svgHtml += `<g transform="translate(${midX.toFixed(1)}, ${ssLineY}) scale(${corr.toFixed(3)}, 1)">`;
+        if (isDesktop) {
+          svgHtml += `<rect x="-44" y="-5.5" width="88" height="11" rx="3" fill="#f0fdfa" stroke="#5eead4" stroke-width="0.9" style="pointer-events:none;" />`;
+          svgHtml += `<text x="0" y="2.5" text-anchor="middle" font-size="7.0" font-weight="700" fill="#0f766e" style="pointer-events:none; user-select:none;">🏛️ SS Active for Life →</text>`;
+        } else {
+          svgHtml += `<rect x="-38" y="-4.5" width="76" height="9.5" rx="2.5" fill="#f0fdfa" stroke="#5eead4" stroke-width="0.8" style="pointer-events:none;" />`;
+          svgHtml += `<text x="0" y="2.3" text-anchor="middle" font-size="6.0" font-weight="700" fill="#0f766e" style="pointer-events:none; user-select:none;">🏛️ SS Active for Life →</text>`;
+        }
         svgHtml += `</g>`;
       }
 
+      // -------------------------------------------------------------------------
+      // ROW 2: Statutory Age Milestones Track
+      // -------------------------------------------------------------------------
+      const dividerY = isDesktop ? 66 : 48;
+      svgHtml += `<line x1="${padL}" y1="${dividerY}" x2="${W - padR}" y2="${dividerY}" stroke="#e2e8f0" stroke-width="0.9" stroke-dasharray="2,2" />`;
+
+      // Track Label on Left
+      const trackLabelY = isDesktop ? 75.5 : 55.5;
+      const trackLabelFontSize = isDesktop ? "6.8" : "5.4";
+      svgHtml += `<g transform="translate(${padL}, ${trackLabelY}) scale(${corr.toFixed(3)}, 1)">`;
+      svgHtml += `<text x="0" y="0" font-size="${trackLabelFontSize}" font-weight="700" fill="#94a3b8" letter-spacing="0.04em">MILESTONES:</text>`;
+      svgHtml += `</g>`;
+
+      // Age Milestones Round Icons A, B, C, D, E, F, G, H
+      const milestoneCenterY = isDesktop ? 92 : 65.5;
+      const lineY2 = isDesktop ? 81 : 59;
+
+      ROADMAP_MILESTONES.forEach(m => {
+        const startAgeSched = schedule[0].age;
+        const curAgeVal = parseInt(document.getElementById('currentAge')?.value) || startAgeSched;
+        const mAge = (m.letter === 'H') ? ((curAgeVal <= 64) ? 75 : 73) : m.age;
+        const mIndex = mAge - startAgeSched;
+        const cx = padL + mIndex * step;
+
+        // Render if within or very near the schedule timeline range
+        if (cx >= (padL - 4) && cx <= (padL + plotW + 4)) {
+          const isSel = (activeRoadmapSelectionType === 'milestone' && selectedMilestoneLetter === m.letter && isPhaseDetailCardExpanded);
+          const r = isDesktop ? (isSel ? 12.0 : 10.0) : (isSel ? 7.2 : 6.2);
+          const strokeCol = isSel ? m.color : m.borderColor;
+          const strokeW = isDesktop ? (isSel ? 2.2 : 1.5) : (isSel ? 1.8 : 1.2);
+          const fillCol = isSel ? m.bg : '#ffffff';
+          const textFill = isSel ? m.color : '#334155';
+          const letterFontSize = isDesktop ? (isSel ? 11.5 : 10.0) : (isSel ? 7.6 : 6.8);
+          const letterY = isDesktop ? 3.5 : 2.3;
+
+          // Guideline connector to timeline axis
+          svgHtml += `<line x1="${cx.toFixed(1)}" y1="${dividerY}" x2="${cx.toFixed(1)}" y2="${lineY2}" stroke="${isSel ? m.color : '#cbd5e1'}" stroke-width="${isSel ? 1.4 : 0.8}" stroke-dasharray="${isSel ? 'none' : '1.5,1.5'}" />`;
+
+          // Round Milestone Circle with letter A, B, C, D...
+          svgHtml += `<g transform="translate(${cx.toFixed(1)}, ${milestoneCenterY}) scale(${corr.toFixed(3)}, 1)">`;
+          svgHtml += `<circle cx="0" cy="0" r="${r}" fill="${fillCol}" stroke="${strokeCol}" stroke-width="${strokeW}" filter="drop-shadow(0 1px 3px rgba(0,0,0,0.08))" />`;
+          svgHtml += `<text x="0" y="${letterY}" text-anchor="middle" font-size="${letterFontSize}" font-weight="800" fill="${textFill}" style="pointer-events: none; user-select: none;">${m.letter}</text>`;
+          if (isSel) {
+            if (isDesktop) {
+              svgHtml += `<path d="M -2.8,13.5 L 0,16.3 L 2.8,13.5" fill="none" stroke="${m.color}" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" />`;
+            } else {
+              svgHtml += `<path d="M -1.8,8.2 L 0,10.0 L 1.8,8.2" fill="none" stroke="${m.color}" stroke-width="1.0" stroke-linecap="round" stroke-linejoin="round" />`;
+            }
+          }
+          svgHtml += `</g>`;
+
+          // Milestone Age Label underneath circle
+          const ageLabel = (m.letter === 'H') ? `${mAge}` : m.ageText;
+          const ageLabelCenterY = isDesktop ? 110 : 77.5;
+          const ageLabelFontSize = isDesktop ? (isSel ? "8.4" : "7.5") : "5.2";
+          svgHtml += `<g transform="translate(${cx.toFixed(1)}, ${ageLabelCenterY}) scale(${corr.toFixed(3)}, 1)">`;
+          svgHtml += `<text x="0" y="0" text-anchor="middle" font-size="${ageLabelFontSize}" font-weight="${isSel ? '700' : '600'}" fill="${isSel ? m.color : '#64748b'}" style="pointer-events: none; user-select: none;">${ageLabel}</text>`;
+          svgHtml += `</g>`;
+
+          // Interactive Hit Rect for Milestone (no title tooltip text)
+          const hitTopY = isDesktop ? 68 : 50;
+          const hitHeight = isDesktop ? 50 : 32;
+          const hitW = isDesktop ? Math.max(24, step) : 18;
+          const hitX = Math.max(0, cx - hitW / 2);
+          svgHtml += `<rect x="${hitX.toFixed(1)}" y="${hitTopY}" width="${hitW.toFixed(1)}" height="${hitHeight}" fill="transparent" cursor="pointer" class="milestone-svg-hit-rect" data-milestone-letter="${m.letter}" />`;
+        }
+      });
+
       svg.innerHTML = svgHtml;
 
-      // Attach events to hit rects
+      // Attach click events to phase hit rects (no tooltip text)
       svg.querySelectorAll('.phase-hit-rect').forEach(rect => {
         const idx = parseInt(rect.getAttribute('data-phase-idx'), 10);
-        const p = phases[idx];
-        const info = getPhaseDisplayInfo(p, params);
-
         rect.addEventListener('click', (e) => {
           e.stopPropagation();
           togglePhaseGrouping(idx);
         });
+      });
 
-        rect.addEventListener('mouseenter', () => {
-          if (!tooltip) return;
-          const r = svg.getBoundingClientRect();
-          const rectW = rect.getBoundingClientRect();
-          tooltip.style.display = 'block';
-          tooltip.style.left = `${Math.min(r.width - 160, Math.max(10, rectW.left - r.left + rectW.width / 2 - 70))}px`;
-          tooltip.style.top = `-28px`;
-          const isThisExpanded = (idx === selectedPhaseGroupingIdx && isPhaseDetailCardExpanded);
-          const toggleAction = isThisExpanded ? 'Tap to collapse description' : 'Tap to open description';
-          tooltip.innerHTML = `<strong>${info.icon} ${info.title}</strong> (Age ${p.startAge}–${p.endAge})<br><span style="font-size: 0.72rem; color: #94a3b8; font-weight: 500;">${toggleAction}</span>`;
-        });
-
-        rect.addEventListener('mouseleave', () => {
-          if (tooltip) tooltip.style.display = 'none';
+      // Attach click events to milestone SVG hit rects (no tooltip text)
+      svg.querySelectorAll('.milestone-svg-hit-rect').forEach(rect => {
+        const letter = rect.getAttribute('data-milestone-letter');
+        rect.addEventListener('click', (e) => {
+          e.stopPropagation();
+          toggleMilestoneDetail(letter);
         });
       });
 
-      // Update detail card
-      if (typeof selectedPhaseGroupingIdx === 'number' && selectedPhaseGroupingIdx >= 0 && selectedPhaseGroupingIdx < phases.length) {
-        updatePhaseDetailCard(phases[selectedPhaseGroupingIdx], selectedPhaseGroupingIdx, phases.length, params);
+      // Update detail card and milestone bar active states
+      if (isPhaseDetailCardExpanded) {
+        if (activeRoadmapSelectionType === 'milestone' && selectedMilestoneLetter) {
+          const m = ROADMAP_MILESTONES.find(item => item.letter === selectedMilestoneLetter);
+          if (m) updateMilestoneDetailCard(m);
+        } else if (typeof selectedPhaseGroupingIdx === 'number' && selectedPhaseGroupingIdx >= 0 && selectedPhaseGroupingIdx < phases.length) {
+          updatePhaseDetailCard(phases[selectedPhaseGroupingIdx], selectedPhaseGroupingIdx, phases.length, params);
+        }
+      } else {
+        const card = document.getElementById('chartPhaseDetailCard');
+        if (card) {
+          card.style.display = 'none';
+          card.innerHTML = '';
+        }
       }
+
+      // Update milestone button active state in milestones bar
+      document.querySelectorAll('.milestone-badge-btn').forEach(btn => {
+        const isMatch = (isPhaseDetailCardExpanded && activeRoadmapSelectionType === 'milestone' && btn.getAttribute('data-milestone-letter') === selectedMilestoneLetter);
+        btn.classList.toggle('active', isMatch);
+      });
     }
 
     /* ==========================================================================
@@ -11966,9 +12616,11 @@ ${url}`;
 
     function updateResultsTopPlanBar() {
       const goalPill = document.getElementById('planGoalPill');
+      const headline = document.getElementById('planSummaryHeadline');
       const ageStat = document.getElementById('planAgeStat');
       const balStat = document.getElementById('planBalStat');
       const expStat = document.getElementById('planExpStat');
+      const planRothStat = document.getElementById('planRothStat');
 
       const curAge = parseInt(document.getElementById('currentAge')?.value) || 50;
       const retAge = parseInt(document.getElementById('retirementAge')?.value) || 50;
@@ -11979,27 +12631,81 @@ ${url}`;
       const bBrok = parseFloat(document.getElementById('balBrokerage')?.value) || 0;
       const bHsa = parseFloat(document.getElementById('balHsa')?.value) || 0;
       const totalAssets = b401 + bIra + bRoth + bBrok + bHsa;
+      const conv = parseFloat(document.getElementById('annualRothConv')?.value) || 0;
 
-      if (goalPill) {
-        if (activeGoalMode === 'when_retire') goalPill.innerHTML = '⏱️ Goal: When can I retire?';
-        else if (activeGoalMode === 'what_afford') goalPill.innerHTML = '💵 Goal: What can I afford?';
-        else goalPill.innerHTML = '✍️ Goal: Custom Plan';
+      // Extract current simulation result if available
+      let finalBal = 0;
+      let isSolvent = true;
+      let depAge = null;
+      if (typeof currentSchedule !== 'undefined' && currentSchedule && currentSchedule.length > 0) {
+        const lastRow = currentSchedule[currentSchedule.length - 1];
+        finalBal = lastRow ? (lastRow.totalEndingBal || 0) : 0;
+      }
+      if (typeof currentDepletedAge !== 'undefined' && currentDepletedAge !== null) {
+        depAge = currentDepletedAge;
+        isSolvent = false;
       }
 
-      if (ageStat) {
-        ageStat.innerHTML = `<strong>Age:</strong> ${curAge} → Retire ${retAge}`;
+      // 1. Goal Pill & Prominent Goal Answer
+      if (activeGoalMode === 'when_retire') {
+        if (goalPill) goalPill.innerHTML = '⏱️ Goal: When can I retire?';
+        if (headline) {
+          if (retAge <= curAge) {
+            headline.innerHTML = `You can retire right now at <span class="plan-answer-highlight">Age ${retAge}</span>`;
+          } else {
+            const yrsLeft = retAge - curAge;
+            headline.innerHTML = `Earliest Retirement Age: <span class="plan-answer-highlight">Age ${retAge}</span> <span style="font-size:0.85rem; font-weight:600; color:#64748b;">(in ${yrsLeft} year${yrsLeft > 1 ? 's' : ''})</span>`;
+          }
+        }
+        if (ageStat) {
+          ageStat.innerHTML = isSolvent
+            ? `<strong>Solvency:</strong> <span style="color:#15803d; font-weight:700;">✓ 100% Through Age 90</span>`
+            : `<strong>Solvency:</strong> <span style="color:#dc2626; font-weight:700;">⚠️ Depleted at Age ${depAge}</span>`;
+        }
+        if (balStat) {
+          balStat.innerHTML = `<strong>Projected Balance (Age 90):</strong> <span style="color:#15803d; font-weight:700;">${formatCurrency(finalBal)}</span>`;
+        }
+        if (expStat) {
+          expStat.innerHTML = `<strong>Spending:</strong> ${formatCurrency(expense)}/yr`;
+        }
+      } else if (activeGoalMode === 'what_afford') {
+        if (goalPill) goalPill.innerHTML = '💵 Goal: What can I afford?';
+        if (headline) {
+          headline.innerHTML = `You can safely spend: <span class="plan-answer-highlight">${formatCurrency(expense)}/yr</span> <span style="font-size:0.85rem; font-weight:600; color:#64748b;">(${formatCurrency(Math.round(expense / 12))}/mo)</span>`;
+        }
+        if (ageStat) {
+          ageStat.innerHTML = `<strong>Retirement Age:</strong> Age ${retAge}`;
+        }
+        if (balStat) {
+          balStat.innerHTML = `<strong>Starting Assets:</strong> ${formatCurrency(totalAssets)}`;
+        }
+        if (expStat) {
+          expStat.innerHTML = `<strong>Solvency:</strong> <span style="color:#15803d; font-weight:700;">✓ 100% Through Age 90</span>`;
+        }
+      } else {
+        // Custom Plan
+        if (goalPill) goalPill.innerHTML = '✍️ Goal: Custom Plan';
+        if (headline) {
+          if (isSolvent) {
+            headline.innerHTML = `Plan Status: <span class="plan-answer-highlight">✓ 100% Fully Solvent</span> <span style="font-size:0.85rem; font-weight:600; color:#64748b;">(Through Age 90)</span>`;
+          } else {
+            headline.innerHTML = `Plan Status: <span class="plan-answer-highlight warning">⚠️ Portfolio Depleted at Age ${depAge}</span>`;
+          }
+        }
+        if (ageStat) {
+          ageStat.innerHTML = `<strong>Timeline:</strong> Age ${curAge} → Retire ${retAge}`;
+        }
+        if (balStat) {
+          balStat.innerHTML = `<strong>Ending Balance:</strong> ${formatCurrency(finalBal)}`;
+        }
+        if (expStat) {
+          expStat.innerHTML = `<strong>Spending:</strong> ${formatCurrency(expense)}/yr`;
+        }
       }
-      if (balStat) {
-        balStat.innerHTML = `<strong>Assets:</strong> ${formatCurrency(totalAssets)}`;
-      }
-      if (expStat) {
-        expStat.innerHTML = `<strong>Expenses:</strong> ${formatCurrency(expense)}/yr`;
-      }
-      const planRothStat = document.getElementById('planRothStat');
+
       if (planRothStat) {
-        const conv = parseFloat(document.getElementById('annualRothConv')?.value) || 0;
         if (isAutoRothConversion) {
-          planRothStat.innerHTML = `<strong>Roth:</strong> Auto-Optimized${conv > 0 ? ` (${formatCurrency(conv)}/yr)` : ' ($0/yr)'}`;
+          planRothStat.innerHTML = `<strong>Auto-Roth:</strong> ${conv > 0 ? formatCurrency(conv) + '/yr' : '$0/yr'}`;
           planRothStat.title = 'Dual Goal: Maximize ending net worth at Age 90 & minimize lifetime taxes';
         } else {
           planRothStat.innerHTML = `<strong>Roth:</strong> ${conv > 0 ? formatCurrency(conv) + '/yr (Manual)' : '$0/yr (Manual)'}`;
