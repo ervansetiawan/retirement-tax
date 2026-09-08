@@ -506,23 +506,30 @@
         display: block !important;
       }
       .kpi-grid {
-        display: grid !important;
-        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-        gap: 1rem !important;
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 1.5rem !important;
+        width: 100% !important;
         margin-bottom: 1.5rem !important;
       }
       .kpi-grid .carousel-slide {
-        display: flex !important;
-        flex-direction: column !important;
-        height: 100% !important;
+        display: block !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        height: auto !important;
       }
       .kpi-grid .carousel-slide .kpi-card {
-        flex: 1 1 auto !important;
-        height: 100% !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        height: auto !important;
       }
       #slideTable {
         display: block !important;
+        width: 100% !important;
         margin-bottom: 1.5rem !important;
+      }
+      .balance-growth-canvas-wrap {
+        height: 115px;
       }
     }
 
@@ -935,22 +942,14 @@
       box-shadow: 0 2px 6px rgba(37, 99, 235, 0.3);
     }
 
-    /* KPI Summary Cards: 2-col on mobile, 4-col on desktop */
-    /* KPI Summary Cards: 1-col on mobile, 3-col on desktop */
+    /* KPI Summary Cards: 1-col full available width */
     .kpi-grid {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr);
-      gap: 0.85rem;
-      margin-bottom: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      margin-bottom: 1.5rem;
       width: 100%;
       max-width: 100%;
-    }
-    @media (min-width: 768px) {
-      .kpi-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 1rem;
-        margin-bottom: 1.5rem;
-      }
     }
     .kpi-card {
       background: var(--bg-card);
@@ -2411,6 +2410,34 @@
       display: inline-block;
       flex-shrink: 0;
     }
+    .taxes-top-metrics-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 1.15rem;
+      width: 100%;
+    }
+    .taxes-top-metrics-grid .tax-paid-col {
+      min-width: 0;
+    }
+    .taxes-top-metrics-grid .tax-unrealized-col {
+      padding-top: 0.85rem;
+      border-top: 1px solid #e2e8f0;
+      min-width: 0;
+    }
+    @media (min-width: 768px) {
+      .taxes-top-metrics-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+        align-items: start;
+      }
+      .taxes-top-metrics-grid .tax-unrealized-col {
+        padding-top: 0;
+        padding-left: 1.5rem;
+        border-top: none;
+        border-left: 1px solid #e2e8f0;
+      }
+    }
 
     .btn-action {
       background: var(--primary);
@@ -3302,9 +3329,9 @@
             <div class="carousel-slide" id="slideLifetimeTaxes">
               <div class="kpi-card" id="kpiCardLifetimeTaxes">
                 <div>
-                  <div style="display: flex; flex-direction: column; gap: 1.15rem; width: 100%;">
+                  <div class="taxes-top-metrics-grid">
                     <!-- Top Block: Paid Taxes -->
-                    <div>
+                    <div class="tax-paid-col">
                       <div class="kpi-label">Paid Taxes</div>
                       <div class="kpi-value" id="kpiTaxes">--</div>
                       <div class="kpi-sub" id="kpiTaxRate">--</div>
@@ -3314,8 +3341,8 @@
                       </div>
                     </div>
 
-                    <!-- Bottom Block: Estimated Taxes on Unrealized Gain (Below Paid Taxes) -->
-                    <div style="padding-top: 0.85rem; border-top: 1px solid #e2e8f0;">
+                    <!-- Bottom Block: Estimated Taxes on Unrealized Gain (Below Paid Taxes on Mobile, 2-col on Desktop) -->
+                    <div class="tax-unrealized-col">
                       <div class="kpi-label">Est. Tax on Unrealized Gain</div>
                       <div class="kpi-value" id="kpiUnrealizedTax" style="color: #7c3aed;">$0</div>
                       <div class="kpi-sub" id="kpiUnrealizedTaxSub">--</div>
@@ -3342,7 +3369,8 @@
                       <span class="balance-growth-peak" id="wotPeakBadge" style="background:#e0f2fe; color:#0369a1;">Peak: $0/yr</span>
                     </div>
                     <div class="balance-growth-legend" id="wotGrowthLegend" style="flex-wrap: wrap; gap: 0.35rem 0.65rem;">
-                      <span class="bg-legend-item"><span class="bg-legend-dot" style="background: #0284c7;"></span>Pre-Tax</span>
+                      <span class="bg-legend-item"><span class="bg-legend-dot" style="background: #2563eb;"></span>401(k)</span>
+                      <span class="bg-legend-item"><span class="bg-legend-dot" style="background: #0284c7;"></span>Trad IRA</span>
                       <span class="bg-legend-item"><span class="bg-legend-dot" style="background: #f59e0b;"></span>Mandatory RMD</span>
                       <span class="bg-legend-item"><span class="bg-legend-dot" style="background: #a855f7;"></span>Brokerage</span>
                       <span class="bg-legend-item"><span class="bg-legend-dot" style="background: #0d9488;"></span>HSA</span>
@@ -6555,10 +6583,19 @@
         const wPretaxTotal = Math.max(0, row.wPretax || 0);
         const mandatoryRmd = Math.max(0, row.mandatoryRmd || 0);
         const wRmd = Math.min(wPretaxTotal, mandatoryRmd);
-        const wPretax = Math.max(0, wPretaxTotal - wRmd);
+        const wPretaxDiscretionary = Math.max(0, wPretaxTotal - wRmd);
+        
+        let w401k = 0;
+        let wIRA = 0;
+        if (wPretaxTotal > 0) {
+          const ratio401k = (row.w401k || 0) / wPretaxTotal;
+          w401k = wPretaxDiscretionary * ratio401k;
+          wIRA = Math.max(0, wPretaxDiscretionary - w401k);
+        }
+        
         const wHsa = Math.max(0, row.wHsa || 0);
         const wRoth = Math.max(0, row.wRoth || 0);
-        const totalW = wBrok + wPretax + wRmd + wHsa + wRoth;
+        const totalW = wBrok + w401k + wIRA + wRmd + wHsa + wRoth;
 
         return {
           age: row.age,
@@ -6567,7 +6604,9 @@
           isWorking: row.isWorking,
           phaseLabel: row.isWorking ? 'Working' : 'Retirement',
           wBrok: wBrok,
-          wPretax: wPretax,
+          w401k: w401k,
+          wIRA: wIRA,
+          wPretax: wPretaxDiscretionary,
           wRmd: wRmd,
           wHsa: wHsa,
           wRoth: wRoth,
@@ -6642,35 +6681,42 @@
         const x = padL + (i + 0.5) * step - barW / 2;
         let curY = zeroY;
 
-        // 1. Pre-Tax Discretionary (#0284c7)
-        const hPretax = (p.wPretax / maxW) * plotH;
-        if (hPretax > 0.4) {
-          barsSvg += `<rect x="${x.toFixed(1)}" y="${(curY - hPretax).toFixed(1)}" width="${barW.toFixed(1)}" height="${hPretax.toFixed(1)}" fill="#0284c7" />`;
-          curY -= hPretax;
+        // 1. 401(k) Discretionary (#2563eb)
+        const h401k = (p.w401k / maxW) * plotH;
+        if (h401k > 0.4) {
+          barsSvg += `<rect x="${x.toFixed(1)}" y="${(curY - h401k).toFixed(1)}" width="${barW.toFixed(1)}" height="${h401k.toFixed(1)}" fill="#2563eb" />`;
+          curY -= h401k;
         }
 
-        // 2. Mandatory RMD (#f59e0b)
+        // 2. Traditional IRA Discretionary (#0284c7)
+        const hIRA = (p.wIRA / maxW) * plotH;
+        if (hIRA > 0.4) {
+          barsSvg += `<rect x="${x.toFixed(1)}" y="${(curY - hIRA).toFixed(1)}" width="${barW.toFixed(1)}" height="${hIRA.toFixed(1)}" fill="#0284c7" />`;
+          curY -= hIRA;
+        }
+
+        // 3. Mandatory RMD (#f59e0b)
         const hRmd = (p.wRmd / maxW) * plotH;
         if (hRmd > 0.4) {
           barsSvg += `<rect x="${x.toFixed(1)}" y="${(curY - hRmd).toFixed(1)}" width="${barW.toFixed(1)}" height="${hRmd.toFixed(1)}" fill="#f59e0b" />`;
           curY -= hRmd;
         }
 
-        // 3. Brokerage (#a855f7)
+        // 4. Brokerage (#a855f7)
         const hBrok = (p.wBrok / maxW) * plotH;
         if (hBrok > 0.4) {
           barsSvg += `<rect x="${x.toFixed(1)}" y="${(curY - hBrok).toFixed(1)}" width="${barW.toFixed(1)}" height="${hBrok.toFixed(1)}" fill="#a855f7" />`;
           curY -= hBrok;
         }
 
-        // 4. HSA (#0d9488)
+        // 5. HSA (#0d9488)
         const hHsa = (p.wHsa / maxW) * plotH;
         if (hHsa > 0.4) {
           barsSvg += `<rect x="${x.toFixed(1)}" y="${(curY - hHsa).toFixed(1)}" width="${barW.toFixed(1)}" height="${hHsa.toFixed(1)}" fill="#0d9488" />`;
           curY -= hHsa;
         }
 
-        // 5. Roth IRA (#10b981)
+        // 6. Roth IRA (#10b981)
         const hRoth = (p.wRoth / maxW) * plotH;
         if (hRoth > 0.4) {
           barsSvg += `<rect x="${x.toFixed(1)}" y="${(curY - hRoth).toFixed(1)}" width="${barW.toFixed(1)}" height="${hRoth.toFixed(1)}" fill="#10b981" rx="1.2" />`;
@@ -6718,9 +6764,10 @@
 
         // Format breakdown items
         const parts = [];
-        if (p.wBrok > 0) parts.push(`<span style="color:#c084fc;">● Brok:</span> <span style="color:#f1f5f9;">${formatCurrency(p.wBrok)}</span>`);
-        if (p.wPretax > 0) parts.push(`<span style="color:#38bdf8;">● Pre-Tax:</span> <span style="color:#f1f5f9;">${formatCurrency(p.wPretax)}</span>`);
+        if (p.w401k > 0) parts.push(`<span style="color:#60a5fa;">● 401(k):</span> <span style="color:#f1f5f9;">${formatCurrency(p.w401k)}</span>`);
+        if (p.wIRA > 0) parts.push(`<span style="color:#38bdf8;">● Trad IRA:</span> <span style="color:#f1f5f9;">${formatCurrency(p.wIRA)}</span>`);
         if (p.wRmd > 0) parts.push(`<span style="color:#fbbf24;">● RMD:</span> <span style="color:#f1f5f9;">${formatCurrency(p.wRmd)}</span>`);
+        if (p.wBrok > 0) parts.push(`<span style="color:#c084fc;">● Brok:</span> <span style="color:#f1f5f9;">${formatCurrency(p.wBrok)}</span>`);
         if (p.wHsa > 0) parts.push(`<span style="color:#2dd4bf;">● HSA:</span> <span style="color:#f1f5f9;">${formatCurrency(p.wHsa)}</span>`);
         if (p.wRoth > 0) parts.push(`<span style="color:#34d399;">● Roth:</span> <span style="color:#f1f5f9;">${formatCurrency(p.wRoth)}</span>`);
         if (parts.length === 0) parts.push(`<span style="color:#94a3b8;">$0 Withdrawals (${p.phaseLabel})</span>`);
