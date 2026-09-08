@@ -7423,8 +7423,8 @@
         candidates.push(c);
       }
 
+      const items = [];
       let baselineMetrics = null;
-      let best = null;
 
       for (const c of candidates) {
         const testParams = Object.assign({}, baseParams, { annualRothConv: c });
@@ -7439,33 +7439,52 @@
         const estEmbeddedBrokTax = finalBrok * (1 - basisRatio) * 0.15;
         const afterTaxNetWorth = finalBal - estEmbeddedPretaxTax - estEmbeddedBrokTax;
 
+        let totalRmd = 0;
+        res.schedule.forEach(r => { totalRmd += (r.mandatoryRmd || 0); });
+
         const item = {
           conv: c,
           finalBal: finalBal,
           afterTaxNetWorth: afterTaxNetWorth,
-          lifetimeTax: lifetimeTax
+          lifetimeTax: lifetimeTax,
+          totalRmd: totalRmd
         };
 
         if (c === 0) baselineMetrics = item;
+        items.push(item);
+      }
 
-        if (!best) {
+      if (!baselineMetrics || items.length === 0) return;
+
+      // Score candidates by Net Economic Benefit = (Tax Savings) + (After-Tax Net Worth Change)
+      let best = baselineMetrics;
+      best.taxSavings = 0;
+      best.wealthGain = 0;
+      best.netEconomicBenefit = 0;
+
+      items.forEach(item => {
+        const taxSavings = baselineMetrics.lifetimeTax - item.lifetimeTax;
+        const wealthGain = item.afterTaxNetWorth - baselineMetrics.afterTaxNetWorth;
+        const netBenefit = taxSavings + wealthGain;
+
+        item.taxSavings = taxSavings;
+        item.wealthGain = wealthGain;
+        item.netEconomicBenefit = netBenefit;
+
+        if (item.netEconomicBenefit > best.netEconomicBenefit + 500) {
           best = item;
-        } else {
-          // Maximize after-tax net worth; break ties with lower lifetime tax
-          const wealthDiff = item.afterTaxNetWorth - best.afterTaxNetWorth;
-          if (wealthDiff > 1000) {
-            best = item;
-          } else if (Math.abs(wealthDiff) <= 1000 && item.lifetimeTax < best.lifetimeTax) {
+        } else if (Math.abs(item.netEconomicBenefit - best.netEconomicBenefit) <= 500) {
+          if (item.taxSavings > best.taxSavings) {
             best = item;
           }
         }
-      }
-
-      if (!best || !baselineMetrics) return;
+      });
 
       const optimalConv = best.conv;
-      const wealthGain = best.afterTaxNetWorth - baselineMetrics.afterTaxNetWorth;
-      const taxSavings = baselineMetrics.lifetimeTax - best.lifetimeTax;
+      const wealthGain = best.wealthGain;
+      const taxSavings = best.taxSavings;
+      const rmdReduction = baselineMetrics.totalRmd - best.totalRmd;
+      const rmdPct = baselineMetrics.totalRmd > 0 ? Math.round((rmdReduction / baselineMetrics.totalRmd) * 100) : 0;
 
       // Apply the optimal conversion amount
       if (convInput) convInput.value = optimalConv;
@@ -7481,13 +7500,16 @@
 
       if (optimalConv > 0) {
         let diffHtml = '';
-        if (wealthGain > 500) {
-          diffHtml += `<div>Projected After-Tax Wealth: <strong style="color: #15803d;">+${formatCurrency(wealthGain)}</strong></div>`;
-        }
         if (taxSavings > 500) {
           diffHtml += `<div>Lifetime Tax Savings: <strong style="color: #0369a1;">+${formatCurrency(taxSavings)} saved</strong></div>`;
-        } else if (taxSavings < -500) {
-          diffHtml += `<div style="font-size: 0.74rem; color: #64748b;">(Conversion tax paid upfront fuels compound tax-free Roth growth)</div>`;
+        }
+        if (rmdReduction > 500) {
+          diffHtml += `<div>Mandatory RMD Reduction: <strong style="color: #d97706;">-${formatCurrency(rmdReduction)} (${rmdPct}% less forced RMD)</strong></div>`;
+        }
+        if (wealthGain > 500) {
+          diffHtml += `<div>Projected After-Tax Wealth: <strong style="color: #15803d;">+${formatCurrency(wealthGain)}</strong></div>`;
+        } else if (wealthGain < -500) {
+          diffHtml += `<div style="font-size: 0.74rem; color: #64748b;">Net Economic Gain: <strong style="color: #15803d;">+${formatCurrency(best.netEconomicBenefit)}</strong> (after tax &amp; compounding)</div>`;
         }
         resultBox.innerHTML = `
           <div style="display: flex; align-items: center; justify-content: space-between; gap: 0.4rem; margin-bottom: 0.25rem;">
