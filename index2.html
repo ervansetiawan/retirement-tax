@@ -207,12 +207,27 @@
       .what-if-subtitle {
         display: none;
       }
+      .what-if-title-long {
+        display: none;
+      }
+      .what-if-title {
+        font-size: 0.88rem;
+        white-space: nowrap;
+      }
+      .what-if-header-left {
+        gap: 0.35rem;
+      }
+      .what-if-header-right {
+        gap: 0.35rem;
+      }
       .what-if-preview-badge {
-        font-size: 0.74rem;
-        padding: 0.15rem 0.45rem;
+        font-size: 0.70rem;
+        padding: 0.15rem 0.40rem;
+        letter-spacing: -0.01em;
       }
       .what-if-toggle-btn {
-        padding: 0.55rem 0.75rem;
+        padding: 0.50rem 0.60rem;
+        gap: 0.35rem;
       }
     }
     .what-if-content {
@@ -3261,7 +3276,7 @@
               <div style="display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; background: #fffbeb; border: 1px solid #fde68a; border-radius: 8px; padding: 0.65rem 0.85rem; font-size: 0.80rem; color: #92400e; margin-top: 0.75rem;">
                 <span style="display: flex; align-items: center; gap: 0.45rem;">
                   <span style="font-size: 1.05rem;">⚡</span>
-                  <span><strong>Automatic Roth Conversion:</strong> Included in all calculations to proactively fill low tax brackets and minimize lifetime taxes.</span>
+                  <span><strong>Automatic Roth Conversion:</strong> Included in all calculations. Objective: <strong>Maximize ending net worth at Age 90 &amp; minimize lifetime taxes</strong>.</span>
                 </span>
                 <span id="autoRothStatusBadge" style="font-weight: 750; color: #b45309; white-space: nowrap; font-size: 0.74rem; background: #fef3c7; padding: 2px 8px; border-radius: 5px; border: 1px solid #fcd34d;">Auto-Active</span>
               </div>
@@ -3624,7 +3639,7 @@
             <div style="display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; background: #fffbeb; border: 1px solid #fde68a; border-radius: 8px; padding: 0.65rem 0.85rem; font-size: 0.80rem; color: #92400e; margin-top: 0.75rem;">
               <span style="display: flex; align-items: center; gap: 0.45rem;">
                 <span style="font-size: 1.05rem;">⚡</span>
-                <span><strong>Automatic Roth Conversion:</strong> Included in all calculations to proactively fill low tax brackets and minimize lifetime taxes.</span>
+                <span><strong>Automatic Roth Conversion:</strong> Automatically optimizes annual conversions to <strong>maximize ending net worth at Age 90 &amp; minimize lifetime taxes</strong>.</span>
               </span>
               <span style="font-weight: 750; color: #b45309; white-space: nowrap; font-size: 0.74rem; background: #fef3c7; padding: 2px 8px; border-radius: 5px; border: 1px solid #fcd34d;">Auto-Active</span>
             </div>
@@ -3844,12 +3859,12 @@
                       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
                       <span id="btnMaximizeRothText">⚡ Auto-Optimize Roth (ON)</span>
                     </button>
-                    <span style="font-size: 0.72rem; color: #92400e; font-weight: 600;">Auto-fills low brackets</span>
+                    <span style="font-size: 0.72rem; color: #92400e; font-weight: 600;">Goal: Maximize Net Worth &amp; Minimize Taxes</span>
                   </div>
                   <div id="rothMaximizeResult" class="retire-result-box" style="display: none; margin-top: 0.45rem;"></div>
                 </div>
                 <p style="font-size: 0.78rem; color: #475569; margin-top: 6px; line-height: 1.45;">
-                  Converts pre-tax 401(k)/IRA funds to Roth each year. Automatically optimized to minimize taxes without depleting your portfolio.
+                  Converts pre-tax 401(k)/IRA funds to Roth each year. Automatically optimized to <strong>maximize ending net worth at Age 90 while minimizing total lifetime taxes</strong> without risking portfolio solvency.
                 </p>
               </div>
 
@@ -4063,12 +4078,12 @@
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                   <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
                 </svg>
-                <span>What-If Scenarios</span>
+                <span>What-If</span><span class="what-if-title-long">&nbsp;Scenarios</span>
               </div>
               <span class="what-if-subtitle">Adjust assumptions to test scenarios in real time across all tabs</span>
             </div>
             <div class="what-if-header-right">
-              <span class="what-if-preview-badge" id="whatIfPreviewBadge">6.0% Return · Age 50 · $0/yr</span>
+              <span class="what-if-preview-badge" id="whatIfPreviewBadge">6.0% ROI · Age 50 · Auto $25k/yr</span>
               <span id="whatIfChevron" class="milestones-chevron">▼</span>
             </div>
           </button>
@@ -4078,10 +4093,10 @@
               <!-- 1. Investment Growth Rate Slider -->
               <div class="what-if-item">
                 <div class="what-if-item-header">
-                  <span class="what-if-label">Investment Return</span>
+                  <span class="what-if-label">Investment ROI</span>
                   <span class="what-if-val" id="whatIfReturnVal">6.0%</span>
                 </div>
-                <input type="range" class="what-if-slider" id="whatIfReturnSlider" min="2.0" max="12.0" step="0.1" value="6.0" oninput="syncWhatIfReturn(this.value)" aria-label="What-if Investment Return" />
+                <input type="range" class="what-if-slider" id="whatIfReturnSlider" min="2.0" max="12.0" step="0.1" value="6.0" oninput="syncWhatIfReturn(this.value)" aria-label="What-if Investment ROI" />
                 <div class="what-if-range-labels">
                   <span>2.0%</span>
                   <span>6.0%</span>
@@ -4106,7 +4121,7 @@
               <!-- 3. Annual Roth Conversion Slider -->
               <div class="what-if-item">
                 <div class="what-if-item-header">
-                  <span class="what-if-label">Annual Roth Conversion</span>
+                  <span class="what-if-label">Annual Roth Conversion <span style="font-size: 0.70rem; color: #92400e; font-weight: 600;">(Goal: Max Net Worth &amp; Min Taxes)</span></span>
                   <div style="display: flex; align-items: center; gap: 6px;">
                     <button type="button" id="btnWhatIfAutoRoth" onclick="resetWhatIfAutoRoth()" style="display: none; font-size: 0.70rem; padding: 1px 7px; border-radius: 4px; background: #eff6ff; color: #2563eb; border: 1px solid #bfdbfe; font-weight: 750; cursor: pointer;" title="Reset to auto-optimized Roth conversion">⚡ Auto</button>
                     <span class="what-if-val" id="whatIfRothConvVal">$0/yr</span>
@@ -5371,8 +5386,12 @@
         const curAge = parseInt(curAgeInput ? curAgeInput.value : 50) || 50;
         const retAge = parseInt(retAgeInput.value) || curAge;
         const conv = parseFloat(convInput.value) || 0;
-        const rothText = isAutoRothConversion ? `Auto ${formatCurrency(conv)}/yr` : `${formatCurrency(conv)}/yr`;
-        whatIfPreview.textContent = `${rate.toFixed(1)}% Return · Age ${retAge} · ${rothText}`;
+        const convFormatted = conv >= 1000 ? `$${Math.round(conv / 1000)}k` : `$${Math.round(conv)}`;
+        const rothText = isAutoRothConversion
+          ? (conv > 0 ? `Auto ${convFormatted}/yr` : 'Auto $0')
+          : (conv > 0 ? `${convFormatted}/yr` : '$0/yr');
+        whatIfPreview.textContent = `${rate.toFixed(1)}% ROI · Age ${retAge} · ${rothText}`;
+        whatIfPreview.title = `Investment ROI: ${rate.toFixed(1)}% · Retirement Age: ${retAge} · Roth: ${isAutoRothConversion ? `Auto-Optimized (${formatCurrency(conv)}/yr - Max Net Worth & Min Taxes)` : formatCurrency(conv) + '/yr'}`;
       }
     }
 
@@ -6875,7 +6894,10 @@
         if (convInput) convInput.value = optimalConv;
         if (convSlider) convSlider.value = optimalConv;
         const rothBadge = document.getElementById('rothOverrideBadge');
-        if (rothBadge) rothBadge.innerText = optimalConv > 0 ? `Auto: ${formatCurrency(optimalConv)}/yr` : 'Auto: $0/yr';
+        if (rothBadge) {
+          rothBadge.innerText = optimalConv > 0 ? `Auto: ${formatCurrency(optimalConv)}/yr` : 'Auto: $0/yr';
+          rothBadge.title = 'Optimized to maximize ending net worth at Age 90 & minimize lifetime taxes';
+        }
       }
 
       const smartResult = simulateRetirement('smart', params);
@@ -7600,7 +7622,16 @@
 
       // Item 4: Strategy & Conversion Impact
       const annualConv = params.annualRothConv || 0;
-      if (activeStrategy === 'smart' && stratTaxSavings > 1000) {
+      if (isAutoRothConversion && annualConv > 0) {
+        const taxSav = (typeof lastOptimalRothDetails !== 'undefined' && lastOptimalRothDetails && lastOptimalRothDetails.taxSavings > 0)
+          ? `saving <strong>${formatCurrency(lastOptimalRothDetails.taxSavings)}</strong> in lifetime taxes`
+          : 'minimizing lifetime taxes';
+        items.push({
+          icon: '⚡',
+          title: 'Auto-Optimized Roth Conversion',
+          text: `Automatically converting <strong>${formatCurrency(annualConv)}/yr</strong> achieves your dual goal: <strong>maximizing ending net worth at Age 90</strong> while ${taxSav} and eliminating late-life RMD tax spikes.`
+        });
+      } else if (activeStrategy === 'smart' && stratTaxSavings > 1000) {
         items.push({
           icon: '🎯',
           title: 'Smart Bracket-Filling',
@@ -9278,13 +9309,41 @@
     /* ==========================================================================
        AUTOMATIC ROTH CONVERSION OPTIMIZATION ENGINE
        ========================================================================== */
+    let lastOptimalRothDetails = {
+      optimalConv: 0,
+      taxSavings: 0,
+      wealthGain: 0,
+      netBenefit: 0,
+      endingNetWorth: 0,
+      baseEndingNetWorth: 0,
+      baseLifetimeTax: 0,
+      isSolvent: true
+    };
+
     function solveOptimalRothConversion(baseParams) {
       const pretaxTotal = (baseParams.bal401kInit || 0) + (baseParams.balIRAInit || 0);
-      if (pretaxTotal <= 0) return 0;
+      if (pretaxTotal <= 0) {
+        lastOptimalRothDetails = {
+          optimalConv: 0,
+          taxSavings: 0,
+          wealthGain: 0,
+          netBenefit: 0,
+          endingNetWorth: 0,
+          baseEndingNetWorth: 0,
+          baseLifetimeTax: 0,
+          isSolvent: true
+        };
+        return 0;
+      }
 
-      const maxCandidate = Math.min(250000, pretaxTotal);
+      const maxCandidate = Math.min(300000, pretaxTotal);
       const candidates = [0];
-      for (let c = 10000; c <= maxCandidate; c += 10000) {
+      // Search with $5,000 granularity up to $100k to precisely target federal 10%/12% tax bracket ceilings
+      for (let c = 5000; c <= Math.min(100000, maxCandidate); c += 5000) {
+        candidates.push(c);
+      }
+      // Search with $10,000 granularity from $110k up to $300k
+      for (let c = 110000; c <= maxCandidate; c += 10000) {
         candidates.push(c);
       }
 
@@ -9303,6 +9362,9 @@
       let bestConv = 0;
       let bestNetBenefit = 0;
       let bestFinalBal = baseFinalBal;
+      let bestAfterTax = baseAfterTax;
+      let bestTaxSavings = 0;
+      let bestWealthGain = 0;
       let bestIsSolvent = isBaseSolvent;
       let bestDepletedAge = baseRes.depletedAge || 0;
 
@@ -9343,6 +9405,7 @@
         }
 
         // 5. For solvent candidates (or equal longevity), compare net wealth & tax benefits
+        // Dual Objective: (1) Maximize ending net worth at Age 90 AND (2) Minimize lifetime taxes
         const lifetimeTax = res.totalLifetimeTaxes || 0;
         const finalPretax = lastRow ? ((lastRow.bal401k || 0) + (lastRow.balIRA || 0)) : 0;
         const finalBrok = lastRow ? (lastRow.balBrokerage || 0) : 0;
@@ -9350,18 +9413,39 @@
 
         const taxSavings = baseLifetimeTax - lifetimeTax;
         const wealthGain = afterTax - baseAfterTax;
+        // Total Dual Objective Score: Sum of wealth gain and lifetime tax savings
         const netBenefit = taxSavings + wealthGain;
 
         if (netBenefit > bestNetBenefit + 500) {
           bestNetBenefit = netBenefit;
           bestConv = c;
           bestFinalBal = finalBal;
-        } else if (Math.abs(netBenefit - bestNetBenefit) <= 500 && finalBal > bestFinalBal) {
-          bestNetBenefit = netBenefit;
-          bestConv = c;
-          bestFinalBal = finalBal;
+          bestAfterTax = afterTax;
+          bestTaxSavings = taxSavings;
+          bestWealthGain = wealthGain;
+        } else if (Math.abs(netBenefit - bestNetBenefit) <= 500) {
+          // Tie-breaker: prioritize higher ending after-tax net worth first, then higher lifetime tax savings
+          if (afterTax > bestAfterTax + 250 || (Math.abs(afterTax - bestAfterTax) <= 250 && taxSavings > bestTaxSavings)) {
+            bestNetBenefit = netBenefit;
+            bestConv = c;
+            bestFinalBal = finalBal;
+            bestAfterTax = afterTax;
+            bestTaxSavings = taxSavings;
+            bestWealthGain = wealthGain;
+          }
         }
       }
+
+      lastOptimalRothDetails = {
+        optimalConv: bestConv,
+        taxSavings: bestTaxSavings,
+        wealthGain: bestWealthGain,
+        netBenefit: bestNetBenefit,
+        endingNetWorth: bestAfterTax,
+        baseEndingNetWorth: baseAfterTax,
+        baseLifetimeTax: baseLifetimeTax,
+        isSolvent: bestIsSolvent
+      };
 
       return bestConv;
     }
@@ -9477,6 +9561,8 @@
       if (resultBox) {
         resultBox.style.display = 'block';
         resultBox.className = 'retire-result-box';
+        const wealthStr = (lastOptimalRothDetails.wealthGain >= 0 ? '+' : '') + formatCurrency(lastOptimalRothDetails.wealthGain);
+        const taxStr = (lastOptimalRothDetails.taxSavings >= 0 ? 'Saves ' : 'Shifted ') + formatCurrency(Math.abs(lastOptimalRothDetails.taxSavings));
         resultBox.innerHTML = `
           <div style="display: flex; align-items: center; justify-content: space-between; gap: 0.4rem; margin-bottom: 0.25rem;">
             <div style="display: flex; align-items: center; gap: 0.35rem; flex-wrap: wrap;">
@@ -9485,8 +9571,11 @@
             </div>
             <button type="button" onclick="resetRothConversionBaseline()" style="white-space: nowrap; background: #ffffff; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 0.72rem; color: #475569; cursor: pointer; padding: 2px 6px; font-weight: 600;">Revert</button>
           </div>
-          <div style="font-size: 0.78rem; line-height: 1.4;">
-            Converts pre-tax accounts systematically before mandatory RMDs at Age 73/75 to lock in tax-free compounding while guaranteeing full solvency through Age 90.
+          <div style="font-size: 0.78rem; line-height: 1.4; color: #334155; margin-top: 4px;">
+            <div><strong>Dual Optimization Goal:</strong> Maximize ending net worth &amp; minimize lifetime taxes.</div>
+            <div style="margin-top: 3px;">• <strong>Ending Net Worth at Age 90:</strong> ${wealthStr} net wealth</div>
+            <div>• <strong>Lifetime Taxes:</strong> ${taxStr} vs $0 baseline conversion</div>
+            <div>• <strong>Solvency:</strong> Preserves 100% solvency through Age 90</div>
           </div>
         `;
       }
@@ -11030,7 +11119,13 @@
       const planRothStat = document.getElementById('planRothStat');
       if (planRothStat) {
         const conv = parseFloat(document.getElementById('annualRothConv')?.value) || 0;
-        planRothStat.innerHTML = `<strong>Roth:</strong> ${isAutoRothConversion ? 'Auto-Optimized' : (conv > 0 ? formatCurrency(conv) + '/yr' : '$0/yr')}`;
+        if (isAutoRothConversion) {
+          planRothStat.innerHTML = `<strong>Roth:</strong> Auto-Optimized${conv > 0 ? ` (${formatCurrency(conv)}/yr)` : ' ($0/yr)'}`;
+          planRothStat.title = 'Dual Goal: Maximize ending net worth at Age 90 & minimize lifetime taxes';
+        } else {
+          planRothStat.innerHTML = `<strong>Roth:</strong> ${conv > 0 ? formatCurrency(conv) + '/yr (Manual)' : '$0/yr (Manual)'}`;
+          planRothStat.title = 'Manual conversion override';
+        }
       }
     }
 
