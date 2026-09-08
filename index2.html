@@ -2465,8 +2465,14 @@
       <aside id="panelInputs" class="panel-view">
         <div class="card">
           <div class="card-title">
-            <span>Tell me about your situation</span>
-            <button class="btn-action btn-secondary" style="padding: 0.25rem 0.75rem; font-size: 0.82rem; min-height: 34px;" onclick="resetInputs()">Reset</button>
+            <div>
+              <span>Tell me about your situation</span>
+              <div id="saveStatusIndicator" style="font-size: 0.72rem; color: #64748b; font-weight: 500; margin-top: 2px; display: flex; align-items: center; gap: 4px;">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
+                <span id="saveStatusText">Default settings</span>
+              </div>
+            </div>
+            <button class="btn-action btn-secondary" style="padding: 0.25rem 0.75rem; font-size: 0.82rem; min-height: 34px;" onclick="resetInputs()" title="Reset all inputs to default values and clear saved data">Reset</button>
           </div>
 
           <!-- 1. Age & Timeline Planning (Grouped Box) -->
@@ -4503,9 +4509,215 @@
     }
 
     /* ==========================================================================
+       PERSISTENCE ENGINE: LOCALSTORAGE DEVICE AUTO-SAVE & RESTORE
+       Saves all user inputs, account balances, and scenario settings to the user's
+       browser device (localStorage) so they don't have to re-enter info on return.
+       ========================================================================== */
+    const STORAGE_KEY = 'fire_taxcalc_user_inputs';
+    let isResetting = false;
+    let isLoadingSaved = false;
+    let pageInitialized = false;
+
+    function updateSaveStatusIndicator(text, color) {
+      const el = document.getElementById('saveStatusText');
+      const container = document.getElementById('saveStatusIndicator');
+      if (!el || !container) return;
+      el.textContent = text;
+      if (color) container.style.color = color;
+    }
+
+    function saveUserInputs() {
+      if (isResetting || isLoadingSaved) return;
+      try {
+        const parseNum = (id, fallback) => {
+          const el = document.getElementById(id);
+          if (!el) return fallback;
+          const val = parseFloat(el.value);
+          return !isNaN(val) ? val : fallback;
+        };
+
+        const parseIntNum = (id, fallback) => {
+          const el = document.getElementById(id);
+          if (!el) return fallback;
+          const val = parseInt(el.value);
+          return !isNaN(val) ? val : fallback;
+        };
+
+        const data = {
+          version: 1,
+          savedAt: new Date().toISOString(),
+          status: document.getElementById('filingStatus')?.value || 'MFJ',
+          stateCode: document.getElementById('stateSelect')?.value || 'MN',
+          currentAge: parseIntNum('currentAge', 50),
+          retirementAge: parseIntNum('retirementAge', 50),
+          annualExpense: parseNum('annualExpense', 100000),
+          ssMonthly: parseNum('ssMonthly', 2500),
+          ssStartAge: parseIntNum('ssStartAge', 67),
+          bal401k: parseNum('bal401k', 1000000),
+          balIRA: parseNum('balIRA', 200000),
+          balRoth: parseNum('balRoth', 200000),
+          balBrokerage: parseNum('balBrokerage', 1000000),
+          balHsa: parseNum('balHsa', 100000),
+          annualRothConv: parseNum('annualRothConv', 0),
+          rateReturn: parseNum('rateReturn', 6.0),
+          rateInflation: parseNum('rateInflation', 2.5),
+          costBasisRatio: parseNum('costBasisRatio', 60),
+          targetBracketRate: parseIntNum('pretaxBracketCap', 12),
+          enableIrmaa: document.getElementById('enableIrmaa') ? document.getElementById('enableIrmaa').checked : true,
+          exemptRule55: document.getElementById('exemptRule55') ? document.getElementById('exemptRule55').checked : false
+        };
+
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+        updateSaveStatusIndicator('Saved on this device', '#16a34a');
+      } catch (e) {
+        console.warn('localStorage save failed:', e);
+      }
+    }
+
+    function loadSavedUserInputs() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) {
+          updateSaveStatusIndicator('Default settings', '#64748b');
+          return false;
+        }
+        const data = JSON.parse(raw);
+        if (!data || typeof data !== 'object') return false;
+
+        isLoadingSaved = true;
+
+        // 1. Filing Status
+        if (data.status && ['MFJ', 'Single', 'HoH', 'MFS'].includes(data.status)) {
+          const sel = document.getElementById('filingStatus');
+          if (sel) sel.value = data.status;
+          ['MFJ', 'Single', 'HoH', 'MFS'].forEach(st => {
+            const btn = document.getElementById(`btnStatus${st}`);
+            if (btn) btn.classList.toggle('active', st === data.status);
+          });
+        }
+
+        // 2. State Select
+        if (data.stateCode && document.getElementById('stateSelect')) {
+          if (typeof STATE_TAX_DATA !== 'undefined' && STATE_TAX_DATA[data.stateCode]) {
+            document.getElementById('stateSelect').value = data.stateCode;
+          }
+        }
+
+        // 3. Ages (Clamp retirement age >= current age)
+        const curAge = (data.currentAge !== undefined && !isNaN(parseInt(data.currentAge)))
+          ? Math.min(85, Math.max(30, parseInt(data.currentAge)))
+          : 50;
+        const retAge = (data.retirementAge !== undefined && !isNaN(parseInt(data.retirementAge)))
+          ? Math.min(85, Math.max(curAge, parseInt(data.retirementAge)))
+          : curAge;
+
+        const curInput = document.getElementById('currentAge');
+        const curSlider = document.getElementById('currentAgeSlider');
+        if (curInput) curInput.value = curAge;
+        if (curSlider) curSlider.value = curAge;
+
+        const retInput = document.getElementById('retirementAge');
+        const retSlider = document.getElementById('retirementAgeSlider');
+        if (retInput) {
+          retInput.min = curAge;
+          retInput.value = retAge;
+        }
+        if (retSlider) {
+          retSlider.min = curAge;
+          retSlider.value = retAge;
+        }
+
+        // 4. Expenses & Social Security
+        if (data.annualExpense !== undefined && !isNaN(parseFloat(data.annualExpense))) {
+          const exp = parseFloat(data.annualExpense);
+          const inp = document.getElementById('annualExpense');
+          const sld = document.getElementById('annualExpenseSlider');
+          if (inp) inp.value = exp;
+          if (sld) sld.value = exp;
+        }
+        if (data.ssMonthly !== undefined && !isNaN(parseFloat(data.ssMonthly))) {
+          const ssm = parseFloat(data.ssMonthly);
+          const inp = document.getElementById('ssMonthly');
+          const sld = document.getElementById('ssMonthlySlider');
+          if (inp) inp.value = ssm;
+          if (sld) sld.value = ssm;
+        }
+        if (data.ssStartAge !== undefined && !isNaN(parseInt(data.ssStartAge))) {
+          const ssa = parseInt(data.ssStartAge);
+          const inp = document.getElementById('ssStartAge');
+          const sld = document.getElementById('ssStartAgeSlider');
+          if (inp) inp.value = ssa;
+          if (sld) sld.value = ssa;
+        }
+
+        // 5. Portfolio Balances & Return Assumptions
+        const numFields = [
+          { key: 'bal401k', id: 'bal401k', sId: 'bal401kSlider' },
+          { key: 'balIRA', id: 'balIRA', sId: 'balIRASlider' },
+          { key: 'balRoth', id: 'balRoth', sId: 'balRothSlider' },
+          { key: 'balBrokerage', id: 'balBrokerage', sId: 'balBrokerageSlider' },
+          { key: 'balHsa', id: 'balHsa', sId: 'balHsaSlider' },
+          { key: 'annualRothConv', id: 'annualRothConv', sId: 'annualRothConvSlider' },
+          { key: 'rateReturn', id: 'rateReturn', sId: 'rateReturnSlider' },
+          { key: 'rateInflation', id: 'rateInflation', sId: 'rateInflationSlider' },
+          { key: 'costBasisRatio', id: 'costBasisRatio', sId: 'costBasisRatioSlider' }
+        ];
+
+        numFields.forEach(f => {
+          if (data[f.key] !== undefined && !isNaN(parseFloat(data[f.key]))) {
+            const val = parseFloat(data[f.key]);
+            const inp = document.getElementById(f.id);
+            const sld = document.getElementById(f.sId);
+            if (inp) inp.value = val;
+            if (sld) sld.value = Math.min(parseFloat(sld.max || 999999999), Math.max(parseFloat(sld.min || 0), val));
+          }
+        });
+
+        // 6. Checkboxes
+        if (data.enableIrmaa !== undefined && document.getElementById('enableIrmaa')) {
+          document.getElementById('enableIrmaa').checked = !!data.enableIrmaa;
+        }
+        if (data.exemptRule55 !== undefined && document.getElementById('exemptRule55')) {
+          document.getElementById('exemptRule55').checked = !!data.exemptRule55;
+        }
+
+        // 7. Bracket Cap
+        if (data.targetBracketRate !== undefined) {
+          const rate = parseInt(data.targetBracketRate);
+          const sel = document.getElementById('pretaxBracketCap');
+          if (sel) sel.value = rate;
+          [10, 12, 22, 24].forEach(r => {
+            const btn = document.getElementById(`btnBrk${r}`);
+            if (btn) btn.classList.toggle('active', r === rate);
+          });
+        }
+
+        isLoadingSaved = false;
+        updateSaveStatusIndicator('Restored from this device', '#2563eb');
+        return true;
+      } catch (e) {
+        isLoadingSaved = false;
+        console.warn('localStorage load failed:', e);
+        return false;
+      }
+    }
+
+    function clearSavedUserInputs() {
+      try {
+        localStorage.removeItem(STORAGE_KEY);
+        updateSaveStatusIndicator('Reset to defaults', '#64748b');
+      } catch (e) {
+        console.warn('localStorage clear failed:', e);
+      }
+    }
+
+    /* ==========================================================================
        RESET INPUTS TO DEFAULTS
        ========================================================================== */
     function resetInputs() {
+      isResetting = true;
+      clearSavedUserInputs();
+
       setFilingStatus('MFJ');
 
       document.getElementById('currentAge').value = 50;
@@ -4561,6 +4773,8 @@
         resetRetirementBaseline();
       }
       onStateChange();
+      isResetting = false;
+      clearSavedUserInputs();
     }
 
     const STRATEGY_DESCRIPTIONS = {
@@ -5390,6 +5604,7 @@
     }
 
     function calculatePlan() {
+      if (isLoadingSaved) return;
       const params = getFormValues();
       const smartResult = simulateRetirement('smart', params);
       const convResult = simulateRetirement('conv', params);
@@ -5410,6 +5625,9 @@
       }
       if (typeof updateWhatIfUIFromInputs === 'function') {
         updateWhatIfUIFromInputs();
+      }
+      if (pageInitialized && !isResetting && typeof saveUserInputs === 'function') {
+        saveUserInputs();
       }
     }
 
@@ -7770,7 +7988,7 @@
             chips.push(`<span>🛡️ Taxes: <strong>$0 Retirement Tax</strong></span>`);
             break;
 
-          case 'BROKERAGE_BRIDGE':
+          case 'BROKERAGE_BRIDGE': {
             icon = '🛡️';
             nodeBg = '#f3e8ff';
             nodeBorder = '#d8b4fe';
@@ -7779,7 +7997,37 @@
             catBg = '#f3e8ff';
             catColor = '#7e22ce';
             title = 'Early Retirement & Brokerage Bridge';
-            desc = `Retirement begins before Age 59½. Living expenses are primarily funded by drawing from taxable brokerage to safely avoid the 10% early distribution penalty on pre-tax 401(k)/IRAs. Long-term capital gains remain within the 0% federal bracket.`;
+
+            const basisRatio = (params.costBasisRatio !== undefined ? params.costBasisRatio : 60);
+            const gainPct = Math.max(0, 100 - basisRatio);
+            const estGain = Math.round(avgW * (gainPct / 100));
+            const status = params.status || 'MFJ';
+            const statusLabel = status === 'MFJ' ? 'Married Filing Jointly' : (status === 'Single' ? 'Single' : (status === 'HoH' ? 'Head of Household' : status));
+            const zeroCap = (status === 'MFJ' ? 94050 : (status === 'HoH' ? 63000 : 47025));
+
+            let ltcgExplHtml = '';
+            if (estGain <= zeroCap) {
+              ltcgExplHtml = `
+                <div style="margin-top: 0.55rem; padding: 0.55rem 0.75rem; background: #faf5ff; border: 1px solid #e9d5ff; border-radius: 7px; font-size: 0.79rem; line-height: 1.45; color: #581c87;">
+                  <div style="display: flex; align-items: center; gap: 4px; font-weight: 700; color: #6b21a8; margin-bottom: 0.25rem;">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                    Why Federal Capital Gains Tax (LTCG) is $0 (0% Rate):
+                  </div>
+                  <div style="margin-bottom: 2px;">• <strong>Tax-Free Basis Return:</strong> With your ${basisRatio}% cost basis, ${basisRatio}% of every brokerage withdrawal is tax-free return of your original principal. Only ${gainPct}% (${formatCurrency(estGain)}/yr) is taxable capital gain.</div>
+                  <div style="margin-bottom: 2px;">• <strong>0% Statutory Federal Bracket:</strong> IRS tax law grants a 0% federal rate on long-term capital gains up to <strong>${formatCurrency(zeroCap)}</strong> for ${statusLabel} (2024 baseline, inflation-indexed).</div>
+                  <div>• <strong>No Competing Ordinary Income:</strong> Because you have no W-2 job wages and zero taxable 401(k) withdrawals before Age 59½, your ordinary taxable income is $0. Your ${formatCurrency(estGain)}/yr gain fits 100% inside the 0% federal tax bracket.</div>
+                </div>
+              `;
+            } else {
+              ltcgExplHtml = `
+                <div style="margin-top: 0.55rem; padding: 0.55rem 0.75rem; background: #faf5ff; border: 1px solid #e9d5ff; border-radius: 7px; font-size: 0.79rem; line-height: 1.45; color: #581c87;">
+                  <div style="font-weight: 700; color: #6b21a8; margin-bottom: 0.25rem;">Capital Gains Tax Explanation:</div>
+                  <div>With your ${basisRatio}% cost basis, ${gainPct}% (${formatCurrency(estGain)}/yr) of your withdrawal is realized capital gain. Gains up to ${formatCurrency(zeroCap)} are taxed at 0% federally, and the excess is taxed at the standard 15% LTCG bracket.</div>
+                </div>
+              `;
+            }
+
+            desc = `Retirement begins before Age 59½. Living expenses are primarily funded by drawing from taxable brokerage to safely avoid the 10% early distribution penalty on pre-tax 401(k)/IRAs. Long-term capital gains remain within the 0% federal bracket.${ltcgExplHtml}`;
             chips.push(`<span>💵 Avg W/D: <strong>${formatCurrency(avgW)}/yr</strong></span>`);
             chips.push(`<span>🏛️ Primary: <strong>Taxable Brokerage</strong></span>`);
             chips.push(`<span>📊 Tax Rate: <strong>0% Fed LTCG</strong></span>`);
@@ -7787,6 +8035,7 @@
               chips.push(`<span>🔄 Conversions: <strong>${formatCurrency(avgConv)}/yr to Roth</strong></span>`);
             }
             break;
+          }
 
           case 'PRETAX_DRAW':
             icon = '🔓';
@@ -8114,12 +8363,14 @@
         document.getElementById('panelResults')?.classList.add('hidden-mobile');
       }
       initMobileCarousel();
+      loadSavedUserInputs();
       updateAgeBadges();
       updateSSBadge();
       if (typeof updateWhatIfUIFromInputs === 'function') {
         updateWhatIfUIFromInputs();
       }
       onStateChange();
+      pageInitialized = true;
     });
   </script>
 </body>
