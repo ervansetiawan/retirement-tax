@@ -1219,12 +1219,44 @@
       border: 1px solid #93c5fd;
       border-radius: 6px;
       font-size: 0.78rem;
-      font-weight: 700;
+      font-weight: 600;
       cursor: pointer;
-      transition: background 0.15s ease;
+      transition: all 0.15s ease;
     }
     .btn-apply-age:hover {
-      background: #dbeafe;
+      background: #eff6ff;
+      border-color: #3b82f6;
+    }
+    .btn-maximize-roth {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.40rem;
+      background: linear-gradient(135deg, #d97706, #b45309);
+      color: #ffffff;
+      border: 1px solid #b45309;
+      border-radius: 6px;
+      padding: 0.40rem 0.80rem;
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      box-shadow: 0 1px 3px rgba(180, 83, 9, 0.25);
+      user-select: none;
+    }
+    .btn-maximize-roth:hover {
+      background: linear-gradient(135deg, #b45309, #92400e);
+      border-color: #92400e;
+      transform: translateY(-1px);
+      box-shadow: 0 2px 5px rgba(180, 83, 9, 0.35);
+    }
+    .btn-maximize-roth:active {
+      transform: translateY(0);
+    }
+    .btn-maximize-roth.active {
+      background: linear-gradient(135deg, #15803d, #166534);
+      border-color: #166534;
+      box-shadow: 0 1px 3px rgba(22, 101, 52, 0.30);
     }
 
     /* Move State Comparison Section ("Should I move to ?") */
@@ -2757,7 +2789,17 @@
                 <span>$500k</span>
               </div>
             </div>
-            <p style="font-size: 0.78rem; color: #475569; margin-top: 4px; line-height: 1.45;">
+            <div class="roth-maximize-section" style="margin-top: 0.65rem; border-top: 1px dashed #fcd34d; padding-top: 0.55rem;">
+              <div style="display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; flex-wrap: wrap;">
+                <button type="button" class="btn-maximize-roth" id="btnMaximizeRoth" onclick="maximizeRothConversion()" title="Automatically calculate best amount / year to maximize net worth and minimize lifetime taxes">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                  <span>Maximize Me</span>
+                </button>
+                <span style="font-size: 0.72rem; color: #92400e; font-weight: 600;">Auto-optimize wealth &amp; tax</span>
+              </div>
+              <div id="rothMaximizeResult" class="retire-result-box" style="display: none; margin-top: 0.45rem;"></div>
+            </div>
+            <p style="font-size: 0.78rem; color: #475569; margin-top: 6px; line-height: 1.45;">
               Converts pre-tax 401(k)/IRA funds to Roth each year. Taxed as ordinary income with <strong>0% early penalty</strong>.
             </p>
           </div>
@@ -3921,6 +3963,11 @@
           handleRetirementAgeChange(slider.value);
           return;
         }
+        if (numberId === 'annualRothConv') {
+          const btn = document.getElementById('btnMaximizeRoth');
+          if (btn) btn.classList.remove('active');
+          isRothMaximized = false;
+        }
         if (typeof onUserInputChange === 'function') {
           onUserInputChange(numberId, parseFloat(slider.value) || 0);
         }
@@ -3941,6 +3988,11 @@
         if (numberId === 'retirementAge') {
           handleRetirementAgeChange(val);
           return;
+        }
+        if (numberId === 'annualRothConv') {
+          const btn = document.getElementById('btnMaximizeRoth');
+          if (btn) btn.classList.remove('active');
+          isRothMaximized = false;
         }
         if (typeof onUserInputChange === 'function') {
           onUserInputChange(numberId, val);
@@ -4799,6 +4851,9 @@
       setStrategy('smart');
       if (typeof resetRetirementBaseline === 'function') {
         resetRetirementBaseline();
+      }
+      if (typeof resetRothConversionBaseline === 'function') {
+        resetRothConversionBaseline();
       }
       onStateChange();
       isResetting = false;
@@ -7251,6 +7306,169 @@
 
     function calculateRetirementAge() {
       calculateOptimalRetirement(0);
+    }
+
+    /* ==========================================================================
+       ROTH CONVERSION OPTIMIZATION ENGINE ("Maximize Me")
+       Automatically calculates the best annual Roth conversion amount ($/year)
+       to maximize after-tax net worth at Age 90 while minimizing lifetime taxes.
+       ========================================================================== */
+    let originalRothConvBaseline = null;
+    let isRothMaximized = false;
+
+    function resetRothConversionBaseline() {
+      const convInput = document.getElementById('annualRothConv');
+      const convSlider = document.getElementById('annualRothConvSlider');
+      const resultBox = document.getElementById('rothMaximizeResult');
+      const btn = document.getElementById('btnMaximizeRoth');
+
+      const revertVal = (originalRothConvBaseline !== null) ? originalRothConvBaseline : 0;
+      if (convInput) convInput.value = revertVal;
+      if (convSlider) convSlider.value = revertVal;
+      if (typeof syncWhatIfRothConv === 'function') syncWhatIfRothConv(revertVal);
+
+      if (btn) btn.classList.remove('active');
+      if (resultBox) {
+        resultBox.style.display = 'none';
+        resultBox.innerHTML = '';
+      }
+
+      isRothMaximized = false;
+      originalRothConvBaseline = null;
+      calculatePlan();
+    }
+
+    function maximizeRothConversion() {
+      const convInput = document.getElementById('annualRothConv');
+      const convSlider = document.getElementById('annualRothConvSlider');
+      const resultBox = document.getElementById('rothMaximizeResult');
+      const btn = document.getElementById('btnMaximizeRoth');
+
+      // Toggle off if already maximized
+      if (isRothMaximized) {
+        resetRothConversionBaseline();
+        return;
+      }
+
+      if (originalRothConvBaseline === null) {
+        originalRothConvBaseline = convInput ? (parseFloat(convInput.value) || 0) : 0;
+      }
+
+      const baseParams = getFormValues();
+      const pretaxTotal = (baseParams.bal401kInit || 0) + (baseParams.balIRAInit || 0);
+
+      if (!resultBox) return;
+
+      if (pretaxTotal <= 0) {
+        resultBox.className = 'retire-result-box warning';
+        resultBox.style.display = 'block';
+        resultBox.innerHTML = `
+          <div><strong>⚠️ Pre-Tax Accounts are $0</strong></div>
+          <div style="margin-top: 0.25rem; font-size: 0.76rem; color: #78350f;">
+            You have no Traditional 401(k) or Traditional IRA funds to convert. Enter starting balances in the portfolio section above.
+          </div>
+        `;
+        return;
+      }
+
+      // Search candidate conversion amounts from $0 up to min($300,000, pretaxTotal) in $5,000 steps
+      const maxCandidate = Math.min(300000, pretaxTotal);
+      const candidates = [];
+      for (let c = 0; c <= maxCandidate; c += 5000) {
+        candidates.push(c);
+      }
+
+      let baselineMetrics = null;
+      let best = null;
+
+      for (const c of candidates) {
+        const testParams = Object.assign({}, baseParams, { annualRothConv: c });
+        const res = simulateRetirement('smart', testParams);
+        const lastRow = res.schedule[res.schedule.length - 1];
+        const finalBal = lastRow ? (lastRow.totalEndingBal || 0) : 0;
+        const lifetimeTax = res.totalLifetimeTaxes || 0;
+        const finalPretax = lastRow ? ((lastRow.bal401k || 0) + (lastRow.balIRA || 0)) : 0;
+        const finalBrok = lastRow ? (lastRow.balBrokerage || 0) : 0;
+        const basisRatio = (baseParams.costBasisRatio !== undefined ? baseParams.costBasisRatio : 60) / 100;
+        const estEmbeddedPretaxTax = finalPretax * 0.22;
+        const estEmbeddedBrokTax = finalBrok * (1 - basisRatio) * 0.15;
+        const afterTaxNetWorth = finalBal - estEmbeddedPretaxTax - estEmbeddedBrokTax;
+
+        const item = {
+          conv: c,
+          finalBal: finalBal,
+          afterTaxNetWorth: afterTaxNetWorth,
+          lifetimeTax: lifetimeTax
+        };
+
+        if (c === 0) baselineMetrics = item;
+
+        if (!best) {
+          best = item;
+        } else {
+          // Maximize after-tax net worth; break ties with lower lifetime tax
+          const wealthDiff = item.afterTaxNetWorth - best.afterTaxNetWorth;
+          if (wealthDiff > 1000) {
+            best = item;
+          } else if (Math.abs(wealthDiff) <= 1000 && item.lifetimeTax < best.lifetimeTax) {
+            best = item;
+          }
+        }
+      }
+
+      if (!best || !baselineMetrics) return;
+
+      const optimalConv = best.conv;
+      const wealthGain = best.afterTaxNetWorth - baselineMetrics.afterTaxNetWorth;
+      const taxSavings = baselineMetrics.lifetimeTax - best.lifetimeTax;
+
+      // Apply the optimal conversion amount
+      if (convInput) convInput.value = optimalConv;
+      if (convSlider) convSlider.value = optimalConv;
+      if (typeof syncWhatIfRothConv === 'function') syncWhatIfRothConv(optimalConv);
+
+      if (btn) btn.classList.add('active');
+      isRothMaximized = true;
+
+      // Render informative result box
+      resultBox.className = 'retire-result-box';
+      resultBox.style.display = 'block';
+
+      if (optimalConv > 0) {
+        let diffHtml = '';
+        if (wealthGain > 500) {
+          diffHtml += `<div>Projected After-Tax Wealth: <strong style="color: #15803d;">+${formatCurrency(wealthGain)}</strong></div>`;
+        }
+        if (taxSavings > 500) {
+          diffHtml += `<div>Lifetime Tax Savings: <strong style="color: #0369a1;">+${formatCurrency(taxSavings)} saved</strong></div>`;
+        } else if (taxSavings < -500) {
+          diffHtml += `<div style="font-size: 0.74rem; color: #64748b;">(Conversion tax paid upfront fuels compound tax-free Roth growth)</div>`;
+        }
+        resultBox.innerHTML = `
+          <div style="display: flex; align-items: center; justify-content: space-between; gap: 0.4rem; margin-bottom: 0.25rem;">
+            <span style="font-weight: 700; color: #1e293b; font-size: 0.84rem;">⚡ Optimal: ${formatCurrency(optimalConv)}/yr</span>
+            <button type="button" onclick="resetRothConversionBaseline()" style="white-space: nowrap; background: #ffffff; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 0.72rem; color: #475569; cursor: pointer; padding: 2px 6px; font-weight: 600;">Revert</button>
+          </div>
+          <div style="font-size: 0.78rem; line-height: 1.4;">
+            ${diffHtml}
+            <div style="margin-top: 0.20rem; font-size: 0.73rem; color: #475569;">
+              Converts pre-tax accounts systematically before mandatory RMDs at Age 73/75 to lock in tax-free compounding.
+            </div>
+          </div>
+        `;
+      } else {
+        resultBox.innerHTML = `
+          <div style="display: flex; align-items: center; justify-content: space-between; gap: 0.4rem; margin-bottom: 0.25rem;">
+            <span style="font-weight: 700; color: #1e293b; font-size: 0.84rem;">⚡ Optimal: $0/yr</span>
+            <button type="button" onclick="resetRothConversionBaseline()" style="white-space: nowrap; background: #ffffff; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 0.72rem; color: #475569; cursor: pointer; padding: 2px 6px; font-weight: 600;">Close</button>
+          </div>
+          <div style="font-size: 0.76rem; color: #475569; line-height: 1.4;">
+            Your current plan already maximizes net worth. Pre-tax funds are absorbed efficiently by living expenses and standard deductions without triggering punitive RMD brackets.
+          </div>
+        `;
+      }
+
+      calculatePlan();
     }
 
     /* ==========================================================================
