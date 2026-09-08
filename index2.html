@@ -1179,6 +1179,46 @@
       width: 100%;
       box-sizing: border-box;
     }
+    .goal-selector-bar {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.35rem;
+      background: #f1f5f9;
+      padding: 0.30rem;
+      border-radius: 9px;
+      border: 1px solid #e2e8f0;
+      margin-bottom: 0.70rem;
+      box-sizing: border-box;
+    }
+    .goal-selector-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 0.45rem 0.25rem;
+      border: 1px solid transparent;
+      border-radius: 7px;
+      background: transparent;
+      color: #475569;
+      font-weight: 600;
+      font-size: 0.78rem;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      text-align: center;
+      line-height: 1.25;
+      user-select: none;
+    }
+    .goal-selector-btn:hover {
+      background: #ffffff;
+      color: #0f172a;
+    }
+    .goal-selector-btn.active {
+      background: #ffffff;
+      color: #2563eb;
+      border-color: #cbd5e1;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+      font-weight: 700;
+    }
     .btn-retire-target {
       display: flex;
       flex-direction: column;
@@ -1215,13 +1255,10 @@
       transform: translateY(-1px);
     }
     .target-title {
-      font-size: 0.78rem;
+      font-size: 0.73rem;
       font-weight: 700;
-      line-height: 1.2;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      max-width: 100%;
+      line-height: 1.15;
+      text-align: center;
       color: #ffffff;
     }
     .target-sub {
@@ -2652,9 +2689,450 @@
       background: #f8fafc;
       border-color: #94a3b8;
     }
+  
+    /* ==========================================================================
+       GOAL-FIRST GUIDED ONBOARDING & FULL-SCREEN WIZARD STYLES
+       ========================================================================== */
+    body.wizard-mode {
+      background: #f8fafc;
+    }
+    body.wizard-mode .dashboard-grid {
+      display: block !important;
+      max-width: 900px !important;
+      margin: 0 auto !important;
+      padding: 1.25rem 1rem 3.5rem !important;
+    }
+    body.wizard-mode #panelInputs {
+      width: 100% !important;
+      max-width: 100% !important;
+      position: static !important;
+      max-height: none !important;
+      overflow-y: visible !important;
+    }
+    body.wizard-mode #panelResults {
+      display: none !important;
+    }
+    body.wizard-mode .mobile-jump-wrap {
+      display: none !important;
+    }
+
+    body.results-mode {
+      background: #f8fafc;
+    }
+    body.results-mode .dashboard-grid {
+      display: block !important;
+      max-width: 1320px !important;
+      margin: 0 auto !important;
+      padding: 0.75rem 1rem 3.5rem !important;
+    }
+    body.results-mode #panelInputs {
+      display: none !important;
+    }
+    body.results-mode #panelResults {
+      display: block !important;
+      width: 100% !important;
+      max-width: 100% !important;
+    }
+
+    /* Wizard Card & Navigation Tracker */
+    .wizard-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 16px;
+      box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.08);
+      padding: 2rem 2.25rem;
+      margin-bottom: 1.5rem;
+      position: relative;
+    }
+    @media (max-width: 640px) {
+      .wizard-card {
+        padding: 1.25rem 1rem;
+        border-radius: 12px;
+      }
+    }
+    .wizard-top-tracker {
+      margin-bottom: 1.75rem;
+      padding-bottom: 1.25rem;
+      border-bottom: 1px solid #f1f5f9;
+    }
+    .wizard-tracker-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 0.85rem;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .wizard-step-counter {
+      font-size: 0.82rem;
+      font-weight: 750;
+      color: #2563eb;
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      padding: 0.25rem 0.65rem;
+      border-radius: 20px;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+    .wizard-tracker-steps {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.4rem;
+      overflow-x: auto;
+      padding-bottom: 0.25rem;
+    }
+    .wizard-step-chip {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.80rem;
+      font-weight: 600;
+      color: #64748b;
+      cursor: pointer;
+      padding: 0.35rem 0.65rem;
+      border-radius: 20px;
+      transition: all 0.2s ease;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      white-space: nowrap;
+      user-select: none;
+    }
+    .wizard-step-chip:hover {
+      background: #f1f5f9;
+      color: #1e293b;
+      border-color: #cbd5e1;
+    }
+    .wizard-step-chip.active {
+      color: #2563eb;
+      background: #eff6ff;
+      border-color: #93c5fd;
+      font-weight: 750;
+      box-shadow: 0 1px 3px rgba(37, 99, 235, 0.12);
+    }
+    .wizard-step-chip.completed {
+      color: #16a34a;
+      background: #f0fdf4;
+      border-color: #bbf7d0;
+    }
+    .wizard-step-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #e2e8f0;
+      color: #475569;
+      font-size: 0.70rem;
+      font-weight: 750;
+    }
+    .wizard-step-chip.active .wizard-step-num {
+      background: #2563eb;
+      color: #ffffff;
+    }
+    .wizard-step-chip.completed .wizard-step-num {
+      background: #16a34a;
+      color: #ffffff;
+    }
+    .wizard-progress-bar-bg {
+      height: 6px;
+      background: #e2e8f0;
+      border-radius: 3px;
+      overflow: hidden;
+      width: 100%;
+      margin-top: 0.85rem;
+    }
+    .wizard-progress-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #2563eb, #3b82f6);
+      border-radius: 3px;
+      transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* Wizard Step Header Typography */
+    .wizard-step-heading {
+      margin-bottom: 1.35rem;
+    }
+    .wizard-step-title {
+      font-size: 1.40rem;
+      font-weight: 800;
+      color: #0f172a;
+      margin: 0 0 0.40rem 0;
+      line-height: 1.3;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+    .wizard-step-subtitle {
+      font-size: 0.90rem;
+      color: #475569;
+      margin: 0;
+      line-height: 1.45;
+    }
+
+    /* Goal Selection Cards Grid (Step 1) */
+    .wizard-goals-container {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1.15rem;
+      margin: 1.25rem 0 1.5rem;
+    }
+    @media (max-width: 768px) {
+      .wizard-goals-container {
+        grid-template-columns: 1fr;
+        gap: 0.85rem;
+      }
+    }
+    .wizard-goal-card-btn {
+      background: #ffffff;
+      border: 2px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 1.25rem 1.15rem;
+      cursor: pointer;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      display: flex;
+      flex-direction: column;
+      text-align: left;
+      position: relative;
+      user-select: none;
+      box-sizing: border-box;
+      width: 100%;
+    }
+    .wizard-goal-card-btn:hover {
+      border-color: #93c5fd;
+      background: #f8fafc;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px -2px rgba(37, 99, 235, 0.10);
+    }
+    .wizard-goal-card-btn.active {
+      border-color: #2563eb;
+      background: #f0f7ff;
+      box-shadow: 0 0 0 1px #2563eb, 0 8px 20px -3px rgba(37, 99, 235, 0.16);
+    }
+    .wizard-goal-top-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 0.65rem;
+    }
+    .wizard-goal-icon-badge {
+      font-size: 1.85rem;
+      line-height: 1;
+    }
+    .wizard-goal-tag {
+      font-size: 0.70rem;
+      font-weight: 750;
+      padding: 2px 7px;
+      border-radius: 4px;
+      background: #e2e8f0;
+      color: #475569;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+    .wizard-goal-card-btn.active .wizard-goal-tag {
+      background: #dbeafe;
+      color: #1e40af;
+      border: 1px solid #bfdbfe;
+    }
+    .wizard-goal-card-title {
+      font-size: 1.10rem;
+      font-weight: 750;
+      color: #0f172a;
+      margin-bottom: 0.40rem;
+      line-height: 1.3;
+    }
+    .wizard-goal-card-desc {
+      font-size: 0.80rem;
+      color: #475569;
+      line-height: 1.45;
+      margin-bottom: 0.85rem;
+      flex-grow: 1;
+    }
+    .wizard-goal-card-status {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: #2563eb;
+      margin-top: auto;
+    }
+
+    /* "Why We Ask This" Explanatory Callout Box */
+    .why-we-ask-box {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-left: 4px solid #2563eb;
+      border-radius: 10px;
+      padding: 1.1rem 1.25rem;
+      margin-top: 1.5rem;
+    }
+    .why-we-ask-header {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      font-size: 0.88rem;
+      font-weight: 750;
+      color: #1e293b;
+      margin-bottom: 0.65rem;
+    }
+    .why-we-ask-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.55rem;
+    }
+    .why-we-ask-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.50rem;
+      font-size: 0.80rem;
+      line-height: 1.45;
+      color: #475569;
+    }
+    .why-we-ask-bullet {
+      font-size: 0.95rem;
+      line-height: 1.2;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .why-we-ask-item strong {
+      color: #1e293b;
+    }
+
+    /* Wizard Navigation Footer */
+    .wizard-nav-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-top: 2rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid #e2e8f0;
+      flex-wrap: wrap;
+    }
+    .btn-wizard-nav {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.70rem 1.4rem;
+      font-size: 0.92rem;
+      font-weight: 700;
+      border-radius: 9px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      border: 1px solid transparent;
+      user-select: none;
+    }
+    .btn-wizard-back {
+      background: #ffffff;
+      border-color: #cbd5e1;
+      color: #475569;
+    }
+    .btn-wizard-back:hover {
+      background: #f1f5f9;
+      color: #0f172a;
+      border-color: #94a3b8;
+    }
+    .btn-wizard-next {
+      background: #2563eb;
+      color: #ffffff;
+      box-shadow: 0 2px 8px rgba(37, 99, 235, 0.25);
+    }
+    .btn-wizard-next:hover {
+      background: #1d4ed8;
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.35);
+      transform: translateY(-1px);
+    }
+    .btn-wizard-submit {
+      background: linear-gradient(135deg, #16a34a, #15803d);
+      color: #ffffff;
+      font-size: 1.02rem;
+      padding: 0.80rem 1.75rem;
+      box-shadow: 0 4px 14px rgba(22, 163, 74, 0.35);
+    }
+    .btn-wizard-submit:hover {
+      background: linear-gradient(135deg, #15803d, #166534);
+      box-shadow: 0 6px 18px rgba(22, 163, 74, 0.45);
+      transform: translateY(-1px);
+    }
+
+    /* Results Mode Top Plan Bar */
+    .results-plan-bar {
+      background: #ffffff;
+      border: 1px solid #bfdbfe;
+      border-left: 4px solid #2563eb;
+      border-radius: 10px;
+      padding: 0.85rem 1.15rem;
+      margin-bottom: 1.15rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+      box-shadow: 0 2px 8px rgba(37, 99, 235, 0.07);
+    }
+    .results-plan-summary {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+    .results-plan-summary-title {
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+      flex-wrap: wrap;
+    }
+    .plan-goal-pill {
+      font-size: 0.76rem;
+      font-weight: 750;
+      background: #eff6ff;
+      color: #1d4ed8;
+      border: 1px solid #bfdbfe;
+      padding: 2px 8px;
+      border-radius: 6px;
+    }
+    .results-plan-metrics-row {
+      display: flex;
+      align-items: center;
+      gap: 1.15rem;
+      flex-wrap: wrap;
+      font-size: 0.82rem;
+      color: #475569;
+    }
+    .plan-stat-item strong {
+      color: #1e293b;
+    }
+    .btn-edit-answers {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.55rem 1.05rem;
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      color: #1e293b;
+      font-size: 0.84rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.18s ease;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+      white-space: nowrap;
+    }
+    .btn-edit-answers:hover {
+      background: #eff6ff;
+      border-color: #93c5fd;
+      color: #2563eb;
+      transform: translateY(-1px);
+      box-shadow: 0 3px 8px rgba(37, 99, 235, 0.15);
+    }
+
   </style>
 </head>
-<body>
+<body class="wizard-mode">
 
   <div class="container">
     <!-- Header -->
@@ -2673,319 +3151,527 @@
     <!-- Main Grid -->
     <div class="dashboard-grid">
       <!-- Input Sidebar -->
+            <!-- Input Sidebar & Full-Screen Guided Wizard -->
       <aside id="panelInputs" class="panel-view">
-        <div class="card">
-          <div class="card-title">
-            <div>
-              <span>Tell me about your situation</span>
-              <div id="saveStatusIndicator" style="font-size: 0.72rem; color: #64748b; font-weight: 500; margin-top: 2px; display: flex; align-items: center; gap: 4px;">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
-                <span id="saveStatusText">Default settings</span>
+        <div class="wizard-card">
+          <!-- Wizard Top Navigation Tracker -->
+          <div class="wizard-top-tracker">
+            <div class="wizard-tracker-header">
+              <div style="display: flex; align-items: center; gap: 0.75rem;">
+                <span class="wizard-step-counter" id="wizardStepCountText">Step 1 of 5</span>
+                <div id="saveStatusIndicator" style="font-size: 0.72rem; color: #64748b; font-weight: 500; display: flex; align-items: center; gap: 4px;">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
+                  <span id="saveStatusText">Default settings</span>
+                </div>
+              </div>
+              <div style="display: flex; align-items: center; gap: 0.5rem;">
+                <button type="button" id="btnWizardViewResults" class="btn-action btn-secondary" style="padding: 0.25rem 0.65rem; font-size: 0.78rem; min-height: 30px; display: none;" onclick="completeWizardAndShowResults()">View Results Dashboard →</button>
+                <button class="btn-action btn-secondary" style="padding: 0.25rem 0.75rem; font-size: 0.80rem; min-height: 30px;" onclick="resetInputs()" title="Reset all inputs to default values and clear saved data">Reset</button>
               </div>
             </div>
-            <button class="btn-action btn-secondary" style="padding: 0.25rem 0.75rem; font-size: 0.82rem; min-height: 34px;" onclick="resetInputs()" title="Reset all inputs to default values and clear saved data">Reset</button>
-          </div>
 
-          <!-- 1. Age & Timeline Planning (Grouped Box) -->
-          <div class="balances-group-card" style="margin-bottom: 0.9rem;">
-            <div class="balances-group-header">
-              <div class="slider-title">
-                <span style="display: flex; align-items: center; gap: 0.45rem;">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <polyline points="12 6 12 12 16 14"></polyline>
-                  </svg>
-                  Age & Horizon
-                </span>
+            <!-- Clickable Step Chips -->
+            <div class="wizard-tracker-steps">
+              <div class="wizard-step-chip active" id="wizardChip1" onclick="goToWizardStep(1)">
+                <span class="wizard-step-num">1</span>
+                <span>Goal</span>
               </div>
-              <span class="slider-badge" id="ageTimelineBadge" style="background:#dcfce7; color:#15803d; border:1px solid #86efac; font-size:0.88rem;">Retiring immediately</span>
+              <div class="wizard-step-chip" id="wizardChip2" onclick="goToWizardStep(2)">
+                <span class="wizard-step-num">2</span>
+                <span>Age</span>
+              </div>
+              <div class="wizard-step-chip" id="wizardChip3" onclick="goToWizardStep(3)">
+                <span class="wizard-step-num">3</span>
+                <span>Balances</span>
+              </div>
+              <div class="wizard-step-chip" id="wizardChip4" onclick="goToWizardStep(4)">
+                <span class="wizard-step-num">4</span>
+                <span>Expenses</span>
+              </div>
+              <div class="wizard-step-chip" id="wizardChip5" onclick="goToWizardStep(5)">
+                <span class="wizard-step-num">5</span>
+                <span>Taxes &amp; SS</span>
+              </div>
             </div>
-            <div style="display: flex; flex-direction: column; gap: 0.85rem;">
-              
-              <!-- Current Age Sub-Card -->
-              <div style="background:#ffffff; border:1px solid #e2e8f0; border-radius:8px; padding:0.75rem 0.85rem;">
-                <div class="slider-header-row" style="margin-bottom:0.35rem;">
-                  <div class="slider-title">
-                    <span>Current Age</span>
-                    <span class="slider-badge" id="currentAgeBadge" style="background:#f1f5f9; color:#475569;">Your age today</span>
-                  </div>
-                  <div class="slider-val-input-wrap" style="width: 80px;">
-                    <input type="number" inputmode="numeric" id="currentAge" min="30" max="85" value="50" class="slider-val-input" oninput="handleCurrentAgeChange(this.value)" />
-                  </div>
-                </div>
-                <div class="slider-track-wrap">
-                  <input type="range" id="currentAgeSlider" min="30" max="85" value="50" step="1" oninput="handleCurrentAgeSlider(this.value)" />
-                  <div class="slider-range-labels">
-                    <span>Age 30</span>
-                    <span>Age 50</span>
-                    <span>Age 85</span>
-                  </div>
-                </div>
-              </div>
 
-              <!-- Retirement Age Sub-Card -->
-              <div style="background:#ffffff; border:1px solid #e2e8f0; border-radius:8px; padding:0.75rem 0.85rem;">
-                <div class="slider-header-row" style="margin-bottom:0.35rem;">
-                  <div class="slider-title">
-                    <span>Retirement Age</span>
-                    <span class="slider-badge" id="retirementAgeBadge" style="background:#dcfce7; color:#15803d;">Retiring right now</span>
-                  </div>
-                  <div class="slider-val-input-wrap" style="width: 80px;">
-                    <input type="number" inputmode="numeric" id="retirementAge" min="50" max="85" value="50" class="slider-val-input" oninput="handleRetirementAgeChange(this.value)" />
-                  </div>
-                </div>
-                <div class="slider-track-wrap">
-                  <input type="range" id="retirementAgeSlider" min="30" max="85" value="50" step="1" oninput="handleRetirementAgeSlider(this.value)" />
-                  <div class="slider-range-labels">
-                    <span id="retAgeMinLabel">Age 50</span>
-                    <span>Age 65</span>
-                    <span>Age 85</span>
-                  </div>
-                </div>
-
-                <div class="retire-target-section" id="btnWhenCanIRetire" style="margin-top: 0.65rem; border-top: 1px dashed #cbd5e1; padding-top: 0.55rem;">
-                  <div class="retire-section-title" style="font-size: 0.76rem; color: #475569; margin-bottom: 0.35rem; display: flex; justify-content: space-between; align-items: center;">
-                    <span>Auto-Calculate Retirement Age</span>
-                    <span style="font-weight: normal; font-size: 0.70rem; color: #64748b; text-transform: none;">Click to solve &amp; set</span>
-                  </div>
-                  <div class="retire-btn-group">
-                    <button type="button" class="btn-retire-target" id="btnDieWithZero" onclick="calculateOptimalRetirement(0)" title="Auto-calculate and set optimal retirement age to die with zero at Age 90">
-                      <span class="target-title">Die with Zero</span>
-                      <span class="target-sub">$0 at 90</span>
-                    </button>
-                    <button type="button" class="btn-retire-target" id="btnDieWithMillion" onclick="calculateOptimalRetirement(1000000)" title="Auto-calculate and set optimal retirement age to die with $1M at Age 90">
-                      <span class="target-title">Die with 1M</span>
-                      <span class="target-sub">$1M at 90</span>
-                    </button>
-                    <button type="button" class="btn-retire-target" id="btnDieWith10Million" onclick="calculateOptimalRetirement(10000000)" title="Auto-calculate and set optimal retirement age to die with $10M at Age 90">
-                      <span class="target-title">Die with 10M</span>
-                      <span class="target-sub">$10M at 90</span>
-                    </button>
-                  </div>
-                  <div id="retireCalcResult" class="retire-result-box" style="display: none;"></div>
-                </div>
-              </div>
-
+            <!-- Animated Progress Bar -->
+            <div class="wizard-progress-bar-bg">
+              <div class="wizard-progress-bar-fill" id="wizardProgressFill" style="width: 20%;"></div>
             </div>
           </div>
 
-
-          <!-- 4. Starting Portfolio Balances (Grouped) -->
-          <div class="balances-group-card">
-            <div class="balances-group-header">
-              <div class="slider-title">
-                <span style="display: flex; align-items: center; gap: 0.45rem;">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                    <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
-                    <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
-                  </svg>
-                  Starting Portfolio Balances
-                </span>
-                <span class="slider-badge">Current assets across retirement & brokerage accounts</span>
-              </div>
-              <span class="balances-total-badge" id="startingBalancesTotalBadge">$2,500,000 Total</span>
+          <!-- ================================================================
+               STEP 1: GOALS FIRST (FULL SCREEN)
+               ================================================================ -->
+          <div id="wizardStep1" class="wizard-step-view" style="display: block;">
+            <div class="wizard-step-heading">
+              <h2 class="wizard-step-title">🎯 What is your retirement goal?</h2>
+              <p class="wizard-step-subtitle">Select what you'd like this calculator to solve for you. Your entire withdrawal strategy and tax minimization roadmap will be tailored to this goal.</p>
             </div>
 
-            <div class="balances-items-list">
-              <!-- Traditional 401(k) -->
-              <div class="balance-sub-item">
-                <div class="slider-header-row">
-                  <div class="slider-title">
-                    <span style="color: #2563eb; font-size: 0.98rem;">Traditional 401(k)</span>
-                    <span class="slider-badge">Pre-tax balance</span>
-                  </div>
-                  <div class="slider-val-input-wrap">
-                    <span class="prefix">$</span>
-                    <input type="number" inputmode="decimal" id="bal401k" value="1000000" step="5000" class="slider-val-input has-prefix" oninput="syncFromNumber('bal401k', 'bal401kSlider')" />
-                  </div>
-                </div>
-                <div class="slider-track-wrap">
-                  <input type="range" id="bal401kSlider" min="0" max="5000000" value="1000000" step="10000" oninput="syncFromSlider('bal401kSlider', 'bal401k')" />
-                  <div class="slider-range-labels">
-                    <span>$0</span>
-                    <span>$2.5M</span>
-                    <span>$5M</span>
-                  </div>
-                </div>
+            <div class="balances-group-card" id="goalPlanningCard" style="margin-bottom: 1.25rem; border: none; background: transparent; padding: 0;">
+              <div style="display: none;">
+                <span id="ageTimelineBadge">Goal-driven plan</span>
               </div>
 
-              <!-- Traditional IRA -->
-              <div class="balance-sub-item">
-                <div class="slider-header-row">
-                  <div class="slider-title">
-                    <span style="color: #0284c7; font-size: 0.98rem;">Traditional IRA</span>
-                    <span class="slider-badge">Pre-tax balance</span>
+              <!-- 3-Mode Interactive Goal Cards -->
+              <div class="goal-selector-bar wizard-goals-container" id="goalSelectorBar">
+                <button type="button" class="goal-selector-btn wizard-goal-card-btn active" id="btnGoalModeWhenRetire" onclick="handleWizardGoalSelect('when_retire')">
+                  <div class="wizard-goal-top-row">
+                    <span class="wizard-goal-icon-badge">⏱️</span>
+                    <span class="wizard-goal-tag">Earliest Age</span>
                   </div>
-                  <div class="slider-val-input-wrap">
-                    <span class="prefix">$</span>
-                    <input type="number" inputmode="decimal" id="balIRA" value="200000" step="5000" class="slider-val-input has-prefix" oninput="syncFromNumber('balIRA', 'balIRASlider')" />
+                  <div class="wizard-goal-card-title">When can I retire?</div>
+                  <div class="wizard-goal-card-desc">Calculate the earliest age you can step away from work based on your living expenses. Guaranteed 100% solvent through Age 90 with auto-optimized Roth conversions.</div>
+                  <div class="wizard-goal-card-status" id="goalCardStatusRetire">
+                    <span>✓ Selected Goal</span>
                   </div>
-                </div>
-                <div class="slider-track-wrap">
-                  <input type="range" id="balIRASlider" min="0" max="5000000" value="200000" step="10000" oninput="syncFromSlider('balIRASlider', 'balIRA')" />
-                  <div class="slider-range-labels">
-                    <span>$0</span>
-                    <span>$2.5M</span>
-                    <span>$5M</span>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Roth IRA -->
-              <div class="balance-sub-item">
-                <div class="slider-header-row">
-                  <div class="slider-title">
-                    <span style="color: #16a34a; font-size: 0.98rem;">Roth IRA</span>
-                    <span class="slider-badge">100% Tax-Free</span>
-                  </div>
-                  <div class="slider-val-input-wrap">
-                    <span class="prefix">$</span>
-                    <input type="number" inputmode="decimal" id="balRoth" value="200000" step="5000" class="slider-val-input has-prefix" oninput="syncFromNumber('balRoth', 'balRothSlider')" />
-                  </div>
-                </div>
-                <div class="slider-track-wrap">
-                  <input type="range" id="balRothSlider" min="0" max="5000000" value="200000" step="10000" oninput="syncFromSlider('balRothSlider', 'balRoth')" />
-                  <div class="slider-range-labels">
-                    <span>$0</span>
-                    <span>$2.5M</span>
-                    <span>$5M</span>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Taxable Brokerage -->
-              <div class="balance-sub-item">
-                <div class="slider-header-row">
-                  <div class="slider-title">
-                    <span style="color: #9333ea; font-size: 0.98rem;">Taxable Brokerage</span>
-                    <span class="slider-badge">Capital gains taxed</span>
-                  </div>
-                  <div class="slider-val-input-wrap">
-                    <span class="prefix">$</span>
-                    <input type="number" inputmode="decimal" id="balBrokerage" value="1000000" step="5000" class="slider-val-input has-prefix" oninput="syncFromNumber('balBrokerage', 'balBrokerageSlider')" />
-                  </div>
-                </div>
-                <div class="slider-track-wrap">
-                  <input type="range" id="balBrokerageSlider" min="0" max="5000000" value="1000000" step="10000" oninput="syncFromSlider('balBrokerageSlider', 'balBrokerage')" />
-                  <div class="slider-range-labels">
-                    <span>$0</span>
-                    <span>$2.5M</span>
-                    <span>$5M</span>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Health Savings Account (HSA) -->
-              <div class="balance-sub-item">
-                <div class="slider-header-row">
-                  <div class="slider-title">
-                    <span style="color: #0d9488; font-size: 0.98rem;">Health Savings Account (HSA)</span>
-                    <span class="slider-badge">100% Tax-Free Healthcare · No RMDs</span>
-                  </div>
-                  <div class="slider-val-input-wrap">
-                    <span class="prefix">$</span>
-                    <input type="number" inputmode="decimal" id="balHsa" value="100000" step="5000" class="slider-val-input has-prefix" oninput="syncFromNumber('balHsa', 'balHsaSlider')" />
-                  </div>
-                </div>
-                <div class="slider-track-wrap">
-                  <input type="range" id="balHsaSlider" min="0" max="1000000" value="100000" step="5000" oninput="syncFromSlider('balHsaSlider', 'balHsa')" />
-                  <div class="slider-range-labels">
-                    <span>$0</span>
-                    <span>$500k</span>
-                    <span>$1M</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Yearly Living Expense Slider Card (Relocated after Starting Balances) -->
-          <div class="slider-card-group" id="annualExpenseCard">
-            <div class="slider-header-row">
-              <div class="slider-title">
-                <span style="display: flex; align-items: center; gap: 0.45rem;">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M3 3v18h18"></path>
-                    <path d="m19 9-5 5-4-4-3 3"></path>
-                  </svg>
-                  Yearly Living Expense
-                </span>
-                <span class="slider-badge">Annual net cash needed</span>
-              </div>
-              <div class="slider-val-input-wrap">
-                <span class="prefix">$</span>
-                <input type="number" inputmode="decimal" id="annualExpense" value="100000" step="1000" class="slider-val-input has-prefix" oninput="syncFromNumber('annualExpense', 'annualExpenseSlider')" />
-              </div>
-            </div>
-            <div class="slider-track-wrap">
-              <input type="range" id="annualExpenseSlider" min="0" max="250000" value="100000" step="2500" oninput="syncFromSlider('annualExpenseSlider', 'annualExpense')" />
-              <div class="slider-range-labels" id="annualExpenseRangeLabels">
-                <span>$0</span>
-                <span>$125k</span>
-                <span>$250k</span>
-              </div>
-            </div>
-            <div class="what-afford-section" style="margin-top: 0.65rem; border-top: 1px dashed #cbd5e1; padding-top: 0.55rem;">
-              <div style="display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; flex-wrap: wrap;">
-                <button type="button" class="btn-what-afford" id="btnWhatCanIAfford" onclick="calculateAffordableExpense()" title="Automatically calculate maximum living expense so portfolio lasts through end of simulation (Age 90)">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
-                    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
-                  </svg>
-                  <span>What can I afford?</span>
                 </button>
-                <span style="font-size: 0.72rem; color: #047857; font-weight: 600;">Lasts through Age 90</span>
-              </div>
-              <div id="affordCalcResult" class="retire-result-box" style="display: none; margin-top: 0.45rem;"></div>
-            </div>
-          </div>
 
-          <!-- 8. Annual Roth IRA Conversion Slider Card -->
-          <div class="slider-card-group" style="border-color: #fde68a; background: #fffbeb;">
-            <div class="slider-header-row">
-              <div class="slider-title">
-                <span style="color: #b45309;">Annual Roth Conversion</span>
-                <span class="slider-badge">Pre-tax to Roth until depleted</span>
-              </div>
-              <div class="slider-val-input-wrap">
-                <span class="prefix">$</span>
-                <input type="number" inputmode="decimal" id="annualRothConv" value="0" step="5000" class="slider-val-input has-prefix" oninput="syncFromNumber('annualRothConv', 'annualRothConvSlider')" />
-              </div>
-            </div>
-            <div class="slider-track-wrap">
-              <input type="range" id="annualRothConvSlider" min="0" max="500000" value="0" step="5000" oninput="syncFromSlider('annualRothConvSlider', 'annualRothConv')" />
-              <div class="slider-range-labels">
-                <span>$0</span>
-                <span>$250k</span>
-                <span>$500k</span>
-              </div>
-            </div>
-            <div class="roth-maximize-section" style="margin-top: 0.65rem; border-top: 1px dashed #fcd34d; padding-top: 0.55rem;">
-              <div style="display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; flex-wrap: wrap;">
-                <button type="button" class="btn-maximize-roth" id="btnMaximizeRoth" onclick="maximizeRothConversion()" title="Automatically calculate best amount / year to maximize net worth and minimize lifetime taxes">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
-                  <span>Maximize Me</span>
+                <button type="button" class="goal-selector-btn wizard-goal-card-btn" id="btnGoalModeWhatAfford" onclick="handleWizardGoalSelect('what_afford')">
+                  <div class="wizard-goal-top-row">
+                    <span class="wizard-goal-icon-badge">💵</span>
+                    <span class="wizard-goal-tag">Max Spending</span>
+                  </div>
+                  <div class="wizard-goal-card-title">What can I afford?</div>
+                  <div class="wizard-goal-card-desc">Pick your desired retirement age. We solve for the maximum yearly living expenses your portfolio can safely fund through Age 90 without depleting.</div>
+                  <div class="wizard-goal-card-status" id="goalCardStatusAfford">
+                    <span>Select Goal →</span>
+                  </div>
                 </button>
-                <span style="font-size: 0.72rem; color: #92400e; font-weight: 600;">Auto-optimize wealth &amp; tax</span>
+
+                <button type="button" class="goal-selector-btn wizard-goal-card-btn" id="btnGoalModeCustom" onclick="handleWizardGoalSelect('custom')">
+                  <div class="wizard-goal-top-row">
+                    <span class="wizard-goal-icon-badge">✍️</span>
+                    <span class="wizard-goal-tag">Custom Plan</span>
+                  </div>
+                  <div class="wizard-goal-card-title">I have a plan</div>
+                  <div class="wizard-goal-card-desc">Enter both your target retirement age and annual living expenses. Simulate your year-by-year cash flows, tax brackets, RMDs, and legacy balance at Age 90.</div>
+                  <div class="wizard-goal-card-status" id="goalCardStatusCustom">
+                    <span>Select Goal →</span>
+                  </div>
+                </button>
               </div>
-              <div id="rothMaximizeResult" class="retire-result-box" style="display: none; margin-top: 0.45rem;"></div>
+
+              <div id="goalModeIntroText" style="display: none;">
+                Calculate the earliest age you can retire given your living expenses and legacy goal at Age 90.
+              </div>
+
+              <!-- Automatic Roth Conversion Confirmation Banner -->
+              <div style="display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; background: #fffbeb; border: 1px solid #fde68a; border-radius: 8px; padding: 0.65rem 0.85rem; font-size: 0.80rem; color: #92400e; margin-top: 0.75rem;">
+                <span style="display: flex; align-items: center; gap: 0.45rem;">
+                  <span style="font-size: 1.05rem;">⚡</span>
+                  <span><strong>Automatic Roth Conversion:</strong> Included in all calculations to proactively fill low tax brackets and minimize lifetime taxes.</span>
+                </span>
+                <span id="autoRothStatusBadge" style="font-weight: 750; color: #b45309; white-space: nowrap; font-size: 0.74rem; background: #fef3c7; padding: 2px 8px; border-radius: 5px; border: 1px solid #fcd34d;">Auto-Active</span>
+              </div>
             </div>
-            <p style="font-size: 0.78rem; color: #475569; margin-top: 6px; line-height: 1.45;">
-              Converts pre-tax 401(k)/IRA funds to Roth each year. Taxed as ordinary income with <strong>0% early penalty</strong>.
-            </p>
+
+            <!-- Why We Ask This: Goal First -->
+            <div class="why-we-ask-box">
+              <div class="why-we-ask-header">
+                <span class="why-icon">💡</span>
+                <span>Why we ask your goal first</span>
+              </div>
+              <div class="why-we-ask-list">
+                <div class="why-we-ask-item">
+                  <span class="why-we-ask-bullet">🎯</span>
+                  <div><strong>Goal-Driven Modeling:</strong> Retirement isn't one-size-fits-all. Some want to know their earliest freedom date (<em>When can I retire?</em>), while others have a set date and want to maximize lifestyle (<em>What can I afford?</em>).</div>
+                </div>
+                <div class="why-we-ask-item">
+                  <span class="why-we-ask-bullet">⚡</span>
+                  <div><strong>Dynamic Optimization:</strong> Selecting your goal configures our simulation algorithm to solve for the missing variable while optimizing your tax brackets through Age 90.</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="wizard-nav-footer">
+              <div></div>
+              <button type="button" class="btn-wizard-nav btn-wizard-next" onclick="goToWizardStep(2)">
+                Continue to Age &amp; Horizon →
+              </button>
+            </div>
           </div>
 
-          <!-- Advanced Collapsible Sliders -->
-          <button class="collapsible-trigger" onclick="toggleAdvanced()">
-            <span>⚙ Advanced Assumptions</span>
-            <span id="advChevron">▼</span>
-          </button>
-          <div class="collapsible-content" id="advContent">
-            <!-- IRS Filing Status & State Tax -->
-            <div class="slider-card-group">
-              <div class="slider-header-row">
+          <!-- ================================================================
+               STEP 2: CURRENT AGE & HORIZON
+               ================================================================ -->
+          <div id="wizardStep2" class="wizard-step-view" style="display: none;">
+            <div class="wizard-step-heading">
+              <h2 class="wizard-step-title">📅 Current Age &amp; Retirement Horizon</h2>
+              <p class="wizard-step-subtitle">Tell us your age today and your planned retirement timeline.</p>
+            </div>
+
+            <!-- Current Age Sub-Card -->
+            <div style="background:#ffffff; border:1px solid #e2e8f0; border-radius:10px; padding:1rem 1.15rem; margin-bottom: 1rem; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
+              <div class="slider-header-row" style="margin-bottom:0.45rem;">
                 <div class="slider-title">
-                  <span>IRS Filing Status & State</span>
-                  <span class="slider-badge">Federal & state tax calculations</span>
+                  <span style="display: flex; align-items: center; gap: 0.40rem; font-size: 1.05rem; font-weight: 750;">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                      <circle cx="12" cy="12" r="10"></circle>
+                      <polyline points="12 6 12 12 16 14"></polyline>
+                    </svg>
+                    <span>Current Age</span>
+                  </span>
+                  <span class="slider-badge" id="currentAgeBadge" style="background:#f1f5f9; color:#475569;">Your age today</span>
+                </div>
+                <div class="slider-val-input-wrap" style="width: 85px;">
+                  <input type="number" inputmode="numeric" id="currentAge" min="30" max="85" value="50" class="slider-val-input" oninput="handleCurrentAgeChange(this.value)" />
+                </div>
+              </div>
+              <div class="slider-track-wrap">
+                <input type="range" id="currentAgeSlider" min="30" max="85" value="50" step="1" oninput="handleCurrentAgeSlider(this.value)" />
+                <div class="slider-range-labels">
+                  <span>Age 30</span>
+                  <span>Age 50</span>
+                  <span>Age 85</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Desired Retirement Age Card (Shown in Mode 2 and Mode 3; solved for in Mode 1) -->
+            <div id="retirementAgeCard" style="background:#ffffff; border:1px solid #e2e8f0; border-radius:10px; padding:1rem 1.15rem; margin-bottom: 1rem; display: none; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
+              <div class="slider-header-row" style="margin-bottom:0.45rem;">
+                <div class="slider-title">
+                  <span style="display: flex; align-items: center; gap: 0.40rem; font-size: 1.05rem; font-weight: 750;">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                      <circle cx="12" cy="12" r="10"></circle>
+                      <polyline points="12 6 12 12 16 14"></polyline>
+                    </svg>
+                    <span>Desired Retirement Age</span>
+                  </span>
+                  <span class="slider-badge" id="retirementAgeBadge" style="background:#dcfce7; color:#15803d;">Retiring right now</span>
+                </div>
+                <div class="slider-val-input-wrap" style="width: 85px;">
+                  <input type="number" inputmode="numeric" id="retirementAge" min="30" max="85" value="50" class="slider-val-input" oninput="handleRetirementAgeChange(this.value)" />
+                </div>
+              </div>
+              <div class="slider-track-wrap">
+                <input type="range" id="retirementAgeSlider" min="30" max="85" value="50" step="1" oninput="handleRetirementAgeSlider(this.value)" />
+                <div class="slider-range-labels">
+                  <span id="retAgeMinLabel">Age 50</span>
+                  <span>Age 65</span>
+                  <span>Age 85</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Goal 1 Solved Notice for Retirement Age -->
+            <div id="retAgeSolvedNotice" style="background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 10px; padding: 1rem 1.15rem; margin-bottom: 1rem; display: block;">
+              <div style="display: flex; align-items: flex-start; gap: 0.55rem;">
+                <span style="font-size: 1.25rem; line-height: 1;">🎯</span>
+                <div>
+                  <div style="font-weight: 750; color: #1e40af; font-size: 0.92rem; margin-bottom: 0.25rem;">Retirement Age Will Be Calculated Automatically</div>
+                  <div style="font-size: 0.82rem; color: #3b82f6; line-height: 1.45;">Because you selected <strong>When can I retire?</strong>, our math engine will calculate the exact earliest age your portfolio can fund your living expenses through Age 90.</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Why We Ask This: Age & Horizon -->
+            <div class="why-we-ask-box">
+              <div class="why-we-ask-header">
+                <span class="why-icon">💡</span>
+                <span>Why we ask about your age</span>
+              </div>
+              <div class="why-we-ask-list">
+                <div class="why-we-ask-item">
+                  <span class="why-we-ask-bullet">📈</span>
+                  <div><strong>Compounding Window:</strong> The years between your current age and retirement is your accumulation window, allowing your existing investments to compound before withdrawals start.</div>
+                </div>
+                <div class="why-we-ask-item">
+                  <span class="why-we-ask-bullet">🛡️</span>
+                  <div><strong>IRS Age 59½ Early Access Rules:</strong> Traditional 401(k) and IRA withdrawals prior to age 59½ face a 10% IRS penalty unless bridged by taxable brokerage assets, the Rule of 55, or SEPP 72(t).</div>
+                </div>
+                <div class="why-we-ask-item">
+                  <span class="why-we-ask-bullet">🎯</span>
+                  <div><strong>Lifetime Horizon (Age 90):</strong> We project your plan consistently through Age 90 to protect against longevity risk and guarantee you do not outlive your assets.</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="wizard-nav-footer">
+              <button type="button" class="btn-wizard-nav btn-wizard-back" onclick="goToWizardStep(1)">
+                ← Back to Goals
+              </button>
+              <button type="button" class="btn-wizard-nav btn-wizard-next" onclick="goToWizardStep(3)">
+                Continue to Starting Balances →
+              </button>
+            </div>
+          </div>
+
+          <!-- ================================================================
+               STEP 3: STARTING BALANCES
+               ================================================================ -->
+          <div id="wizardStep3" class="wizard-step-view" style="display: none;">
+            <div class="wizard-step-heading">
+              <h2 class="wizard-step-title">💰 Starting Portfolio Balances</h2>
+              <p class="wizard-step-subtitle">Enter your current investments across each tax account bucket.</p>
+            </div>
+
+            <!-- Starting Portfolio Balances Group Card -->
+            <div class="balances-group-card" style="margin-bottom: 1.25rem;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.85rem; padding: 0 0.15rem;">
+                <div style="font-size: 0.90rem; font-weight: 750; color: #1e293b; display: flex; align-items: center; gap: 0.40rem;">
+                  <span>💼 Your Investment Accounts</span>
+                </div>
+                <span class="balances-total-badge" id="startingBalancesTotalBadge">$2,500,000 Total</span>
+              </div>
+
+              <div class="balances-items-list">
+                <!-- Traditional 401(k) -->
+                <div class="balance-sub-item">
+                  <div class="slider-header-row">
+                    <div class="slider-title">
+                      <span style="color: #2563eb; font-size: 0.98rem; font-weight: 700;">Traditional 401(k)</span>
+                      <span class="slider-badge">Pre-tax balance</span>
+                    </div>
+                    <div class="slider-val-input-wrap">
+                      <span class="prefix">$</span>
+                      <input type="number" inputmode="decimal" id="bal401k" value="1000000" step="5000" class="slider-val-input has-prefix" oninput="syncFromNumber('bal401k', 'bal401kSlider')" />
+                    </div>
+                  </div>
+                  <div class="slider-track-wrap">
+                    <input type="range" id="bal401kSlider" min="0" max="5000000" value="1000000" step="10000" oninput="syncFromSlider('bal401kSlider', 'bal401k')" />
+                    <div class="slider-range-labels">
+                      <span>$0</span>
+                      <span>$2.5M</span>
+                      <span>$5M</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Traditional IRA -->
+                <div class="balance-sub-item">
+                  <div class="slider-header-row">
+                    <div class="slider-title">
+                      <span style="color: #0284c7; font-size: 0.98rem; font-weight: 700;">Traditional IRA</span>
+                      <span class="slider-badge">Pre-tax balance</span>
+                    </div>
+                    <div class="slider-val-input-wrap">
+                      <span class="prefix">$</span>
+                      <input type="number" inputmode="decimal" id="balIRA" value="200000" step="5000" class="slider-val-input has-prefix" oninput="syncFromNumber('balIRA', 'balIRASlider')" />
+                    </div>
+                  </div>
+                  <div class="slider-track-wrap">
+                    <input type="range" id="balIRASlider" min="0" max="5000000" value="200000" step="10000" oninput="syncFromSlider('balIRASlider', 'balIRA')" />
+                    <div class="slider-range-labels">
+                      <span>$0</span>
+                      <span>$2.5M</span>
+                      <span>$5M</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Roth IRA -->
+                <div class="balance-sub-item">
+                  <div class="slider-header-row">
+                    <div class="slider-title">
+                      <span style="color: #16a34a; font-size: 0.98rem; font-weight: 700;">Roth IRA</span>
+                      <span class="slider-badge">100% Tax-Free</span>
+                    </div>
+                    <div class="slider-val-input-wrap">
+                      <span class="prefix">$</span>
+                      <input type="number" inputmode="decimal" id="balRoth" value="200000" step="5000" class="slider-val-input has-prefix" oninput="syncFromNumber('balRoth', 'balRothSlider')" />
+                    </div>
+                  </div>
+                  <div class="slider-track-wrap">
+                    <input type="range" id="balRothSlider" min="0" max="5000000" value="200000" step="10000" oninput="syncFromSlider('balRothSlider', 'balRoth')" />
+                    <div class="slider-range-labels">
+                      <span>$0</span>
+                      <span>$2.5M</span>
+                      <span>$5M</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Taxable Brokerage -->
+                <div class="balance-sub-item">
+                  <div class="slider-header-row">
+                    <div class="slider-title">
+                      <span style="color: #9333ea; font-size: 0.98rem; font-weight: 700;">Taxable Brokerage</span>
+                      <span class="slider-badge">Capital gains taxed</span>
+                    </div>
+                    <div class="slider-val-input-wrap">
+                      <span class="prefix">$</span>
+                      <input type="number" inputmode="decimal" id="balBrokerage" value="1000000" step="5000" class="slider-val-input has-prefix" oninput="syncFromNumber('balBrokerage', 'balBrokerageSlider')" />
+                    </div>
+                  </div>
+                  <div class="slider-track-wrap">
+                    <input type="range" id="balBrokerageSlider" min="0" max="5000000" value="1000000" step="10000" oninput="syncFromSlider('balBrokerageSlider', 'balBrokerage')" />
+                    <div class="slider-range-labels">
+                      <span>$0</span>
+                      <span>$2.5M</span>
+                      <span>$5M</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Health Savings Account (HSA) -->
+                <div class="balance-sub-item">
+                  <div class="slider-header-row">
+                    <div class="slider-title">
+                      <span style="color: #0d9488; font-size: 0.98rem; font-weight: 700;">Health Savings Account (HSA)</span>
+                      <span class="slider-badge">100% Tax-Free Healthcare · No RMDs</span>
+                    </div>
+                    <div class="slider-val-input-wrap">
+                      <span class="prefix">$</span>
+                      <input type="number" inputmode="decimal" id="balHsa" value="100000" step="5000" class="slider-val-input has-prefix" oninput="syncFromNumber('balHsa', 'balHsaSlider')" />
+                    </div>
+                  </div>
+                  <div class="slider-track-wrap">
+                    <input type="range" id="balHsaSlider" min="0" max="1000000" value="100000" step="5000" oninput="syncFromSlider('balHsaSlider', 'balHsa')" />
+                    <div class="slider-range-labels">
+                      <span>$0</span>
+                      <span>$500k</span>
+                      <span>$1M</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Why We Ask This: Starting Balances -->
+            <div class="why-we-ask-box">
+              <div class="why-we-ask-header">
+                <span class="why-icon">💡</span>
+                <span>Why we ask about your account balances</span>
+              </div>
+              <div class="why-we-ask-list">
+                <div class="why-we-ask-item">
+                  <span class="why-we-ask-bullet">⚖️</span>
+                  <div><strong>Tax Diversification:</strong> A dollar in a pre-tax 401(k) is taxed as ordinary income upon withdrawal, while Roth withdrawals are 100% tax-free, and taxable brokerage gains receive preferential long-term capital gains rates (0%/15%/20%).</div>
+                </div>
+                <div class="why-we-ask-item">
+                  <span class="why-we-ask-bullet">📜</span>
+                  <div><strong>RMD Spikes at Age 73/75:</strong> Pre-tax accounts are subject to mandatory IRS Required Minimum Distributions, which often trigger sudden marginal tax spikes unless proactively converted.</div>
+                </div>
+                <div class="why-we-ask-item">
+                  <span class="why-we-ask-bullet">🌉</span>
+                  <div><strong>Penalty-Free Bridge:</strong> Taxable brokerage assets act as your bridge if retiring before 59½ without touching locked accounts.</div>
+                </div>
+                <div class="why-we-ask-item">
+                  <span class="why-we-ask-bullet">🔄</span>
+                  <div><strong>Smart Sequencing:</strong> Knowing your exact account balances allows our engine to dynamically draw from the optimal bucket each year to minimize lifetime taxes.</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="wizard-nav-footer">
+              <button type="button" class="btn-wizard-nav btn-wizard-back" onclick="goToWizardStep(2)">
+                ← Back to Age
+              </button>
+              <button type="button" class="btn-wizard-nav btn-wizard-next" onclick="goToWizardStep(4)">
+                Continue to Living Expenses →
+              </button>
+            </div>
+          </div>
+
+          <!-- ================================================================
+               STEP 4: LIVING EXPENSES & TARGET
+               ================================================================ -->
+          <div id="wizardStep4" class="wizard-step-view" style="display: none;">
+            <div class="wizard-step-heading">
+              <h2 class="wizard-step-title">🏷️ Lifestyle &amp; Living Expenses</h2>
+              <p class="wizard-step-subtitle">Your desired living budget drives the annual portfolio distribution needed.</p>
+            </div>
+
+            <!-- Expected Yearly Living Expense Card -->
+            <div class="slider-card-group" id="annualExpenseCard" style="background:#ffffff; border:1px solid #e2e8f0; border-radius:10px; padding:1rem 1.15rem; margin-bottom: 1rem; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
+              <div class="slider-header-row" style="margin-bottom:0.45rem;">
+                <div class="slider-title">
+                  <span style="display: flex; align-items: center; gap: 0.40rem; font-size: 1.05rem; font-weight: 750;">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M3 3v18h18"></path>
+                      <path d="m19 9-5 5-4-4-3 3"></path>
+                    </svg>
+                    <span id="annualExpenseTitleText">Expected Yearly Living Expense</span>
+                  </span>
+                  <span class="slider-badge" id="annualExpenseBadge">Annual net cash needed</span>
+                </div>
+                <div class="slider-val-input-wrap">
+                  <span class="prefix">$</span>
+                  <input type="number" inputmode="decimal" id="annualExpense" value="100000" step="1000" class="slider-val-input has-prefix" oninput="syncFromNumber('annualExpense', 'annualExpenseSlider')" />
+                </div>
+              </div>
+              <div class="slider-track-wrap">
+                <input type="range" id="annualExpenseSlider" min="0" max="250000" value="100000" step="2500" oninput="syncFromSlider('annualExpenseSlider', 'annualExpense')" />
+                <div class="slider-range-labels" id="annualExpenseRangeLabels">
+                  <span>$0</span>
+                  <span>$125k</span>
+                  <span>$250k</span>
+                </div>
+              </div>
+              <button type="button" id="btnWhatCanIAfford" onclick="calculateAffordableExpense()" style="display:none;">What can I afford?</button>
+            </div>
+
+            <!-- Goal 2 Affordable Spending Solved Notice -->
+            <div id="affordSolveNotice" style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 10px; padding: 1rem 1.15rem; margin-bottom: 1rem; display: none;">
+              <div style="display: flex; align-items: flex-start; gap: 0.55rem;">
+                <span style="font-size: 1.25rem; line-height: 1;">💵</span>
+                <div>
+                  <div style="font-weight: 750; color: #166534; font-size: 0.92rem; margin-bottom: 0.25rem;">Affordable Spending Will Be Maximized Automatically</div>
+                  <div style="font-size: 0.82rem; color: #15803d; line-height: 1.45;">Because you selected <strong>What can I afford?</strong>, our engine will calculate the absolute highest yearly spending your portfolio can sustainably fund all the way to Age 90.</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Compatibility element and solver results boxes -->
+            <div id="btnWhenCanIRetire" style="display: none;"></div>
+            <div id="retireCalcResult" class="retire-result-box" style="display: none;"></div>
+            <div id="affordCalcResult" class="retire-result-box" style="display: none;"></div>
+
+            <!-- Automatic Roth Conversion Note -->
+            <div style="display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; background: #fffbeb; border: 1px solid #fde68a; border-radius: 8px; padding: 0.65rem 0.85rem; font-size: 0.80rem; color: #92400e; margin-top: 0.75rem;">
+              <span style="display: flex; align-items: center; gap: 0.45rem;">
+                <span style="font-size: 1.05rem;">⚡</span>
+                <span><strong>Automatic Roth Conversion:</strong> Included in all calculations to proactively fill low tax brackets and minimize lifetime taxes.</span>
+              </span>
+              <span style="font-weight: 750; color: #b45309; white-space: nowrap; font-size: 0.74rem; background: #fef3c7; padding: 2px 8px; border-radius: 5px; border: 1px solid #fcd34d;">Auto-Active</span>
+            </div>
+
+            <!-- Why We Ask This: Expenses -->
+            <div class="why-we-ask-box">
+              <div class="why-we-ask-header">
+                <span class="why-icon">💡</span>
+                <span>Why we ask about living expenses</span>
+              </div>
+              <div class="why-we-ask-list">
+                <div class="why-we-ask-item">
+                  <span class="why-we-ask-bullet">💵</span>
+                  <div><strong>Net Cash Needed in Hand:</strong> Your living expense is what you take home after taxes. Because withdrawals trigger tax liabilities, the portfolio must distribute enough to cover both living expenses and federal/state taxes.</div>
+                </div>
+                <div class="why-we-ask-item">
+                  <span class="why-we-ask-bullet">📈</span>
+                  <div><strong>Inflation Compounding:</strong> Expenses are modeled with annual inflation (default 2.5%/yr), ensuring your purchasing power is maintained throughout your lifetime.</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="wizard-nav-footer">
+              <button type="button" class="btn-wizard-nav btn-wizard-back" onclick="goToWizardStep(3)">
+                ← Back to Balances
+              </button>
+              <button type="button" class="btn-wizard-nav btn-wizard-next" onclick="goToWizardStep(5)">
+                Continue to Social Security &amp; Taxes →
+              </button>
+            </div>
+          </div>
+
+          <!-- ================================================================
+               STEP 5: SOCIAL SECURITY & TAX FOUNDATION
+               ================================================================ -->
+          <div id="wizardStep5" class="wizard-step-view" style="display: none;">
+            <div class="wizard-step-heading">
+              <h2 class="wizard-step-title">🏛️ Social Security &amp; Tax Foundation</h2>
+              <p class="wizard-step-subtitle">Filing status, state of residence, and guaranteed Social Security income.</p>
+            </div>
+
+            <!-- IRS Filing Status & State Tax -->
+            <div class="slider-card-group" style="background:#ffffff; border:1px solid #e2e8f0; border-radius:10px; padding:1rem 1.15rem; margin-bottom: 1rem; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
+              <div class="slider-header-row" style="margin-bottom:0.45rem;">
+                <div class="slider-title">
+                  <span style="font-size: 1.05rem; font-weight: 750;">IRS Filing Status &amp; State</span>
+                  <span class="slider-badge">Federal &amp; state tax rules</span>
                 </div>
               </div>
               <div class="segmented-touch-bar">
@@ -3015,7 +3701,7 @@
               </select>
 
               <!-- State Tax Selection Dropdown -->
-              <div style="margin-top: 0.85rem; padding-top: 0.85rem; border-top: 1px solid var(--border);">
+              <div style="margin-top: 1rem; padding-top: 0.85rem; border-top: 1px solid var(--border);">
                 <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 0.4rem;">
                   <label for="stateSelect" style="font-size: 0.88rem; font-weight: 600; color: #334155;">State of Residence</label>
                   <span id="stateTaxInfo" style="font-size: 0.80rem; color: #0284c7; font-weight: 600;">Minnesota (5.35% – 9.85%)</span>
@@ -3078,77 +3764,12 @@
                 </div>
               </div>
             </div>
-            <!-- Expected Return Slider -->
-            <div class="slider-card-group">
-              <div class="slider-header-row">
-                <div class="slider-title">
-                  <span>Investment Return</span>
-                  <span class="slider-badge">Nominal growth</span>
-                </div>
-                <div class="slider-val-input-wrap" style="width: 80px;">
-                  <input type="number" inputmode="decimal" id="rateReturn" value="6.0" step="0.1" class="slider-val-input has-suffix" oninput="syncFromNumber('rateReturn', 'rateReturnSlider')" />
-                  <span class="suffix">%</span>
-                </div>
-              </div>
-              <div class="slider-track-wrap">
-                <input type="range" id="rateReturnSlider" min="2.0" max="12.0" value="6.0" step="0.1" oninput="syncFromSlider('rateReturnSlider', 'rateReturn')" />
-                <div class="slider-range-labels">
-                  <span>2.0%</span>
-                  <span>6.0%</span>
-                  <span>12.0%</span>
-                </div>
-              </div>
-            </div>
-
-            <!-- Expected Inflation Slider -->
-            <div class="slider-card-group">
-              <div class="slider-header-row">
-                <div class="slider-title">
-                  <span>Inflation Rate</span>
-                  <span class="slider-badge">Adjusts expenses & brackets</span>
-                </div>
-                <div class="slider-val-input-wrap" style="width: 80px;">
-                  <input type="number" inputmode="decimal" id="rateInflation" value="2.5" step="0.1" class="slider-val-input has-suffix" oninput="syncFromNumber('rateInflation', 'rateInflationSlider')" />
-                  <span class="suffix">%</span>
-                </div>
-              </div>
-              <div class="slider-track-wrap">
-                <input type="range" id="rateInflationSlider" min="0.0" max="8.0" value="2.5" step="0.1" oninput="syncFromSlider('rateInflationSlider', 'rateInflation')" />
-                <div class="slider-range-labels">
-                  <span>0.0%</span>
-                  <span>2.5%</span>
-                  <span>8.0%</span>
-                </div>
-              </div>
-            </div>
-
-            <!-- Cost Basis Slider -->
-            <div class="slider-card-group">
-              <div class="slider-header-row">
-                <div class="slider-title">
-                  <span>Brokerage Cost Basis</span>
-                  <span class="slider-badge">% of balance that is principal</span>
-                </div>
-                <div class="slider-val-input-wrap" style="width: 80px;">
-                  <input type="number" inputmode="numeric" id="costBasisRatio" value="60" min="0" max="100" class="slider-val-input has-suffix" oninput="syncFromNumber('costBasisRatio', 'costBasisRatioSlider')" />
-                  <span class="suffix">%</span>
-                </div>
-              </div>
-              <div class="slider-track-wrap">
-                <input type="range" id="costBasisRatioSlider" min="0" max="100" value="60" step="5" oninput="syncFromSlider('costBasisRatioSlider', 'costBasisRatio')" />
-                <div class="slider-range-labels">
-                  <span>0% (all gains)</span>
-                  <span>60%</span>
-                  <span>100% (no gains)</span>
-                </div>
-              </div>
-            </div>
 
             <!-- Social Security Benefits Card -->
-            <div class="slider-card-group" style="border-color: #bbf7d0; background: #f0fdf4;">
-              <div class="slider-header-row">
+            <div class="slider-card-group" style="border-color: #bbf7d0; background: #f0fdf4; border-radius:10px; padding:1rem 1.15rem; margin-bottom: 1rem; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
+              <div class="slider-header-row" style="margin-bottom:0.45rem;">
                 <div class="slider-title">
-                  <span style="color: #15803d;">Social Security Benefit</span>
+                  <span style="color: #15803d; font-size: 1.05rem; font-weight: 750;">Social Security Benefit</span>
                   <span class="slider-badge" id="ssSummaryBadge" style="background:#dcfce7; color:#15803d; border:1px solid #86efac; padding:0.15rem 0.5rem; border-radius:4px;">$30,000/yr starting age 67</span>
                 </div>
                 <div class="slider-val-input-wrap">
@@ -3169,10 +3790,10 @@
               <div style="margin-top: 0.85rem; padding-top: 0.75rem; border-top: 1px solid #bbf7d0;">
                 <div class="slider-header-row">
                   <div class="slider-title">
-                    <span style="font-size: 0.8rem; font-weight: 600; color: #334155;">Claiming Age</span>
+                    <span style="font-size: 0.85rem; font-weight: 650; color: #334155;">Claiming Age</span>
                     <span class="slider-badge">Eligible 62 – 70</span>
                   </div>
-                  <div class="slider-val-input-wrap" style="width: 70px;">
+                  <div class="slider-val-input-wrap" style="width: 75px;">
                     <input type="number" inputmode="numeric" id="ssStartAge" min="62" max="70" value="67" class="slider-val-input" oninput="syncFromNumber('ssStartAge', 'ssStartAgeSlider'); updateSSBadge();" />
                   </div>
                 </div>
@@ -3190,90 +3811,250 @@
               </p>
             </div>
 
-            <!-- Fixed Horizon Age (Always Age 90) -->
-            <div class="slider-card-group">
-              <div class="slider-header-row">
-                <div class="slider-title">
-                  <span>Simulation Horizon</span>
-                  <span class="slider-badge" style="color: #065f46; background: #d1fae5;">Always Age 90</span>
+            <!-- Advanced Collapsible Sliders -->
+            <button class="collapsible-trigger" onclick="toggleAdvanced()" style="margin-bottom: 0.5rem;">
+              <span>⚙ Advanced Assumptions (Returns, Inflation, IRMAA)</span>
+              <span id="advChevron">▼</span>
+            </button>
+            <div class="collapsible-content" id="advContent">
+
+              <!-- Annual Roth IRA Conversion (Advanced Override) -->
+              <div class="slider-card-group" style="border-color: #fde68a; background: #fffbeb; margin-bottom: 0.85rem;">
+                <div class="slider-header-row">
+                  <div class="slider-title">
+                    <span style="color: #b45309; font-weight: 700;">Annual Roth Conversion (Advanced Override)</span>
+                    <span class="slider-badge" id="rothOverrideBadge">Auto-optimized</span>
+                  </div>
+                  <div class="slider-val-input-wrap">
+                    <span class="prefix">$</span>
+                    <input type="number" inputmode="decimal" id="annualRothConv" value="0" step="5000" class="slider-val-input has-prefix" oninput="handleManualRothConvInput(this.value)" />
+                  </div>
                 </div>
-                <div style="font-size: 0.85rem; font-weight: 700; color: #2563eb; background: #eff6ff; padding: 0.35rem 0.65rem; border-radius: 6px; border: 1px solid #bfdbfe;">
-                  Age 90
+                <div class="slider-track-wrap">
+                  <input type="range" id="annualRothConvSlider" min="0" max="500000" value="0" step="5000" oninput="handleManualRothConvSlider(this.value)" />
+                  <div class="slider-range-labels">
+                    <span>$0</span>
+                    <span>$250k</span>
+                    <span>$500k</span>
+                  </div>
+                </div>
+                <div class="roth-maximize-section" style="margin-top: 0.65rem; border-top: 1px dashed #fcd34d; padding-top: 0.55rem;">
+                  <div style="display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; flex-wrap: wrap;">
+                    <button type="button" class="btn-maximize-roth active" id="btnMaximizeRoth" onclick="toggleAutoRothConversion()" title="Toggle automatic annual Roth conversion optimization">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                      <span id="btnMaximizeRothText">⚡ Auto-Optimize Roth (ON)</span>
+                    </button>
+                    <span style="font-size: 0.72rem; color: #92400e; font-weight: 600;">Auto-fills low brackets</span>
+                  </div>
+                  <div id="rothMaximizeResult" class="retire-result-box" style="display: none; margin-top: 0.45rem;"></div>
+                </div>
+                <p style="font-size: 0.78rem; color: #475569; margin-top: 6px; line-height: 1.45;">
+                  Converts pre-tax 401(k)/IRA funds to Roth each year. Automatically optimized to minimize taxes without depleting your portfolio.
+                </p>
+              </div>
+
+              <!-- Expected Return Slider -->
+              <div class="slider-card-group">
+                <div class="slider-header-row">
+                  <div class="slider-title">
+                    <span>Investment Return</span>
+                    <span class="slider-badge">Nominal growth</span>
+                  </div>
+                  <div class="slider-val-input-wrap" style="width: 80px;">
+                    <input type="number" inputmode="decimal" id="rateReturn" value="6.0" step="0.1" class="slider-val-input has-suffix" oninput="syncFromNumber('rateReturn', 'rateReturnSlider')" />
+                    <span class="suffix">%</span>
+                  </div>
+                </div>
+                <div class="slider-track-wrap">
+                  <input type="range" id="rateReturnSlider" min="2.0" max="12.0" value="6.0" step="0.1" oninput="syncFromSlider('rateReturnSlider', 'rateReturn')" />
+                  <div class="slider-range-labels">
+                    <span>2.0%</span>
+                    <span>6.0%</span>
+                    <span>12.0%</span>
+                  </div>
                 </div>
               </div>
-              <input type="hidden" id="endAge" value="90" />
-              <p style="font-size: 0.78rem; color: var(--text-dim); margin-top: 4px; line-height: 1.45;">
-                Withdrawal plan and lifetime taxes are consistently projected until <strong>Age 90</strong>.
-              </p>
+
+              <!-- Expected Inflation Slider -->
+              <div class="slider-card-group">
+                <div class="slider-header-row">
+                  <div class="slider-title">
+                    <span>Inflation Rate</span>
+                    <span class="slider-badge">Adjusts expenses &amp; brackets</span>
+                  </div>
+                  <div class="slider-val-input-wrap" style="width: 80px;">
+                    <input type="number" inputmode="decimal" id="rateInflation" value="2.5" step="0.1" class="slider-val-input has-suffix" oninput="syncFromNumber('rateInflation', 'rateInflationSlider')" />
+                    <span class="suffix">%</span>
+                  </div>
+                </div>
+                <div class="slider-track-wrap">
+                  <input type="range" id="rateInflationSlider" min="0.0" max="8.0" value="2.5" step="0.1" oninput="syncFromSlider('rateInflationSlider', 'rateInflation')" />
+                  <div class="slider-range-labels">
+                    <span>0.0%</span>
+                    <span>2.5%</span>
+                    <span>8.0%</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Cost Basis Slider -->
+              <div class="slider-card-group">
+                <div class="slider-header-row">
+                  <div class="slider-title">
+                    <span>Brokerage Cost Basis</span>
+                    <span class="slider-badge">% of balance that is principal</span>
+                  </div>
+                  <div class="slider-val-input-wrap" style="width: 80px;">
+                    <input type="number" inputmode="numeric" id="costBasisRatio" value="60" min="0" max="100" class="slider-val-input has-suffix" oninput="syncFromNumber('costBasisRatio', 'costBasisRatioSlider')" />
+                    <span class="suffix">%</span>
+                  </div>
+                </div>
+                <div class="slider-track-wrap">
+                  <input type="range" id="costBasisRatioSlider" min="0" max="100" value="60" step="5" oninput="syncFromSlider('costBasisRatioSlider', 'costBasisRatio')" />
+                  <div class="slider-range-labels">
+                    <span>0% (all gains)</span>
+                    <span>60%</span>
+                    <span>100% (no gains)</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Fixed Horizon Age (Always Age 90) -->
+              <div class="slider-card-group">
+                <div class="slider-header-row">
+                  <div class="slider-title">
+                    <span>Simulation Horizon</span>
+                    <span class="slider-badge" style="color: #065f46; background: #d1fae5;">Always Age 90</span>
+                  </div>
+                  <div style="font-size: 0.85rem; font-weight: 700; color: #2563eb; background: #eff6ff; padding: 0.35rem 0.65rem; border-radius: 6px; border: 1px solid #bfdbfe;">
+                    Age 90
+                  </div>
+                </div>
+                <input type="hidden" id="endAge" value="90" />
+                <p style="font-size: 0.78rem; color: var(--text-dim); margin-top: 4px; line-height: 1.45;">
+                  Withdrawal plan and lifetime taxes are consistently projected until <strong>Age 90</strong>.
+                </p>
+              </div>
+
+              <!-- Early Withdrawal Penalty Exemption Toggle -->
+              <div class="slider-card-group">
+                <div class="slider-header-row">
+                  <div class="slider-title">
+                    <span>Pre-59½ Penalty Exemption</span>
+                    <span class="slider-badge">Rule of 55 or SEPP 72(t)</span>
+                  </div>
+                  <div style="display: flex; align-items: center;">
+                    <input type="checkbox" id="exemptRule55" style="width: 20px; height: 20px; accent-color: var(--primary); cursor: pointer;" onchange="calculatePlan()" />
+                  </div>
+                </div>
+                <p style="font-size: 0.78rem; color: var(--text-dim); margin-top: 4px; line-height: 1.45;">
+                  Check if you qualify for penalty-free pre-tax access before age 59½ (e.g., leaving job at age 55+ under Rule of 55 or using 72(t) SEPP).
+                </p>
+              </div>
+
+              <!-- Medicare IRMAA Surcharge Modeling Toggle -->
+              <div class="slider-card-group">
+                <div class="slider-header-row">
+                  <div class="slider-title">
+                    <span>Medicare IRMAA Surcharges</span>
+                    <span class="slider-badge" style="color: #0369a1; background: #e0f2fe;">Part B &amp; D (Age 65+)</span>
+                  </div>
+                  <div style="display: flex; align-items: center;">
+                    <input type="checkbox" id="enableIrmaa" checked style="width: 20px; height: 20px; accent-color: var(--primary); cursor: pointer;" onchange="calculatePlan()" />
+                  </div>
+                </div>
+                <p style="font-size: 0.78rem; color: var(--text-dim); margin-top: 4px; line-height: 1.45;">
+                  Models Medicare Part B &amp; D income-based monthly surcharges starting at age 65, using the official <strong>2-year lookback MAGI rule</strong> (e.g., Age 63 income sets Age 65 premiums).
+                </p>
+              </div>
+
+              <!-- Bracket Ceiling Selection (Touch Buttons) -->
+              <div class="slider-card-group">
+                <div class="slider-header-row">
+                  <div class="slider-title">
+                    <span>Target Pre-Tax Bracket Cap</span>
+                    <span class="slider-badge">Optimal ordinary bracket ceiling</span>
+                  </div>
+                </div>
+                <div class="bracket-ceiling-bar">
+                  <button class="bracket-btn" id="btnBrk10" onclick="setBracketCeiling(10)">10%</button>
+                  <button class="bracket-btn active" id="btnBrk12" onclick="setBracketCeiling(12)">12%</button>
+                  <button class="bracket-btn" id="btnBrk22" onclick="setBracketCeiling(22)">22%</button>
+                  <button class="bracket-btn" id="btnBrk24" onclick="setBracketCeiling(24)">24%</button>
+                </div>
+                <select id="pretaxBracketCap" class="hidden-accessible" onchange="calculatePlan()">
+                  <option value="10">10%</option>
+                  <option value="12" selected>12%</option>
+                  <option value="22">22%</option>
+                  <option value="24">24%</option>
+                </select>
+              </div>
             </div>
 
-            <!-- Early Withdrawal Penalty Exemption Toggle -->
-            <div class="slider-card-group">
-              <div class="slider-header-row">
-                <div class="slider-title">
-                  <span>Pre-59½ Penalty Exemption</span>
-                  <span class="slider-badge">Rule of 55 or SEPP 72(t)</span>
+            <!-- Why We Ask This: Social Security & Taxes -->
+            <div class="why-we-ask-box">
+              <div class="why-we-ask-header">
+                <span class="why-icon">💡</span>
+                <span>Why we ask about Social Security &amp; location</span>
+              </div>
+              <div class="why-we-ask-list">
+                <div class="why-we-ask-item">
+                  <span class="why-we-ask-bullet">🏛️</span>
+                  <div><strong>Guaranteed Income Floor:</strong> Social Security provides inflation-indexed income for life, directly lowering the withdrawal burden on your investment portfolio.</div>
                 </div>
-                <div style="display: flex; align-items: center;">
-                  <input type="checkbox" id="exemptRule55" style="width: 20px; height: 20px; accent-color: var(--primary); cursor: pointer;" onchange="calculatePlan()" />
+                <div class="why-we-ask-item">
+                  <span class="why-we-ask-bullet">📑</span>
+                  <div><strong>IRS § 86 Formula:</strong> Between 0% and 85% of Social Security benefits become taxable depending on provisional income. Strategic pre-tax sequencing prevents unnecessary taxation.</div>
+                </div>
+                <div class="why-we-ask-item">
+                  <span class="why-we-ask-bullet">🗺️</span>
+                  <div><strong>State Tax Drag:</strong> State income taxes range from 0% (FL, TX, WA, NV) to states with generous retirement exclusions (PA, IL, IA, MS) to states with progressive rates (MN, CA, NY).</div>
                 </div>
               </div>
-              <p style="font-size: 0.78rem; color: var(--text-dim); margin-top: 4px; line-height: 1.45;">
-                Check if you qualify for penalty-free pre-tax access before age 59½ (e.g., leaving job at age 55+ under Rule of 55 or using 72(t) SEPP).
-              </p>
             </div>
 
-            <!-- Medicare IRMAA Surcharge Modeling Toggle -->
-            <div class="slider-card-group">
-              <div class="slider-header-row">
-                <div class="slider-title">
-                  <span>Medicare IRMAA Surcharges</span>
-                  <span class="slider-badge" style="color: #0369a1; background: #e0f2fe;">Part B & D (Age 65+)</span>
-                </div>
-                <div style="display: flex; align-items: center;">
-                  <input type="checkbox" id="enableIrmaa" checked style="width: 20px; height: 20px; accent-color: var(--primary); cursor: pointer;" onchange="calculatePlan()" />
-                </div>
-              </div>
-              <p style="font-size: 0.78rem; color: var(--text-dim); margin-top: 4px; line-height: 1.45;">
-                Models Medicare Part B & D income-based monthly surcharges starting at age 65, using the official <strong>2-year lookback MAGI rule</strong> (e.g., Age 63 income sets Age 65 premiums).
-              </p>
-            </div>
-
-            <!-- Bracket Ceiling Selection (Touch Buttons) -->
-            <div class="slider-card-group">
-              <div class="slider-header-row">
-                <div class="slider-title">
-                  <span>Target Pre-Tax Bracket Cap</span>
-                  <span class="slider-badge">Optimal ordinary bracket ceiling</span>
-                </div>
-              </div>
-              <div class="bracket-ceiling-bar">
-                <button class="bracket-btn" id="btnBrk10" onclick="setBracketCeiling(10)">10%</button>
-                <button class="bracket-btn active" id="btnBrk12" onclick="setBracketCeiling(12)">12%</button>
-                <button class="bracket-btn" id="btnBrk22" onclick="setBracketCeiling(22)">22%</button>
-                <button class="bracket-btn" id="btnBrk24" onclick="setBracketCeiling(24)">24%</button>
-              </div>
-              <select id="pretaxBracketCap" class="hidden-accessible" onchange="calculatePlan()">
-                <option value="10">10%</option>
-                <option value="12" selected>12%</option>
-                <option value="22">22%</option>
-                <option value="24">24%</option>
-              </select>
+            <div class="wizard-nav-footer">
+              <button type="button" class="btn-wizard-nav btn-wizard-back" onclick="goToWizardStep(4)">
+                ← Back to Expenses
+              </button>
+              <button type="button" class="btn-wizard-nav btn-wizard-submit" onclick="completeWizardAndShowResults()">
+                🎉 Calculate My Retirement Plan →
+              </button>
             </div>
           </div>
 
-          <!-- Mobile Jump Action Button -->
-          <div class="mobile-jump-wrap">
+          <!-- Mobile Jump Action Button (Compatibility) -->
+          <div class="mobile-jump-wrap" style="display: none;">
             <button class="btn-action mobile-jump-btn" onclick="switchMobileTab('results')">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
-              View Results & Visualizations (Age 90) →
+              View Results &amp; Visualizations (Age 90) →
             </button>
           </div>
         </div>
       </aside>
 
-      <!-- Main Content Area -->
-      <main id="panelResults" class="panel-view">
+
+<main id="panelResults" class="panel-view">
+        <!-- Sticky Plan Summary Banner in Results Mode -->
+        <div id="resultsTopPlanBar" class="results-plan-bar">
+          <div class="results-plan-summary">
+            <div class="results-plan-summary-title">
+              <span class="plan-goal-pill" id="planGoalPill">⏱️ Goal: When can I retire?</span>
+              <span id="planSummaryHeadline" style="font-weight: 750; color: #0f172a; font-size: 0.95rem;">Retirement Plan Overview</span>
+            </div>
+            <div class="results-plan-metrics-row">
+              <span class="plan-stat-item" id="planAgeStat"><strong>Age:</strong> 50 → Retire 51</span>
+              <span class="plan-stat-item" id="planBalStat"><strong>Assets:</strong> $2,500,000</span>
+              <span class="plan-stat-item" id="planExpStat"><strong>Expenses:</strong> $100,000/yr</span>
+              <span class="plan-stat-item" id="planRothStat"><strong>Roth:</strong> Auto-Optimized</span>
+            </div>
+          </div>
+          <button type="button" class="btn-edit-answers" onclick="editWizardAnswers(1)">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+            <span>✏️ Edit Answers / Change Goal</span>
+          </button>
+        </div>
+
         <!-- What-If Scenario Quick Slider Bar (At Top of All Tabs) -->
         <div class="what-if-card" id="whatIfSection">
           <button type="button" class="what-if-toggle-btn" id="btnToggleWhatIf" onclick="toggleWhatIfSection()" aria-expanded="false">
@@ -3326,13 +4107,16 @@
               <div class="what-if-item">
                 <div class="what-if-item-header">
                   <span class="what-if-label">Annual Roth Conversion</span>
-                  <span class="what-if-val" id="whatIfRothConvVal">$0/yr</span>
+                  <div style="display: flex; align-items: center; gap: 6px;">
+                    <button type="button" id="btnWhatIfAutoRoth" onclick="resetWhatIfAutoRoth()" style="display: none; font-size: 0.70rem; padding: 1px 7px; border-radius: 4px; background: #eff6ff; color: #2563eb; border: 1px solid #bfdbfe; font-weight: 750; cursor: pointer;" title="Reset to auto-optimized Roth conversion">⚡ Auto</button>
+                    <span class="what-if-val" id="whatIfRothConvVal">$0/yr</span>
+                  </div>
                 </div>
-                <input type="range" class="what-if-slider" id="whatIfRothConvSlider" min="0" max="300000" step="5000" value="0" oninput="syncWhatIfRothConv(this.value)" aria-label="What-if Annual Roth Conversion" />
+                <input type="range" class="what-if-slider" id="whatIfRothConvSlider" min="0" max="500000" step="5000" value="0" oninput="syncWhatIfRothConv(this.value)" aria-label="What-if Annual Roth Conversion" />
                 <div class="what-if-range-labels">
                   <span>$0</span>
-                  <span>$150k</span>
-                  <span>$300k</span>
+                  <span>$250k</span>
+                  <span>$500k</span>
                 </div>
               </div>
             </div>
@@ -3381,6 +4165,13 @@
                   <div class="kpi-tax-hbar-wrap" id="kpiFinalBalHBarWrap">
                     <div class="kpi-tax-hbar" id="kpiFinalBalHBar"></div>
                     <div class="kpi-tax-hbar-legend" id="kpiFinalBalHBarLegend"></div>
+                  </div>
+
+                  <!-- Compatibility placeholder (Die with X buttons removed per user request) -->
+                  <div id="legacyGoalSection" style="display: none;">
+                    <div id="btnDieWithZero"></div>
+                    <div id="btnDieWithMillion"></div>
+                    <div id="btnDieWith10Million"></div>
                   </div>
                 </div>
 
@@ -4471,6 +5262,7 @@
     }
 
     function syncWhatIfRothConv(val) {
+      isAutoRothConversion = false; // Disable auto-optimization so user's manual What-If value takes effect
       const numVal = parseFloat(val) || 0;
       const convInput = document.getElementById('annualRothConv');
       const convSlider = document.getElementById('annualRothConvSlider');
@@ -4482,7 +5274,54 @@
       if (whatIfSlider) whatIfSlider.value = numVal;
       if (whatIfVal) whatIfVal.textContent = formatCurrency(numVal) + '/yr';
 
+      const btn = document.getElementById('btnMaximizeRoth');
+      if (btn) {
+        btn.classList.remove('active');
+        btn.innerText = '⚡ Enable Auto-Roth';
+      }
+      const rothBadge = document.getElementById('rothOverrideBadge');
+      if (rothBadge) rothBadge.innerText = 'What-If: ' + formatCurrency(numVal) + '/yr';
+      const autoBadge = document.getElementById('autoRothStatusBadge');
+      if (autoBadge) {
+        autoBadge.innerText = 'What-If Override';
+        autoBadge.style.color = '#475569';
+        autoBadge.style.background = '#f1f5f9';
+      }
+      const autoBtn = document.getElementById('btnWhatIfAutoRoth');
+      if (autoBtn) {
+        autoBtn.style.display = 'inline-block';
+      }
+
       calculatePlan();
+      if (typeof updateResultsTopPlanBar === 'function') {
+        updateResultsTopPlanBar();
+      }
+    }
+
+    function resetWhatIfAutoRoth() {
+      isAutoRothConversion = true;
+      const btn = document.getElementById('btnMaximizeRoth');
+      if (btn) {
+        btn.classList.add('active');
+        btn.innerText = '⚡ Auto-Optimize Roth (ON)';
+      }
+      const rothBadge = document.getElementById('rothOverrideBadge');
+      if (rothBadge) rothBadge.innerText = 'Auto-optimized';
+      const autoBadge = document.getElementById('autoRothStatusBadge');
+      if (autoBadge) {
+        autoBadge.innerText = 'Auto-Active';
+        autoBadge.style.color = '#b45309';
+        autoBadge.style.background = '#fef3c7';
+      }
+      const autoBtn = document.getElementById('btnWhatIfAutoRoth');
+      if (autoBtn) {
+        autoBtn.style.display = 'none';
+      }
+      calculatePlan();
+      updateWhatIfUIFromInputs();
+      if (typeof updateResultsTopPlanBar === 'function') {
+        updateResultsTopPlanBar();
+      }
     }
 
     function updateWhatIfUIFromInputs() {
@@ -4515,10 +5354,14 @@
       const convInput = document.getElementById('annualRothConv');
       const whatIfRothSlider = document.getElementById('whatIfRothConvSlider');
       const whatIfRothVal = document.getElementById('whatIfRothConvVal');
+      const autoBtn = document.getElementById('btnWhatIfAutoRoth');
       if (convInput && whatIfRothSlider) {
         const conv = parseFloat(convInput.value) || 0;
         whatIfRothSlider.value = conv;
         if (whatIfRothVal) whatIfRothVal.textContent = formatCurrency(conv) + '/yr';
+      }
+      if (autoBtn) {
+        autoBtn.style.display = isAutoRothConversion ? 'none' : 'inline-block';
       }
 
       // Sync Preview Badge
@@ -4528,7 +5371,8 @@
         const curAge = parseInt(curAgeInput ? curAgeInput.value : 50) || 50;
         const retAge = parseInt(retAgeInput.value) || curAge;
         const conv = parseFloat(convInput.value) || 0;
-        whatIfPreview.textContent = `${rate.toFixed(1)}% Return · Age ${retAge} · ${formatCurrency(conv)}/yr`;
+        const rothText = isAutoRothConversion ? `Auto ${formatCurrency(conv)}/yr` : `${formatCurrency(conv)}/yr`;
+        whatIfPreview.textContent = `${rate.toFixed(1)}% Return · Age ${retAge} · ${rothText}`;
       }
     }
 
@@ -5939,6 +6783,20 @@
       };
     }
 
+    let isAutoRothConversion = true;
+    let activeGoalMode = 'when_retire';
+    let activeLegacyTarget = 0;
+
+    function updateStartingBalancesTotal() {
+      const p = getFormValues();
+      const total = (p.bal401kInit || 0) + (p.balIRAInit || 0) + (p.balRothInit || 0) + (p.balBrokerageInit || 0) + (p.balHsaInit || 0);
+      const badge = document.getElementById('startingBalancesTotalBadge');
+      if (badge) {
+        badge.innerText = `${formatCurrency(total)} Total`;
+      }
+    }
+    const updateStartingBalancesTotalBadge = updateStartingBalancesTotal;
+
     function getFormValues() {
       const parseNumVal = (id, fallback) => {
         const el = document.getElementById(id);
@@ -5986,6 +6844,40 @@
     function calculatePlan() {
       if (isLoadingSaved) return;
       const params = getFormValues();
+      if (typeof updateStartingBalancesTotal === 'function') {
+        updateStartingBalancesTotal();
+      }
+
+      // Automatically solve and synchronize earliest solvent retirement age when in Goal 1 ("When can I retire?")
+      if (activeGoalMode === 'when_retire' && typeof solveOptimalRetirementAge === 'function') {
+        const targetBal = (activeLegacyTarget !== undefined) ? activeLegacyTarget : (activeRetirementTarget || 0);
+        const solved = solveOptimalRetirementAge(params, targetBal);
+        if (solved && solved.optimalRetireAge !== null) {
+          params.retirementAge = solved.optimalRetireAge;
+          const retInput = document.getElementById('retirementAge');
+          const retSlider = document.getElementById('retirementAgeSlider');
+          if (retInput && parseInt(retInput.value) !== solved.optimalRetireAge) {
+            retInput.value = solved.optimalRetireAge;
+          }
+          if (retSlider && parseInt(retSlider.value) !== solved.optimalRetireAge) {
+            retSlider.value = Math.min(parseFloat(retSlider.max), Math.max(parseFloat(retSlider.min), solved.optimalRetireAge));
+          }
+          if (typeof updateAgeBadges === 'function') updateAgeBadges();
+        }
+      }
+
+      // Automatically include optimal annual Roth conversion across all calculations
+      if (isAutoRothConversion && typeof solveOptimalRothConversion === 'function') {
+        const optimalConv = solveOptimalRothConversion(params);
+        params.annualRothConv = optimalConv;
+        const convInput = document.getElementById('annualRothConv');
+        const convSlider = document.getElementById('annualRothConvSlider');
+        if (convInput) convInput.value = optimalConv;
+        if (convSlider) convSlider.value = optimalConv;
+        const rothBadge = document.getElementById('rothOverrideBadge');
+        if (rothBadge) rothBadge.innerText = optimalConv > 0 ? `Auto: ${formatCurrency(optimalConv)}/yr` : 'Auto: $0/yr';
+      }
+
       const smartResult = simulateRetirement('smart', params);
       const convResult = simulateRetirement('conv', params);
 
@@ -6000,8 +6892,8 @@
       renderAreaChart(activeResult.schedule);
       renderTable(activeResult.schedule);
       renderTimelineVisualization(activeResult.schedule, params, activeResult.depletedAge);
-      if (typeof updateRetirementSolverBanner === 'function' && typeof activeRetirementTarget !== 'undefined' && activeRetirementTarget !== null) {
-        updateRetirementSolverBanner(activeRetirementTarget);
+      if (activeGoalMode === 'when_retire' && typeof updateRetirementSolverBanner === 'function' && typeof activeRetirementTarget !== 'undefined' && activeRetirementTarget !== null) {
+        updateRetirementSolverBanner(activeLegacyTarget !== undefined ? activeLegacyTarget : activeRetirementTarget);
       }
       if (typeof updateWhatIfUIFromInputs === 'function') {
         updateWhatIfUIFromInputs();
@@ -6387,7 +7279,7 @@
         items.push({
           icon: '💡',
           title: 'How to Fix It',
-          text: `To achieve lifetime solvency, consider <strong>delaying retirement</strong> (click the <em>Die with Zero</em> button under Retirement Age to auto-calculate your solvent age), <strong>trimming annual spending</strong>, or boosting starting savings.`
+          text: `To achieve lifetime solvency, consider <strong>delaying retirement</strong> (use Goal 1 to auto-calculate your solvent retirement age), <strong>trimming annual spending</strong>, or boosting starting savings.`
         });
       }
 
@@ -7964,11 +8856,20 @@
     }
 
     /* ==========================================================================
-       AUTOMATIC RETIREMENT TARGET SOLVERS ("When can I Retire?")
-       Die with Zero ($0) | Die with Million ($1M) | Die with 10 Million ($10M)
+       GOAL PLANNING & RETIREMENT SOLVERS ENGINE
+       Mode 1: When can I retire? (Solves earliest viable retirement age)
+       Mode 2: What can I afford? (Solves maximum sustainable annual expense)
+       Mode 3: I have a plan (Custom inputs)
+       Legacy Targets: Die with Zero ($0) | Die with 1M ($1M) | Die with 10M ($10M)
+       Automated Roth Conversion: Solves net-wealth maximizing conversion for all
        ========================================================================== */
     let originalRetirementBaseline = null;
-    let activeRetirementTarget = null;
+    let activeRetirementTarget = 0;
+    let originalAffordBaseline = null;
+    let isCalculatingAffordable = false;
+    let isSolvingRetirement = false;
+    let originalRothConvBaseline = null;
+    let isRothMaximized = false;
 
     function onUserInputChange(numberId, val) {
       // Kept for test suite compatibility
@@ -7989,6 +8890,75 @@
       }
     }
 
+    function updateLegacyButtonStyles() {
+      const btnZero = document.getElementById('btnDieWithZero');
+      const btnMillion = document.getElementById('btnDieWithMillion');
+      const btn10Million = document.getElementById('btnDieWith10Million');
+      if (btnZero) btnZero.className = 'btn-retire-target' + (activeLegacyTarget === 0 ? ' active-zero' : '');
+      if (btnMillion) btnMillion.className = 'btn-retire-target' + (activeLegacyTarget === 1000000 ? ' active-million' : '');
+      if (btn10Million) btn10Million.className = 'btn-retire-target' + (activeLegacyTarget === 10000000 ? ' active-10million' : '');
+    }
+
+    function selectLegacyTarget(targetVal) {
+      activeLegacyTarget = targetVal;
+      activeRetirementTarget = targetVal;
+      updateLegacyButtonStyles();
+
+      if (activeGoalMode === 'when_retire') {
+        calculateOptimalRetirement(targetVal);
+      } else if (activeGoalMode === 'what_afford') {
+        calculateAffordableExpense(targetVal);
+      } else {
+        calculatePlan();
+      }
+    }
+
+    function switchGoalMode(mode) {
+      activeGoalMode = mode;
+
+      const btnRetire = document.getElementById('btnGoalModeWhenRetire');
+      const btnAfford = document.getElementById('btnGoalModeWhatAfford');
+      const btnCustom = document.getElementById('btnGoalModeCustom');
+      if (btnRetire) btnRetire.classList.toggle('active', mode === 'when_retire');
+      if (btnAfford) btnAfford.classList.toggle('active', mode === 'what_afford');
+      if (btnCustom) btnCustom.classList.toggle('active', mode === 'custom');
+
+      const retCard = document.getElementById('retirementAgeCard');
+      const expCard = document.getElementById('annualExpenseCard');
+      const introText = document.getElementById('goalModeIntroText');
+      const retResult = document.getElementById('retireCalcResult');
+      const affordResult = document.getElementById('affordCalcResult');
+
+      updateLegacyButtonStyles();
+
+      if (mode === 'when_retire') {
+        if (retCard) retCard.style.display = 'none';
+        if (expCard) expCard.style.display = 'block';
+        if (introText) {
+          introText.innerHTML = '<strong>Goal 1: When can I retire?</strong> Enter your expected yearly living expenses below. We\'ll calculate your earliest viable retirement age.';
+        }
+        if (affordResult) affordResult.style.display = 'none';
+        calculateOptimalRetirement(activeLegacyTarget || 0);
+      } else if (mode === 'what_afford') {
+        if (retCard) retCard.style.display = 'block';
+        if (expCard) expCard.style.display = 'none';
+        if (introText) {
+          introText.innerHTML = '<strong>Goal 2: What can I afford?</strong> Enter your target retirement age below. We\'ll calculate the maximum sustainable living expenses your portfolio can fund through Age 90.';
+        }
+        if (retResult) retResult.style.display = 'none';
+        calculateAffordableExpense(activeLegacyTarget || 0);
+      } else if (mode === 'custom') {
+        if (retCard) retCard.style.display = 'block';
+        if (expCard) expCard.style.display = 'block';
+        if (introText) {
+          introText.innerHTML = '<strong>Goal 3: Custom Retirement Plan.</strong> Set both your retirement age and living expenses directly to evaluate your custom roadmap and portfolio longevity.';
+        }
+        if (retResult) retResult.style.display = 'none';
+        if (affordResult) affordResult.style.display = 'none';
+        calculatePlan();
+      }
+    }
+
     function resetRetirementBaseline() {
       ['btnDieWithZero', 'btnDieWithMillion', 'btnDieWith10Million'].forEach(id => {
         const btn = document.getElementById(id);
@@ -8002,24 +8972,59 @@
       originalRetirementBaseline = null;
     }
 
-    function calculateOptimalRetirement(targetBalance) {
-      // Toggle off if clicking the currently active target button
-      if (activeRetirementTarget === targetBalance) {
-        resetRetirementBaseline();
-        return;
+    function solveOptimalRetirementAge(baseParams, targetBalance = 0) {
+      const currentAge = baseParams.currentAge || baseParams.startAge || 50;
+      const totalStartAssets = (baseParams.bal401kInit || 0) + (baseParams.balIRAInit || 0) + (baseParams.balRothInit || 0) + (baseParams.balBrokerageInit || 0) + (baseParams.balHsaInit || 0);
+      const currentExpense = baseParams.initialExpense;
+      const activeStrat = activeStrategy || 'smart';
+
+      let candidateRothConv = baseParams.annualRothConv || 0;
+      if (isAutoRothConversion && typeof solveOptimalRothConversion === 'function') {
+        candidateRothConv = solveOptimalRothConversion(baseParams);
       }
 
+      for (let rAge = currentAge; rAge <= 90; rAge++) {
+        let rAgeRothConv = candidateRothConv;
+        if (isAutoRothConversion && typeof solveOptimalRothConversion === 'function') {
+          rAgeRothConv = solveOptimalRothConversion({ ...baseParams, retirementAge: rAge });
+        }
+        const testP = {
+          ...baseParams,
+          currentAge: currentAge,
+          retirementAge: rAge,
+          annualRothConv: rAgeRothConv
+        };
+
+        const res = simulateRetirement(activeStrat, testP);
+        if (res.depletedAge === null && res.finalBalance >= targetBalance) {
+          let optimalGrownAssets = null;
+          if (rAge > currentAge) {
+            const yrs = rAge - currentAge;
+            const gFactor = Math.pow(1 + (baseParams.rateReturn || 6) / 100, yrs);
+            const iFactor = Math.pow(1 + (baseParams.rateInflation || 2.5) / 100, yrs);
+            optimalGrownAssets = {
+              total: Math.round(totalStartAssets * gFactor),
+              inflatedExpense: Math.round(currentExpense * iFactor)
+            };
+          }
+          return {
+            optimalRetireAge: rAge,
+            optimalFinalBal: res.finalBalance,
+            optimalGrownAssets: optimalGrownAssets
+          };
+        }
+      }
+      return null;
+    }
+
+    function calculateOptimalRetirement(targetBalance) {
+      if (targetBalance === undefined || targetBalance === null) {
+        targetBalance = activeLegacyTarget || 0;
+      }
+      activeLegacyTarget = targetBalance;
       activeRetirementTarget = targetBalance;
-
-      // Update button active classes
-      const btnZero = document.getElementById('btnDieWithZero');
-      const btnMillion = document.getElementById('btnDieWithMillion');
-      const btn10Million = document.getElementById('btnDieWith10Million');
-      if (btnZero) btnZero.className = 'btn-retire-target' + (targetBalance === 0 ? ' active-zero' : '');
-      if (btnMillion) btnMillion.className = 'btn-retire-target' + (targetBalance === 1000000 ? ' active-million' : '');
-      if (btn10Million) btn10Million.className = 'btn-retire-target' + (targetBalance === 10000000 ? ' active-10million' : '');
-
-      updateRetirementSolverBanner(targetBalance, true);
+      updateLegacyButtonStyles();
+      calculatePlan();
     }
 
     function updateRetirementSolverBanner(targetBalance, autoApply = false) {
@@ -8031,62 +9036,26 @@
       const currentAge = baseParams.currentAge;
       const currentRetireAge = baseParams.retirementAge;
       const currentExpense = baseParams.initialExpense;
-      const totalStartAssets = baseParams.bal401kInit + baseParams.balIRAInit + baseParams.balRothInit + baseParams.balBrokerageInit + (baseParams.balHsaInit || 0);
-      const activeStrat = activeStrategy || 'smart';
+      const totalStartAssets = (baseParams.bal401kInit || 0) + (baseParams.balIRAInit || 0) + (baseParams.balRothInit || 0) + (baseParams.balBrokerageInit || 0) + (baseParams.balHsaInit || 0);
 
       const targetLabels = {
-        0: 'Die with Zero ($0 at 90)',
-        1000000: 'Die with Million ($1M at 90)',
-        10000000: 'Die with 10 Million ($10M at 90)'
+        0: 'Solvent through Age 90',
+        1000000: 'Preserving $1M at 90',
+        10000000: 'Preserving $10M at 90'
       };
       const targetLabel = targetLabels[targetBalance] || `Target ${formatCurrency(targetBalance)}`;
 
-      // Search across candidate retirement ages starting from currentAge up to 90
-      // "Retirement Age can't be earlier than current age. Current Age will always be the same regardless which Die with X scenario. Only retirement age can be calculated"
-      let optimalRetireAge = null;
-      let optimalFinalBal = 0;
-      let optimalGrownAssets = null;
-
-      for (let rAge = currentAge; rAge <= 90; rAge++) {
-        const testP = {
-          ...baseParams,
-          currentAge: currentAge,
-          retirementAge: rAge
-        };
-
-        const res = simulateRetirement(activeStrat, testP);
-        if (res.depletedAge === null && res.finalBalance >= targetBalance) {
-          optimalRetireAge = rAge;
-          optimalFinalBal = res.finalBalance;
-          if (rAge > currentAge) {
-            const yrs = rAge - currentAge;
-            const gFactor = Math.pow(1 + (baseParams.rateReturn || 6) / 100, yrs);
-            const iFactor = Math.pow(1 + (baseParams.rateInflation || 2.5) / 100, yrs);
-            optimalGrownAssets = {
-              total: Math.round(totalStartAssets * gFactor),
-              inflatedExpense: Math.round(currentExpense * iFactor)
-            };
-          }
-          break;
-        }
-      }
-
-      // If autoApply is requested and a viable retirement age is found, immediately apply it to the input/slider
-      if (autoApply && optimalRetireAge !== null && optimalRetireAge !== currentRetireAge) {
-        const retInput = document.getElementById('retirementAge');
-        const retSlider = document.getElementById('retirementAgeSlider');
-        if (retInput) retInput.value = optimalRetireAge;
-        if (retSlider) retSlider.value = Math.min(parseFloat(retSlider.max), Math.max(parseFloat(retSlider.min), optimalRetireAge));
-        updateAgeBadges();
-        calculatePlan();
-        return; // calculatePlan re-invokes updateRetirementSolverBanner(activeRetirementTarget, false) which displays the confirmation below
-      }
+      const solved = solveOptimalRetirementAge(baseParams, targetBalance);
 
       resultBox.style.display = 'block';
 
-      if (optimalRetireAge !== null) {
+      if (solved !== null) {
+        const optimalRetireAge = solved.optimalRetireAge;
+        const optimalFinalBal = solved.optimalFinalBal;
+        const optimalGrownAssets = solved.optimalGrownAssets;
+
         resultBox.className = 'retire-result-box';
-        let html = `<div><strong>🎯 Calculated Retirement Age: ${optimalRetireAge} (${targetLabel})</strong></div>`;
+        let html = `<div><strong style="color: #15803d; font-size: 0.88rem;">🎯 Earliest Retirement Age: ${optimalRetireAge} (${targetLabel})</strong></div>`;
         html += `<div style="margin-top: 0.25rem;">Projected balance at Age 90: <strong style="color:#15803d;">${formatCurrency(optimalFinalBal)}</strong></div>`;
         if (optimalGrownAssets) {
           html += `<div style="margin-top: 0.25rem; font-size: 0.78rem; line-height: 1.35; opacity: 0.95;">Working from current Age ${currentAge} until Retirement Age ${optimalRetireAge} allows your ${formatCurrency(totalStartAssets)} current assets to compound to <strong>${formatCurrency(optimalGrownAssets.total)}</strong> at retirement, funding your <strong>${formatCurrency(optimalGrownAssets.inflatedExpense)}/yr</strong> inflation-adjusted living expenses through Age 90.</div>`;
@@ -8096,9 +9065,7 @@
           html += `<div style="margin-top: 0.25rem; font-size: 0.78rem; line-height: 1.35; opacity: 0.95;">Retiring at Retirement Age ${optimalRetireAge} achieves this target.</div>`;
         }
         html += `<div style="margin-top: 0.45rem; display: flex; gap: 0.4rem; align-items: center; flex-wrap: wrap;">`;
-        if (optimalRetireAge !== currentRetireAge) {
-          html += `<button type="button" class="btn-apply-age" onclick="applyRetirementAge(${optimalRetireAge})">Apply Retirement Age ${optimalRetireAge} to Plan</button>`;
-        }
+        html += `<span style="display:inline-flex; align-items:center; gap:4px; font-size: 0.76rem; background: #dcfce7; color: #15803d; font-weight: 700; padding: 2px 7px; border-radius: 4px; border: 1px solid #86efac;">✓ Applied to Plan</span>`;
         html += `<button type="button" class="btn-apply-age" style="background:#f1f5f9; color:#475569; border-color:#cbd5e1;" onclick="resetRetirementBaseline()">✕ Close</button>`;
         html += `</div>`;
         resultBox.innerHTML = html;
@@ -8118,34 +9085,19 @@
       if (retSlider) retSlider.value = Math.min(parseFloat(retSlider.max), Math.max(parseFloat(retSlider.min), targetAge));
 
       updateAgeBadges();
-
-      // Automatically close the solver window and deselect target buttons
       const resultBox = document.getElementById('retireCalcResult');
       if (resultBox) resultBox.style.display = 'none';
-
-      ['btnDieWithZero', 'btnDieWithMillion', 'btnDieWith10Million'].forEach(id => {
-        const btn = document.getElementById(id);
-        if (btn) btn.className = 'btn-retire-target';
-      });
-
-      activeRetirementTarget = null;
-      originalRetirementBaseline = null;
 
       calculatePlan();
     }
 
     function calculateRetirementAge() {
-      calculateOptimalRetirement(0);
+      calculateOptimalRetirement(activeLegacyTarget || 0);
     }
 
     /* ==========================================================================
        AFFORDABLE LIVING EXPENSE SOLVER ("What can I afford?")
-       Automatically calculates the maximum sustainable annual living expense
-       so that the portfolio lasts until the end of the simulation (Age 90).
        ========================================================================== */
-    let originalAffordBaseline = null;
-    let isCalculatingAffordable = false;
-
     function updateExpenseRangeLabels(maxVal) {
       const labels = document.getElementById('annualExpenseRangeLabels');
       if (!labels) return;
@@ -8187,13 +9139,20 @@
       saveUserInputs();
     }
 
-    function calculateAffordableExpense() {
+    function calculateAffordableExpense(targetBalance = null) {
       const expInput = document.getElementById('annualExpense');
       const expSlider = document.getElementById('annualExpenseSlider');
       const resultBox = document.getElementById('affordCalcResult');
       const btn = document.getElementById('btnWhatCanIAfford');
 
       if (!expInput || !resultBox) return;
+
+      if (targetBalance === null || targetBalance === undefined) {
+        targetBalance = activeLegacyTarget || 0;
+      }
+      activeLegacyTarget = targetBalance;
+      activeRetirementTarget = targetBalance;
+      updateLegacyButtonStyles();
 
       if (originalAffordBaseline === null) {
         originalAffordBaseline = parseFloat(expInput.value) || 100000;
@@ -8205,35 +9164,47 @@
                           (baseParams.balRothInit || 0) + (baseParams.balBrokerageInit || 0) + 
                           (baseParams.balHsaInit || 0);
 
+      const targetLabels = {
+        0: 'Solvent through Age 90',
+        1000000: 'Preserving $1M at 90',
+        10000000: 'Preserving $10M at 90'
+      };
+      const targetLabel = targetLabels[targetBalance] || `Target ${formatCurrency(targetBalance)}`;
+
+      let rothConv = baseParams.annualRothConv || 0;
+      if (isAutoRothConversion && typeof solveOptimalRothConversion === 'function') {
+        rothConv = solveOptimalRothConversion(baseParams);
+      }
+
       // Check baseline solvency at $0 expense
       let low = 0;
       let high = Math.max(500000, Math.min(3000000, Math.round(totalAssets * 0.5) + (baseParams.ssMonthly * 12 * 2)));
 
-      const testLow = simulateRetirement(activeStrat, { ...baseParams, initialExpense: low });
-      if (testLow.depletedAge !== null) {
+      const testLow = simulateRetirement(activeStrat, { ...baseParams, annualRothConv: rothConv, initialExpense: 0 });
+      if (testLow.depletedAge !== null || testLow.finalBalance < targetBalance) {
         resultBox.style.display = 'block';
         resultBox.className = 'retire-result-box warning';
-        resultBox.innerHTML = `<div><strong>⚠️ Unable to calculate affordable spending</strong></div>` +
-          `<div style="margin-top: 0.25rem; font-size: 0.78rem;">With current assets and parameters, the portfolio cannot sustain withdrawals through Age 90. Try adjusting retirement age or starting balances.</div>` +
+        resultBox.innerHTML = `<div><strong>⚠️ Legacy Target Unreachable: ${targetLabel}</strong></div>` +
+          `<div style="margin-top: 0.25rem; font-size: 0.78rem;">Even with $0 living expenses, current assets cannot reach ${formatCurrency(targetBalance)} at Age 90 (Projected ending balance: ${formatCurrency(testLow.finalBalance)}). Try delaying retirement age, increasing starting balances, or choosing a lower legacy goal.</div>` +
           `<div style="margin-top: 0.45rem;"><button type="button" class="btn-apply-age" style="background:#f1f5f9; color:#475569; border-color:#cbd5e1;" onclick="resetAffordableBaseline()">✕ Close</button></div>`;
         return;
       }
 
-      // Expand high bound if still solvent at high
+      // Expand high bound if still solvent and >= targetBalance
       while (high <= 5000000) {
-        const testHigh = simulateRetirement(activeStrat, { ...baseParams, initialExpense: high });
-        if (testHigh.depletedAge === null && testHigh.finalBalance >= 0) {
+        const testHigh = simulateRetirement(activeStrat, { ...baseParams, annualRothConv: rothConv, initialExpense: high });
+        if (testHigh.depletedAge === null && testHigh.finalBalance >= targetBalance) {
           high *= 2;
         } else {
           break;
         }
       }
 
-      // Binary search for maximum initialExpense where depletedAge === null && finalBalance >= 0
+      // Binary search for maximum initialExpense where depletedAge === null && finalBalance >= targetBalance
       for (let i = 0; i < 26; i++) {
         const mid = Math.round((low + high) / 2);
-        const testMid = simulateRetirement(activeStrat, { ...baseParams, initialExpense: mid });
-        if (testMid.depletedAge === null && testMid.finalBalance >= 0) {
+        const testMid = simulateRetirement(activeStrat, { ...baseParams, annualRothConv: rothConv, initialExpense: mid });
+        if (testMid.depletedAge === null && testMid.finalBalance >= targetBalance) {
           low = mid;
         } else {
           high = mid;
@@ -8244,11 +9215,11 @@
       let optimalExpense = Math.floor(low / 500) * 500;
       if (optimalExpense < 0) optimalExpense = 0;
 
-      // Verify rounded value is solvent
-      let verifySim = simulateRetirement(activeStrat, { ...baseParams, initialExpense: optimalExpense });
-      if (verifySim.depletedAge !== null || verifySim.finalBalance < 0) {
+      // Verify rounded value is solvent and meets target
+      let verifySim = simulateRetirement(activeStrat, { ...baseParams, annualRothConv: rothConv, initialExpense: optimalExpense });
+      if (verifySim.depletedAge !== null || verifySim.finalBalance < targetBalance) {
         optimalExpense = Math.floor(optimalExpense / 1000) * 1000;
-        verifySim = simulateRetirement(activeStrat, { ...baseParams, initialExpense: optimalExpense });
+        verifySim = simulateRetirement(activeStrat, { ...baseParams, annualRothConv: rothConv, initialExpense: optimalExpense });
       }
 
       const finalBal = verifySim.finalBalance;
@@ -8256,10 +9227,8 @@
 
       isCalculatingAffordable = true;
 
-      // Update input
+      // Update input and slider
       expInput.value = optimalExpense;
-
-      // Expand slider max if needed
       if (expSlider) {
         if (optimalExpense > parseFloat(expSlider.max)) {
           const newMax = Math.ceil(optimalExpense / 50000) * 50000;
@@ -8274,7 +9243,8 @@
       // Populate result box
       resultBox.style.display = 'block';
       resultBox.className = 'retire-result-box';
-      const origFormatted = formatCurrency(originalAffordBaseline);
+      const retResult = document.getElementById('retireCalcResult');
+      if (retResult) retResult.style.display = 'none';
       const optFormatted = formatCurrency(optimalExpense);
       const moFormatted = formatCurrency(monthlyAfford);
       const cushionFormatted = formatCurrency(finalBal);
@@ -8282,20 +9252,20 @@
       resultBox.innerHTML = `
         <div style="display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; flex-wrap: wrap;">
           <div><strong style="color: #15803d; font-size: 0.88rem;">🎉 Maximum Sustainable Spending: ${optFormatted}/yr</strong></div>
-          <span style="font-size: 0.72rem; background: #dcfce7; color: #15803d; font-weight: 700; padding: 2px 7px; border-radius: 4px; border: 1px solid #86efac;">Lasts through Age 90</span>
+          <span style="font-size: 0.72rem; background: #dcfce7; color: #15803d; font-weight: 700; padding: 2px 7px; border-radius: 4px; border: 1px solid #86efac;">${targetLabel}</span>
         </div>
         <div style="margin-top: 0.35rem; font-size: 0.80rem; color: #166534;">
           Equal to approximately <strong>${moFormatted}/month</strong> in spendable cash.
         </div>
         <div style="margin-top: 0.25rem; font-size: 0.76rem; color: #14532d; line-height: 1.4;">
-          With your assets compounding and planned distributions, this spending rate ensures your money lasts through the entire simulation to Age 90, with an estimated ending cushion of <strong>${cushionFormatted}</strong>.
+          Retiring at Age ${baseParams.retirementAge}, this spending rate ensures your portfolio lasts through Age 90 with an estimated ending balance of <strong>${cushionFormatted}</strong> (meeting your ${targetLabel} target).
         </div>
         <div style="margin-top: 0.55rem; display: flex; gap: 0.40rem; align-items: center; flex-wrap: wrap;">
           <button type="button" class="btn-apply-age" style="background:#ffffff; color:#047857; border-color:#86efac; font-weight: 700;" onclick="document.getElementById('affordCalcResult').style.display='none'">
             ✓ Keep ${optFormatted}/yr
           </button>
           <button type="button" class="btn-apply-age" style="background:#f1f5f9; color:#475569; border-color:#cbd5e1;" onclick="resetAffordableBaseline()">
-            ↺ Revert to ${origFormatted}/yr
+            ✕ Close
           </button>
         </div>
       `;
@@ -8306,12 +9276,168 @@
     }
 
     /* ==========================================================================
-       ROTH CONVERSION OPTIMIZATION ENGINE ("Maximize Me")
-       Automatically calculates the best annual Roth conversion amount ($/year)
-       to maximize after-tax net worth at Age 90 while minimizing lifetime taxes.
+       AUTOMATIC ROTH CONVERSION OPTIMIZATION ENGINE
        ========================================================================== */
-    let originalRothConvBaseline = null;
-    let isRothMaximized = false;
+    function solveOptimalRothConversion(baseParams) {
+      const pretaxTotal = (baseParams.bal401kInit || 0) + (baseParams.balIRAInit || 0);
+      if (pretaxTotal <= 0) return 0;
+
+      const maxCandidate = Math.min(250000, pretaxTotal);
+      const candidates = [0];
+      for (let c = 10000; c <= maxCandidate; c += 10000) {
+        candidates.push(c);
+      }
+
+      // Baseline at $0 conversion
+      const testBase = { ...baseParams, annualRothConv: 0 };
+      const baseRes = simulateRetirement('smart', testBase);
+      const baseLastRow = baseRes.schedule[baseRes.schedule.length - 1];
+      const baseFinalBal = baseLastRow ? (baseLastRow.totalEndingBal || 0) : 0;
+      const baseLifetimeTax = baseRes.totalLifetimeTaxes || 0;
+      const basePretax = baseLastRow ? ((baseLastRow.bal401k || 0) + (baseLastRow.balIRA || 0)) : 0;
+      const baseBrok = baseLastRow ? (baseLastRow.balBrokerage || 0) : 0;
+      const basisRatio = (baseParams.costBasisRatio !== undefined ? baseParams.costBasisRatio : 60) / 100;
+      const baseAfterTax = baseFinalBal - (basePretax * 0.22) - (baseBrok * (1 - basisRatio) * 0.15);
+      const isBaseSolvent = (baseRes.depletedAge === null && baseFinalBal >= 0);
+
+      let bestConv = 0;
+      let bestNetBenefit = 0;
+      let bestFinalBal = baseFinalBal;
+      let bestIsSolvent = isBaseSolvent;
+      let bestDepletedAge = baseRes.depletedAge || 0;
+
+      for (let i = 1; i < candidates.length; i++) {
+        const c = candidates[i];
+        const testParams = { ...baseParams, annualRothConv: c };
+        const res = simulateRetirement('smart', testParams);
+        const lastRow = res.schedule[res.schedule.length - 1];
+        const finalBal = lastRow ? (lastRow.totalEndingBal || 0) : 0;
+        const isSolvent = (res.depletedAge === null && finalBal >= 0);
+        const curDepletedAge = res.depletedAge || 0;
+
+        // Solvency guarantee:
+        // 1. If baseline is solvent, never pick an insolvent candidate
+        if (isBaseSolvent && !isSolvent) continue;
+        
+        // 2. If current best candidate is solvent, never downgrade to an insolvent candidate
+        if (bestIsSolvent && !isSolvent) continue;
+
+        // 3. If candidate is solvent and best was not solvent, candidate immediately takes precedence!
+        if (isSolvent && !bestIsSolvent) {
+          bestIsSolvent = true;
+          bestConv = c;
+          bestFinalBal = finalBal;
+          bestNetBenefit = 0;
+          continue;
+        }
+
+        // 4. If neither candidate is solvent, only consider if it extends longevity (lasts longer)
+        if (!isSolvent && !bestIsSolvent) {
+          if (curDepletedAge < bestDepletedAge) continue;
+          if (curDepletedAge > bestDepletedAge) {
+            bestDepletedAge = curDepletedAge;
+            bestConv = c;
+            bestFinalBal = finalBal;
+            continue;
+          }
+        }
+
+        // 5. For solvent candidates (or equal longevity), compare net wealth & tax benefits
+        const lifetimeTax = res.totalLifetimeTaxes || 0;
+        const finalPretax = lastRow ? ((lastRow.bal401k || 0) + (lastRow.balIRA || 0)) : 0;
+        const finalBrok = lastRow ? (lastRow.balBrokerage || 0) : 0;
+        const afterTax = finalBal - (finalPretax * 0.22) - (finalBrok * (1 - basisRatio) * 0.15);
+
+        const taxSavings = baseLifetimeTax - lifetimeTax;
+        const wealthGain = afterTax - baseAfterTax;
+        const netBenefit = taxSavings + wealthGain;
+
+        if (netBenefit > bestNetBenefit + 500) {
+          bestNetBenefit = netBenefit;
+          bestConv = c;
+          bestFinalBal = finalBal;
+        } else if (Math.abs(netBenefit - bestNetBenefit) <= 500 && finalBal > bestFinalBal) {
+          bestNetBenefit = netBenefit;
+          bestConv = c;
+          bestFinalBal = finalBal;
+        }
+      }
+
+      return bestConv;
+    }
+
+    function toggleAutoRothConversion() {
+      isAutoRothConversion = !isAutoRothConversion;
+      const btn = document.getElementById('btnMaximizeRoth');
+      const rothBadge = document.getElementById('rothOverrideBadge');
+      const autoBadge = document.getElementById('autoRothStatusBadge');
+
+      if (isAutoRothConversion) {
+        if (btn) {
+          btn.classList.add('active');
+          btn.innerText = '⚡ Auto-Optimizing';
+        }
+        if (autoBadge) {
+          autoBadge.innerText = 'Auto-Active';
+          autoBadge.style.color = '#b45309';
+          autoBadge.style.background = '#fef3c7';
+        }
+      } else {
+        if (btn) {
+          btn.classList.remove('active');
+          btn.innerText = '⚡ Enable Auto-Roth';
+        }
+        if (rothBadge) rothBadge.innerText = 'Manual Override';
+        if (autoBadge) {
+          autoBadge.innerText = 'Manual Override';
+          autoBadge.style.color = '#475569';
+          autoBadge.style.background = '#f1f5f9';
+        }
+      }
+      calculatePlan();
+    }
+
+    function handleManualRothConvInput(val) {
+      isAutoRothConversion = false;
+      const num = parseFloat(val) || 0;
+      const slider = document.getElementById('annualRothConvSlider');
+      if (slider) slider.value = num;
+      const btn = document.getElementById('btnMaximizeRoth');
+      if (btn) {
+        btn.classList.remove('active');
+        btn.innerText = '⚡ Enable Auto-Roth';
+      }
+      const rothBadge = document.getElementById('rothOverrideBadge');
+      if (rothBadge) rothBadge.innerText = 'Manual Override';
+      const autoBadge = document.getElementById('autoRothStatusBadge');
+      if (autoBadge) {
+        autoBadge.innerText = 'Manual Override';
+        autoBadge.style.color = '#475569';
+        autoBadge.style.background = '#f1f5f9';
+      }
+      calculatePlan();
+    }
+
+    function handleManualRothConvSlider(val) {
+      isAutoRothConversion = false;
+      const num = parseFloat(val) || 0;
+      const inp = document.getElementById('annualRothConv');
+      if (inp) inp.value = num;
+      const btn = document.getElementById('btnMaximizeRoth');
+      if (btn) {
+        btn.classList.remove('active');
+        btn.innerText = '⚡ Enable Auto-Roth';
+      }
+      const rothBadge = document.getElementById('rothOverrideBadge');
+      if (rothBadge) rothBadge.innerText = 'Manual Override';
+      const autoBadge = document.getElementById('autoRothStatusBadge');
+      if (autoBadge) {
+        autoBadge.innerText = 'Manual Override';
+        autoBadge.style.color = '#475569';
+        autoBadge.style.background = '#f1f5f9';
+      }
+      calculatePlan();
+    }
 
     function resetRothConversionBaseline() {
       const convInput = document.getElementById('annualRothConv');
@@ -8336,211 +9462,34 @@
     }
 
     function maximizeRothConversion() {
+      const optimalConv = solveOptimalRothConversion(getFormValues());
       const convInput = document.getElementById('annualRothConv');
       const convSlider = document.getElementById('annualRothConvSlider');
-      const resultBox = document.getElementById('rothMaximizeResult');
-      const btn = document.getElementById('btnMaximizeRoth');
-
-      // Toggle off if already maximized
-      if (isRothMaximized) {
-        resetRothConversionBaseline();
-        return;
-      }
-
-      if (originalRothConvBaseline === null) {
-        originalRothConvBaseline = convInput ? (parseFloat(convInput.value) || 0) : 0;
-      }
-
-      const baseParams = getFormValues();
-      const pretaxTotal = (baseParams.bal401kInit || 0) + (baseParams.balIRAInit || 0);
-
-      if (!resultBox) return;
-
-      if (pretaxTotal <= 0) {
-        resultBox.className = 'retire-result-box warning';
-        resultBox.style.display = 'block';
-        resultBox.innerHTML = `
-          <div><strong>⚠️ Pre-Tax Accounts are $0</strong></div>
-          <div style="margin-top: 0.25rem; font-size: 0.76rem; color: #78350f;">
-            You have no Traditional 401(k) or Traditional IRA funds to convert. Enter starting balances in the portfolio section above.
-          </div>
-        `;
-        return;
-      }
-
-      // Search candidate conversion amounts from $0 up to min($300,000, pretaxTotal) in $5,000 steps
-      const maxCandidate = Math.min(300000, pretaxTotal);
-      const candidates = [];
-      for (let c = 0; c <= maxCandidate; c += 5000) {
-        candidates.push(c);
-      }
-
-      const items = [];
-      let baselineMetrics = null;
-
-      for (const c of candidates) {
-        const testParams = Object.assign({}, baseParams, { annualRothConv: c });
-        const res = simulateRetirement('smart', testParams);
-        const lastRow = res.schedule[res.schedule.length - 1];
-        const finalBal = lastRow ? (lastRow.totalEndingBal || 0) : 0;
-        const lifetimeTax = res.totalLifetimeTaxes || 0;
-        const finalPretax = lastRow ? ((lastRow.bal401k || 0) + (lastRow.balIRA || 0)) : 0;
-        const finalBrok = lastRow ? (lastRow.balBrokerage || 0) : 0;
-        const basisRatio = (baseParams.costBasisRatio !== undefined ? baseParams.costBasisRatio : 60) / 100;
-        const estEmbeddedPretaxTax = finalPretax * 0.22;
-        const estEmbeddedBrokTax = finalBrok * (1 - basisRatio) * 0.15;
-        const afterTaxNetWorth = finalBal - estEmbeddedPretaxTax - estEmbeddedBrokTax;
-
-        let totalRmd = 0;
-        res.schedule.forEach(r => { totalRmd += (r.mandatoryRmd || 0); });
-
-        const isSolvent = (res.depletedAge === null && finalBal >= 0);
-
-        const item = {
-          conv: c,
-          finalBal: finalBal,
-          afterTaxNetWorth: afterTaxNetWorth,
-          lifetimeTax: lifetimeTax,
-          totalRmd: totalRmd,
-          depletedAge: res.depletedAge,
-          isSolvent: isSolvent
-        };
-
-        if (c === 0) baselineMetrics = item;
-        items.push(item);
-      }
-
-      if (!baselineMetrics || items.length === 0) return;
-
-      // Solvency Rule: The maximize button MUST make sure that we have money until the end of the simulation (Age 90).
-      // Disqualify any candidate conversion amount that causes the portfolio to deplete early.
-      const isBaselineSolvent = baselineMetrics.isSolvent;
-      let eligibleItems = [];
-
-      if (isBaselineSolvent) {
-        // When baseline is solvent through Age 90, strictly only consider candidates that remain completely solvent through Age 90
-        eligibleItems = items.filter(it => it.isSolvent);
-      } else {
-        // If baseline itself is already depleted prior to Age 90:
-        // 1. Check if any conversion candidate cures depletion and reaches Age 90
-        const solventCandidates = items.filter(it => it.isSolvent);
-        if (solventCandidates.length > 0) {
-          eligibleItems = solventCandidates;
-        } else {
-          // 2. Otherwise only consider candidates that do not accelerate depletion
-          eligibleItems = items.filter(it => (it.depletedAge || 0) >= (baselineMetrics.depletedAge || 0));
-        }
-      }
-
-      if (eligibleItems.length === 0) {
-        eligibleItems = [baselineMetrics];
-      }
-
-      // Score eligible candidates by Net Economic Benefit = (Tax Savings) + (After-Tax Net Worth Change)
-      let best = baselineMetrics;
-      if (!eligibleItems.includes(best)) {
-        best = eligibleItems[0];
-      }
-      best.taxSavings = baselineMetrics.lifetimeTax - best.lifetimeTax;
-      best.wealthGain = best.afterTaxNetWorth - baselineMetrics.afterTaxNetWorth;
-      best.netEconomicBenefit = best.taxSavings + best.wealthGain;
-
-      eligibleItems.forEach(item => {
-        const taxSavings = baselineMetrics.lifetimeTax - item.lifetimeTax;
-        const wealthGain = item.afterTaxNetWorth - baselineMetrics.afterTaxNetWorth;
-        const netBenefit = taxSavings + wealthGain;
-
-        item.taxSavings = taxSavings;
-        item.wealthGain = wealthGain;
-        item.netEconomicBenefit = netBenefit;
-
-        if (item.netEconomicBenefit > best.netEconomicBenefit + 500) {
-          best = item;
-        } else if (Math.abs(item.netEconomicBenefit - best.netEconomicBenefit) <= 500) {
-          // Tie-break: prioritize candidate leaving higher ending cushion / balance
-          if (item.finalBal > best.finalBal) {
-            best = item;
-          } else if (item.taxSavings > best.taxSavings) {
-            best = item;
-          }
-        }
-      });
-
-      const optimalConv = best.conv;
-      const wealthGain = best.wealthGain;
-      const taxSavings = best.taxSavings;
-      const rmdReduction = baselineMetrics.totalRmd - best.totalRmd;
-      const rmdPct = baselineMetrics.totalRmd > 0 ? Math.round((rmdReduction / baselineMetrics.totalRmd) * 100) : 0;
-
-      // Apply the optimal conversion amount
       if (convInput) convInput.value = optimalConv;
       if (convSlider) convSlider.value = optimalConv;
       if (typeof syncWhatIfRothConv === 'function') syncWhatIfRothConv(optimalConv);
 
+      const btn = document.getElementById('btnMaximizeRoth');
       if (btn) btn.classList.add('active');
       isRothMaximized = true;
 
-      // Render informative result box
-      resultBox.className = 'retire-result-box';
-      resultBox.style.display = 'block';
-
-      if (optimalConv > 0) {
-        let diffHtml = '';
-        if (taxSavings > 500) {
-          diffHtml += `<div>Lifetime Tax Savings: <strong style="color: #0369a1;">+${formatCurrency(taxSavings)} saved</strong></div>`;
-        }
-        if (rmdReduction > 500) {
-          diffHtml += `<div>Mandatory RMD Reduction: <strong style="color: #d97706;">-${formatCurrency(rmdReduction)} (${rmdPct}% less forced RMD)</strong></div>`;
-        }
-        if (wealthGain > 500) {
-          diffHtml += `<div>Projected After-Tax Wealth: <strong style="color: #15803d;">+${formatCurrency(wealthGain)}</strong></div>`;
-        } else if (wealthGain < -500) {
-          diffHtml += `<div style="font-size: 0.74rem; color: #64748b;">Net Economic Gain: <strong style="color: #15803d;">+${formatCurrency(best.netEconomicBenefit)}</strong> (after tax &amp; compounding)</div>`;
-        }
-        diffHtml += `<div style="color: #15803d; font-weight: 600; margin-top: 2px;">✓ Portfolio Longevity: <strong>Lasts through Age 90</strong> (Ending Cushion: ${formatCurrency(best.finalBal)})</div>`;
-
+      const resultBox = document.getElementById('rothMaximizeResult');
+      if (resultBox) {
+        resultBox.style.display = 'block';
+        resultBox.className = 'retire-result-box';
         resultBox.innerHTML = `
           <div style="display: flex; align-items: center; justify-content: space-between; gap: 0.4rem; margin-bottom: 0.25rem;">
             <div style="display: flex; align-items: center; gap: 0.35rem; flex-wrap: wrap;">
-              <span style="font-weight: 700; color: #1e293b; font-size: 0.84rem;">⚡ Optimal: ${formatCurrency(optimalConv)}/yr</span>
+              <span style="font-weight: 700; color: #1e293b; font-size: 0.84rem;">⚡ Optimal Conversion: ${formatCurrency(optimalConv)}/yr</span>
               <span style="font-size: 0.70rem; background: #dcfce7; color: #15803d; font-weight: 700; padding: 2px 6px; border-radius: 4px; border: 1px solid #86efac;">Solvent to Age 90</span>
             </div>
             <button type="button" onclick="resetRothConversionBaseline()" style="white-space: nowrap; background: #ffffff; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 0.72rem; color: #475569; cursor: pointer; padding: 2px 6px; font-weight: 600;">Revert</button>
           </div>
           <div style="font-size: 0.78rem; line-height: 1.4;">
-            ${diffHtml}
-            <div style="margin-top: 0.20rem; font-size: 0.73rem; color: #475569;">
-              Converts pre-tax accounts systematically before mandatory RMDs at Age 73/75 to lock in tax-free compounding while guaranteeing full solvency through Age 90.
-            </div>
-          </div>
-        `;
-      } else {
-        let reasonHtml = '';
-        if (isBaselineSolvent) {
-          const hadSolventAlternatives = items.some(it => it.conv > 0 && it.isSolvent);
-          if (hadSolventAlternatives) {
-            reasonHtml = 'Your current plan already maximizes net worth while ensuring your money lasts through Age 90. Pre-tax funds are absorbed efficiently by living expenses and standard deductions without triggering punitive RMD brackets.';
-          } else {
-            reasonHtml = 'To guarantee your money lasts until the end of the simulation (Age 90), annual Roth conversion is kept at <strong>$0/yr</strong>. Converting pre-tax accounts right now would incur upfront taxes that deplete your portfolio prematurely.';
-          }
-        } else {
-          reasonHtml = `With current living expenses, your portfolio is projected to deplete at Age ${baselineMetrics.depletedAge}. Converting pre-tax funds right now would incur upfront taxes that worsen longevity. Use <strong>"What can I afford?"</strong> or adjust retirement age to secure solvency first.`;
-        }
-
-        resultBox.innerHTML = `
-          <div style="display: flex; align-items: center; justify-content: space-between; gap: 0.4rem; margin-bottom: 0.25rem;">
-            <div style="display: flex; align-items: center; gap: 0.35rem; flex-wrap: wrap;">
-              <span style="font-weight: 700; color: #1e293b; font-size: 0.84rem;">⚡ Optimal: $0/yr</span>
-              ${isBaselineSolvent ? '<span style="font-size: 0.70rem; background: #dcfce7; color: #15803d; font-weight: 700; padding: 2px 6px; border-radius: 4px; border: 1px solid #86efac;">Protected to Age 90</span>' : '<span style="font-size: 0.70rem; background: #fee2e2; color: #dc2626; font-weight: 700; padding: 2px 6px; border-radius: 4px;">Depletes Early</span>'}
-            </div>
-            <button type="button" onclick="resetRothConversionBaseline()" style="white-space: nowrap; background: #ffffff; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 0.72rem; color: #475569; cursor: pointer; padding: 2px 6px; font-weight: 600;">Close</button>
-          </div>
-          <div style="font-size: 0.76rem; color: #475569; line-height: 1.4;">
-            ${reasonHtml}
+            Converts pre-tax accounts systematically before mandatory RMDs at Age 73/75 to lock in tax-free compounding while guaranteeing full solvency through Age 90.
           </div>
         `;
       }
-
       calculatePlan();
     }
 
@@ -9917,12 +10866,174 @@
       loadSavedUserInputs();
       updateAgeBadges();
       updateSSBadge();
+      updateStartingBalancesTotal();
+      switchGoalMode(activeGoalMode || 'when_retire');
       if (typeof updateWhatIfUIFromInputs === 'function') {
         updateWhatIfUIFromInputs();
       }
       onStateChange();
       pageInitialized = true;
     });
+  
+    /* ==========================================================================
+       FULL-SCREEN GOAL-FIRST GUIDED WIZARD CONTROLLER
+       ========================================================================== */
+    let currentWizardStep = 1;
+    let isWizardComplete = false;
+
+    function goToWizardStep(stepNum) {
+      if (stepNum < 1 || stepNum > 5) return;
+      currentWizardStep = stepNum;
+
+      // Toggle step visibility
+      for (let i = 1; i <= 5; i++) {
+        const stepEl = document.getElementById(`wizardStep${i}`);
+        const chipEl = document.getElementById(`wizardChip${i}`);
+        if (stepEl) {
+          stepEl.style.display = (i === stepNum) ? 'block' : 'none';
+        }
+        if (chipEl) {
+          if (i === stepNum) {
+            chipEl.className = 'wizard-step-chip active';
+          } else if (i < stepNum) {
+            chipEl.className = 'wizard-step-chip completed';
+          } else {
+            chipEl.className = 'wizard-step-chip';
+          }
+        }
+      }
+
+      // Progress bar fill
+      const progressFill = document.getElementById('wizardProgressFill');
+      if (progressFill) {
+        progressFill.style.width = `${stepNum * 20}%`;
+      }
+      const countText = document.getElementById('wizardStepCountText');
+      if (countText) {
+        countText.innerText = `Step ${stepNum} of 5`;
+      }
+
+      // Dynamic step behavior
+      if (stepNum === 2) {
+        const retCard = document.getElementById('retirementAgeCard');
+        const retNotice = document.getElementById('retAgeSolvedNotice');
+        if (activeGoalMode === 'when_retire') {
+          if (retCard) retCard.style.display = 'none';
+          if (retNotice) retNotice.style.display = 'block';
+        } else {
+          if (retCard) retCard.style.display = 'block';
+          if (retNotice) retNotice.style.display = 'none';
+        }
+      } else if (stepNum === 4) {
+        const affordNotice = document.getElementById('affordSolveNotice');
+        if (activeGoalMode === 'what_afford') {
+          if (affordNotice) affordNotice.style.display = 'block';
+        } else {
+          if (affordNotice) affordNotice.style.display = 'none';
+        }
+      }
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function handleWizardGoalSelect(mode) {
+      switchGoalMode(mode);
+      
+      // Update visual selection states on goal buttons
+      const btnRet = document.getElementById('btnGoalModeWhenRetire');
+      const btnAff = document.getElementById('btnGoalModeWhatAfford');
+      const btnCus = document.getElementById('btnGoalModeCustom');
+      const statRet = document.getElementById('goalCardStatusRetire');
+      const statAff = document.getElementById('goalCardStatusAfford');
+      const statCus = document.getElementById('goalCardStatusCustom');
+
+      if (btnRet) btnRet.classList.toggle('active', mode === 'when_retire');
+      if (btnAff) btnAff.classList.toggle('active', mode === 'what_afford');
+      if (btnCus) btnCus.classList.toggle('active', mode === 'custom');
+
+      if (statRet) statRet.innerHTML = mode === 'when_retire' ? '<span>✓ Selected Goal</span>' : '<span>Select Goal →</span>';
+      if (statAff) statAff.innerHTML = mode === 'what_afford' ? '<span>✓ Selected Goal</span>' : '<span>Select Goal →</span>';
+      if (statCus) statCus.innerHTML = mode === 'custom' ? '<span>✓ Selected Goal</span>' : '<span>Select Goal →</span>';
+
+      // Advance to step 2 after brief tactile delay
+      setTimeout(() => {
+        goToWizardStep(2);
+      }, 180);
+    }
+
+    function completeWizardAndShowResults() {
+      isWizardComplete = true;
+      calculatePlan();
+
+      // Switch to results-mode
+      document.body.classList.remove('wizard-mode');
+      document.body.classList.add('results-mode');
+
+      // Allow returning from tracker
+      const btnViewResults = document.getElementById('btnWizardViewResults');
+      if (btnViewResults) btnViewResults.style.display = 'inline-block';
+
+      updateResultsTopPlanBar();
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+
+      // Refresh charts
+      if (currentSchedule && currentSchedule.length > 0 && currentPlanParams) {
+        setTimeout(() => {
+          renderBarChart(currentSchedule);
+          renderAreaChart(currentSchedule);
+          renderBalanceGrowthChart(currentSchedule, currentPlanParams);
+          renderWithdrawalsBySourceChart(currentSchedule, currentPlanParams);
+          renderTaxesOverTimeChart(currentSchedule, currentPlanParams);
+          renderTimelineVisualization(currentSchedule, currentPlanParams, currentDepletedAge);
+        }, 50);
+      }
+    }
+
+    function editWizardAnswers(stepNum = 1) {
+      document.body.classList.remove('results-mode');
+      document.body.classList.add('wizard-mode');
+      goToWizardStep(stepNum);
+    }
+
+    function updateResultsTopPlanBar() {
+      const goalPill = document.getElementById('planGoalPill');
+      const ageStat = document.getElementById('planAgeStat');
+      const balStat = document.getElementById('planBalStat');
+      const expStat = document.getElementById('planExpStat');
+
+      const curAge = parseInt(document.getElementById('currentAge')?.value) || 50;
+      const retAge = parseInt(document.getElementById('retirementAge')?.value) || 50;
+      const expense = parseFloat(document.getElementById('annualExpense')?.value) || 100000;
+      const b401 = parseFloat(document.getElementById('bal401k')?.value) || 0;
+      const bIra = parseFloat(document.getElementById('balIRA')?.value) || 0;
+      const bRoth = parseFloat(document.getElementById('balRoth')?.value) || 0;
+      const bBrok = parseFloat(document.getElementById('balBrokerage')?.value) || 0;
+      const bHsa = parseFloat(document.getElementById('balHsa')?.value) || 0;
+      const totalAssets = b401 + bIra + bRoth + bBrok + bHsa;
+
+      if (goalPill) {
+        if (activeGoalMode === 'when_retire') goalPill.innerHTML = '⏱️ Goal: When can I retire?';
+        else if (activeGoalMode === 'what_afford') goalPill.innerHTML = '💵 Goal: What can I afford?';
+        else goalPill.innerHTML = '✍️ Goal: Custom Plan';
+      }
+
+      if (ageStat) {
+        ageStat.innerHTML = `<strong>Age:</strong> ${curAge} → Retire ${retAge}`;
+      }
+      if (balStat) {
+        balStat.innerHTML = `<strong>Assets:</strong> ${formatCurrency(totalAssets)}`;
+      }
+      if (expStat) {
+        expStat.innerHTML = `<strong>Expenses:</strong> ${formatCurrency(expense)}/yr`;
+      }
+      const planRothStat = document.getElementById('planRothStat');
+      if (planRothStat) {
+        const conv = parseFloat(document.getElementById('annualRothConv')?.value) || 0;
+        planRothStat.innerHTML = `<strong>Roth:</strong> ${isAutoRothConversion ? 'Auto-Optimized' : (conv > 0 ? formatCurrency(conv) + '/yr' : '$0/yr')}`;
+      }
+    }
+
   </script>
 </body>
 </html>
