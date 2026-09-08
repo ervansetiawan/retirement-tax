@@ -3218,8 +3218,9 @@
                       <span class="balance-growth-peak" id="bgPeakBadge">Peak: $0</span>
                     </div>
                     <div class="balance-growth-legend" id="bgGrowthLegend">
-                      <span class="bg-legend-item"><span class="bg-legend-dot" style="background: #4f46e5;"></span>Taxable</span>
-                      <span class="bg-legend-item"><span class="bg-legend-dot" style="background: #10b981;"></span>Non-Taxable (Roth &amp; HSA)</span>
+                      <span class="bg-legend-item"><span class="bg-legend-dot" style="background: #9333ea;"></span>Taxable</span>
+                      <span class="bg-legend-item"><span class="bg-legend-dot" style="background: #2563eb;"></span>Tax-Deferred</span>
+                      <span class="bg-legend-item"><span class="bg-legend-dot" style="background: #10b981;"></span>Tax-Free (Roth &amp; HSA)</span>
                     </div>
                   </div>
                   <div class="balance-growth-canvas-wrap" id="bgCanvasWrap">
@@ -6336,9 +6337,12 @@
     }
 
     /* ==========================================================================
-       BALANCE GROWTH STACKED AREA LINE CHART (Final Balance KPI Card)
-       Visualizes portfolio trajectory broken down by Taxable (Brokerage & Pre-Tax)
-       and Non-Taxable (Roth IRA) from current age through Age 90.
+       BALANCE GROWTH AREA LINE CHART (Final Balance Card)
+       Visualizes portfolio trajectory broken down by:
+       - Taxable (Brokerage)
+       - Tax-Deferred (Pre-Tax 401(k) / IRA)
+       - Tax-Free (Roth IRA & HSA)
+       from current age through Age 90.
        ========================================================================== */
     function renderBalanceGrowthChart(schedule, params) {
       const svg = document.getElementById('bgGrowthSvg');
@@ -6350,19 +6354,23 @@
       const retirementAge = params ? params.retirementAge : currentAge;
 
       const startTaxable = params
-        ? ((params.balBrokerageInit || 0) + (params.bal401kInit || 0) + (params.balIRAInit || 0))
-        : ((schedule[0].balBrokerage || 0) + (schedule[0].balPretax || 0));
-      const startNonTaxable = params
+        ? (params.balBrokerageInit || 0)
+        : (schedule[0].balBrokerage || 0);
+      const startTaxDeferred = params
+        ? ((params.bal401kInit || 0) + (params.balIRAInit || 0))
+        : (schedule[0].balPretax !== undefined ? schedule[0].balPretax : ((schedule[0].bal401k || 0) + (schedule[0].balIRA || 0)));
+      const startTaxFree = params
         ? ((params.balRothInit || 0) + (params.balHsaInit || 0))
         : (((schedule[0].balRoth || 0) + (schedule[0].balHsa || 0)));
-      const startTotal = startTaxable + startNonTaxable;
+      const startTotal = startTaxable + startTaxDeferred + startTaxFree;
 
       // Build data points list starting from initial start of plan
       const dataPoints = [{
         age: currentAge,
         year: 0,
         taxable: Math.max(0, startTaxable),
-        nonTaxable: Math.max(0, startNonTaxable),
+        taxDeferred: Math.max(0, startTaxDeferred),
+        taxFree: Math.max(0, startTaxFree),
         total: Math.max(0, startTotal),
         isWorking: (currentAge < retirementAge),
         isStart: true
@@ -6370,16 +6378,16 @@
 
       schedule.forEach((row) => {
         const tBrok = Math.max(0, row.balBrokerage || 0);
-        const tPretax = Math.max(0, row.balPretax !== undefined ? row.balPretax : ((row.bal401k || 0) + (row.balIRA || 0)));
-        const taxBal = tBrok + tPretax;
-        const nonTaxBal = Math.max(0, (row.balRoth || 0) + (row.balHsa || 0));
-        const totBal = Math.max(0, row.totalEndingBal !== undefined ? row.totalEndingBal : (taxBal + nonTaxBal));
+        const tTaxDef = Math.max(0, row.balPretax !== undefined ? row.balPretax : ((row.bal401k || 0) + (row.balIRA || 0)));
+        const tTaxFree = Math.max(0, (row.balRoth || 0) + (row.balHsa || 0));
+        const totBal = Math.max(0, row.totalEndingBal !== undefined ? row.totalEndingBal : (tBrok + tTaxDef + tTaxFree));
 
         dataPoints.push({
           age: row.age,
           year: row.year,
-          taxable: taxBal,
-          nonTaxable: nonTaxBal,
+          taxable: tBrok,
+          taxDeferred: tTaxDef,
+          taxFree: tTaxFree,
           total: totBal,
           isWorking: row.isWorking,
           isStart: false
@@ -6446,10 +6454,12 @@
       const coords = dataPoints.map((p, i) => {
         const x = getX(i);
         const yTaxable = getY(p.taxable);
+        const yTaxDeferred = getY(p.taxable + p.taxDeferred);
         const yTotal = getY(p.total);
         return {
           x: x,
           yTaxable: yTaxable,
+          yTaxDeferred: yTaxDeferred,
           yTotal: yTotal,
           point: p
         };
@@ -6462,21 +6472,37 @@
       }
       taxAreaD += ` L ${coords[coords.length - 1].x.toFixed(1)} ${zeroY.toFixed(1)} Z`;
 
-      // 2. Path for Non-Taxable (Roth) Area (stacked from yTaxable up to yTotal)
-      let nonTaxAreaD = `M ${coords[0].x.toFixed(1)} ${coords[0].yTaxable.toFixed(1)} L ${coords[0].x.toFixed(1)} ${coords[0].yTotal.toFixed(1)}`;
+      // 2. Path for Tax-Deferred Area (stacked from yTaxable up to yTaxDeferred)
+      let taxDefAreaD = `M ${coords[0].x.toFixed(1)} ${coords[0].yTaxable.toFixed(1)} L ${coords[0].x.toFixed(1)} ${coords[0].yTaxDeferred.toFixed(1)}`;
       for (let i = 1; i < coords.length; i++) {
-        nonTaxAreaD += ` L ${coords[i].x.toFixed(1)} ${coords[i].yTotal.toFixed(1)}`;
+        taxDefAreaD += ` L ${coords[i].x.toFixed(1)} ${coords[i].yTaxDeferred.toFixed(1)}`;
       }
-      nonTaxAreaD += ` L ${coords[coords.length - 1].x.toFixed(1)} ${coords[coords.length - 1].yTaxable.toFixed(1)}`;
+      taxDefAreaD += ` L ${coords[coords.length - 1].x.toFixed(1)} ${coords[coords.length - 1].yTaxable.toFixed(1)}`;
       for (let i = coords.length - 2; i >= 0; i--) {
-        nonTaxAreaD += ` L ${coords[i].x.toFixed(1)} ${coords[i].yTaxable.toFixed(1)}`;
+        taxDefAreaD += ` L ${coords[i].x.toFixed(1)} ${coords[i].yTaxable.toFixed(1)}`;
       }
-      nonTaxAreaD += ` Z`;
+      taxDefAreaD += ` Z`;
 
-      // 3. Stroke lines for boundaries
+      // 3. Path for Tax-Free (Roth & HSA) Area (stacked from yTaxDeferred up to yTotal)
+      let taxFreeAreaD = `M ${coords[0].x.toFixed(1)} ${coords[0].yTaxDeferred.toFixed(1)} L ${coords[0].x.toFixed(1)} ${coords[0].yTotal.toFixed(1)}`;
+      for (let i = 1; i < coords.length; i++) {
+        taxFreeAreaD += ` L ${coords[i].x.toFixed(1)} ${coords[i].yTotal.toFixed(1)}`;
+      }
+      taxFreeAreaD += ` L ${coords[coords.length - 1].x.toFixed(1)} ${coords[coords.length - 1].yTaxDeferred.toFixed(1)}`;
+      for (let i = coords.length - 2; i >= 0; i--) {
+        taxFreeAreaD += ` L ${coords[i].x.toFixed(1)} ${coords[i].yTaxDeferred.toFixed(1)}`;
+      }
+      taxFreeAreaD += ` Z`;
+
+      // 4. Stroke lines for boundaries
       let taxLineD = `M ${coords[0].x.toFixed(1)} ${coords[0].yTaxable.toFixed(1)}`;
       for (let i = 1; i < coords.length; i++) {
         taxLineD += ` L ${coords[i].x.toFixed(1)} ${coords[i].yTaxable.toFixed(1)}`;
+      }
+
+      let taxDefLineD = `M ${coords[0].x.toFixed(1)} ${coords[0].yTaxDeferred.toFixed(1)}`;
+      for (let i = 1; i < coords.length; i++) {
+        taxDefLineD += ` L ${coords[i].x.toFixed(1)} ${coords[i].yTaxDeferred.toFixed(1)}`;
       }
 
       let totalLineD = `M ${coords[0].x.toFixed(1)} ${coords[0].yTotal.toFixed(1)}`;
@@ -6502,25 +6528,31 @@
       svg.innerHTML = `
         <defs>
           <linearGradient id="bgTaxableGrad" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="#4f46e5" stop-opacity="0.48" />
-            <stop offset="100%" stop-color="#4f46e5" stop-opacity="0.10" />
+            <stop offset="0%" stop-color="#9333ea" stop-opacity="0.45" />
+            <stop offset="100%" stop-color="#9333ea" stop-opacity="0.10" />
           </linearGradient>
-          <linearGradient id="bgNonTaxGrad" x1="0" y1="0" x2="0" y2="1">
+          <linearGradient id="bgTaxDefGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#2563eb" stop-opacity="0.48" />
+            <stop offset="100%" stop-color="#2563eb" stop-opacity="0.10" />
+          </linearGradient>
+          <linearGradient id="bgTaxFreeGrad" x1="0" y1="0" x2="0" y2="1">
             <stop offset="0%" stop-color="#10b981" stop-opacity="0.55" />
-            <stop offset="100%" stop-color="#10b981" stop-opacity="0.16" />
+            <stop offset="100%" stop-color="#10b981" stop-opacity="0.14" />
           </linearGradient>
         </defs>
         <!-- Horizontal baseline ($0) -->
         <line x1="${padL}" y1="${zeroY.toFixed(1)}" x2="${(padL + plotW).toFixed(1)}" y2="${zeroY.toFixed(1)}" stroke="#e2e8f0" stroke-width="1" />
         <!-- Retirement vertical milestone line -->
         ${retireLineSvg}
-        <!-- Layer 1: Taxable Area (Indigo) -->
+        <!-- Layer 1: Taxable Area (Purple) -->
         <path d="${taxAreaD}" fill="url(#bgTaxableGrad)" />
-        <!-- Layer 2: Non-Taxable Roth Area (Emerald) -->
-        <path d="${nonTaxAreaD}" fill="url(#bgNonTaxGrad)" />
-        <!-- Line for Taxable Boundary -->
-        <path d="${taxLineD}" fill="none" stroke="#4f46e5" stroke-width="1.8" stroke-linejoin="round" />
-        <!-- Line for Total Portfolio Boundary -->
+        <!-- Layer 2: Tax-Deferred Area (Blue) -->
+        <path d="${taxDefAreaD}" fill="url(#bgTaxDefGrad)" />
+        <!-- Layer 3: Tax-Free Roth & HSA Area (Emerald) -->
+        <path d="${taxFreeAreaD}" fill="url(#bgTaxFreeGrad)" />
+        <!-- Boundary Lines -->
+        <path d="${taxLineD}" fill="none" stroke="#9333ea" stroke-width="1.6" stroke-linejoin="round" />
+        <path d="${taxDefLineD}" fill="none" stroke="#2563eb" stroke-width="1.6" stroke-linejoin="round" />
         <path d="${totalLineD}" fill="none" stroke="#059669" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
         <!-- Milestone circles on Total line -->
         <circle cx="${startCoord.x.toFixed(1)}" cy="${startCoord.yTotal.toFixed(1)}" r="3" fill="#3b82f6" stroke="#ffffff" stroke-width="1.5" />
@@ -6529,12 +6561,14 @@
         <!-- Interactive crosshair scrubber elements -->
         <line id="bgScrubLine" x1="0" y1="${padT}" x2="0" y2="${zeroY.toFixed(1)}" stroke="#0f172a" stroke-width="1" stroke-dasharray="2,2" style="display:none;" />
         <circle id="bgScrubDotTotal" cx="0" cy="0" r="4.5" fill="#059669" stroke="#ffffff" stroke-width="2" style="display:none;" />
-        <circle id="bgScrubDotTax" cx="0" cy="0" r="3.5" fill="#4f46e5" stroke="#ffffff" stroke-width="1.5" style="display:none;" />
+        <circle id="bgScrubDotTaxDef" cx="0" cy="0" r="3.5" fill="#2563eb" stroke="#ffffff" stroke-width="1.5" style="display:none;" />
+        <circle id="bgScrubDotTax" cx="0" cy="0" r="3.5" fill="#9333ea" stroke="#ffffff" stroke-width="1.5" style="display:none;" />
       `;
 
       // Interactive hover / touch scrubber
       const scrubLine = svg.querySelector('#bgScrubLine');
       const scrubDotTotal = svg.querySelector('#bgScrubDotTotal');
+      const scrubDotTaxDef = svg.querySelector('#bgScrubDotTaxDef');
       const scrubDotTax = svg.querySelector('#bgScrubDotTax');
 
       function updateScrub(clientX) {
@@ -6563,6 +6597,14 @@
         scrubDotTotal.setAttribute('cy', closestCoord.yTotal.toFixed(1));
         scrubDotTotal.style.display = 'block';
 
+        if (scrubDotTaxDef && p.taxDeferred > 0) {
+          scrubDotTaxDef.setAttribute('cx', closestCoord.x.toFixed(1));
+          scrubDotTaxDef.setAttribute('cy', closestCoord.yTaxDeferred.toFixed(1));
+          scrubDotTaxDef.style.display = 'block';
+        } else if (scrubDotTaxDef) {
+          scrubDotTaxDef.style.display = 'none';
+        }
+
         if (scrubDotTax && p.taxable > 0) {
           scrubDotTax.setAttribute('cx', closestCoord.x.toFixed(1));
           scrubDotTax.setAttribute('cy', closestCoord.yTaxable.toFixed(1));
@@ -6576,15 +6618,17 @@
           : (p.isWorking ? ' (Working)' : ' (Retirement)');
 
         const taxPct = p.total > 0 ? Math.round((p.taxable / p.total) * 100) : 0;
-        const nonTaxPct = p.total > 0 ? Math.max(0, 100 - taxPct) : 0;
+        const taxDefPct = p.total > 0 ? Math.round((p.taxDeferred / p.total) * 100) : 0;
+        const taxFreePct = p.total > 0 ? Math.max(0, 100 - taxPct - taxDefPct) : 0;
 
         tooltip.innerHTML = `
           <div style="font-weight:700; margin-bottom:2px; color:#ffffff;">
             Age ${p.age}${phaseText} · Total: ${formatCurrency(p.total)}
           </div>
-          <div style="display:flex; gap:8px; font-size:0.71rem; opacity:0.95;">
-            <span><strong style="color:#a5b4fc;">● Taxable:</strong> ${formatCurrency(p.taxable)} (${taxPct}%)</span>
-            <span><strong style="color:#6ee7b7;">● Non-Tax:</strong> ${formatCurrency(p.nonTaxable)} (${nonTaxPct}%)</span>
+          <div style="display:flex; flex-wrap:wrap; gap:8px; font-size:0.71rem; opacity:0.95;">
+            <span><strong style="color:#d8b4fe;">● Taxable:</strong> ${formatCurrency(p.taxable)} (${taxPct}%)</span>
+            <span><strong style="color:#93c5fd;">● Tax-Deferred:</strong> ${formatCurrency(p.taxDeferred)} (${taxDefPct}%)</span>
+            <span><strong style="color:#6ee7b7;">● Tax-Free:</strong> ${formatCurrency(p.taxFree)} (${taxFreePct}%)</span>
           </div>
         `;
         tooltip.style.display = 'block';
@@ -6596,6 +6640,7 @@
       function hideScrub() {
         if (scrubLine) scrubLine.style.display = 'none';
         if (scrubDotTotal) scrubDotTotal.style.display = 'none';
+        if (scrubDotTaxDef) scrubDotTaxDef.style.display = 'none';
         if (scrubDotTax) scrubDotTax.style.display = 'none';
         if (tooltip) tooltip.style.display = 'none';
       }
