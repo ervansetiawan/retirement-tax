@@ -1982,7 +1982,610 @@
     }
 
     /* Table Section: 100% responsive card */
-    .table-card {
+        /* ==========================================================================
+       YEAR-BY-YEAR FINANCIAL CONDITION VISUALIZER (Swipe & Stepper)
+       ========================================================================== */
+    /* ==========================================================================
+       RESULTS VIEW MODE SWITCHER (Easy View vs Detailed View)
+       ========================================================================== */
+    .view-mode-hidden,
+    .kpi-grid .carousel-slide.view-mode-hidden,
+    #slideFinalBalance.view-mode-hidden,
+    #sectionTable.view-mode-hidden,
+    #yearVisualizerSection.view-mode-hidden {
+      display: none !important;
+    }
+
+    .result-view-mode-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 0.85rem 1.15rem;
+      margin-bottom: 1.15rem;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+      box-sizing: border-box;
+      width: 100%;
+    }
+    @media (max-width: 639px) {
+      .result-view-mode-card {
+        padding: 0.75rem 0.70rem;
+        margin-bottom: 1.0rem;
+      }
+    }
+    .result-view-mode-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+    .result-view-mode-label {
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      color: #64748b;
+      text-transform: uppercase;
+    }
+    .result-view-mode-tabs {
+      display: inline-flex;
+      background: #f1f5f9;
+      padding: 3px;
+      border-radius: 10px;
+      border: 1px solid #e2e8f0;
+      gap: 4px;
+    }
+    .btn-result-mode {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 0.45rem 0.95rem;
+      border-radius: 8px;
+      border: none;
+      background: transparent;
+      color: #475569;
+      font-size: 0.86rem;
+      font-weight: 650;
+      cursor: pointer;
+      transition: all 0.16s ease;
+      user-select: none;
+    }
+    .btn-result-mode:hover:not(.active) {
+      color: #0f172a;
+      background: rgba(255, 255, 255, 0.65);
+    }
+    .btn-result-mode.active {
+      background: #ffffff;
+      color: #1d4ed8;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(37, 99, 235, 0.08);
+      font-weight: 750;
+    }
+    .btn-result-mode .mode-icon {
+      font-size: 1.05rem;
+      line-height: 1;
+    }
+    .btn-result-mode .mode-text-wrap {
+      display: inline-flex;
+      align-items: baseline;
+      gap: 5px;
+    }
+    .btn-result-mode .mode-title {
+      font-size: 0.88rem;
+      font-weight: 750;
+    }
+    .btn-result-mode .mode-sub {
+      font-size: 0.72rem;
+      opacity: 0.75;
+      font-weight: 500;
+    }
+    .result-view-mode-desc {
+      margin-top: 0.50rem;
+      font-size: 0.80rem;
+      color: #475569;
+      line-height: 1.4;
+      padding-top: 0.45rem;
+      border-top: 1px dashed #e2e8f0;
+    }
+
+    .year-visualizer-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.25rem;
+      margin-bottom: 1.5rem;
+      width: 100%;
+      min-width: 0;
+      max-width: 100%;
+      box-sizing: border-box;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+      outline: none;
+    }
+    @media (min-width: 640px) {
+      .year-visualizer-card {
+        padding: 1.5rem;
+      }
+    }
+    @media (max-width: 639px) {
+      .year-visualizer-card {
+        padding: 0.90rem 0.65rem;
+        margin-bottom: 1.25rem;
+      }
+    }
+
+    .year-vis-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 0.85rem;
+      margin-bottom: 1.15rem;
+    }
+    .year-vis-header-left {
+      flex: 1 1 260px;
+      min-width: 0;
+    }
+    .year-vis-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.76rem;
+      font-weight: 750;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #1d4ed8;
+      background: #dbeafe;
+      padding: 3px 9px;
+      border-radius: 9999px;
+      border: 1px solid #bfdbfe;
+      margin-bottom: 0.35rem;
+    }
+    .year-vis-title {
+      font-size: 1.28rem;
+      font-weight: 800;
+      color: var(--text-main);
+      margin: 0 0 0.25rem 0;
+      line-height: 1.25;
+    }
+    .year-vis-sub {
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      margin: 0;
+      line-height: 1.4;
+    }
+
+    /* Prev / Next Navigation & Counter Pill */
+    .year-vis-nav-group {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      flex-wrap: wrap;
+    }
+    .btn-year-vis-nav {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: #ffffff;
+      color: #1e293b;
+      border: 1px solid #cbd5e1;
+      padding: 0.48rem 0.78rem;
+      border-radius: 8px;
+      font-size: 0.86rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      user-select: none;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+    }
+    .btn-year-vis-nav:hover:not(:disabled) {
+      background: #f1f5f9;
+      border-color: #94a3b8;
+      color: #0f172a;
+    }
+    .btn-year-vis-nav:active:not(:disabled) {
+      transform: translateY(1px);
+    }
+    .btn-year-vis-nav:disabled {
+      opacity: 0.42;
+      cursor: not-allowed;
+      border-color: #e2e8f0;
+      background: #f8fafc;
+      color: #94a3b8;
+      box-shadow: none;
+    }
+    .year-vis-counter-pill {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 0.32rem 0.80rem;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      min-width: 125px;
+      text-align: center;
+      user-select: none;
+    }
+    .year-vis-counter-pill span {
+      font-size: 0.70rem;
+      font-weight: 600;
+      color: #64748b;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .year-vis-counter-pill strong {
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: #1e3a8a;
+      line-height: 1.2;
+    }
+
+    /* Scrubber Slider & Quick Jump Pills */
+    .year-vis-scrubber-bar {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 0.75rem 0.95rem;
+      margin-bottom: 1.15rem;
+    }
+    .year-vis-slider-wrap {
+      width: 100%;
+      margin-bottom: 0.60rem;
+    }
+    .year-vis-slider {
+      width: 100%;
+      height: 6px;
+      border-radius: 3px;
+      background: #cbd5e1;
+      outline: none;
+      cursor: pointer;
+      -webkit-appearance: none;
+      accent-color: #2563eb;
+    }
+    .year-vis-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #2563eb;
+      border: 2px solid #ffffff;
+      box-shadow: 0 1px 4px rgba(37, 99, 235, 0.4);
+      cursor: pointer;
+      transition: transform 0.1s ease;
+    }
+    .year-vis-slider::-webkit-slider-thumb:hover {
+      transform: scale(1.15);
+    }
+    .year-vis-slider-ticks {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.74rem;
+      font-weight: 600;
+      color: #64748b;
+      margin-top: 3px;
+      padding: 0 2px;
+    }
+    .year-vis-jump-pills {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      flex-wrap: wrap;
+      padding-top: 0.45rem;
+      border-top: 1px dashed #e2e8f0;
+    }
+    .jump-pills-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #475569;
+      margin-right: 0.15rem;
+    }
+    .btn-vis-jump {
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      border-radius: 9999px;
+      padding: 0.20rem 0.55rem;
+      font-size: 0.76rem;
+      font-weight: 650;
+      color: #334155;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      white-space: nowrap;
+    }
+    .btn-vis-jump:hover {
+      background: #eff6ff;
+      border-color: #93c5fd;
+      color: #1d4ed8;
+    }
+    .btn-vis-jump.active {
+      background: #2563eb;
+      border-color: #2563eb;
+      color: #ffffff;
+    }
+
+    /* Swipe Track (Touch Gesture Friendly) */
+    .year-vis-swipe-track {
+      width: 100%;
+      min-width: 0;
+      overflow: hidden;
+      touch-action: pan-y;
+      outline: none;
+      position: relative;
+      border-radius: 10px;
+    }
+    .year-vis-card-content {
+      width: 100%;
+      min-width: 0;
+      box-sizing: border-box;
+      transition: opacity 0.18s ease, transform 0.18s ease;
+    }
+    .year-vis-card-content.fade-out {
+      opacity: 0.35;
+      transform: scale(0.99);
+    }
+
+    /* Year Top Summary Ribbon */
+    .year-vis-summary-ribbon {
+      background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);
+      color: #ffffff;
+      border-radius: 10px;
+      padding: 0.95rem 1.15rem;
+      margin-bottom: 1.0rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.16);
+    }
+    .year-vis-summary-left {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+    .year-vis-age-badge {
+      font-size: 1.45rem;
+      font-weight: 850;
+      letter-spacing: -0.01em;
+      line-height: 1.1;
+    }
+    .year-vis-phase-pill {
+      font-size: 0.78rem;
+      font-weight: 750;
+      padding: 3px 9px;
+      border-radius: 9999px;
+      background: rgba(255, 255, 255, 0.22);
+      backdrop-filter: blur(4px);
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      color: #ffffff;
+      white-space: nowrap;
+    }
+    .year-vis-summary-right {
+      text-align: right;
+    }
+    .year-vis-expense-label {
+      font-size: 0.74rem;
+      opacity: 0.85;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .year-vis-expense-val {
+      font-size: 1.15rem;
+      font-weight: 800;
+    }
+
+    /* Milestone Spotlight Banner */
+    .year-vis-milestone-banner {
+      background: #ffffff;
+      border-left: 4px solid #2563eb;
+      border-radius: 8px;
+      padding: 0.85rem 1.05rem;
+      margin-bottom: 1.0rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+      border-top: 1px solid #f1f5f9;
+      border-right: 1px solid #f1f5f9;
+      border-bottom: 1px solid #f1f5f9;
+    }
+    .year-vis-ms-icon-wrap {
+      flex-shrink: 0;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.95rem;
+      font-weight: 850;
+      border: 2px solid;
+    }
+    .year-vis-ms-body {
+      flex: 1 1 auto;
+      min-width: 0;
+    }
+    .year-vis-ms-tag {
+      display: inline-block;
+      font-size: 0.70rem;
+      font-weight: 750;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      padding: 1px 6px;
+      border-radius: 4px;
+      margin-bottom: 2px;
+    }
+    .year-vis-ms-title {
+      font-size: 0.98rem;
+      font-weight: 800;
+      color: #0f172a;
+      margin-bottom: 3px;
+    }
+    .year-vis-ms-desc {
+      font-size: 0.84rem;
+      color: #334155;
+      line-height: 1.42;
+    }
+    .year-vis-ms-tax {
+      font-size: 0.79rem;
+      color: #0369a1;
+      margin-top: 4px;
+      font-weight: 600;
+      line-height: 1.35;
+    }
+
+    /* The 3 Core Pillars Grid */
+    .year-vis-pillars-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1.0rem;
+      margin-bottom: 0.95rem;
+    }
+    @media (max-width: 900px) {
+      .year-vis-pillars-grid {
+        grid-template-columns: 1fr;
+        gap: 0.85rem;
+      }
+    }
+
+    .year-vis-pillar {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 1.05rem;
+      box-sizing: border-box;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+      display: flex;
+      flex-direction: column;
+    }
+    .year-vis-pillar-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.65rem;
+    }
+    .pillar-tag {
+      font-size: 0.75rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      padding: 2px 7px;
+      border-radius: 4px;
+    }
+    .pillar-tag.balances { background: #e0e7ff; color: #3730a3; }
+    .pillar-tag.inflows { background: #dcfce7; color: #15803d; }
+    .pillar-tag.taxes { background: #fee2e2; color: #991b1b; }
+
+    .pillar-badge-sub {
+      font-size: 0.76rem;
+      font-weight: 700;
+      padding: 1px 6px;
+      border-radius: 4px;
+    }
+
+    .pillar-total-val {
+      font-size: 1.48rem;
+      font-weight: 850;
+      line-height: 1.2;
+      color: #0f172a;
+      margin-bottom: 0.75rem;
+    }
+    .pillar-mini-bar {
+      height: 6px;
+      border-radius: 3px;
+      background: #e2e8f0;
+      display: flex;
+      overflow: hidden;
+      margin-bottom: 0.85rem;
+    }
+    .pillar-mini-segment {
+      height: 100%;
+      transition: width 0.2s ease;
+    }
+
+    .pillar-lines-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.40rem;
+      margin-top: auto;
+      font-size: 0.84rem;
+    }
+    .pillar-line-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.22rem 0;
+      border-bottom: 1px dashed #f1f5f9;
+    }
+    .pillar-line-item:last-child {
+      border-bottom: none;
+    }
+    .pillar-line-left {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: #475569;
+      font-weight: 500;
+    }
+    .pillar-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .pillar-line-right {
+      font-weight: 700;
+      color: #0f172a;
+      text-align: right;
+      white-space: nowrap;
+    }
+    .pillar-line-right.highlight-tax {
+      color: #b91c1c;
+    }
+    .pillar-line-right.highlight-income {
+      color: #15803d;
+    }
+
+    /* Footer Hint */
+    .year-vis-footer-hint {
+      display: flex;
+      justify-content: center;
+      text-align: center;
+      font-size: 0.78rem;
+      color: #64748b;
+      padding-top: 0.50rem;
+    }
+    .swipe-hint-mobile {
+      display: none;
+    }
+    .swipe-hint-desktop {
+      display: inline;
+    }
+    @media (max-width: 639px) {
+      .swipe-hint-mobile {
+        display: inline;
+        font-weight: 600;
+        color: #2563eb;
+      }
+      .swipe-hint-desktop {
+        display: none;
+      }
+    }
+
+    /* Table active row highlight */
+    tr.active-visualizer-row {
+      background-color: #eff6ff !important;
+      outline: 2px solid #3b82f6;
+      outline-offset: -2px;
+    }
+    #scheduleTableBody tr {
+      cursor: pointer;
+      transition: background-color 0.12s ease;
+    }
+    #scheduleTableBody tr:hover {
+      background-color: #f8fafc;
+    }
+
+.table-card {
       background: var(--bg-card);
       border: 1px solid var(--border);
       border-radius: 12px;
@@ -4658,6 +5261,32 @@
           </div>
         </div>
 
+        <!-- Results View Mode Switcher: Easy View vs Detailed View -->
+        <div class="result-view-mode-card" id="resultViewModeBar">
+          <div class="result-view-mode-header">
+            <span class="result-view-mode-label">RESULTS VIEW MODE</span>
+            <div class="result-view-mode-tabs" role="tablist" aria-label="Results View Mode">
+              <button type="button" class="btn-result-mode active" id="btnModeEasy" onclick="switchResultViewMode('easy')" role="tab" aria-selected="true" title="Easy View: Year-by-Year visual inspection of balances, withdrawals & milestones">
+                <span class="mode-icon">🌱</span>
+                <span class="mode-text-wrap">
+                  <span class="mode-title">Easy View</span>
+                  <span class="mode-sub">(Year-by-Year)</span>
+                </span>
+              </button>
+              <button type="button" class="btn-result-mode" id="btnModeDetailed" onclick="switchResultViewMode('detailed')" role="tab" aria-selected="false" title="Detailed View: Comprehensive net worth growth charts, tax curves & full schedule table">
+                <span class="mode-icon">📊</span>
+                <span class="mode-text-wrap">
+                  <span class="mode-title">Detailed View</span>
+                  <span class="mode-sub">(Charts &amp; Schedules)</span>
+                </span>
+              </button>
+            </div>
+          </div>
+          <div class="result-view-mode-desc" id="resultViewModeDesc">
+            <span id="resultViewModeDescText">🌱 <strong>Easy View active:</strong> Swipe left/right or use controls to inspect your financial condition, balances, withdrawals, and milestones year-by-year.</span>
+          </div>
+        </div>
+
         <!-- What-If Scenario Quick Slider Bar (At Top of All Tabs) -->
         <div class="what-if-card" id="whatIfSection">
           <button type="button" class="what-if-toggle-btn" id="btnToggleWhatIf" onclick="toggleWhatIfSection()" aria-expanded="false">
@@ -5080,7 +5709,59 @@
 
           <!-- Slide 2: Detailed Table -->
           <div class="carousel-slide" id="slideTable">
-            <div class="table-card" id="sectionTable">
+          <!-- Year-by-Year Financial Visualizer Card with Touch Swipe -->
+          <div class="year-visualizer-card" id="yearVisualizerSection">
+            <!-- Header with Title, Stepper Controls, and Counter Pill -->
+            <div class="year-vis-header">
+              <div class="year-vis-header-left">
+                <div class="year-vis-badge">📅 Annual Financial Condition</div>
+                <h3 class="year-vis-title">Year-by-Year Visualizer</h3>
+                <p class="year-vis-sub">Swipe left/right or use controls to inspect balances, withdrawals, taxes &amp; milestones for any year.</p>
+              </div>
+              <div class="year-vis-nav-group">
+                <button type="button" class="btn-year-vis-nav" id="btnPrevYear" onclick="stepVisualizerYear(-1)" title="Previous Year (Swipe Right)" aria-label="Previous Year">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                  <span>Prev Year</span>
+                </button>
+                <div class="year-vis-counter-pill" id="yearVisCounterPill">
+                  <span id="yearVisYearNum">Year 1 of 41</span>
+                  <strong id="yearVisAgeLabel">Age 50 (2024)</strong>
+                </div>
+                <button type="button" class="btn-year-vis-nav" id="btnNextYear" onclick="stepVisualizerYear(1)" title="Next Year (Swipe Left)" aria-label="Next Year">
+                  <span>Next Year</span>
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </button>
+              </div>
+            </div>
+
+            <!-- Timeline Scrubber Slider & Quick Milestone Jump Pills -->
+            <div class="year-vis-scrubber-bar">
+              <div class="year-vis-slider-wrap">
+                <input type="range" class="year-vis-slider" id="visualizerYearSlider" min="0" max="40" value="0" step="1" oninput="jumpVisualizerYear(parseInt(this.value))" aria-label="Timeline Year Scrubber">
+                <div class="year-vis-slider-ticks" id="visualizerYearTicks">
+                  <!-- Start, middle, and end year labels populated dynamically -->
+                </div>
+              </div>
+              <div class="year-vis-jump-pills" id="visualizerMilestoneJumps" aria-label="Quick Milestone Jumps">
+                <!-- Milestone jump pills populated dynamically -->
+              </div>
+            </div>
+
+            <!-- Swipe Track / Card Body (with Touch Swipe Listeners) -->
+            <div class="year-vis-swipe-track" id="yearVisualizerSwipeTrack" tabindex="0" aria-label="Yearly Financial Condition Swipe Card">
+              <div class="year-vis-card-content" id="yearVisualizerCardContent">
+                <!-- Dynamically populated by renderYearVisualizer() -->
+              </div>
+            </div>
+
+            <!-- Swipe Hint Footer for Mobile & Desktop Keyboard Help -->
+            <div class="year-vis-footer-hint">
+              <span class="swipe-hint-mobile">👈 Swipe left/right on card to navigate years 👉</span>
+              <span class="swipe-hint-desktop">💡 Tip: Use keyboard arrows (← / →), drag the scrubber, or swipe left/right. Click any table row below to jump to that year.</span>
+            </div>
+          </div>
+
+          <div class="table-card" id="sectionTable">
               <div class="table-actions">
                 <div>
                   <div class="chart-title">Year-by-Year Schedule</div>
@@ -8167,6 +8848,12 @@ ${url}`;
       renderBarChart(activeResult.schedule);
       renderAreaChart(activeResult.schedule);
       renderTable(activeResult.schedule);
+      if (typeof renderYearVisualizer === 'function') {
+        renderYearVisualizer(activeResult.schedule);
+      }
+      if (typeof switchResultViewMode === 'function') {
+        switchResultViewMode(activeResultViewMode);
+      }
       renderTimelineVisualization(activeResult.schedule, params, activeResult.depletedAge);
       if (activeGoalMode === 'when_retire' && typeof updateRetirementSolverBanner === 'function' && typeof activeRetirementTarget !== 'undefined' && activeRetirementTarget !== null) {
         updateRetirementSolverBanner(activeLegacyTarget !== undefined ? activeLegacyTarget : activeRetirementTarget);
@@ -12441,14 +13128,538 @@ ${url}`;
       container.innerHTML = html;
     }
 
+    /* ==========================================================================
+       YEAR-BY-YEAR FINANCIAL CONDITION VISUALIZER ENGINE
+       ========================================================================== */
+    let activeResultViewMode = 'easy'; // 'easy' or 'detailed'
+    window.activeResultViewMode = 'easy';
+
+    function switchResultViewMode(mode) {
+      if (mode !== 'easy' && mode !== 'detailed') mode = 'easy';
+      activeResultViewMode = mode;
+      window.activeResultViewMode = mode;
+
+      const btnEasy = document.getElementById('btnModeEasy');
+      const btnDetailed = document.getElementById('btnModeDetailed');
+      const descText = document.getElementById('resultViewModeDescText');
+      const slideFinalBalance = document.getElementById('slideFinalBalance');
+      const sectionTable = document.getElementById('sectionTable');
+      const yearVis = document.getElementById('yearVisualizerSection');
+      const slideTable = document.getElementById('slideTable');
+
+      if (mode === 'easy') {
+        if (btnEasy) {
+          btnEasy.classList.add('active');
+          btnEasy.setAttribute('aria-selected', 'true');
+        }
+        if (btnDetailed) {
+          btnDetailed.classList.remove('active');
+          btnDetailed.setAttribute('aria-selected', 'false');
+        }
+        if (descText) {
+          descText.innerHTML = `🌱 <strong>Easy View active:</strong> Swipe left/right or use controls to inspect your financial condition, balances, withdrawals, and milestones year-by-year.`;
+        }
+
+        // In Easy View: Show Year-by-Year Visualizer, hide complex charts, situations, and dense table
+        if (yearVis) {
+          yearVis.classList.remove('view-mode-hidden');
+          yearVis.style.display = 'block';
+        }
+        if (slideTable) {
+          slideTable.classList.remove('view-mode-hidden');
+          slideTable.style.display = 'block';
+        }
+        if (slideFinalBalance) {
+          slideFinalBalance.classList.add('view-mode-hidden');
+        }
+        if (sectionTable) {
+          sectionTable.classList.add('view-mode-hidden');
+        }
+
+        // Ensure visualizer is refreshed
+        if (typeof renderYearVisualizer === 'function' && window.currentSchedule) {
+          renderYearVisualizer(currentSchedule, visualizerActiveIndex);
+        }
+      } else {
+        if (btnDetailed) {
+          btnDetailed.classList.add('active');
+          btnDetailed.setAttribute('aria-selected', 'true');
+        }
+        if (btnEasy) {
+          btnEasy.classList.remove('active');
+          btnEasy.setAttribute('aria-selected', 'false');
+        }
+        if (descText) {
+          descText.innerHTML = `📊 <strong>Detailed View active:</strong> Showing full Net Worth growth charts, withdrawal & tax breakdown curves, lifecycle roadmap, situations, and complete schedule table.`;
+        }
+
+        // In Detailed View: Show charts, lifecycle roadmap, situations, and detailed schedule table; hide year-by-year single card
+        if (slideFinalBalance) {
+          slideFinalBalance.classList.remove('view-mode-hidden');
+          slideFinalBalance.style.display = 'block';
+        }
+        if (slideTable) {
+          slideTable.classList.remove('view-mode-hidden');
+          slideTable.style.display = 'block';
+        }
+        if (sectionTable) {
+          sectionTable.classList.remove('view-mode-hidden');
+          sectionTable.style.display = 'block';
+        }
+        if (yearVis) {
+          yearVis.classList.add('view-mode-hidden');
+        }
+
+        // Re-render SVG charts in case layout needs refresh
+        if (typeof renderBarChart === 'function' && window.currentSchedule) {
+          renderBarChart(currentSchedule);
+        }
+        if (typeof renderAreaChart === 'function' && window.currentSchedule) {
+          renderAreaChart(currentSchedule);
+        }
+        if (typeof renderWithdrawalsBySourceChart === 'function' && window.currentSchedule) {
+          renderWithdrawalsBySourceChart(currentSchedule);
+        }
+        if (typeof renderTaxesOverTimeChart === 'function' && window.currentSchedule) {
+          renderTaxesOverTimeChart(currentSchedule);
+        }
+      }
+    }
+
+    let visualizerActiveIndex = 0;
+    let visualizerTouchStartX = 0;
+    let visualizerTouchStartY = 0;
+    let visualizerTouchEndX = 0;
+    let visualizerTouchEndY = 0;
+
+    function initYearVisualizerSwipe() {
+      const track = document.getElementById('yearVisualizerSwipeTrack');
+      if (!track || track._swipeInitialized) return;
+      track._swipeInitialized = true;
+
+      track.addEventListener('touchstart', function(e) {
+        if (!e.changedTouches || e.changedTouches.length === 0) return;
+        visualizerTouchStartX = e.changedTouches[0].screenX;
+        visualizerTouchStartY = e.changedTouches[0].screenY;
+      }, { passive: true });
+
+      track.addEventListener('touchend', function(e) {
+        if (!e.changedTouches || e.changedTouches.length === 0) return;
+        visualizerTouchEndX = e.changedTouches[0].screenX;
+        visualizerTouchEndY = e.changedTouches[0].screenY;
+        handleYearVisualizerSwipeGesture();
+      }, { passive: true });
+
+      track.addEventListener('keydown', function(e) {
+        if (e.key === 'ArrowLeft') {
+          stepVisualizerYear(-1);
+          e.preventDefault();
+        } else if (e.key === 'ArrowRight') {
+          stepVisualizerYear(1);
+          e.preventDefault();
+        }
+      });
+    }
+
+    function handleYearVisualizerSwipeGesture() {
+      const diffX = visualizerTouchEndX - visualizerTouchStartX;
+      const diffY = visualizerTouchEndY - visualizerTouchStartY;
+      // Trigger when horizontal movement exceeds vertical and distance is > 35px
+      if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 35) {
+        if (diffX < 0) {
+          // Swiped left -> Next Year
+          stepVisualizerYear(1);
+        } else {
+          // Swiped right -> Previous Year
+          stepVisualizerYear(-1);
+        }
+      }
+    }
+
+    function stepVisualizerYear(delta) {
+      if (!currentSchedule || currentSchedule.length === 0) return;
+      const newIndex = visualizerActiveIndex + delta;
+      if (newIndex >= 0 && newIndex < currentSchedule.length) {
+        jumpVisualizerYear(newIndex);
+      }
+    }
+
+    function jumpVisualizerYear(index) {
+      if (!currentSchedule || currentSchedule.length === 0) return;
+      const targetIndex = Math.max(0, Math.min(currentSchedule.length - 1, index));
+      visualizerActiveIndex = targetIndex;
+      renderYearVisualizer(currentSchedule, targetIndex);
+      const cardContent = document.getElementById('yearVisualizerCardContent');
+      if (cardContent) {
+        cardContent.classList.add('fade-out');
+        requestAnimationFrame(() => {
+          setTimeout(() => {
+            cardContent.classList.remove('fade-out');
+          }, 50);
+        });
+      }
+    }
+
+    function renderYearVisualizer(schedule, selectedIndex = null) {
+      if (!schedule || schedule.length === 0) return;
+      initYearVisualizerSwipe();
+
+      if (selectedIndex === null || selectedIndex === undefined) {
+        // Default to retirement age row or current visualizer index
+        const retInput = document.getElementById('retirementAge');
+        const retAge = retInput ? parseInt(retInput.value) : 50;
+        const foundIdx = schedule.findIndex(row => row.age === retAge);
+        selectedIndex = (foundIdx !== -1) ? foundIdx : visualizerActiveIndex;
+      }
+
+      selectedIndex = Math.max(0, Math.min(schedule.length - 1, selectedIndex));
+      visualizerActiveIndex = selectedIndex;
+
+      const d = schedule[selectedIndex];
+      const prevD = (selectedIndex > 0) ? schedule[selectedIndex - 1] : null;
+      const totalYears = schedule.length;
+      const curInput = document.getElementById('currentAge');
+      const retInput = document.getElementById('retirementAge');
+      const curAge = curInput ? parseInt(curInput.value) : 50;
+      const retAge = retInput ? parseInt(retInput.value) : 50;
+      const rmdAge = (curAge <= 64) ? 75 : 73;
+
+      // 1. Update Counter Pill & Nav Buttons
+      const yearNumEl = document.getElementById('yearVisYearNum');
+      const ageLabelEl = document.getElementById('yearVisAgeLabel');
+      const btnPrev = document.getElementById('btnPrevYear');
+      const btnNext = document.getElementById('btnNextYear');
+      const slider = document.getElementById('visualizerYearSlider');
+
+      if (yearNumEl) yearNumEl.innerText = `Year ${selectedIndex + 1} of ${totalYears}`;
+      if (ageLabelEl) ageLabelEl.innerText = `Age ${d.age} (${d.calendarYear})`;
+      if (btnPrev) btnPrev.disabled = (selectedIndex === 0);
+      if (btnNext) btnNext.disabled = (selectedIndex === totalYears - 1);
+
+      // 2. Update Slider & Ticks
+      if (slider) {
+        slider.min = 0;
+        slider.max = totalYears - 1;
+        slider.value = selectedIndex;
+      }
+      const ticksEl = document.getElementById('visualizerYearTicks');
+      if (ticksEl && (!ticksEl.children || ticksEl.children.length === 0)) {
+        const startAge = schedule[0].age;
+        const midIdx = Math.floor(totalYears / 2);
+        const midAge = schedule[midIdx].age;
+        const endAge = schedule[totalYears - 1].age;
+        ticksEl.innerHTML = `<span>Age ${startAge} (${schedule[0].calendarYear})</span><span>Age ${midAge}</span><span>Age ${endAge} (${schedule[totalYears - 1].calendarYear})</span>`;
+      }
+
+      // 3. Render Quick Milestone Jump Pills
+      const jumpsEl = document.getElementById('visualizerMilestoneJumps');
+      if (jumpsEl) {
+        let jumpHtml = `<span class="jump-pills-label">Jump to:</span>`;
+        // Retirement Year
+        const retIdx = schedule.findIndex(r => r.age === retAge);
+        if (retIdx !== -1) {
+          jumpHtml += `<button type="button" class="btn-vis-jump ${retIdx === selectedIndex ? 'active' : ''}" onclick="jumpVisualizerYear(${retIdx})">🎉 Retire (${retAge})</button>`;
+        }
+        // Statutory milestones that exist in schedule
+        const keyAges = [50, 55, 59, 62, 65, 67, 70, rmdAge];
+        keyAges.forEach(targetAge => {
+          if (targetAge === retAge) return; // avoid duplicate
+          const found = schedule.findIndex(r => r.age === targetAge);
+          if (found !== -1) {
+            let label = `Age ${targetAge}`;
+            if (targetAge === 59) label = `59½ (Penalty-Free)`;
+            else if (targetAge === 62) label = `62 (Early SS)`;
+            else if (targetAge === 65) label = `65 (Medicare)`;
+            else if (targetAge === 67) label = `67 (FRA)`;
+            else if (targetAge === 70) label = `70 (Max SS)`;
+            else if (targetAge === rmdAge) label = `${rmdAge} (RMD)`;
+            jumpHtml += `<button type="button" class="btn-vis-jump ${found === selectedIndex ? 'active' : ''}" onclick="jumpVisualizerYear(${found})">${label}</button>`;
+          }
+        });
+        jumpsEl.innerHTML = jumpHtml;
+      }
+
+      // 4. Determine Phase & Phase Pill
+      let phaseLabel = 'Early Retirement Bridge';
+      let phaseBg = 'rgba(255, 255, 255, 0.22)';
+      if (d.isWorking) {
+        phaseLabel = '💼 Working Accumulation Phase';
+      } else if (d.age === retAge) {
+        phaseLabel = '🎉 Retirement Transition Kickoff';
+      } else if (d.age < 62) {
+        phaseLabel = '🌱 Early Retirement (Pre-SS)';
+      } else if (d.age >= 62 && d.age < 65) {
+        phaseLabel = '⏳ Social Security Window (Pre-Medicare)';
+      } else if (d.age >= 65 && d.age < rmdAge) {
+        phaseLabel = '🏥 Medicare & Prime Retirement';
+      } else if (d.age >= rmdAge) {
+        phaseLabel = '📜 Mandatory RMD & Legacy Phase';
+      }
+
+      // 5. Milestone Spotlight Logic
+      let milestoneHtml = '';
+      if (typeof ROADMAP_MILESTONES !== 'undefined') {
+        const ms = ROADMAP_MILESTONES.find(m => {
+          if (m.age === 59.5) return d.age === 59 || d.age === 60;
+          return m.age === d.age;
+        });
+
+        if (ms) {
+          milestoneHtml = `
+            <div class="year-vis-milestone-banner" style="border-left-color: ${ms.color}; background: #ffffff;">
+              <div class="year-vis-ms-icon-wrap" style="background: ${ms.bg}; color: ${ms.color}; border-color: ${ms.borderColor};">
+                ${ms.letter}
+              </div>
+              <div class="year-vis-ms-body">
+                <span class="year-vis-ms-tag" style="background: ${ms.bg}; color: ${ms.color};">Statutory Milestone ${ms.letter} · ${ms.tag}</span>
+                <div class="year-vis-ms-title">${ms.title}</div>
+                <div class="year-vis-ms-desc">${ms.desc}</div>
+                <div class="year-vis-ms-tax" style="color: ${ms.color};">💡 <strong>Tax & Strategy Impact:</strong> ${ms.taxImpact}</div>
+              </div>
+            </div>
+          `;
+        } else if (d.age === retAge && !d.isWorking) {
+          milestoneHtml = `
+            <div class="year-vis-milestone-banner" style="border-left-color: #16a34a; background: #ffffff;">
+              <div class="year-vis-ms-icon-wrap" style="background: #dcfce7; color: #16a34a; border-color: #86efac;">
+                🎉
+              </div>
+              <div class="year-vis-ms-body">
+                <span class="year-vis-ms-tag" style="background: #dcfce7; color: #16a34a;">Life Milestone · Year 1 of Retirement</span>
+                <div class="year-vis-ms-title">Retirement Kickoff · Financial Independence Transition</div>
+                <div class="year-vis-ms-desc">You are officially retired! Your earned paycheck ends and your retirement withdrawal strategy begins. Living expenses of ${formatCurrency(d.targetExpense)} are fully covered by your portfolio and cash flows.</div>
+              </div>
+            </div>
+          `;
+        }
+      }
+
+      // 6. Ending Balances & YoY Calculation
+      const endingBal = d.totalEndingBal || 0;
+      let yoyBadge = '';
+      if (prevD && prevD.totalEndingBal > 0) {
+        const diff = endingBal - prevD.totalEndingBal;
+        const pct = (diff / prevD.totalEndingBal) * 100;
+        const sign = diff >= 0 ? '+' : '';
+        const color = diff >= 0 ? '#15803d' : '#b91c1c';
+        const bg = diff >= 0 ? '#dcfce7' : '#fee2e2';
+        yoyBadge = `<span class="pillar-badge-sub" style="background: ${bg}; color: ${color};">${sign}${formatCurrency(diff)} (${sign}${pct.toFixed(1)}% YoY)</span>`;
+      } else {
+        yoyBadge = `<span class="pillar-badge-sub" style="background: #f1f5f9; color: #475569;">Year 1 Baseline</span>`;
+      }
+
+      // Balances Mini Bar Segments
+      const balBrok = d.balBrokerage || 0;
+      const balPre = d.balPretax || ((d.bal401k || 0) + (d.balIRA || 0));
+      const balRoth = d.balRoth || 0;
+      const balHsa = d.balHsa || 0;
+      const sumBal = balBrok + balPre + balRoth + balHsa || 1;
+      const pctBrok = Math.max(0, (balBrok / sumBal) * 100);
+      const pctPre = Math.max(0, (balPre / sumBal) * 100);
+      const pctRoth = Math.max(0, (balRoth / sumBal) * 100);
+      const pctHsa = Math.max(0, (balHsa / sumBal) * 100);
+
+      // 7. Cash Inflows & Withdrawals Calculation
+      const grossW = d.totalGrossW || 0;
+      const ssAnnual = d.annualSS || 0;
+      const totalInflow = grossW + ssAnnual;
+      const netSpend = d.netSpendable || (totalInflow - (d.estTax || 0) - (d.irmaaSurcharge || 0));
+
+      // 8. Taxes & Healthcare Calculation
+      const totalTax = (d.estTax || 0) + (d.irmaaSurcharge || 0);
+      const effRate = totalInflow > 0 ? ((totalTax / totalInflow) * 100).toFixed(1) : '0.0';
+
+      // 9. Build Comprehensive HTML for Card Content
+      const container = document.getElementById('yearVisualizerCardContent');
+      if (!container) return;
+
+      let html = `
+        <!-- Top Summary Ribbon -->
+        <div class="year-vis-summary-ribbon">
+          <div class="year-vis-summary-left">
+            <div class="year-vis-age-badge">Age ${d.age} · ${d.calendarYear}</div>
+            <div class="year-vis-phase-pill">${phaseLabel}</div>
+          </div>
+          <div class="year-vis-summary-right">
+            <div class="year-vis-expense-label">Target Living Expense</div>
+            <div class="year-vis-expense-val">${formatCurrency(d.targetExpense)}/yr <span style="font-size: 0.82rem; font-weight: 500; opacity: 0.9;">(${formatCurrency(Math.round(d.targetExpense / 12))}/mo)</span></div>
+          </div>
+        </div>
+
+        ${milestoneHtml}
+
+        <!-- 3 Pillars Grid -->
+        <div class="year-vis-pillars-grid">
+          <!-- Pillar 1: Year-End Portfolio Balances -->
+          <div class="year-vis-pillar">
+            <div class="year-vis-pillar-head">
+              <span class="pillar-tag balances">1. Ending Balances</span>
+              ${yoyBadge}
+            </div>
+            <div class="pillar-total-val" style="color: ${endingBal <= 0 ? '#b91c1c' : '#0f172a'};">
+              ${endingBal <= 0 ? 'Portfolio Depleted ($0)' : formatCurrency(endingBal)}
+            </div>
+            <div class="pillar-mini-bar" title="Brokerage ${pctBrok.toFixed(0)}% | Pre-Tax ${pctPre.toFixed(0)}% | Roth ${pctRoth.toFixed(0)}% | HSA ${pctHsa.toFixed(0)}%">
+              <div class="pillar-mini-segment" style="width: ${pctBrok}%; background: #9333ea;"></div>
+              <div class="pillar-mini-segment" style="width: ${pctPre}%; background: #2563eb;"></div>
+              <div class="pillar-mini-segment" style="width: ${pctRoth}%; background: #16a34a;"></div>
+              <div class="pillar-mini-segment" style="width: ${pctHsa}%; background: #0284c7;"></div>
+            </div>
+            <div class="pillar-lines-list">
+              <div class="pillar-line-item">
+                <span class="pillar-line-left"><span class="pillar-dot" style="background: #9333ea;"></span>Taxable Brokerage</span>
+                <span class="pillar-line-right">${formatCurrency(balBrok)}</span>
+              </div>
+              <div class="pillar-line-item">
+                <span class="pillar-line-left"><span class="pillar-dot" style="background: #2563eb;"></span>Pre-Tax 401(k) / IRA</span>
+                <span class="pillar-line-right">${formatCurrency(balPre)}</span>
+              </div>
+              <div class="pillar-line-item">
+                <span class="pillar-line-left"><span class="pillar-dot" style="background: #16a34a;"></span>Roth IRA</span>
+                <span class="pillar-line-right">${formatCurrency(balRoth)}</span>
+              </div>
+              <div class="pillar-line-item">
+                <span class="pillar-line-left"><span class="pillar-dot" style="background: #0284c7;"></span>Health Savings (HSA)</span>
+                <span class="pillar-line-right">${formatCurrency(balHsa)}</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Pillar 2: Cash Inflows & Withdrawals -->
+          <div class="year-vis-pillar">
+            <div class="year-vis-pillar-head">
+              <span class="pillar-tag inflows">2. Inflows & Withdrawals</span>
+              <span class="pillar-badge-sub" style="background: #f1f5f9; color: #334155;">Net Cash: ${formatCurrency(netSpend)}</span>
+            </div>
+            <div class="pillar-total-val" style="color: #15803d;">
+              ${formatCurrency(totalInflow)}
+            </div>
+            <div class="pillar-mini-bar" style="background: #dcfce7;">
+              <div class="pillar-mini-segment" style="width: 100%; background: #16a34a;"></div>
+            </div>
+            <div class="pillar-lines-list">
+              <div class="pillar-line-item">
+                <span class="pillar-line-left">🛒 Living Expenses Covered</span>
+                <span class="pillar-line-right highlight-income">${formatCurrency(d.targetExpense)}</span>
+              </div>
+              <div class="pillar-line-item">
+                <span class="pillar-line-left">🛡️ Social Security Income</span>
+                <span class="pillar-line-right">${ssAnnual > 0 ? `${formatCurrency(ssAnnual)} <span style="font-size:0.74rem; font-weight:normal; color:#64748b;">(Taxable: ${formatCurrency(d.taxableSS || 0)})</span>` : '$0'}</span>
+              </div>
+              <div class="pillar-line-item">
+                <span class="pillar-line-left"><span class="pillar-dot" style="background: #9333ea;"></span>Brokerage Withdrawal</span>
+                <span class="pillar-line-right">${formatCurrency(d.wBrokerage || 0)}</span>
+              </div>
+              <div class="pillar-line-item">
+                <span class="pillar-line-left"><span class="pillar-dot" style="background: #2563eb;"></span>Pre-Tax / RMD Drawdown</span>
+                <span class="pillar-line-right">${formatCurrency(d.wPretax || 0)}${d.isRmd ? ` <span style="font-size:0.72rem; color:#b45309; font-weight:700;">(RMD)</span>` : ''}</span>
+              </div>
+              <div class="pillar-line-item">
+                <span class="pillar-line-left"><span class="pillar-dot" style="background: #16a34a;"></span>Roth IRA Distribution</span>
+                <span class="pillar-line-right">${(d.wRoth || 0) > 0 ? `${formatCurrency(d.wRoth)} <span style="font-size:0.72rem; color:#16a34a; font-weight:700;">(Tax-Free)</span>` : '$0'}</span>
+              </div>
+              <div class="pillar-line-item">
+                <span class="pillar-line-left"><span class="pillar-dot" style="background: #0284c7;"></span>HSA Medical Drawdown</span>
+                <span class="pillar-line-right">${(d.wHsa || 0) > 0 ? `${formatCurrency(d.wHsa)} <span style="font-size:0.72rem; color:#0284c7; font-weight:700;">(Tax-Free)</span>` : '$0'}</span>
+              </div>
+              ${(d.rothConv || 0) > 0 ? `
+              <div class="pillar-line-item">
+                <span class="pillar-line-left">🔄 Roth Conversion</span>
+                <span class="pillar-line-right" style="color: #2563eb;">${formatCurrency(d.rothConv)}</span>
+              </div>` : ''}
+              ${(d.surplusReinvested || 0) > 0 ? `
+              <div class="pillar-line-item">
+                <span class="pillar-line-left">📈 Surplus Reinvested</span>
+                <span class="pillar-line-right" style="color: #16a34a;">+${formatCurrency(d.surplusReinvested)}</span>
+              </div>` : ''}
+            </div>
+          </div>
+
+          <!-- Pillar 3: Taxes & Healthcare -->
+          <div class="year-vis-pillar">
+            <div class="year-vis-pillar-head">
+              <span class="pillar-tag taxes">3. Taxes & Healthcare</span>
+              <span class="pillar-badge-sub" style="background: #fee2e2; color: #991b1b;">${effRate}% Effective</span>
+            </div>
+            <div class="pillar-total-val" style="color: #b91c1c;">
+              ${formatCurrency(totalTax)}
+            </div>
+            <div class="pillar-mini-bar" style="background: #fee2e2;">
+              <div class="pillar-mini-segment" style="width: 100%; background: #dc2626;"></div>
+            </div>
+            <div class="pillar-lines-list">
+              <div class="pillar-line-item">
+                <span class="pillar-line-left">🏛️ Federal Income Tax</span>
+                <span class="pillar-line-right">${formatCurrency(d.fedTax || 0)}</span>
+              </div>
+              <div class="pillar-line-item">
+                <span class="pillar-line-left">🌲 State Tax (${d.stateCode || 'MN'})</span>
+                <span class="pillar-line-right">${formatCurrency(d.stateTax || 0)}</span>
+              </div>
+              <div class="pillar-line-item">
+                <span class="pillar-line-left">📊 Capital Gains Tax</span>
+                <span class="pillar-line-right">${formatCurrency(d.capGainTax || d.ltcgTax || 0)}</span>
+              </div>
+              <div class="pillar-line-item">
+                <span class="pillar-line-left">⚠️ 10% Early Penalty</span>
+                <span class="pillar-line-right" style="color: ${(d.earlyPenalty || 0) > 0 ? '#dc2626' : '#15803d'}; font-weight: 700;">
+                  ${(d.earlyPenalty || 0) > 0 ? formatCurrency(d.earlyPenalty) : '✓ $0 (Exempt)'}
+                </span>
+              </div>
+              <div class="pillar-line-item">
+                <span class="pillar-line-left">🏥 Medicare IRMAA Surcharge</span>
+                <span class="pillar-line-right" style="color: ${(d.irmaaSurcharge || 0) > 0 ? '#b91c1c' : '#475569'};">
+                  ${(d.irmaaSurcharge || 0) > 0 ? `${formatCurrency(d.irmaaSurcharge)} <span style="font-size:0.72rem; color:#b91c1c;">(Tier ${d.irmaaTier || 1})</span>` : '$0 (Standard)'}
+                </span>
+              </div>
+              ${(d.convTax || 0) > 0 ? `
+              <div class="pillar-line-item">
+                <span class="pillar-line-left">🔄 Roth Conversion Tax</span>
+                <span class="pillar-line-right" style="color: #ea580c;">${formatCurrency(d.convTax)}</span>
+              </div>` : ''}
+              ${(d.rmdTax || 0) > 0 ? `
+              <div class="pillar-line-item">
+                <span class="pillar-line-left">📜 RMD Forced Tax</span>
+                <span class="pillar-line-right" style="color: #b45309;">${formatCurrency(d.rmdTax)}</span>
+              </div>` : ''}
+            </div>
+          </div>
+        </div>
+      `;
+
+      container.innerHTML = html;
+
+      // 10. Highlight corresponding row in schedule table
+      const tbody = document.getElementById('scheduleTableBody');
+      if (tbody && tbody.children) {
+        for (let i = 0; i < tbody.children.length; i++) {
+          const tr = tbody.children[i];
+          if (i === selectedIndex) {
+            tr.classList.add('active-visualizer-row');
+          } else {
+            tr.classList.remove('active-visualizer-row');
+          }
+        }
+      }
+    }
+
     function renderTable(schedule) {
       const tbody = document.getElementById('scheduleTableBody');
       tbody.innerHTML = '';
       if (!schedule || schedule.length === 0) return;
 
-      schedule.forEach(d => {
+      schedule.forEach((d, idx) => {
         const tr = document.createElement('tr');
         if (d.isRmd) tr.classList.add('rmd-year');
+        tr.setAttribute('data-year-index', idx);
+        tr.setAttribute('title', `Click to inspect Age ${d.age} in Year Visualizer above`);
+        tr.onclick = function() {
+          jumpVisualizerYear(idx);
+          const visEl = document.getElementById('yearVisualizerSection');
+          if (visEl) {
+            visEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          }
+        };
 
         // 1. Build Consolidated Outflows Horizontal Bar Chart: Where Withdrawn Money & SS Goes
         // Total Inflow = Total Portfolio Withdrawal + Social Security Benefits
